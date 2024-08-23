@@ -1,7 +1,9 @@
 import os
 import pytest
 from unittest import mock
-from m3learning_util.util.IO import download, make_folder  # Adjust the import according to your file structure
+from io import StringIO
+import time
+from m3learning_util.util.IO import download, make_folder, reporthook  # Adjust the import according to your file structure
 
 @mock.patch('m3learning_util.util.IO.os.path.exists')
 @mock.patch('m3learning_util.util.IO.os.remove')
@@ -105,3 +107,12 @@ def test_make_folder_called_with_correct_args(mock_makedirs):
     
     # Check if the returned path is correct
     assert result == folder_name
+    
+def test_reporthook():
+    
+    # Initial call to simulate the start of download
+    reporthook(0, 1024, 10240)
+    
+    # Initial call to simulate the middle of download
+    reporthook(5, 1024, 10240)
+
