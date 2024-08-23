@@ -11,6 +11,8 @@ from m3learning_util.util.IO import (
     compress_folder,
     unzip,
     get_size,
+    download_and_unzip,
+    append_to_csv,
 )  # Adjust the import according to your file structure
 
 
@@ -264,3 +266,135 @@ def test_get_size(mock_os_walk, mock_getsize):
 
     # Check that the total size is correct
     assert total_size == 600  # 100 + 200 + 300
+
+@mock.patch('m3learning_util.util.IO.unzip')
+@mock.patch('m3learning_util.util.IO.os.path.isfile')
+@mock.patch('m3learning_util.util.IO.download_file')
+@mock.patch('m3learning_util.util.IO.exists')
+@mock.patch('m3learning_util.util.IO.make_folder')
+def test_download_and_unzip_existing_file(mock_make_folder, mock_exists, mock_download_file, mock_isfile, mock_unzip):
+    # Test parameters
+    filename = "data.zip"
+    url = "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-zip-file.zip"
+    save_path = "/path/to/save"
+    
+    # Simulate that the file already exists and force=False
+    mock_exists.return_value = True
+    mock_isfile.return_value = True
+
+    # Call the download_and_unzip function
+    download_and_unzip(filename, url, save_path, force=False)
+
+    # Ensure make_folder is called
+    mock_make_folder.assert_called_once_with(save_path)
+    
+    # Ensure download_file is not called since the file exists and force=False
+    mock_download_file.assert_not_called()
+
+    # Ensure unzip is called since the file exists
+    mock_unzip.assert_called_once_with(save_path + '/' + filename, save_path)
+
+@mock.patch('m3learning_util.util.IO.unzip')
+@mock.patch('m3learning_util.util.IO.os.path.isfile')
+@mock.patch('m3learning_util.util.IO.download_file')
+@mock.patch('m3learning_util.util.IO.exists')
+@mock.patch('m3learning_util.util.IO.make_folder')
+def test_download_and_unzip_force_download(mock_make_folder, mock_exists, mock_download_file, mock_isfile, mock_unzip):
+    # Test parameters
+    filename = "data.zip"
+    url = "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-zip-file.zip"
+    save_path = "/path/to/save"
+    
+    # Simulate that the file exists but force=True
+    mock_exists.return_value = True
+    mock_isfile.return_value = True
+
+    # Call the download_and_unzip function with force=True
+    download_and_unzip(filename, url, save_path, force=True)
+
+    # Ensure make_folder is called
+    mock_make_folder.assert_called_once_with(save_path)
+
+    # Ensure download_file is called despite the file existing
+    mock_download_file.assert_called_once_with(url, save_path + '/' + filename)
+
+    # Ensure unzip is called
+    mock_unzip.assert_called_once_with(save_path + '/' + filename, save_path)
+
+@mock.patch('m3learning_util.util.IO.unzip')
+@mock.patch('m3learning_util.util.IO.os.path.isfile')
+@mock.patch('m3learning_util.util.IO.download_file')
+@mock.patch('m3learning_util.util.IO.exists')
+@mock.patch('m3learning_util.util.IO.make_folder')
+def test_download_and_unzip_file_does_not_exist(mock_make_folder, mock_exists, mock_download_file, mock_isfile, mock_unzip):
+    # Test parameters
+    filename = "data.zip"
+    url = "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-zip-file.zip"
+    save_path = "/path/to/save"
+    
+    # Simulate that the file does not exist
+    mock_exists.return_value = False
+    mock_isfile.return_value = True
+
+    # Call the download_and_unzip function
+    download_and_unzip(filename, url, save_path, force=False)
+
+    # Ensure make_folder is called
+    mock_make_folder.assert_called_once_with(save_path)
+
+    # Ensure download_file is called since the file does not exist
+    mock_download_file.assert_called_once_with(url, save_path + '/' + filename)
+
+    # Ensure unzip is called
+    mock_unzip.assert_called_once_with(save_path + '/' + filename, save_path)
+
+@mock.patch('m3learning_util.util.IO.os.path.isfile')
+@mock.patch('builtins.open', new_callable=mock.mock_open)
+@mock.patch('m3learning_util.util.IO.csv.writer')
+def test_append_to_csv_file_does_not_exist(mock_csv_writer, mock_open, mock_isfile):
+    # Simulate that the file does not exist
+    mock_isfile.return_value = False
+
+    # Test parameters
+    file_path = 'test.csv'
+    data = ['value1', 'value2', 'value3']
+    headers = ['header1', 'header2', 'header3']
+
+    # Call the append_to_csv function
+    append_to_csv(file_path, data, headers)
+
+    # Ensure that os.path.isfile is called with the correct file path
+    mock_isfile.assert_called_once_with(file_path)
+
+    # Ensure the file is opened in append mode
+    mock_open.assert_called_once_with(file_path, 'a', newline='')
+
+    # Get the mock writer object and ensure the correct rows are written
+    mock_writer = mock_csv_writer.return_value
+    mock_writer.writerow.assert_any_call(headers)  # Header should be written since the file does not exist
+    mock_writer.writerow.assert_any_call(data)  # Data row should be written
+
+@mock.patch('m3learning_util.util.IO.os.path.isfile')
+@mock.patch('builtins.open', new_callable=mock.mock_open)
+@mock.patch('m3learning_util.util.IO.csv.writer')
+def test_append_to_csv_file_exists(mock_csv_writer, mock_open, mock_isfile):
+    # Simulate that the file exists
+    mock_isfile.return_value = True
+
+    # Test parameters
+    file_path = 'test.csv'
+    data = ['value1', 'value2', 'value3']
+    headers = ['header1', 'header2', 'header3']
+
+    # Call the append_to_csv function
+    append_to_csv(file_path, data, headers)
+
+    # Ensure that os.path.isfile is called with the correct file path
+    mock_isfile.assert_called_once_with(file_path)
+
+    # Ensure the file is opened in append mode
+    mock_open.assert_called_once_with(file_path, 'a', newline='')
+
+    # Get the mock writer object and ensure only the data row is written
+    mock_writer = mock_csv_writer.return_value
+    mock_writer.writerow.assert_called_once_with(data)  # Only data row should be written
