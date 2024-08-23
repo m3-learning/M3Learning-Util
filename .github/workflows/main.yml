@@ -28,12 +28,11 @@ jobs:
           pip install pyscaffold
 
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@v1.32.1
+        uses: anothrNick/github-tag-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_branches: main
-          custom_tag: v0.0.0
-          tag_prefix: 'v'
+          DEFAULT_BUMP: none
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
