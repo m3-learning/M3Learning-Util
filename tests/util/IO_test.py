@@ -10,6 +10,7 @@ from m3learning_util.util.IO import (
     download_file,
     compress_folder,
     unzip,
+    get_size,
 )  # Adjust the import according to your file structure
 
 
@@ -235,3 +236,31 @@ def test_unzip(mock_zipfile):
 
     # Assert that close was called once
     mock_zip_ref.close.assert_called_once()
+
+@mock.patch('m3learning_util.util.IO.os.path.getsize')
+@mock.patch('m3learning_util.util.IO.os.walk')
+def test_get_size(mock_os_walk, mock_getsize):
+    # Define the mock return values for os.walk and os.path.getsize
+
+    # Simulate a directory structure with files
+    mock_os_walk.return_value = [
+        ('/path/to/dir', ('subdir',), ('file1.txt', 'file2.txt')),
+        ('/path/to/dir/subdir', (), ('file3.txt',))
+    ]
+    
+    # Simulate the file sizes returned by os.path.getsize
+    mock_getsize.side_effect = [100, 200, 300]  # Sizes of file1.txt, file2.txt, file3.txt respectively
+
+    # Call the get_size function
+    total_size = get_size('/path/to/dir')
+
+    # Check that os.walk was called with the correct directory
+    mock_os_walk.assert_called_once_with('/path/to/dir')
+
+    # Check that os.path.getsize was called with the correct file paths
+    mock_getsize.assert_any_call('/path/to/dir/file1.txt')
+    mock_getsize.assert_any_call('/path/to/dir/file2.txt')
+    mock_getsize.assert_any_call('/path/to/dir/subdir/file3.txt')
+
+    # Check that the total size is correct
+    assert total_size == 600  # 100 + 200 + 300
