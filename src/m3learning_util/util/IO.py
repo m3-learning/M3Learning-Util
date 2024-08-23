@@ -76,6 +76,8 @@ def reporthook(count, block_size, total_size):
                      (percent, progress_size / (1024 * 1024), speed, duration))
     sys.stdout.flush()
 
+
+#TODO: This could be refactored with the above download function
 def download_file(url, filename):
     """ A function that downloads the data file from a URL
 

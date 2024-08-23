@@ -3,7 +3,7 @@ import pytest
 from unittest import mock
 from io import StringIO
 import time
-from m3learning_util.util.IO import download, make_folder, reporthook  # Adjust the import according to your file structure
+from m3learning_util.util.IO import download, make_folder, reporthook, download_file  # Adjust the import according to your file structure
 
 @mock.patch('m3learning_util.util.IO.os.path.exists')
 @mock.patch('m3learning_util.util.IO.os.remove')
@@ -116,3 +116,38 @@ def test_reporthook():
     # Initial call to simulate the middle of download
     reporthook(5, 1024, 10240)
 
+@mock.patch('m3learning_util.util.IO.urllib.request.urlretrieve')
+@mock.patch('m3learning_util.util.IO.os.path.isfile')
+def test_download_file_when_file_exists(mock_isfile, mock_urlretrieve):
+    # Simulate that the file already exists
+    mock_isfile.return_value = True
+
+    url = "https://filesampleshub.com/download/document/txt/sample1.txt"
+    filename = "/path/to/file.txt"
+
+    # Call the download_file function
+    download_file(url, filename)
+
+    # Assert that os.path.isfile was called with the correct filename
+    mock_isfile.assert_called_once_with(filename)
+
+    # Assert that urllib.request.urlretrieve was not called, since the file exists
+    mock_urlretrieve.assert_not_called()
+    
+@mock.patch('m3learning_util.util.IO.urllib.request.urlretrieve')
+@mock.patch('m3learning_util.util.IO.os.path.isfile')
+def test_download_file_when_file_does_not_exist(mock_isfile, mock_urlretrieve):
+    # Simulate that the file does not exist
+    mock_isfile.return_value = False
+
+    url = "https://filesampleshub.com/download/document/txt/sample1.txt"
+    filename = "/path/to/file.txt"
+
+    # Call the download_file function
+    download_file(url, filename)
+
+    # Assert that os.path.isfile was called with the correct filename
+    mock_isfile.assert_called_once_with(filename)
+
+    # Assert that urllib.request.urlretrieve was called with the correct arguments
+    mock_urlretrieve.assert_called_once_with(url, filename, mock.ANY)
