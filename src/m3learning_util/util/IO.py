@@ -10,16 +10,17 @@ import numpy as np
 from os.path import exists
 import csv
 
+
 def download(url: str, destination: str, force: bool = False) -> None:
     """
     Downloads a file from a URL to a destination. 
     If the file already exists, it can optionally overwrite it.
-    
+
     Parameters:
         url (str): The URL of the file to download.
         destination (str): The local path where the file should be saved.
         force (bool, optional): Whether to force download and overwrite. Default is False.
-        
+
     Returns:
         None
     """
@@ -66,7 +67,7 @@ def reporthook(count, block_size, total_size):
     """
     global start_time
     if count == 0:
-        start_time =time.time()
+        start_time = time.time()
         return
     duration = time.time() - start_time
     progress_size = int(count * block_size)
@@ -77,7 +78,7 @@ def reporthook(count, block_size, total_size):
     sys.stdout.flush()
 
 
-#TODO: This could be refactored with the above download function
+# TODO: This could be refactored with the above download function
 def download_file(url, filename):
     """ A function that downloads the data file from a URL
 
@@ -159,7 +160,7 @@ def download_and_unzip(filename, url, save_path, force=False):
 def append_to_csv(file_path, data, headers):
     """
     Appends a row of data to a CSV file.
-    
+
     If the file doesn't exist, it creates a new file and writes the header row.
 
     Args:

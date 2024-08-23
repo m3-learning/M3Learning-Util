@@ -5,6 +5,7 @@ from pygments.lexers import PythonLexer
 from pygments.formatters import TerminalFormatter
 from m3learning_util.util.code import print_code
 
+
 def test_print_code(capsys):
     # Define a sample function to test
     def sample_function():
@@ -23,7 +24,8 @@ def test_print_code(capsys):
     source_code = "".join(source_lines)
 
     # Perform syntax highlighting using Pygments
-    expected_highlighted_code = highlight(source_code, PythonLexer(), TerminalFormatter())
+    expected_highlighted_code = highlight(
+        source_code, PythonLexer(), TerminalFormatter())
 
     # Rebuild the expected output with line numbers
     expected_output = "\n".join(
