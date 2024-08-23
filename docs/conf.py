@@ -74,6 +74,10 @@ extensions = [
     "sphinx.ext.napoleon",
 ]
 
+# Generate summary tables automatically
+autosummary_generate = True
+
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
@@ -153,14 +157,39 @@ todo_emit_warnings = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "alabaster"
+html_theme = "pydata_sphinx_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
+# Material theme options (see theme.conf for more information)
 html_theme_options = {
-    "sidebar_width": "300px",
-    "page_width": "1200px"
+    "show_nav_level": 4,
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/<your-org>/<your-repo>",
+            "icon": "fab fa-github-square",
+            "type": "fontawesome",
+        },
+        {
+            "name": "GitLab",
+            "url": "https://gitlab.com/<your-org>/<your-repo>",
+            "icon": "fab fa-gitlab",
+            "type": "fontawesome",
+        },
+        {
+            "name": "Twitter",
+            "url": "https://twitter.com/<your-handle>",
+            "icon": "fab fa-twitter-square",
+            # The default for `type` is `fontawesome` so it is not actually required in any of the above examples as it is shown here
+        },
+        {
+            "name": "Mastodon",
+            "url": "https://<your-host>@<your-handle>",
+            "icon": "fab fa-mastodon",
+        },
+    ],
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -185,11 +214,15 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+html_static_path = ['_static']
+
+html_css_files = [
+    'custom.css',
+]
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
-# html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = '%b %d, %Y'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.

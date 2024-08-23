@@ -28,6 +28,7 @@ Contents
 
 .. toctree::
    :maxdepth: 2
+   :caption: Contents:
 
    Overview <readme>
    Contributions & Help <contributing>
@@ -35,6 +36,7 @@ Contents
    Authors <authors>
    Changelog <changelog>
    Module Reference <api/modules>
+   api <api>
 
 
 Indices and tables
