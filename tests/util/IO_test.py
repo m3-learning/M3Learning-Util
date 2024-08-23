@@ -9,6 +9,7 @@ from m3learning_util.util.IO import (
     reporthook,
     download_file,
     compress_folder,
+    unzip,
 )  # Adjust the import according to your file structure
 
 
@@ -213,3 +214,24 @@ def test_compress_folder_default_root_dir(mock_make_archive):
 
     # Assert that shutil.make_archive was called with the correct arguments
     mock_make_archive.assert_called_once_with(base_name, format, None)
+    
+@mock.patch('m3learning_util.util.IO.zipfile.ZipFile')
+def test_unzip(mock_zipfile):
+    # Mock instance of ZipFile
+    mock_zip_ref = mock_zipfile.return_value
+
+    # Test parameters
+    filename = "test_archive.zip"
+    path = "/path/to/extract"
+
+    # Call the unzip function
+    unzip(filename, path)
+
+    # Assert that zipfile.ZipFile was called with the correct arguments
+    mock_zipfile.assert_called_once_with('./' + filename, 'r')
+
+    # Assert that extractall was called with the correct path
+    mock_zip_ref.extractall.assert_called_once_with(path)
+
+    # Assert that close was called once
+    mock_zip_ref.close.assert_called_once()

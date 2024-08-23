@@ -34,3 +34,4 @@ def test_print_code(capsys):
 
     # Compare the captured output to the expected output
     assert captured.out.strip() == expected_output.strip()
+
