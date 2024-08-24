@@ -1,3 +1,7 @@
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
 def set_style(name="default"):
     """Function to implement custom default style for graphs
 
@@ -6,7 +10,6 @@ def set_style(name="default"):
     """
     if name == "default":
         try:
-            import seaborn as sns
 
             # resetting default seaborn style
             sns.reset_orig()
@@ -17,7 +20,6 @@ def set_style(name="default"):
             pass
 
         try:
-            import matplotlib.pyplot as plt
 
             # setting default plotting params
             plt.rcParams["image.cmap"] = "magma"
@@ -36,7 +38,6 @@ def set_style(name="default"):
     if name == "printing":
 
         try:
-            import seaborn as sns
 
             # resetting default seaborn style
             sns.reset_orig()
@@ -45,8 +46,6 @@ def set_style(name="default"):
 
         except:
             pass
-
-        import matplotlib.pyplot as plt
 
         # setting default plotting params
         plt.rcParams["image.cmap"] = "viridis"
