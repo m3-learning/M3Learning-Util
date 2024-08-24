@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3learning_util.util.IO &#8212; M3Learning-Util 0.0.post1.dev1+g5ddb2de documentation</title>
+    <title>m3learning_util.util.IO &#8212; M3Learning-Util 0.0.post1.dev1+g9d465d0 documentation</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../_static/documentation_options.js?v=f0d16104"></script>
+    <script src="../../../_static/documentation_options.js?v=8d203b9b"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3learning_util/util/IO';</script>
@@ -43,7 +43,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 23, 2024"/>
+    <meta name="docbuild:last-update" content="Aug 24, 2024"/>
   </head>
   
   
@@ -117,7 +117,7 @@
   
   
   
-    <p class="title logo__title">M3Learning-Util 0.0.post1.dev1+g5ddb2de documentation</p>
+    <p class="title logo__title">M3Learning-Util 0.0.post1.dev1+g9d465d0 documentation</p>
   
 </a></div>
     
@@ -503,7 +503,7 @@ document.write(`
 <a class="viewcode-back" href="../../../api/m3learning_util.util.html#m3learning_util.util.IO.download">[docs]</a>
 <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">destination</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Downloads a file from a URL to a destination. </span>
+<span class="sd">    Downloads a file from a URL to a destination.</span>
 <span class="sd">    If the file already exists, it can optionally overwrite it.</span>
 
 <span class="sd">    Parameters:</span>
@@ -569,8 +569,10 @@ document.write(`
     <span class="n">progress_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span> <span class="o">*</span> <span class="n">block_size</span><span class="p">)</span>
     <span class="n">speed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">progress_size</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="n">duration</span> <span class="o">+</span> <span class="mf">0.0001</span><span class="p">))</span>
     <span class="n">percent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span> <span class="o">*</span> <span class="n">block_size</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">total_size</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">...</span><span class="si">%d%%</span><span class="s2">, </span><span class="si">%d</span><span class="s2"> MB, </span><span class="si">%d</span><span class="s2"> KB/s, </span><span class="si">%d</span><span class="s2"> seconds passed&quot;</span> <span class="o">%</span>
-                     <span class="p">(</span><span class="n">percent</span><span class="p">,</span> <span class="n">progress_size</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">),</span> <span class="n">speed</span><span class="p">,</span> <span class="n">duration</span><span class="p">))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="se">\r</span><span class="s2">...</span><span class="si">%d%%</span><span class="s2">, </span><span class="si">%d</span><span class="s2"> MB, </span><span class="si">%d</span><span class="s2"> KB/s, </span><span class="si">%d</span><span class="s2"> seconds passed&quot;</span>
+        <span class="o">%</span> <span class="p">(</span><span class="n">percent</span><span class="p">,</span> <span class="n">progress_size</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">),</span> <span class="n">speed</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
+    <span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div>
 
 
@@ -579,7 +581,7 @@ document.write(`
 <div class="viewcode-block" id="download_file">
 <a class="viewcode-back" href="../../../api/m3learning_util.util.html#m3learning_util.util.IO.download_file">[docs]</a>
 <span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; A function that downloads the data file from a URL</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A function that downloads the data file from a URL</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        url (string): url where the file to download is located</span>
@@ -614,7 +616,7 @@ document.write(`
 <span class="sd">        filename (string): base name of the zip file</span>
 <span class="sd">        path (string): path where the zip file will be saved</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">zip_ref</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s1">&#39;./&#39;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">zip_ref</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
     <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">zip_ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
@@ -622,7 +624,7 @@ document.write(`
 
 <div class="viewcode-block" id="get_size">
 <a class="viewcode-back" href="../../../api/m3learning_util.util.html#m3learning_util.util.IO.get_size">[docs]</a>
-<span class="k">def</span> <span class="nf">get_size</span><span class="p">(</span><span class="n">start_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">get_size</span><span class="p">(</span><span class="n">start_path</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A function that computes the size of a folder</span>
 
 
@@ -654,17 +656,17 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">make_folder</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
 
-    <span class="n">path</span> <span class="o">=</span> <span class="n">save_path</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">filename</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">save_path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">filename</span>
     <span class="c1"># if np.int(get_size(save_path) / 1e9) &lt; 1:</span>
     <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">force</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Using files already downloaded&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using files already downloaded&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;downloading data&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;downloading data&quot;</span><span class="p">)</span>
         <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="s1">&#39;.zip&#39;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;.zip&quot;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;extracting </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;extracting </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">unzip</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span></div>
 
 
@@ -683,7 +685,7 @@ document.write(`
 <span class="sd">        headers (list): A list of header values for the CSV file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">file_exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">file_exists</span><span class="p">:</span>
             <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>  <span class="c1"># Write header row if the file is newly created</span>

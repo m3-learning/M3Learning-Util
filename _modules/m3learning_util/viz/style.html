@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3learning_util.ml.rand_test &#8212; M3Learning-Util 0.0.post1.dev1+g9d465d0 documentation</title>
+    <title>m3learning_util.viz.style &#8212; M3Learning-Util 0.0.post1.dev1+g9d465d0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
     <script src="../../../_static/documentation_options.js?v=8d203b9b"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3learning_util/ml/rand_test';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3learning_util/viz/style';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -485,84 +485,76 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for m3learning_util.ml.rand_test</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pytest</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">m3learning_util.ml.rand</span> <span class="kn">import</span> <span class="n">rand_tensor</span><span class="p">,</span> <span class="n">set_seeds</span>
+  <h1>Source code for m3learning_util.viz.style</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="set_style">
+<a class="viewcode-back" href="../../../api/m3learning_util.viz.html#m3learning_util.viz.style.set_style">[docs]</a>
+<span></span><span class="k">def</span> <span class="nf">set_style</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Function to implement custom default style for graphs</span>
 
+<span class="sd">    Args:</span>
+<span class="sd">        name (str, optional): style name. Defaults to &quot;default&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-<div class="viewcode-block" id="test_rand_tensor_values">
-<a class="viewcode-back" href="../../../api/m3learning_util.ml.html#m3learning_util.ml.rand_test.test_rand_tensor_values">[docs]</a>
-<span class="k">def</span> <span class="nf">test_rand_tensor_values</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test that rand_tensor generates a tensor within the specified range.&quot;&quot;&quot;</span>
-    <span class="n">min_val</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">max_val</span> <span class="o">=</span> <span class="mi">5</span>
-    <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,)</span>
-    <span class="n">tensor</span> <span class="o">=</span> <span class="n">rand_tensor</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="n">min_val</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">max_val</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+            <span class="c1"># resetting default seaborn style</span>
+            <span class="n">sns</span><span class="o">.</span><span class="n">reset_orig</span><span class="p">()</span>
 
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">),</span> <span class="s2">&quot;The output should be a torch.Tensor&quot;</span>
-    <span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
-        <span class="n">tensor</span> <span class="o">&gt;=</span> <span class="n">min_val</span>
-    <span class="p">),</span> <span class="s2">&quot;All elements should be greater than or equal to the minimum value&quot;</span>
-    <span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
-        <span class="n">tensor</span> <span class="o">&lt;</span> <span class="n">max_val</span>
-    <span class="p">),</span> <span class="s2">&quot;All elements should be less than the maximum value&quot;</span></div>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> set for seaborn&quot;</span><span class="p">)</span>
 
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
 
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<div class="viewcode-block" id="test_rand_tensor_size">
-<a class="viewcode-back" href="../../../api/m3learning_util.ml.html#m3learning_util.ml.rand_test.test_rand_tensor_size">[docs]</a>
-<span class="k">def</span> <span class="nf">test_rand_tensor_size</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test that rand_tensor generates a tensor of the correct size.&quot;&quot;&quot;</span>
-    <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-    <span class="n">tensor</span> <span class="o">=</span> <span class="n">rand_tensor</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+            <span class="c1"># setting default plotting params</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;image.cmap&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;magma&quot;</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;xtick.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;ytick.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.titlesize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;xtick.direction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;in&quot;</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;ytick.direction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;in&quot;</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;xtick.top&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;ytick.right&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> set for matplotlib&quot;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
 
-    <span class="k">assert</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">size</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Expected tensor shape </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">, but got </span><span class="si">{</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span></div>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;printing&quot;</span><span class="p">:</span>
 
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
+            <span class="c1"># resetting default seaborn style</span>
+            <span class="n">sns</span><span class="o">.</span><span class="n">reset_orig</span><span class="p">()</span>
 
-<div class="viewcode-block" id="test_set_seeds">
-<a class="viewcode-back" href="../../../api/m3learning_util.ml.html#m3learning_util.ml.rand_test.test_set_seeds">[docs]</a>
-<span class="k">def</span> <span class="nf">test_set_seeds</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test that set_seeds sets the random seeds for reproducibility.&quot;&quot;&quot;</span>
-    <span class="n">set_seeds</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> set for seaborn&quot;</span><span class="p">)</span>
 
-    <span class="c1"># Check reproducibility for random</span>
-    <span class="n">random_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-    <span class="n">set_seeds</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-    <span class="n">random_vals_reproduced</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-    <span class="k">assert</span> <span class="n">random_vals</span> <span class="o">==</span> <span class="n">random_vals_reproduced</span><span class="p">,</span> <span class="s2">&quot;Random values are not reproducible&quot;</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
 
-    <span class="c1"># Check reproducibility for numpy</span>
-    <span class="n">np_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">set_seeds</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-    <span class="n">np_vals_reproduced</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span>
-        <span class="n">np_vals</span><span class="p">,</span> <span class="n">np_vals_reproduced</span>
-    <span class="p">),</span> <span class="s2">&quot;NumPy random values are not reproducible&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-    <span class="c1"># Check reproducibility for torch</span>
-    <span class="n">torch_vals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">set_seeds</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-    <span class="n">torch_vals_reproduced</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
-        <span class="n">torch_vals</span><span class="p">,</span> <span class="n">torch_vals_reproduced</span>
-    <span class="p">),</span> <span class="s2">&quot;Torch random values are not reproducible&quot;</span></div>
-
-
-
-<div class="viewcode-block" id="test_environment_seed">
-<a class="viewcode-back" href="../../../api/m3learning_util.ml.html#m3learning_util.ml.rand_test.test_environment_seed">[docs]</a>
-<span class="k">def</span> <span class="nf">test_environment_seed</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test that the PYTHONHASHSEED environment variable is set correctly.&quot;&quot;&quot;</span>
-    <span class="n">seed</span> <span class="o">=</span> <span class="mi">123</span>
-    <span class="n">set_seeds</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYTHONHASHSEED&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span>
-        <span class="n">seed</span>
-    <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;PYTHONHASHSEED should be set to </span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s2">&quot;</span></div>
+        <span class="c1"># setting default plotting params</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;image.cmap&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;viridis&quot;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;xtick.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;ytick.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.titlesize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;xtick.direction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;in&quot;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;ytick.direction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;in&quot;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;xtick.top&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;ytick.right&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;lines.markersize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.grid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;lines.linewidth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.linewidth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;legend.fontsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;legend.loc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;upper left&quot;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;legend.frameon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 </pre></div>
 
