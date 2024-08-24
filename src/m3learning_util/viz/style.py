@@ -10,7 +10,6 @@ def set_style(name="default"):
     """
     if name == "default":
         try:
-
             # resetting default seaborn style
             sns.reset_orig()
 
@@ -20,7 +19,6 @@ def set_style(name="default"):
             pass
 
         try:
-
             # setting default plotting params
             plt.rcParams["image.cmap"] = "magma"
             plt.rcParams["axes.labelsize"] = 18
@@ -36,9 +34,7 @@ def set_style(name="default"):
             pass
 
     if name == "printing":
-
         try:
-
             # resetting default seaborn style
             sns.reset_orig()
 

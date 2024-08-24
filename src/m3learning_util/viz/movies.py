@@ -62,7 +62,6 @@ def make_movie(
 
     # Add frames to the video
     for i, frame in enumerate(frames):
-
         if pad_image:
             frame = cv2.copyMakeBorder(
                 frame,

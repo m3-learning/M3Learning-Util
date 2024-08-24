@@ -4,7 +4,6 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from itertools import product
 import numpy as np
 from matplotlib import (
-    pyplot as plt,
     path,
     patches,
     patheffects,

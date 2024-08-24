@@ -28,7 +28,7 @@ class printer:
         basepath=None,
         label_figs=None,
         fileformats=None,
-        **kwargs
+        **kwargs,
     ):
         """
         Function to save a figure in one or multiple formats.

@@ -6,7 +6,6 @@ import urllib
 import zipfile
 import shutil
 import os.path
-import numpy as np
 from os.path import exists
 import csv
 
@@ -38,7 +37,7 @@ def download(url: str, destination: str, force: bool = False) -> None:
     # Download the file from the given URL to the destination
     print(f"Downloading file from {url} to {destination}...")
     wget.download(url, destination)
-    print(f"\nDownload complete.")
+    print("\nDownload complete.")
 
 
 def make_folder(folder, **kwargs):
