@@ -2,4 +2,4 @@
 Contributors
 ============
 
-* jagar2 <jca92@drexel.edu>
+* Joshua C. Agar <jca92@drexel.edu>
