@@ -3,6 +3,7 @@ import torch
 import os
 import numpy as np
 
+
 def rand_tensor(min=0, max=1, size=(1)):
     """
     Generates a random tensor within a specified range.
@@ -18,6 +19,7 @@ def rand_tensor(min=0, max=1, size=(1)):
     out = (max - min) * torch.rand(size) + min
     return out
 
+
 def set_seeds(seed=42):
     """
     Sets the random seeds for reproducibility.
@@ -25,7 +27,7 @@ def set_seeds(seed=42):
     Args:
         seed (int): The random seed value.
     """
-    os.environ['PYTHONHASHSEED'] = str(seed)
+    os.environ["PYTHONHASHSEED"] = str(seed)
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)

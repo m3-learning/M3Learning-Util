@@ -4,8 +4,18 @@ from m3learning_util.util.IO import make_folder
 from tqdm import tqdm
 import numpy as np
 
-def make_movie(movie_name, input_folder, output_folder, file_format,
-               fps, output_format='mp4', reverse=False, text_list=None,pad_image=True):
+
+def make_movie(
+    movie_name,
+    input_folder,
+    output_folder,
+    file_format,
+    fps,
+    output_format="mp4",
+    reverse=False,
+    text_list=None,
+    pad_image=True,
+):
     """Function that constructs a movie from images
 
     Args:
@@ -22,11 +32,11 @@ def make_movie(movie_name, input_folder, output_folder, file_format,
     output_folder = make_folder(output_folder)
 
     # searches the folder and finds the files
-    file_list = glob.glob(input_folder + '/*.' + file_format)
+    file_list = glob.glob(input_folder + "/*." + file_format)
 
     # Sorts the files by number makes 2 lists to go forward and back
     list.sort(file_list)
-    file_list_rev = glob.glob(input_folder + '/*.' + file_format)
+    file_list_rev = glob.glob(input_folder + "/*." + file_format)
     list.sort(file_list_rev, reverse=True)
 
     # combines the file list if including the reverse
@@ -37,37 +47,50 @@ def make_movie(movie_name, input_folder, output_folder, file_format,
 
     frames = []
     # Add frames to the list
-    for i,image in enumerate(tqdm(new_list)):
+    for i, image in enumerate(tqdm(new_list)):
         frames.append(cv2.imread(image))
-        
+
     # get the largest shape of images
     shapes = np.array([frame.shape for frame in frames]).max(axis=0)
     shape_ = (shapes[1], shapes[0])
 
     # Create the video writer
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     video_writer = cv2.VideoWriter(
-        f"{output_folder}/{movie_name}.{output_format}", fourcc, fps, shape_)
+        f"{output_folder}/{movie_name}.{output_format}", fourcc, fps, shape_
+    )
 
     # Add frames to the video
-    for i,frame in enumerate(frames):
-                
+    for i, frame in enumerate(frames):
+
         if pad_image:
-            frame = cv2.copyMakeBorder(frame, 0, shape_[1]-frame.shape[0], 0, shape_[0]-frame.shape[1], 
-                                       cv2.BORDER_REPLICATE)
-        else: frame = cv2.imread(image)
+            frame = cv2.copyMakeBorder(
+                frame,
+                0,
+                shape_[1] - frame.shape[0],
+                0,
+                shape_[0] - frame.shape[1],
+                cv2.BORDER_REPLICATE,
+            )
+        else:
+            frame = cv2.imread(image)
 
         # Add text
         if text_list is not None:
-            disp_text = new_list[i].split('/')[-1].split(f'.{file_format}')[0]
-            # describe the type of font to be used. 
-            font = cv2.FONT_HERSHEY_SIMPLEX 
-            cv2.putText(frame, disp_text,
-                (50, shape_[1]-50),  
-                font, 3,  
-                (0,0,255),  
-                2, cv2.LINE_4) 
-            
+            disp_text = new_list[i].split("/")[-1].split(f".{file_format}")[0]
+            # describe the type of font to be used.
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(
+                frame,
+                disp_text,
+                (50, shape_[1] - 50),
+                font,
+                3,
+                (0, 0, 255),
+                2,
+                cv2.LINE_4,
+            )
+
         video_writer.write(frame)
 
     # Release the video writer

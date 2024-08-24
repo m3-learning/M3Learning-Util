@@ -15,9 +15,11 @@ def test_rand_tensor_values():
 
     assert isinstance(tensor, torch.Tensor), "The output should be a torch.Tensor"
     assert torch.all(
-        tensor >= min_val), "All elements should be greater than or equal to the minimum value"
+        tensor >= min_val
+    ), "All elements should be greater than or equal to the minimum value"
     assert torch.all(
-        tensor < max_val), "All elements should be less than the maximum value"
+        tensor < max_val
+    ), "All elements should be less than the maximum value"
 
 
 def test_rand_tensor_size():
@@ -43,19 +45,22 @@ def test_set_seeds():
     set_seeds(42)
     np_vals_reproduced = np.random.rand(5)
     assert np.array_equal(
-        np_vals, np_vals_reproduced), "NumPy random values are not reproducible"
+        np_vals, np_vals_reproduced
+    ), "NumPy random values are not reproducible"
 
     # Check reproducibility for torch
     torch_vals = torch.rand(5)
     set_seeds(42)
     torch_vals_reproduced = torch.rand(5)
     assert torch.equal(
-        torch_vals, torch_vals_reproduced), "Torch random values are not reproducible"
+        torch_vals, torch_vals_reproduced
+    ), "Torch random values are not reproducible"
 
 
 def test_environment_seed():
     """Test that the PYTHONHASHSEED environment variable is set correctly."""
     seed = 123
     set_seeds(seed)
-    assert os.environ['PYTHONHASHSEED'] == str(
-        seed), f"PYTHONHASHSEED should be set to {seed}"
+    assert os.environ["PYTHONHASHSEED"] == str(
+        seed
+    ), f"PYTHONHASHSEED should be set to {seed}"

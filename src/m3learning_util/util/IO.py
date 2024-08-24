@@ -13,7 +13,7 @@ import csv
 
 def download(url: str, destination: str, force: bool = False) -> None:
     """
-    Downloads a file from a URL to a destination. 
+    Downloads a file from a URL to a destination.
     If the file already exists, it can optionally overwrite it.
 
     Parameters:
@@ -73,14 +73,16 @@ def reporthook(count, block_size, total_size):
     progress_size = int(count * block_size)
     speed = int(progress_size / (1024 * duration + 0.0001))
     percent = int(count * block_size * 100 / total_size)
-    sys.stdout.write("\r...%d%%, %d MB, %d KB/s, %d seconds passed" %
-                     (percent, progress_size / (1024 * 1024), speed, duration))
+    sys.stdout.write(
+        "\r...%d%%, %d MB, %d KB/s, %d seconds passed"
+        % (percent, progress_size / (1024 * 1024), speed, duration)
+    )
     sys.stdout.flush()
 
 
 # TODO: This could be refactored with the above download function
 def download_file(url, filename):
-    """ A function that downloads the data file from a URL
+    """A function that downloads the data file from a URL
 
     Args:
         url (string): url where the file to download is located
@@ -109,12 +111,12 @@ def unzip(filename, path):
         filename (string): base name of the zip file
         path (string): path where the zip file will be saved
     """
-    zip_ref = zipfile.ZipFile('./' + filename, 'r')
+    zip_ref = zipfile.ZipFile("./" + filename, "r")
     zip_ref.extractall(path)
     zip_ref.close()
 
 
-def get_size(start_path='.'):
+def get_size(start_path="."):
     """A function that computes the size of a folder
 
 
@@ -143,17 +145,17 @@ def download_and_unzip(filename, url, save_path, force=False):
     """
     make_folder(save_path)
 
-    path = save_path + '/' + filename
+    path = save_path + "/" + filename
     # if np.int(get_size(save_path) / 1e9) < 1:
     if exists(path) and not force:
-        print('Using files already downloaded')
+        print("Using files already downloaded")
     else:
-        print('downloading data')
+        print("downloading data")
         download_file(url, path)
 
-    if '.zip' in filename:
+    if ".zip" in filename:
         if os.path.isfile(path):
-            print(f'extracting {path}')
+            print(f"extracting {path}")
             unzip(path, save_path)
 
 
@@ -169,7 +171,7 @@ def append_to_csv(file_path, data, headers):
         headers (list): A list of header values for the CSV file.
     """
     file_exists = os.path.isfile(file_path)
-    with open(file_path, 'a', newline='') as file:
+    with open(file_path, "a", newline="") as file:
         writer = csv.writer(file)
         if not file_exists:
             writer.writerow(headers)  # Write header row if the file is newly created

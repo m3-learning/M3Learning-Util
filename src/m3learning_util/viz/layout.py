@@ -24,7 +24,7 @@ def plot_into_graph(axg, fig, colorbar_=True, clim=None, **kwargs):
         fig (matplotlib.pyplot.figure()): figure you want to put into axes
     """
     img_buf = io.BytesIO()
-    fig.savefig(img_buf, bbox_inches='tight', format='png')
+    fig.savefig(img_buf, bbox_inches="tight", format="png")
     im = PIL.Image.open(img_buf)
 
     if clim != None:
@@ -40,7 +40,9 @@ def plot_into_graph(axg, fig, colorbar_=True, clim=None, **kwargs):
     img_buf.close()
 
 
-def subfigures(nrows, ncols, size=(1.25, 1.25), gaps=(.8, .33), figsize=None, **kwargs):
+def subfigures(
+    nrows, ncols, size=(1.25, 1.25), gaps=(0.8, 0.33), figsize=None, **kwargs
+):
     """
     Create subfigures with specified number of rows and columns.
 
@@ -58,7 +60,7 @@ def subfigures(nrows, ncols, size=(1.25, 1.25), gaps=(.8, .33), figsize=None, **
 
     """
     if figsize is None:
-        figsize = (size[0]*ncols + gaps[0]*ncols, size[1]*nrows+gaps[1]*nrows)
+        figsize = (size[0] * ncols + gaps[0] * ncols, size[1] * nrows + gaps[1] * nrows)
 
     # create a new figure with the specified size
     fig = plt.figure(figsize=figsize)
@@ -66,10 +68,14 @@ def subfigures(nrows, ncols, size=(1.25, 1.25), gaps=(.8, .33), figsize=None, **
     ax = []
 
     for i, j in product(range(nrows), range(ncols)):
-        rvalue = (nrows-1) - j
+        rvalue = (nrows - 1) - j
         # calculate the position and size of each subfigure
-        pos1 = [(size[0]*rvalue + gaps[0]*rvalue)/figsize[0], (size[1]*i + gaps[1]*i)/figsize[1],
-                size[0]/figsize[0], size[1]/figsize[1]]
+        pos1 = [
+            (size[0] * rvalue + gaps[0] * rvalue) / figsize[0],
+            (size[1] * i + gaps[1] * i) / figsize[1],
+            size[0] / figsize[0],
+            size[1] / figsize[1],
+        ]
         ax.append(fig.add_axes(pos1))
 
     ax.reverse()
@@ -94,11 +100,12 @@ def add_text_to_figure(fig, text, text_position_in_inches, **kwargs):
 
     # Convert the desired text position in inches to a relative position (0 to 1)
     text_position_relative = (
-        text_position_in_inches[0] / fig_size_inches[0], text_position_in_inches[1] / fig_size_inches[1])
+        text_position_in_inches[0] / fig_size_inches[0],
+        text_position_in_inches[1] / fig_size_inches[1],
+    )
 
     # Add the text to the figure with the calculated relative position
-    fig.text(text_position_relative[0],
-             text_position_relative[1], text, **kwargs)
+    fig.text(text_position_relative[0], text_position_relative[1], text, **kwargs)
 
 
 def add_box(axs, pos, **kwargs):
@@ -151,14 +158,17 @@ def inset_connector(fig, ax1, ax2, coord1=None, coord2=None, **kwargs):
 
     for p1, p2 in zip(coord1, coord2):
         # Create a connection between the two points
-        con = ConnectionPatch(xyA=p1, xyB=p2,
-                              coordsA=ax1.transData, coordsB=ax2.transData, **kwargs)
+        con = ConnectionPatch(
+            xyA=p1, xyB=p2, coordsA=ax1.transData, coordsB=ax2.transData, **kwargs
+        )
 
         # Add the connection to the plot
         fig.add_artist(con)
 
 
-def subfigures(nrows, ncols, size=(1.25, 1.25), gaps=(.8, .33), figsize=None, **kwargs):
+def subfigures(
+    nrows, ncols, size=(1.25, 1.25), gaps=(0.8, 0.33), figsize=None, **kwargs
+):
     """
     Create subfigures with specified number of rows and columns.
 
@@ -176,7 +186,7 @@ def subfigures(nrows, ncols, size=(1.25, 1.25), gaps=(.8, .33), figsize=None, **
 
     """
     if figsize is None:
-        figsize = (size[0]*ncols + gaps[0]*ncols, size[1]*nrows+gaps[1]*nrows)
+        figsize = (size[0] * ncols + gaps[0] * ncols, size[1] * nrows + gaps[1] * nrows)
 
     # create a new figure with the specified size
     fig = plt.figure(figsize=figsize)
@@ -184,10 +194,14 @@ def subfigures(nrows, ncols, size=(1.25, 1.25), gaps=(.8, .33), figsize=None, **
     ax = []
 
     for i, j in product(range(nrows), range(ncols)):
-        rvalue = (nrows-1) - j
+        rvalue = (nrows - 1) - j
         # calculate the position and size of each subfigure
-        pos1 = [(size[0]*rvalue + gaps[0]*rvalue)/figsize[0], (size[1]*i + gaps[1]*i)/figsize[1],
-                size[0]/figsize[0], size[1]/figsize[1]]
+        pos1 = [
+            (size[0] * rvalue + gaps[0] * rvalue) / figsize[0],
+            (size[1] * i + gaps[1] * i) / figsize[1],
+            size[0] / figsize[0],
+            size[1] / figsize[1],
+        ]
         ax.append(fig.add_axes(pos1))
 
     ax.reverse()
@@ -212,11 +226,12 @@ def add_text_to_figure(fig, text, text_position_in_inches, **kwargs):
 
     # Convert the desired text position in inches to a relative position (0 to 1)
     text_position_relative = (
-        text_position_in_inches[0] / fig_size_inches[0], text_position_in_inches[1] / fig_size_inches[1])
+        text_position_in_inches[0] / fig_size_inches[0],
+        text_position_in_inches[1] / fig_size_inches[1],
+    )
 
     # Add the text to the figure with the calculated relative position
-    fig.text(text_position_relative[0],
-             text_position_relative[1], text, **kwargs)
+    fig.text(text_position_relative[0], text_position_relative[1], text, **kwargs)
 
 
 def add_box(axs, pos, **kwargs):
@@ -266,8 +281,9 @@ def inset_connector(fig, ax1, ax2, coord1=None, coord2=None, **kwargs):
     for p1, p2 in zip(coord1, coord2):
 
         # Create a connection between the two points
-        con = ConnectionPatch(xyA=p1, xyB=p2,
-                              coordsA=ax1.transData, coordsB=ax2.transData, **kwargs)
+        con = ConnectionPatch(
+            xyA=p1, xyB=p2, coordsA=ax1.transData, coordsB=ax2.transData, **kwargs
+        )
 
         # Add the connection to the plot
         fig.add_artist(con)
@@ -307,7 +323,7 @@ def path_maker(axes, locations, facecolor, edgecolor, linestyle, lineweight):
     axes.add_patch(pathpatch)
 
 
-def layout_fig(graph, mod=None, figsize=None, layout='compressed', **kwargs):
+def layout_fig(graph, mod=None, figsize=None, layout="compressed", **kwargs):
     """
     Utility function that helps lay out many figures.
 
@@ -324,7 +340,7 @@ def layout_fig(graph, mod=None, figsize=None, layout='compressed', **kwargs):
     """
     # sets the kwarg values
     for key, value in kwargs.items():
-        exec(f'{key} = value')
+        exec(f"{key} = value")
 
     # Sets the layout of graphs in matplotlib in a pretty way based on the number of plots
 
@@ -348,9 +364,7 @@ def layout_fig(graph, mod=None, figsize=None, layout='compressed', **kwargs):
 
     # builds the figure based on the number of graphs and a selected number of columns
     fig, axes = plt.subplots(
-        graph // mod + (graph % mod > 0),
-        mod,
-        figsize=figsize, layout=layout
+        graph // mod + (graph % mod > 0), mod, figsize=figsize, layout=layout
     )
 
     # deletes extra unneeded axes
@@ -401,12 +415,18 @@ def embedding_maps(data, image, colorbar_shown=True, c_lim=None, mod=None, title
     except RuntimeError:
         # Skip applying tight_layout if it causes conflicts
         pass
-    
-    
 
 
-def imagemap(ax, data, colorbars=True, clim=None, divider_=True,
-             cbar_number_format="%.1e", cmap_='viridis', **kwargs):
+def imagemap(
+    ax,
+    data,
+    colorbars=True,
+    clim=None,
+    divider_=True,
+    cbar_number_format="%.1e",
+    cmap_="viridis",
+    **kwargs,
+):
     """pretty way to plot image maps with standard formats
 
     Args:
@@ -418,8 +438,7 @@ def imagemap(ax, data, colorbars=True, clim=None, divider_=True,
 
     if data.ndim == 1:
         data = data.reshape(
-            np.sqrt(data.shape[0]).astype(
-                int), np.sqrt(data.shape[0]).astype(int)
+            np.sqrt(data.shape[0]).astype(int), np.sqrt(data.shape[0]).astype(int)
         )
 
     cmap = plt.get_cmap(cmap_)
@@ -486,9 +505,17 @@ def combine_lines(*args):
     return lines, labels
 
 
-def labelfigs(axes, number=None, style="wb",
-              loc="tl", string_add="", size=8,
-              text_pos="center", inset_fraction=(0.15, 0.15), **kwargs):
+def labelfigs(
+    axes,
+    number=None,
+    style="wb",
+    loc="tl",
+    string_add="",
+    size=8,
+    text_pos="center",
+    inset_fraction=(0.15, 0.15),
+    **kwargs,
+):
     """
     Add labels to figures.
 
@@ -516,7 +543,7 @@ def labelfigs(axes, number=None, style="wb",
 
     # Sets up various color options
     formatting_key = {
-        "wb": dict(color="w", linewidth=.75),
+        "wb": dict(color="w", linewidth=0.75),
         "b": dict(color="k", linewidth=0),
         "w": dict(color="w", linewidth=0),
     }
@@ -529,32 +556,41 @@ def labelfigs(axes, number=None, style="wb",
     x_inset = (xlim[1] - xlim[0]) * inset_fraction[1]
     y_inset = (ylim[1] - ylim[0]) * inset_fraction[0]
 
-    if loc == 'tl':
+    if loc == "tl":
         x, y = xlim[0] + x_inset, ylim[1] - y_inset
-    elif loc == 'tr':
+    elif loc == "tr":
         x, y = xlim[1] - x_inset, ylim[1] - y_inset
-    elif loc == 'bl':
+    elif loc == "bl":
         x, y = xlim[0] + x_inset, ylim[0] + y_inset
-    elif loc == 'br':
+    elif loc == "br":
         x, y = xlim[1] - x_inset, ylim[0] + y_inset
-    elif loc == 'ct':
+    elif loc == "ct":
         x, y = (xlim[0] + xlim[1]) / 2, ylim[1] - y_inset
-    elif loc == 'cb':
+    elif loc == "cb":
         x, y = (xlim[0] + xlim[1]) / 2, ylim[0] + y_inset
     else:
         raise ValueError(
-            "Invalid position. Choose from 'tl', 'tr', 'bl', 'br', 'ct', or 'cb'.")
+            "Invalid position. Choose from 'tl', 'tr', 'bl', 'br', 'ct', or 'cb'."
+        )
 
     text += string_add
 
     if number is not None:
         text += number_to_letters(number)
 
-    text_ = axes.text(x, y, text, va=text_pos, ha='center',
-                      path_effects=[patheffects.withStroke(
-                          linewidth=formatting["linewidth"], foreground="k")],
-                      color=formatting["color"], size=size, **kwargs
-                      )
+    text_ = axes.text(
+        x,
+        y,
+        text,
+        va=text_pos,
+        ha="center",
+        path_effects=[
+            patheffects.withStroke(linewidth=formatting["linewidth"], foreground="k")
+        ],
+        color=formatting["color"],
+        size=size,
+        **kwargs,
+    )
 
     text_.set_zorder(np.inf)
 
@@ -570,7 +606,7 @@ def number_to_letters(num):
     str: The string representation of the number.
 
     """
-    letters = ''
+    letters = ""
     while num >= 0:
         num, remainder = divmod(num, 26)
         letters = chr(97 + remainder) + letters
@@ -616,7 +652,7 @@ def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
         y_label_height = y_point[np.int64((0.9 - 0.075) * image_size // 1)]
 
     # Make the path for the scalebar
-    path_maker(axes, [x_start, x_end, y_start, y_end], "w", "k", "-", .25)
+    path_maker(axes, [x_start, x_end, y_start, y_end], "w", "k", "-", 0.25)
 
     # Add the text label for the scalebar
     axes.text(
@@ -628,7 +664,7 @@ def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
         ha="center",
         va="center",
         color="w",
-        path_effects=[patheffects.withStroke(linewidth=.5, foreground="k")],
+        path_effects=[patheffects.withStroke(linewidth=0.5, foreground="k")],
     )
 
 
@@ -663,6 +699,7 @@ def get_axis_range(axs):
     Returns:
         list: A list of the form [xmin, xmax, ymin, ymax], where xmin and xmax are the minimum and maximum values of the x axis, and ymin and ymax are the minimum and maximum values of the y axis.
     """
+
     def get_axis_range_(ax):
         """
         Return the minimum and maximum values of a Matplotlib axis.
@@ -723,8 +760,9 @@ def add_scalebar(ax, scalebar_):
     """
 
     if scalebar_ is not None:
-        scalebar(ax, scalebar_['width'], scalebar_[
-            'scale length'], units=scalebar_['units'])
+        scalebar(
+            ax, scalebar_["width"], scalebar_["scale length"], units=scalebar_["units"]
+        )
 
 
 def get_axis_pos_inches(fig, ax):
@@ -747,14 +785,14 @@ def get_axis_pos_inches(fig, ax):
 
     # Convert the center bottom point from normalized coordinates to display units
     center_bottom_display = fig.transFigure.transform(
-        (center_bottom_x, center_bottom_y))
+        (center_bottom_x, center_bottom_y)
+    )
 
-    return center_bottom_display/fig.dpi
+    return center_bottom_display / fig.dpi
 
 
 class FigDimConverter:
-    """class to convert between relative and inches dimensions of a figure
-    """
+    """class to convert between relative and inches dimensions of a figure"""
 
     def __init__(self, figsize):
         """initializes the class
@@ -776,7 +814,12 @@ class FigDimConverter:
             tuple: position in inches (left, bottom, width, height)
         """
 
-        return (x[0] * self.fig_width, x[1] * self.fig_height, x[2] * self.fig_width, x[3] * self.fig_height)
+        return (
+            x[0] * self.fig_width,
+            x[1] * self.fig_height,
+            x[2] * self.fig_width,
+            x[3] * self.fig_height,
+        )
 
     def to_relative(self, x):
         """Converts position from inches to relative
@@ -788,5 +831,9 @@ class FigDimConverter:
             tuple: position in relative coordinates (left, bottom, width, height)
         """
 
-        return (x[0] / self.fig_width, x[1] / self.fig_height, x[2] / self.fig_width, x[3] / self.fig_height)
-
+        return (
+            x[0] / self.fig_width,
+            x[1] / self.fig_height,
+            x[2] / self.fig_width,
+            x[3] / self.fig_height,
+        )

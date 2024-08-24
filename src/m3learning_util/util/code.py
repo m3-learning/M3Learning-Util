@@ -3,14 +3,15 @@ from pygments.lexers import PythonLexer
 from pygments.formatters import TerminalFormatter
 import inspect
 
+
 def print_code(func):
     """
     print_code A function to print the source code of a function with syntax highlighting and line numbers.
 
     Args:
         func (obj): a python function
-    """    
-    
+    """
+
     # Fetch source lines and starting line number
     source_lines, starting_line_number = inspect.getsourcelines(func)
     source_code = "".join(source_lines)

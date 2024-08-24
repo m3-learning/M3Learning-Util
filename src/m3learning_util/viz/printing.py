@@ -5,7 +5,9 @@ from m3learning_util.viz.layout import labelfigs
 class printer:
     """Class to save figures to a folder"""
 
-    def __init__(self, dpi=600, basepath="./", fileformats=["png", "svg"], verbose=True):
+    def __init__(
+        self, dpi=600, basepath="./", fileformats=["png", "svg"], verbose=True
+    ):
         """Initializes the printer class
 
         Args:
@@ -15,10 +17,19 @@ class printer:
         self.dpi = dpi
         self.basepath = basepath
         self.fileformats = fileformats
-        self.verbose=verbose
+        self.verbose = verbose
         make_folder(self.basepath)
 
-    def savefig(self, fig, name, tight_layout=False, basepath=None, label_figs=None, fileformats = None, **kwargs):
+    def savefig(
+        self,
+        fig,
+        name,
+        tight_layout=False,
+        basepath=None,
+        label_figs=None,
+        fileformats=None,
+        **kwargs
+    ):
         """
         Function to save a figure in one or multiple formats.
 
@@ -41,12 +52,13 @@ class printer:
         if label_figs is not None:
             for i, ax in enumerate(label_figs):
                 labelfigs(ax, i, **kwargs)
-        
+
         if fileformats is None:
             fileformats = self.fileformats
-               
+
         for fileformat in fileformats:
-            if self.verbose: print(basepath + name + "." + fileformat)
+            if self.verbose:
+                print(basepath + name + "." + fileformat)
             fig.savefig(
                 basepath + name + "." + fileformat,
                 dpi=self.dpi,
