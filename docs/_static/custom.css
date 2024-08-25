@@ -151,3 +151,21 @@ html[data-theme="dark"] {
         filter: brightness(0.8) contrast(1.2);
     }
 }
+
+/* custom.css */
+
+.light-mode .logo-light {
+  display: block;
+}
+
+.light-mode .logo-dark {
+  display: none;
+}
+
+.dark-mode .logo-light {
+  display: none;
+}
+
+.dark-mode .logo-dark {
+  display: block;
+}

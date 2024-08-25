@@ -190,6 +190,10 @@ html_theme_options = {
             "icon": "fab fa-mastodon",
         },
     ],
+    "logo": {
+      "image_light": "_static/Drexel_blue_Logo_square_Light.png",
+      "image_dark": "_static/Drexel_blue_Logo_square_Dark.png",
+   }
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
