@@ -7,12 +7,12 @@ from m3util.viz.printing import printer  # Replace 'your_module' with the actual
 
 @pytest.fixture
 def mock_make_folder():
-    with patch('m3learning_util.util.IO.make_folder') as mock:
+    with patch('m3util.util.IO.make_folder') as mock:
         yield mock
 
 @pytest.fixture
 def mock_labelfigs():
-    with patch('m3learning_util.viz.layout.labelfigs') as mock:
+    with patch('m3util.viz.layout.labelfigs') as mock:
         yield mock
         
 def test_printer_init(tmp_path, mock_make_folder):

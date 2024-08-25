@@ -16,9 +16,9 @@ from m3util.util.IO import (
 )  # Adjust the import according to your file structure
 
 
-@mock.patch("m3learning_util.util.IO.os.path.exists")
-@mock.patch("m3learning_util.util.IO.os.remove")
-@mock.patch("m3learning_util.util.IO.wget.download")
+@mock.patch("m3util.util.IO.os.path.exists")
+@mock.patch("m3util.util.IO.os.remove")
+@mock.patch("m3util.util.IO.wget.download")
 def test_download_file_does_not_exist(
     mock_wget_download, mock_os_remove, mock_os_path_exists
 ):
@@ -37,9 +37,9 @@ def test_download_file_does_not_exist(
     mock_os_remove.assert_not_called()
 
 
-@mock.patch("m3learning_util.util.IO.os.path.exists")
-@mock.patch("m3learning_util.util.IO.os.remove")
-@mock.patch("m3learning_util.util.IO.wget.download")
+@mock.patch("m3util.util.IO.os.path.exists")
+@mock.patch("m3util.util.IO.os.remove")
+@mock.patch("m3util.util.IO.wget.download")
 def test_download_file_exists_no_force(
     mock_wget_download, mock_os_remove, mock_os_path_exists
 ):
@@ -58,9 +58,9 @@ def test_download_file_exists_no_force(
     mock_os_remove.assert_not_called()
 
 
-@mock.patch("m3learning_util.util.IO.os.path.exists")
-@mock.patch("m3learning_util.util.IO.os.remove")
-@mock.patch("m3learning_util.util.IO.wget.download")
+@mock.patch("m3util.util.IO.os.path.exists")
+@mock.patch("m3util.util.IO.os.remove")
+@mock.patch("m3util.util.IO.wget.download")
 def test_download_file_exists_with_force(
     mock_wget_download, mock_os_remove, mock_os_path_exists
 ):
@@ -117,7 +117,7 @@ def test_make_folder_existing_directory(tmp_path):
     assert result == str(folder_name)
 
 
-@mock.patch("m3learning_util.util.IO.os.makedirs")
+@mock.patch("m3util.util.IO.os.makedirs")
 def test_make_folder_called_with_correct_args(mock_makedirs):
     folder_name = "mock_folder"
 
@@ -140,8 +140,8 @@ def test_reporthook():
     reporthook(5, 1024, 10240)
 
 
-@mock.patch("m3learning_util.util.IO.urllib.request.urlretrieve")
-@mock.patch("m3learning_util.util.IO.os.path.isfile")
+@mock.patch("m3util.util.IO.urllib.request.urlretrieve")
+@mock.patch("m3util.util.IO.os.path.isfile")
 def test_download_file_when_file_exists(mock_isfile, mock_urlretrieve):
     # Simulate that the file already exists
     mock_isfile.return_value = True
@@ -159,8 +159,8 @@ def test_download_file_when_file_exists(mock_isfile, mock_urlretrieve):
     mock_urlretrieve.assert_not_called()
 
 
-@mock.patch("m3learning_util.util.IO.urllib.request.urlretrieve")
-@mock.patch("m3learning_util.util.IO.os.path.isfile")
+@mock.patch("m3util.util.IO.urllib.request.urlretrieve")
+@mock.patch("m3util.util.IO.os.path.isfile")
 def test_download_file_when_file_does_not_exist(mock_isfile, mock_urlretrieve):
     # Simulate that the file does not exist
     mock_isfile.return_value = False
@@ -178,7 +178,7 @@ def test_download_file_when_file_does_not_exist(mock_isfile, mock_urlretrieve):
     mock_urlretrieve.assert_called_once_with(url, filename, mock.ANY)
 
 
-@mock.patch("m3learning_util.util.IO.shutil.make_archive")
+@mock.patch("m3util.util.IO.shutil.make_archive")
 def test_compress_folder_zip(mock_make_archive):
     # Test parameters
     base_name = "test_archive"
@@ -192,7 +192,7 @@ def test_compress_folder_zip(mock_make_archive):
     mock_make_archive.assert_called_once_with(base_name, format, root_dir)
 
 
-@mock.patch("m3learning_util.util.IO.shutil.make_archive")
+@mock.patch("m3util.util.IO.shutil.make_archive")
 def test_compress_folder_tar(mock_make_archive):
     # Test parameters
     base_name = "test_archive"
@@ -206,7 +206,7 @@ def test_compress_folder_tar(mock_make_archive):
     mock_make_archive.assert_called_once_with(base_name, format, root_dir)
 
 
-@mock.patch("m3learning_util.util.IO.shutil.make_archive")
+@mock.patch("m3util.util.IO.shutil.make_archive")
 def test_compress_folder_default_root_dir(mock_make_archive):
     # Test parameters
     base_name = "test_archive"
@@ -218,7 +218,7 @@ def test_compress_folder_default_root_dir(mock_make_archive):
     # Assert that shutil.make_archive was called with the correct arguments
     mock_make_archive.assert_called_once_with(base_name, format, None)
     
-@mock.patch('m3learning_util.util.IO.zipfile.ZipFile')
+@mock.patch('m3util.util.IO.zipfile.ZipFile')
 def test_unzip(mock_zipfile):
     # Mock instance of ZipFile
     mock_zip_ref = mock_zipfile.return_value
@@ -239,8 +239,8 @@ def test_unzip(mock_zipfile):
     # Assert that close was called once
     mock_zip_ref.close.assert_called_once()
 
-@mock.patch('m3learning_util.util.IO.os.path.getsize')
-@mock.patch('m3learning_util.util.IO.os.walk')
+@mock.patch('m3util.util.IO.os.path.getsize')
+@mock.patch('m3util.util.IO.os.walk')
 def test_get_size(mock_os_walk, mock_getsize):
     # Define the mock return values for os.walk and os.path.getsize
 
@@ -267,11 +267,11 @@ def test_get_size(mock_os_walk, mock_getsize):
     # Check that the total size is correct
     assert total_size == 600  # 100 + 200 + 300
 
-@mock.patch('m3learning_util.util.IO.unzip')
-@mock.patch('m3learning_util.util.IO.os.path.isfile')
-@mock.patch('m3learning_util.util.IO.download_file')
-@mock.patch('m3learning_util.util.IO.exists')
-@mock.patch('m3learning_util.util.IO.make_folder')
+@mock.patch('m3util.util.IO.unzip')
+@mock.patch('m3util.util.IO.os.path.isfile')
+@mock.patch('m3util.util.IO.download_file')
+@mock.patch('m3util.util.IO.exists')
+@mock.patch('m3util.util.IO.make_folder')
 def test_download_and_unzip_existing_file(mock_make_folder, mock_exists, mock_download_file, mock_isfile, mock_unzip):
     # Test parameters
     filename = "data.zip"
@@ -294,11 +294,11 @@ def test_download_and_unzip_existing_file(mock_make_folder, mock_exists, mock_do
     # Ensure unzip is called since the file exists
     mock_unzip.assert_called_once_with(save_path + '/' + filename, save_path)
 
-@mock.patch('m3learning_util.util.IO.unzip')
-@mock.patch('m3learning_util.util.IO.os.path.isfile')
-@mock.patch('m3learning_util.util.IO.download_file')
-@mock.patch('m3learning_util.util.IO.exists')
-@mock.patch('m3learning_util.util.IO.make_folder')
+@mock.patch('m3util.util.IO.unzip')
+@mock.patch('m3util.util.IO.os.path.isfile')
+@mock.patch('m3util.util.IO.download_file')
+@mock.patch('m3util.util.IO.exists')
+@mock.patch('m3util.util.IO.make_folder')
 def test_download_and_unzip_force_download(mock_make_folder, mock_exists, mock_download_file, mock_isfile, mock_unzip):
     # Test parameters
     filename = "data.zip"
@@ -321,11 +321,11 @@ def test_download_and_unzip_force_download(mock_make_folder, mock_exists, mock_d
     # Ensure unzip is called
     mock_unzip.assert_called_once_with(save_path + '/' + filename, save_path)
 
-@mock.patch('m3learning_util.util.IO.unzip')
-@mock.patch('m3learning_util.util.IO.os.path.isfile')
-@mock.patch('m3learning_util.util.IO.download_file')
-@mock.patch('m3learning_util.util.IO.exists')
-@mock.patch('m3learning_util.util.IO.make_folder')
+@mock.patch('m3util.util.IO.unzip')
+@mock.patch('m3util.util.IO.os.path.isfile')
+@mock.patch('m3util.util.IO.download_file')
+@mock.patch('m3util.util.IO.exists')
+@mock.patch('m3util.util.IO.make_folder')
 def test_download_and_unzip_file_does_not_exist(mock_make_folder, mock_exists, mock_download_file, mock_isfile, mock_unzip):
     # Test parameters
     filename = "data.zip"
@@ -348,9 +348,9 @@ def test_download_and_unzip_file_does_not_exist(mock_make_folder, mock_exists, m
     # Ensure unzip is called
     mock_unzip.assert_called_once_with(save_path + '/' + filename, save_path)
 
-@mock.patch('m3learning_util.util.IO.os.path.isfile')
+@mock.patch('m3util.util.IO.os.path.isfile')
 @mock.patch('builtins.open', new_callable=mock.mock_open)
-@mock.patch('m3learning_util.util.IO.csv.writer')
+@mock.patch('m3util.util.IO.csv.writer')
 def test_append_to_csv_file_does_not_exist(mock_csv_writer, mock_open, mock_isfile):
     # Simulate that the file does not exist
     mock_isfile.return_value = False
@@ -374,9 +374,9 @@ def test_append_to_csv_file_does_not_exist(mock_csv_writer, mock_open, mock_isfi
     mock_writer.writerow.assert_any_call(headers)  # Header should be written since the file does not exist
     mock_writer.writerow.assert_any_call(data)  # Data row should be written
 
-@mock.patch('m3learning_util.util.IO.os.path.isfile')
+@mock.patch('m3util.util.IO.os.path.isfile')
 @mock.patch('builtins.open', new_callable=mock.mock_open)
-@mock.patch('m3learning_util.util.IO.csv.writer')
+@mock.patch('m3util.util.IO.csv.writer')
 def test_append_to_csv_file_exists(mock_csv_writer, mock_open, mock_isfile):
     # Simulate that the file exists
     mock_isfile.return_value = True

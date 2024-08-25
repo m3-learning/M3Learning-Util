@@ -22,7 +22,7 @@ def temp_dirs_and_files():
 @mock.patch('cv2.VideoWriter')
 @mock.patch('cv2.imread')
 @mock.patch('glob.glob')
-@mock.patch('m3learning_util.util.IO.make_folder')
+@mock.patch('m3util.util.IO.make_folder')
 def test_make_movie_basic(mock_make_folder, mock_glob, mock_imread, mock_VideoWriter, temp_dirs_and_files):
     temp_input_dir, temp_output_dir = temp_dirs_and_files
 
@@ -53,7 +53,7 @@ def test_make_movie_basic(mock_make_folder, mock_glob, mock_imread, mock_VideoWr
 @mock.patch('cv2.VideoWriter')
 @mock.patch('cv2.imread')
 @mock.patch('glob.glob')
-@mock.patch('m3learning_util.util.IO.make_folder')
+@mock.patch('m3util.util.IO.make_folder')
 def test_make_movie_with_reverse(mock_make_folder, mock_glob, mock_imread, mock_VideoWriter, temp_dirs_and_files):
     temp_input_dir, temp_output_dir = temp_dirs_and_files
 
@@ -84,7 +84,7 @@ def test_make_movie_with_reverse(mock_make_folder, mock_glob, mock_imread, mock_
 @mock.patch('cv2.VideoWriter')
 @mock.patch('cv2.imread')
 @mock.patch('glob.glob')
-@mock.patch('m3learning_util.util.IO.make_folder')
+@mock.patch('m3util.util.IO.make_folder')
 def test_make_movie_with_text(mock_make_folder, mock_glob, mock_imread, mock_VideoWriter, temp_dirs_and_files):
     temp_input_dir, temp_output_dir = temp_dirs_and_files
 
