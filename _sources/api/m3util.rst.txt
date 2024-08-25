@@ -1,0 +1,31 @@
+m3util package
+==============
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   m3util.ml
+   m3util.util
+   m3util.viz
+
+Submodules
+----------
+
+m3util.skeleton module
+----------------------
+
+.. automodule:: m3util.skeleton
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: m3util
+   :members:
+   :undoc-members:
+   :show-inheritance:

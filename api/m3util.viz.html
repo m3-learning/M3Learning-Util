@@ -1,0 +1,1063 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>m3util.viz package &#8212; M3Learning-Util 0.2.11 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4ea9af0a" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=29c81e07"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.viz';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="m3util.util package" href="m3util.util.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Aug 25, 2024"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.2.11 documentation - Home"/>
+    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.2.11 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../readme.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing.html">
+    Contributions & Help
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../license.html">
+    License
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../authors.html">
+    Authors
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    Changelog
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="modules.html">
+    Module Reference
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/<your-org>/<your-repo>" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitlab.com/<your-org>/<your-repo>" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitLab</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/<your-handle>" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-twitter-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://<your-host>@<your-handle>" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../readme.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing.html">
+    Contributions & Help
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../license.html">
+    License
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../authors.html">
+    Authors
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    Changelog
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="modules.html">
+    Module Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/<your-org>/<your-repo>" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitlab.com/<your-org>/<your-repo>" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitLab</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/<your-handle>" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-twitter-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://<your-host>@<your-handle>" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="m3util.html">m3util package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="m3util.ml.html">m3util.ml package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="m3util.util.html">m3util.util package</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">m3util.viz package</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="modules.html" class="nav-link">m3util</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="m3util.html" class="nav-link">m3util package</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">m3util.viz package</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="m3util-viz-package">
+<h1>m3util.viz package<a class="headerlink" href="#m3util-viz-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-m3util.viz.layout">
+<span id="m3util-viz-layout-module"></span><h2>m3util.viz.layout module<a class="headerlink" href="#module-m3util.viz.layout" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.Axis_Ratio">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">Axis_Ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#Axis_Ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.Axis_Ratio" title="Link to this definition">#</a></dt>
+<dd><p>Set the aspect ratio of the axes to be proportional to the ratio of data ranges.</p>
+<p>Parameters:
+axes (matplotlib.axes.Axes): The axes object to set the aspect ratio for.
+ratio (float, optional): The desired aspect ratio. Defaults to 1.</p>
+<p>Returns:
+None</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="m3util.viz.layout.FigDimConverter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">FigDimConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figsize</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#FigDimConverter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.FigDimConverter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.11/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>class to convert between relative and inches dimensions of a figure</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="m3util.viz.layout.FigDimConverter.to_inches">
+<span class="sig-name descname"><span class="pre">to_inches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#FigDimConverter.to_inches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.FigDimConverter.to_inches" title="Link to this definition">#</a></dt>
+<dd><p>Converts position from relative to inches</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a>) – position in relative coordinates (left, bottom, width, height)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>position in inches (left, bottom, width, height)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="m3util.viz.layout.FigDimConverter.to_relative">
+<span class="sig-name descname"><span class="pre">to_relative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#FigDimConverter.to_relative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.FigDimConverter.to_relative" title="Link to this definition">#</a></dt>
+<dd><p>Converts position from inches to relative</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a>) – position in inches (left, bottom, width, height)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>position in relative coordinates (left, bottom, width, height)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.add_box">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">add_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#add_box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.add_box" title="Link to this definition">#</a></dt>
+<dd><p>Add a box to the axes.</p>
+<p>Parameters:
+axs (Axes): The axes to add the box to.
+pos (tuple): The position of the box in the form (xmin, ymin, xmax, ymax).
+<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: Additional keyword arguments.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.add_scalebar">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">add_scalebar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#add_scalebar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.add_scalebar" title="Link to this definition">#</a></dt>
+<dd><p>Adds a scalebar to the figure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> (<em>axes</em>) – axes to add the scalebar to</p></li>
+<li><p><strong>scalebar</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – dictionary containing the scalebar information</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.add_text_to_figure">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">add_text_to_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_position_in_inches</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#add_text_to_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.add_text_to_figure" title="Link to this definition">#</a></dt>
+<dd><p>Add text to a figure at a specified position.</p>
+<p>Parameters:
+fig (Figure): The figure to add the text to.
+text (str): The text to be added.
+text_position_in_inches (tuple): The position of the text in inches.
+<a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs: Additional keyword arguments.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.combine_lines">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">combine_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#combine_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.combine_lines" title="Link to this definition">#</a></dt>
+<dd><p>Combine the lines and labels from multiple plots into a single legend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>*args</strong> – Variable number of arguments representing the plots.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the combined lines and labels.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>lines, labels = combine_lines(plot1, plot2, plot3)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.embedding_maps">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">embedding_maps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_shown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_lim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#embedding_maps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.embedding_maps" title="Link to this definition">#</a></dt>
+<dd><p>function that generates the embedding maps</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array</em>) – embedding maps to plot</p></li>
+<li><p><strong>image</strong> (<em>array</em>) – raw image used for the sizing of the image</p></li>
+<li><p><strong>colorbar_shown</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – selects if colorbars are shown. Defaults to True.</p></li>
+<li><p><strong>c_lim</strong> (<em>array</em><em>, </em><em>optional</em>) – sets the range for the color limits. Defaults to None.</p></li>
+<li><p><strong>mod</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – used to change the layout (rows and columns). Defaults to None.</p></li>
+<li><p><strong>title</strong> (<em>string</em><em>, </em><em>optional</em>) – Adds title to the image . Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.find_nearest">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">find_nearest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">averaging_number</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#find_nearest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.find_nearest" title="Link to this definition">#</a></dt>
+<dd><p>computes the average of some n nearest neighbors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>array</em>) – input array</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – value to find closest to</p></li>
+<li><p><strong>averaging_number</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – number of data points to use in averaging</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of indexes of the nearest neighbors</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.get_axis_pos_inches">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">get_axis_pos_inches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#get_axis_pos_inches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.get_axis_pos_inches" title="Link to this definition">#</a></dt>
+<dd><p>gets the position of the axis in inches</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fig</strong> (<em>matplotlib.Figure</em>) – figure where the plot is located</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes</em>) – axes on the plot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the position of the center bottom of the axis in inches</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.get_axis_range">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">get_axis_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#get_axis_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.get_axis_range" title="Link to this definition">#</a></dt>
+<dd><p>Return the minimum and maximum values of a Matplotlib axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>axs</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – A list of Matplotlib axis objects.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the form [xmin, xmax, ymin, ymax], where xmin and xmax are the minimum and maximum values of the x axis, and ymin and ymax are the minimum and maximum values of the y axis.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.imagemap">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">imagemap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">divider_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cbar_number_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%.1e'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#imagemap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.imagemap" title="Link to this definition">#</a></dt>
+<dd><p>pretty way to plot image maps with standard formats</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> (<em>ax</em>) – axes to write to</p></li>
+<li><p><strong>data</strong> (<em>array</em>) – data to write</p></li>
+<li><p><strong>colorbars</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – selects if you want to show a colorbar. Defaults to True.</p></li>
+<li><p><strong>clim</strong> (<em>array</em><em>, </em><em>optional</em>) – manually sets the range of the colorbars. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.inset_connector">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">inset_connector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#inset_connector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.inset_connector" title="Link to this definition">#</a></dt>
+<dd><p>Create a connection between two axes in a figure.</p>
+<p>Parameters:
+fig (Figure): The figure to add the connection to.
+ax1 (Axes): The first axes object.
+ax2 (Axes): The second axes object.
+coord1 (list, optional): The coordinates of the first connection point. Defaults to None.
+coord2 (list, optional): The coordinates of the second connection point. Defaults to None.
+<a href="#id5"><span class="problematic" id="id6">**</span></a>kwargs: Additional keyword arguments.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.labelfigs">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">labelfigs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tl'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string_add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inset_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.15,</span> <span class="pre">0.15)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#labelfigs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.labelfigs" title="Link to this definition">#</a></dt>
+<dd><p>Add labels to figures.</p>
+<p>Parameters:
+axes (Axes): The axes to add the labels to.
+number (int, optional): The number to be added as a label. Defaults to None.
+style (str, optional): The style of the label. Defaults to “wb”.
+loc (str, optional): The location of the label. Defaults to “tl”.
+string_add (str, optional): Additional string to be added to the label. Defaults to “”.
+size (int, optional): The font size of the label. Defaults to 8.
+text_pos (str, optional): The position of the label text. Defaults to “center”.
+inset_fraction (tuple, optional): The fraction of the axes to inset the label. Defaults to (0.15, 0.15).
+<a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs: Additional keyword arguments.</p>
+<p>Returns:
+Text: The created text object.</p>
+<p>Raises:
+ValueError: If an invalid position is provided.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.layout_fig">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">layout_fig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'compressed'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#layout_fig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.layout_fig" title="Link to this definition">#</a></dt>
+<dd><p>Utility function that helps lay out many figures.</p>
+<p>Parameters:
+graph (int): Number of graphs.
+mod (int, optional): Value that assists in determining the number of rows and columns. Defaults to None.
+figsize (tuple, optional): Size of the figure. Defaults to None.
+layout (str, optional): Layout style of the subplots. Defaults to ‘compressed’.
+<a href="#id9"><span class="problematic" id="id10">**</span></a>kwargs: Additional keyword arguments.</p>
+<p>Returns:
+tuple: Figure and axes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.number_to_letters">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">number_to_letters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#number_to_letters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.number_to_letters" title="Link to this definition">#</a></dt>
+<dd><p>Convert a number to a string representation using letters.</p>
+<p>Parameters:
+num (int): The number to convert.</p>
+<p>Returns:
+str: The string representation of the number.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.path_maker">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">path_maker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facecolor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edgecolor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linestyle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineweight</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#path_maker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.path_maker" title="Link to this definition">#</a></dt>
+<dd><p>Create a path patch and add it to the axes.</p>
+<p>Parameters:
+axes (Axes): The axes to add the path patch to.
+locations (tuple): The locations of the path in the form (x1, x2, y1, y2).
+facecolor (str): The face color of the path patch.
+edgecolor (str): The edge color of the path patch.
+linestyle (str): The line style of the path patch.
+lineweight (float): The line weight of the path patch.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.plot_into_graph">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">plot_into_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#plot_into_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.plot_into_graph" title="Link to this definition">#</a></dt>
+<dd><p>Given an axes and figure, it will convert the figure to an image and plot it in</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axg</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.9.2)"><em>matplotlib.axes.Axes</em></a>) – where you want to plot the figure</p></li>
+<li><p><strong>fig</strong> (<em>matplotlib.pyplot.figure</em><em>(</em><em>)</em>) – figure you want to put into axes</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.scalebar">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">scalebar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'br'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#scalebar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.scalebar" title="Link to this definition">#</a></dt>
+<dd><p>Adds a scalebar to figures.</p>
+<p>Parameters:
+axes (matplotlib.axes.Axes): The axes to add the scalebar to.
+image_size (int): The size of the image in nm.
+scale_size (str): The size of the scalebar in units of nm.
+units (str, optional): The units for the label. Defaults to “nm”.
+loc (str, optional): The location of the label. Defaults to “br”.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.set_axis">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">set_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#set_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.set_axis" title="Link to this definition">#</a></dt>
+<dd><p>Set the x and y axis limits for each axis in the given list.</p>
+<p>Parameters:
+axs (list): A list of matplotlib axes objects.
+range (list): A list containing the x and y axis limits in the format [xmin, xmax, ymin, ymax].</p>
+<p>Returns:
+None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.subfigures">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">subfigures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nrows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.25,</span> <span class="pre">1.25)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.8,</span> <span class="pre">0.33)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#subfigures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.subfigures" title="Link to this definition">#</a></dt>
+<dd><p>Create subfigures with specified number of rows and columns.</p>
+<p>Parameters:
+nrows (int): Number of rows.
+ncols (int): Number of columns.
+size (tuple, optional): Size of each subfigure. Defaults to (1.25, 1.25).
+gaps (tuple, optional): Gaps between subfigures. Defaults to (.8, .33).
+figsize (tuple, optional): Size of the figure. Defaults to None.
+<a href="#id11"><span class="problematic" id="id12">**</span></a>kwargs: Additional keyword arguments.</p>
+<p>Returns:
+fig (Figure): The created figure.
+ax (list): List of axes objects.</p>
+</dd></dl>
+
+</section>
+<section id="module-m3util.viz.movies">
+<span id="m3util-viz-movies-module"></span><h2>m3util.viz.movies module<a class="headerlink" href="#module-m3util.viz.movies" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.movies.make_movie">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.movies.</span></span><span class="sig-name descname"><span class="pre">make_movie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">movie_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mp4'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/movies.html#make_movie"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.movies.make_movie" title="Link to this definition">#</a></dt>
+<dd><p>Function that constructs a movie from images</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>movie_name</strong> (<em>string</em>) – filename to save the movie</p></li>
+<li><p><strong>input_folder</strong> (<em>path</em>) – folder where the images are located</p></li>
+<li><p><strong>output_folder</strong> (<em>path</em>) – path where the movies will be saved</p></li>
+<li><p><strong>file_format</strong> (<em>string</em>) – format of the images to use when generating a movie</p></li>
+<li><p><strong>fps</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – frames per second</p></li>
+<li><p><strong>output_format</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – movie file format. Defaults to ‘mp4’.</p></li>
+<li><p><strong>reverse</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – selects if should go in a cycle. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-m3util.viz.printing">
+<span id="m3util-viz-printing-module"></span><h2>m3util.viz.printing module<a class="headerlink" href="#module-m3util.viz.printing" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="m3util.viz.printing.printer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">m3util.viz.printing.</span></span><span class="sig-name descname"><span class="pre">printer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['png',</span> <span class="pre">'svg']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/printing.html#printer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.printing.printer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.11/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class to save figures to a folder</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="m3util.viz.printing.printer.savefig">
+<span class="sig-name descname"><span class="pre">savefig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tight_layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_figs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/printing.html#printer.savefig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.printing.printer.savefig" title="Link to this definition">#</a></dt>
+<dd><p>Function to save a figure in one or multiple formats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fig</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.9.2)"><em>matplotlib.figure.Figure</em></a>) – The figure to save.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The file name to save the figure under.</p></li>
+<li><p><strong>tight_layout</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the layout is adjusted to fit tightly within the figure. Defaults to False.</p></li>
+<li><p><strong>basepath</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The base path for saving the figure. If None, uses self.basepath. Defaults to None.</p></li>
+<li><p><strong>label_figs</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>axes</em><em>, </em><em>optional</em>) – List of axes to label. If None, no axes are labeled. Defaults to None.</p></li>
+<li><p><strong>fileformats</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – List of file formats to save the figure in. If None, uses self.fileformats. Defaults to None.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments for the labelfigs function.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-m3util.viz.style">
+<span id="m3util-viz-style-module"></span><h2>m3util.viz.style module<a class="headerlink" href="#module-m3util.viz.style" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.style.set_style">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.style.</span></span><span class="sig-name descname"><span class="pre">set_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/style.html#set_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.style.set_style" title="Link to this definition">#</a></dt>
+<dd><p>Function to implement custom default style for graphs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – style name. Defaults to “default”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-m3util.viz">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-m3util.viz" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="m3util.util.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">m3util.util package</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.layout">m3util.viz.layout module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.Axis_Ratio"><code class="docutils literal notranslate"><span class="pre">Axis_Ratio()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.FigDimConverter"><code class="docutils literal notranslate"><span class="pre">FigDimConverter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.FigDimConverter.to_inches"><code class="docutils literal notranslate"><span class="pre">FigDimConverter.to_inches()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.FigDimConverter.to_relative"><code class="docutils literal notranslate"><span class="pre">FigDimConverter.to_relative()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.add_box"><code class="docutils literal notranslate"><span class="pre">add_box()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.add_scalebar"><code class="docutils literal notranslate"><span class="pre">add_scalebar()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.add_text_to_figure"><code class="docutils literal notranslate"><span class="pre">add_text_to_figure()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.combine_lines"><code class="docutils literal notranslate"><span class="pre">combine_lines()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.embedding_maps"><code class="docutils literal notranslate"><span class="pre">embedding_maps()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.find_nearest"><code class="docutils literal notranslate"><span class="pre">find_nearest()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.get_axis_pos_inches"><code class="docutils literal notranslate"><span class="pre">get_axis_pos_inches()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.get_axis_range"><code class="docutils literal notranslate"><span class="pre">get_axis_range()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.imagemap"><code class="docutils literal notranslate"><span class="pre">imagemap()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.inset_connector"><code class="docutils literal notranslate"><span class="pre">inset_connector()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.labelfigs"><code class="docutils literal notranslate"><span class="pre">labelfigs()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.layout_fig"><code class="docutils literal notranslate"><span class="pre">layout_fig()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.number_to_letters"><code class="docutils literal notranslate"><span class="pre">number_to_letters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.path_maker"><code class="docutils literal notranslate"><span class="pre">path_maker()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.plot_into_graph"><code class="docutils literal notranslate"><span class="pre">plot_into_graph()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.scalebar"><code class="docutils literal notranslate"><span class="pre">scalebar()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.set_axis"><code class="docutils literal notranslate"><span class="pre">set_axis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.subfigures"><code class="docutils literal notranslate"><span class="pre">subfigures()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.movies">m3util.viz.movies module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.movies.make_movie"><code class="docutils literal notranslate"><span class="pre">make_movie()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.printing">m3util.viz.printing module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.printing.printer"><code class="docutils literal notranslate"><span class="pre">printer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.printing.printer.savefig"><code class="docutils literal notranslate"><span class="pre">printer.savefig()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.style">m3util.viz.style module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.style.set_style"><code class="docutils literal notranslate"><span class="pre">set_style()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/api/m3util.viz.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Joshua C. Agar.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.0.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

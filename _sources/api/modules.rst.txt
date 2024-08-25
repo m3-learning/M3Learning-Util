@@ -1,7 +1,7 @@
-m3learning_util
-===============
+m3util
+======
 
 .. toctree::
    :maxdepth: 4
 
-   m3learning_util
+   m3util
