@@ -1,5 +1,5 @@
-from m3learning_util.util.IO import make_folder
-from m3learning_util.viz.layout import labelfigs
+from m3util.util.IO import make_folder
+from m3util.viz.layout import labelfigs
 
 
 class printer:

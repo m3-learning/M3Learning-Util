@@ -1,6 +1,6 @@
 import glob as glob
 import cv2
-from m3learning_util.util.IO import make_folder
+from m3util.util.IO import make_folder
 from tqdm import tqdm
 import numpy as np
 

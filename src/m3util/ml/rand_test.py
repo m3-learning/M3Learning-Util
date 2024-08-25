@@ -2,7 +2,7 @@ import torch
 import random
 import numpy as np
 import os
-from m3learning_util.ml.rand import rand_tensor, set_seeds
+from m3util.ml.rand import rand_tensor, set_seeds
 
 
 def test_rand_tensor_values():
