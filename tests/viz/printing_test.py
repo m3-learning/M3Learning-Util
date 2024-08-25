@@ -1,9 +1,9 @@
 import pytest
 import matplotlib.pyplot as plt
 from unittest.mock import patch, MagicMock
-from m3learning_util.util.IO import make_folder
-from m3learning_util.viz.layout import labelfigs
-from m3learning_util.viz.printing import printer  # Replace 'your_module' with the actual module name
+from m3util.util.IO import make_folder
+from m3util.viz.layout import labelfigs
+from m3util.viz.printing import printer  # Replace 'your_module' with the actual module name
 
 @pytest.fixture
 def mock_make_folder():

@@ -3,7 +3,7 @@ import h5py
 import numpy as np
 import os
 
-from m3learning_util.util.h5 import (
+from m3util.util.h5 import (
     print_tree,
     get_tree,
     make_group,

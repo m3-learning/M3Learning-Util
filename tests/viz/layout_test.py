@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Rectangle, ConnectionPatch
 from itertools import product
-from m3learning_util.viz.layout import (
+from m3util.viz.layout import (
     plot_into_graph,
     subfigures,
     add_text_to_figure,

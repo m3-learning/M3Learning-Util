@@ -4,7 +4,7 @@ import os
 from unittest import mock
 import numpy as np
 import cv2
-from m3learning_util.viz.movies import make_movie
+from m3util.viz.movies import make_movie
 
 
 @pytest.fixture

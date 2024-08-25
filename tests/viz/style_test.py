@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch
-from m3learning_util.viz.style import set_style
+from m3util.viz.style import set_style
 
 def test_set_style_default():
     with patch("seaborn.reset_orig") as mock_reset_orig, \

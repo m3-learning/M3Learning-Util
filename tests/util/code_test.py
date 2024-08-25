@@ -3,7 +3,7 @@ import inspect
 from pygments import highlight
 from pygments.lexers import PythonLexer
 from pygments.formatters import TerminalFormatter
-from m3learning_util.util.code import print_code
+from m3util.util.code import print_code
 
 
 def test_print_code(capsys):

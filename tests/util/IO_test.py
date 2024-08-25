@@ -3,7 +3,7 @@ import pytest
 from unittest import mock
 from io import StringIO
 import time
-from m3learning_util.util.IO import (
+from m3util.util.IO import (
     download,
     make_folder,
     reporthook,

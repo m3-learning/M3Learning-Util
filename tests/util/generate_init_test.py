@@ -1,4 +1,4 @@
-from m3learning_util.util.generate_init import generate_init_py
+from m3util.util.generate_init import generate_init_py
 import os
 import pytest
 

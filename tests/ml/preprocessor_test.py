@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from m3learning_util.ml.preprocessor import GlobalScaler  
+from m3util.ml.preprocessor import GlobalScaler  
 
 @pytest.fixture
 def sample_data():

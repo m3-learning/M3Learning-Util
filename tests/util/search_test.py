@@ -2,7 +2,7 @@ import pytest
 import re
 import fnmatch
 import os
-from m3learning_util.util.search import (
+from m3util.util.search import (
     in_list,
     get_tuple_names,
     extract_number,
