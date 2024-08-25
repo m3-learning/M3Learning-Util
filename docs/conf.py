@@ -34,7 +34,7 @@ except ImportError:
     from sphinx import apidoc
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../src/m3learning_util")
+module_dir = os.path.join(__location__, "../src/m3util")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -103,7 +103,7 @@ copyright = "2024, Joshua C. Agar"
 # If you don’t need the separation provided between version and release,
 # just set them both to the same value.
 try:
-    from m3learning_util import __version__ as version
+    from m3util import __version__ as version
 except ImportError:
     version = ""
 
@@ -266,7 +266,7 @@ html_last_updated_fmt = '%b %d, %Y'
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "M3Learning-Util-doc"
+htmlhelp_basename = "m3util-doc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
