@@ -34,10 +34,22 @@ M3Learning-Util
 ===============
 
 
-    Add a short description here!
+# M3Learning-Util
 
+Utility functions for the M3-Learning Research Group
 
-A longer description of your project goes here...
+## Installation
+
+```bash
+pip install m3learning-util
+```
+
+## Purpose
+
+This package contains utility functions that are used by the M3-Learning Research Group. The functions are divided into the following categories:
+* Machine learning utilities (ml) - functions that are used to prepreprocess data and conduct tst for machine learning models.
+* Utility functions (util) - These are utility function for making coding easier and dealing with file IO.
+* Visualization utilities (viz) - These are functions that are used to visualize data with less code.
 
 
 .. _pyscaffold-notes:
