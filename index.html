@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>M3Learning-Util &#8212; M3Learning-Util 0.2.11 documentation</title>
+    <title>M3Learning-Util &#8212; M3Learning-Util 0.2.12 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=29c81e07"></script>
+    <script src="_static/documentation_options.js?v=1e30946d"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
@@ -45,7 +45,7 @@
     <link rel="next" title="M3Learning-Util" href="readme.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 25, 2024"/>
+    <meta name="docbuild:last-update" content="Aug 26, 2024"/>
   </head>
   
   
@@ -123,8 +123,8 @@
       
     
     
-    <img src="_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.2.11 documentation - Home"/>
-    <script>document.write(`<img src="_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.2.11 documentation - Home"/>`);</script>
+    <img src="_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.2.12 documentation - Home"/>
+    <script>document.write(`<img src="_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.2.12 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -470,25 +470,33 @@ document.write(`
                   
   <section id="m3learning-util">
 <h1>M3Learning-Util<a class="headerlink" href="#m3learning-util" title="Link to this heading">#</a></h1>
-<p>This is the documentation of <strong>M3Learning-Util</strong>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This is the main page of your project’s <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> documentation.
-It is formatted in <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">reStructuredText</a>. Add additional pages
-by creating rst-files in <code class="docutils literal notranslate"><span class="pre">docs</span></code> and adding them to the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html">toctree</a> below.
-Use then <a class="reference external" href="https://www.sphinx-doc.org/en/stable/markup/inline.html">references</a> in order to link them from this page, e.g.
-<a class="reference internal" href="authors.html#authors"><span class="std std-ref">Contributors</span></a> and <a class="reference internal" href="changelog.html#changes"><span class="std std-ref">Changelog</span></a>.</p>
-<p>It is also possible to refer to the documentation of other Python packages
-with the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html#the-python-domain">Python domain syntax</a>. By default you can reference the
-documentation of <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a>, <a class="reference external" href="https://docs.python.org/">Python</a>, <a class="reference external" href="https://numpy.org/doc/stable">NumPy</a>, <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/">SciPy</a>, <a class="reference external" href="https://matplotlib.org/contents.html#">matplotlib</a>,
-<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable">Pandas</a>, <a class="reference external" href="https://scikit-learn.org/stable">Scikit-Learn</a>. You can add more by extending the
-<code class="docutils literal notranslate"><span class="pre">intersphinx_mapping</span></code> in your Sphinx’s <code class="docutils literal notranslate"><span class="pre">conf.py</span></code>.</p>
-<p>The pretty useful extension <a class="reference external" href="https://www.sphinx-doc.org/en/master/ext/autodoc.html">autodoc</a> is activated by default and lets
-you include documentation from docstrings. Docstrings can be written in
-<a class="reference external" href="https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings">Google style</a> (recommended!), <a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">NumPy style</a> and <a class="reference external" href="https://www.sphinx-doc.org/en/master/domains.html#info-field-lists">classical style</a>.</p>
+<section id="installation">
+<span id="id1"></span><h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>m3learning-util
+</pre></div>
 </div>
+</section>
+<section id="purpose">
+<h2>Purpose<a class="headerlink" href="#purpose" title="Link to this heading">#</a></h2>
+<p>This package contains utility functions that are used by the M3-Learning Research Group. The functions are divided into the following categories:</p>
+<section id="machine-learning-utilities-ml">
+<h3>Machine learning utilities (ml)<a class="headerlink" href="#machine-learning-utilities-ml" title="Link to this heading">#</a></h3>
+<p>Functions that are used to preprocess data and conduct tests for machine learning models.</p>
+</section>
+<section id="utility-functions-util">
+<h3>Utility functions (util)<a class="headerlink" href="#utility-functions-util" title="Link to this heading">#</a></h3>
+<p>Utility functions for making coding easier and dealing with file IO.</p>
+</section>
+<section id="visualization-utilities-viz">
+<h3>Visualization utilities (viz)<a class="headerlink" href="#visualization-utilities-viz" title="Link to this heading">#</a></h3>
+<p>Functions that are used to visualize data with less code.</p>
+<section id="note">
+<span id="pyscaffold-notes"></span><h4>Note<a class="headerlink" href="#note" title="Link to this heading">#</a></h4>
+<p>This project has been set up using PyScaffold 4.5. For details and usage
+information on PyScaffold see <a class="reference external" href="https://pyscaffold.org/">https://pyscaffold.org/</a>.</p>
+</section>
 <section id="contents">
-<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">#</a></h2>
+<h4>Contents<a class="headerlink" href="#contents" title="Link to this heading">#</a></h4>
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -505,10 +513,7 @@ you include documentation from docstrings. Docstrings can be written in
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-1">Version 0.1</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/modules.html">Module Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/m3util.html">m3util package</a></li>
 </ul>
@@ -517,12 +522,14 @@ you include documentation from docstrings. Docstrings can be written in
 </div>
 </section>
 <section id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">#</a></h2>
+<h4>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+</section>
+</section>
 </section>
 </section>
 
@@ -563,8 +570,18 @@ you include documentation from docstrings. Docstrings can be written in
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#purpose">Purpose</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-utilities-ml">Machine learning utilities (ml)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-functions-util">Utility functions (util)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-utilities-viz">Visualization utilities (viz)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#note">Note</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

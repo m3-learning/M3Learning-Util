@@ -2,25 +2,46 @@
 M3Learning-Util
 ===============
 
-This is the documentation of **M3Learning-Util**.
 
-.. note::
+.. _m3learning-util:
 
-    This is the main page of your project's `Sphinx`_ documentation.
-    It is formatted in `reStructuredText`_. Add additional pages
-    by creating rst-files in ``docs`` and adding them to the `toctree`_ below.
-    Use then `references`_ in order to link them from this page, e.g.
-    :ref:`authors` and :ref:`changes`.
 
-    It is also possible to refer to the documentation of other Python packages
-    with the `Python domain syntax`_. By default you can reference the
-    documentation of `Sphinx`_, `Python`_, `NumPy`_, `SciPy`_, `matplotlib`_,
-    `Pandas`_, `Scikit-Learn`_. You can add more by extending the
-    ``intersphinx_mapping`` in your Sphinx's ``conf.py``.
+Installation
+------------
 
-    The pretty useful extension `autodoc`_ is activated by default and lets
-    you include documentation from docstrings. Docstrings can be written in
-    `Google style`_ (recommended!), `NumPy style`_ and `classical style`_.
+.. code-block:: bash
+
+    pip install m3learning-util
+
+
+Purpose
+-------
+
+This package contains utility functions that are used by the M3-Learning Research Group. The functions are divided into the following categories:
+
+Machine learning utilities (ml)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions that are used to preprocess data and conduct tests for machine learning models.
+
+Utility functions (util)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Utility functions for making coding easier and dealing with file IO.
+
+Visualization utilities (viz)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions that are used to visualize data with less code.
+
+
+.. _pyscaffold-notes:
+
+Note
+====
+
+This project has been set up using PyScaffold 4.5. For details and usage
+information on PyScaffold see https://pyscaffold.org/.
 
 
 Contents
