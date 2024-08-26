@@ -32,8 +32,8 @@ def generate_init_py(package_dir):
 
             init_file.write(f"\n__all__ = {modules}\n")
 
-
-if __name__ == "__main__":
+def main():
+            
     if len(sys.argv) != 2:
         print("Usage: python generate_init_py <package_directory>")
         sys.exit(1)
@@ -47,3 +47,7 @@ if __name__ == "__main__":
     print(
         f"__init__.py generated in {package_dir} and its subdirectories, excluding __pycache__ directories"
     )
+
+
+if __name__ == "__main__":
+    main()
