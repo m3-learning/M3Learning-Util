@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.ml package &#8212; M3Learning-Util 0.2.13 documentation</title>
+    <title>m3util.ml package &#8212; M3Learning-Util 0.2.14 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=ba481074"></script>
+    <script src="../_static/documentation_options.js?v=71c180b9"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.ml';</script>
@@ -46,7 +46,7 @@
     <link rel="prev" title="m3util.converters package" href="m3util.converters.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 26, 2024"/>
+    <meta name="docbuild:last-update" content="Aug 27, 2024"/>
   </head>
   
   
@@ -124,8 +124,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.2.13 documentation - Home"/>
-    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.2.13 documentation - Home"/>`);</script>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.2.14 documentation - Home"/>
+    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.2.14 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -620,40 +620,18 @@ This assumes that all values are considered as part of the scaling.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="m3util.ml.rand.set_seeds">
-<span class="sig-prename descclassname"><span class="pre">m3util.ml.rand.</span></span><span class="sig-name descname"><span class="pre">set_seeds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/rand.html#set_seeds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.rand.set_seeds" title="Link to this definition">#</a></dt>
-<dd><p>Sets the random seeds for reproducibility.</p>
+<span class="sig-prename descclassname"><span class="pre">m3util.ml.rand.</span></span><span class="sig-name descname"><span class="pre">set_seeds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pytorch_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numpy_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensorflow_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/rand.html#set_seeds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.rand.set_seeds" title="Link to this definition">#</a></dt>
+<dd><p>Function that sets the random seed</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The random seed value.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – value for the seed. Defaults to 42.</p></li>
+<li><p><strong>pytorch</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – chooses if you set the pytorch seed. Defaults to True.</p></li>
+<li><p><strong>numpy</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – chooses if you set the numpy seed. Defaults to True.</p></li>
+<li><p><strong>tensorflow</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – chooses if you set the tensorflow seed. Defaults to True.</p></li>
+</ul>
 </dd>
 </dl>
-</dd></dl>
-
-</section>
-<section id="module-m3util.ml.rand_test">
-<span id="m3util-ml-rand-test-module"></span><h2>m3util.ml.rand_test module<a class="headerlink" href="#module-m3util.ml.rand_test" title="Link to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="m3util.ml.rand_test.test_environment_seed">
-<span class="sig-prename descclassname"><span class="pre">m3util.ml.rand_test.</span></span><span class="sig-name descname"><span class="pre">test_environment_seed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/rand_test.html#test_environment_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.rand_test.test_environment_seed" title="Link to this definition">#</a></dt>
-<dd><p>Test that the PYTHONHASHSEED environment variable is set correctly.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="m3util.ml.rand_test.test_rand_tensor_size">
-<span class="sig-prename descclassname"><span class="pre">m3util.ml.rand_test.</span></span><span class="sig-name descname"><span class="pre">test_rand_tensor_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/rand_test.html#test_rand_tensor_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.rand_test.test_rand_tensor_size" title="Link to this definition">#</a></dt>
-<dd><p>Test that rand_tensor generates a tensor of the correct size.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="m3util.ml.rand_test.test_rand_tensor_values">
-<span class="sig-prename descclassname"><span class="pre">m3util.ml.rand_test.</span></span><span class="sig-name descname"><span class="pre">test_rand_tensor_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/rand_test.html#test_rand_tensor_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.rand_test.test_rand_tensor_values" title="Link to this definition">#</a></dt>
-<dd><p>Test that rand_tensor generates a tensor within the specified range.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="m3util.ml.rand_test.test_set_seeds">
-<span class="sig-prename descclassname"><span class="pre">m3util.ml.rand_test.</span></span><span class="sig-name descname"><span class="pre">test_set_seeds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/rand_test.html#test_set_seeds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.rand_test.test_set_seeds" title="Link to this definition">#</a></dt>
-<dd><p>Test that set_seeds sets the random seeds for reproducibility.</p>
 </dd></dl>
 
 </section>
@@ -722,13 +700,6 @@ This assumes that all values are considered as part of the scaling.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.ml.rand">m3util.ml.rand module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.rand.rand_tensor"><code class="docutils literal notranslate"><span class="pre">rand_tensor()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.rand.set_seeds"><code class="docutils literal notranslate"><span class="pre">set_seeds()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.ml.rand_test">m3util.ml.rand_test module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.rand_test.test_environment_seed"><code class="docutils literal notranslate"><span class="pre">test_environment_seed()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.rand_test.test_rand_tensor_size"><code class="docutils literal notranslate"><span class="pre">test_rand_tensor_size()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.rand_test.test_rand_tensor_values"><code class="docutils literal notranslate"><span class="pre">test_rand_tensor_values()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.rand_test.test_set_seeds"><code class="docutils literal notranslate"><span class="pre">test_set_seeds()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.ml">Module contents</a></li>
