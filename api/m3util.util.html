@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.util package &#8212; M3Learning-Util 0.2.14 documentation</title>
+    <title>m3util.util package &#8212; M3Learning-Util 0.2.15 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=71c180b9"></script>
+    <script src="../_static/documentation_options.js?v=d5b904a0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.util';</script>
@@ -46,7 +46,7 @@
     <link rel="prev" title="m3util.ml package" href="m3util.ml.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 27, 2024"/>
+    <meta name="docbuild:last-update" content="Aug 28, 2024"/>
   </head>
   
   
@@ -124,8 +124,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.2.14 documentation - Home"/>
-    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.2.14 documentation - Home"/>`);</script>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.2.15 documentation - Home"/>
+    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.2.15 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -605,6 +605,15 @@ If the file already exists, it can optionally overwrite it.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="m3util.util.IO.download_files_from_txt">
+<span class="sig-prename descclassname"><span class="pre">m3util.util.IO.</span></span><span class="sig-name descname"><span class="pre">download_files_from_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/util/IO.html#download_files_from_txt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.util.IO.download_files_from_txt" title="Link to this definition">#</a></dt>
+<dd><p>Download files from URLs listed in a text file.</p>
+<p>Args:
+url_file (str): Path to the text file containing URLs, each on a new line.
+download_path (str): Directory to save the downloaded files. The directory must exist.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="m3util.util.IO.get_size">
 <span class="sig-prename descclassname"><span class="pre">m3util.util.IO.</span></span><span class="sig-name descname"><span class="pre">get_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/util/IO.html#get_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.util.IO.get_size" title="Link to this definition">#</a></dt>
 <dd><p>A function that computes the size of a folder</p>
@@ -934,6 +943,7 @@ even if they are nested within other groups, and return their full paths.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.download"><code class="docutils literal notranslate"><span class="pre">download()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.download_and_unzip"><code class="docutils literal notranslate"><span class="pre">download_and_unzip()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.download_file"><code class="docutils literal notranslate"><span class="pre">download_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.download_files_from_txt"><code class="docutils literal notranslate"><span class="pre">download_files_from_txt()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.get_size"><code class="docutils literal notranslate"><span class="pre">get_size()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.make_folder"><code class="docutils literal notranslate"><span class="pre">make_folder()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.reporthook"><code class="docutils literal notranslate"><span class="pre">reporthook()</span></code></a></li>
