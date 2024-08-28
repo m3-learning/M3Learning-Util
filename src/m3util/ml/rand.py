@@ -1,8 +1,11 @@
 import random
-import torch
 import os
 import numpy as np
 
+try:
+    import torch
+except:
+    print('torch not found')
 
 def rand_tensor(min=0, max=1, size=(1)):
     """
