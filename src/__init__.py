@@ -2,4 +2,4 @@
 
 from . import m3util
 
-__all__ = ['m3util']
+__all__ = ["m3util"]

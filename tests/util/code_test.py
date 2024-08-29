@@ -25,13 +25,16 @@ def test_print_code(capsys):
 
     # Perform syntax highlighting using Pygments
     expected_highlighted_code = highlight(
-        source_code, PythonLexer(), TerminalFormatter())
+        source_code, PythonLexer(), TerminalFormatter()
+    )
 
     # Rebuild the expected output with line numbers
     expected_output = "\n".join(
-        f"{i}: {line}" for i, line in enumerate(expected_highlighted_code.split("\n"), start=starting_line_number)
+        f"{i}: {line}"
+        for i, line in enumerate(
+            expected_highlighted_code.split("\n"), start=starting_line_number
+        )
     )
 
     # Compare the captured output to the expected output
     assert captured.out.strip() == expected_output.strip()
-

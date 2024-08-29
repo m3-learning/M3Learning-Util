@@ -191,9 +191,9 @@ html_theme_options = {
         },
     ],
     "logo": {
-      "image_light": "_static/Drexel_blue_Logo_square_Light.png",
-      "image_dark": "_static/Drexel_blue_Logo_square_Dark.png",
-   }
+        "image_light": "_static/Drexel_blue_Logo_square_Light.png",
+        "image_dark": "_static/Drexel_blue_Logo_square_Dark.png",
+    },
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -218,15 +218,15 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 html_css_files = [
-    'custom.css',
+    "custom.css",
 ]
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
-html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = "%b %d, %Y"
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.

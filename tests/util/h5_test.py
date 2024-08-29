@@ -31,10 +31,18 @@ def test_print_tree(h5_file, capsys):
     """Test the print_tree function."""
     with h5py.File(h5_file, "r") as f:
         print_tree(f)
-    
+
     captured = capsys.readouterr()
     output = captured.out.splitlines()
-    expected_output = ["/", "/group1", "/group1/dataset1", "/group1/nested_group", "/group1/nested_group/dataset3", "/group2", "/group2/dataset2"]
+    expected_output = [
+        "/",
+        "/group1",
+        "/group1/dataset1",
+        "/group1/nested_group",
+        "/group1/nested_group/dataset3",
+        "/group2",
+        "/group2/dataset2",
+    ]
     assert output == expected_output
 
 
@@ -42,8 +50,16 @@ def test_get_tree(h5_file):
     """Test the get_tree function."""
     with h5py.File(h5_file, "r") as f:
         tree = get_tree(f)
-    
-    expected_tree = ["/", "/group1", "/group1/dataset1", "/group1/nested_group", "/group1/nested_group/dataset3", "/group2", "/group2/dataset2"]
+
+    expected_tree = [
+        "/",
+        "/group1",
+        "/group1/dataset1",
+        "/group1/nested_group",
+        "/group1/nested_group/dataset3",
+        "/group2",
+        "/group2/dataset2",
+    ]
     assert tree == expected_tree
 
 
@@ -59,7 +75,7 @@ def test_make_group_existing(h5_file, capsys):
     """Test the make_group function with an existing group."""
     with h5py.File(h5_file, "a") as f:
         make_group(f, "group1")
-    
+
     captured = capsys.readouterr()
     assert "Could not add group - it might already exist." in captured.out
 
@@ -100,8 +116,8 @@ def test_find_measurement(h5_file):
     result = find_measurement(h5_file, "dataset3", "/group1/nested_group")
     assert result == "dataset3"
 
+
 def test_find_measurement_not_found(h5_file):
     """Test the find_measurement function with a string that doesn't match any dataset."""
     result = find_measurement(h5_file, "nonexistent", "/group1")
     assert result == []
-

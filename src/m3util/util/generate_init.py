@@ -32,8 +32,9 @@ def generate_init_py(package_dir):
 
             init_file.write(f"\n__all__ = {modules}\n")
 
+
 def main():
-            
+
     if len(sys.argv) != 2:
         print("Usage: python generate_init_py <package_directory>")
         sys.exit(1)

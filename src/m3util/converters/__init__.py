@@ -2,4 +2,4 @@
 
 from . import complex
 
-__all__ = ['complex']
+__all__ = ["complex"]
