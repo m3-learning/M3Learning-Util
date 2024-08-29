@@ -786,7 +786,6 @@ document.write(`
         <span class="n">coord2</span> <span class="o">=</span> <span class="p">[</span><span class="n">coord2_l1</span><span class="p">,</span> <span class="n">coord2_l2</span><span class="p">]</span>
 
     <span class="k">for</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coord1</span><span class="p">,</span> <span class="n">coord2</span><span class="p">):</span>
-
         <span class="c1"># Create a connection between the two points</span>
         <span class="n">con</span> <span class="o">=</span> <span class="n">ConnectionPatch</span><span class="p">(</span>
             <span class="n">xyA</span><span class="o">=</span><span class="n">p1</span><span class="p">,</span> <span class="n">xyB</span><span class="o">=</span><span class="n">p2</span><span class="p">,</span> <span class="n">coordsA</span><span class="o">=</span><span class="n">ax1</span><span class="o">.</span><span class="n">transData</span><span class="p">,</span> <span class="n">coordsB</span><span class="o">=</span><span class="n">ax2</span><span class="o">.</span><span class="n">transData</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
@@ -922,7 +921,6 @@ document.write(`
                     <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="n">c_lim</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
         <span class="c1"># Adds title to the figure</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
 
@@ -1162,8 +1160,9 @@ document.write(`
 
     <span class="c1"># Get the size of the image</span>
     <span class="n">x_lim</span><span class="p">,</span> <span class="n">y_lim</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">(),</span> <span class="n">axes</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
-    <span class="n">x_size</span><span class="p">,</span> <span class="n">y_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x_lim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_lim</span><span class="p">[</span><span class="mi">0</span><span class="p">]))),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">y_lim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_lim</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">x_size</span><span class="p">,</span> <span class="n">y_size</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x_lim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_lim</span><span class="p">[</span><span class="mi">0</span><span class="p">]))),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">y_lim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_lim</span><span class="p">[</span><span class="mi">0</span><span class="p">]))),</span>
     <span class="p">)</span>
     <span class="c1"># Compute the fraction of the image for the scalebar</span>
     <span class="n">fract</span> <span class="o">=</span> <span class="n">scale_size</span> <span class="o">/</span> <span class="n">image_size</span>
