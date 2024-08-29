@@ -7,7 +7,6 @@ def test_set_style_default():
     with patch("seaborn.reset_orig") as mock_reset_orig, patch(
         "matplotlib.pyplot.rcParams", new_callable=dict
     ) as mock_rcparams, patch("builtins.print") as mock_print:
-
         # Call the function
         set_style("default")
 
@@ -34,7 +33,6 @@ def test_set_style_printing():
     with patch("seaborn.reset_orig") as mock_reset_orig, patch(
         "matplotlib.pyplot.rcParams", new_callable=dict
     ) as mock_rcparams, patch("builtins.print") as mock_print:
-
         # Call the function
         set_style("printing")
 
