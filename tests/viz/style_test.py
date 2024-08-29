@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch
 from m3util.viz.style import set_style
 

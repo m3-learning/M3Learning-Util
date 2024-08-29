@@ -1,7 +1,6 @@
 import pytest
 import h5py
 import numpy as np
-import os
 
 from m3util.util.h5 import (
     print_tree,

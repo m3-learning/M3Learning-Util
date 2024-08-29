@@ -1,8 +1,6 @@
 import pytest
 import matplotlib.pyplot as plt
-from unittest.mock import patch, MagicMock
-from m3util.util.IO import make_folder
-from m3util.viz.layout import labelfigs
+from unittest.mock import patch
 from m3util.viz.printing import (
     printer,
 )  # Replace 'your_module' with the actual module name
