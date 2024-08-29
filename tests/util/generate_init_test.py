@@ -1,6 +1,4 @@
 from m3util.util.generate_init import generate_init_py
-import os
-import pytest
 
 
 def test_generate_init_py(tmp_path):

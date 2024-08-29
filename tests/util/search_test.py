@@ -1,7 +1,3 @@
-import pytest
-import re
-import fnmatch
-import os
 from m3util.util.search import (
     in_list,
     get_tuple_names,

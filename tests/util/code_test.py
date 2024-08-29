@@ -1,4 +1,3 @@
-import pytest
 import inspect
 from pygments import highlight
 from pygments.lexers import PythonLexer

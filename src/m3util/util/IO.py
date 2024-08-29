@@ -101,7 +101,7 @@ def download_files_from_txt(url_file, download_path):
                     print(f"Downloaded: {filename}")
                     break
 
-                except requests.exceptions.HTTPError as e:
+                except requests.exceptions.HTTPError:
                     if response.status_code == 429:  # Too Many Requests
                         print("Rate limit reached, waiting to retry...")
                         time.sleep(delay)
