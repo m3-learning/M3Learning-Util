@@ -2,11 +2,12 @@ from m3util.util.generate_init import generate_init_py
 import os
 import pytest
 
+
 def test_generate_init_py(tmp_path):
     # Create a mock package structure
     package_dir = tmp_path / "my_package"
     package_dir.mkdir()
-    
+
     # Create some Python files in the package directory
     (package_dir / "module1.py").write_text("# Module 1")
     (package_dir / "module2.py").write_text("# Module 2")
@@ -46,7 +47,7 @@ def test_generate_init_py(tmp_path):
         "from . import module3\n\n"
         "__all__ = ['module3']\n"
     )
-    
+
     for line in subpackage_init_content:
         assert line in expected_subpackage_init_content
 

@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 
+
 def to_complex(data):
     """
     to_complex function to check if data is complex. If not complex, makes it a complex number.
@@ -28,7 +29,9 @@ def to_complex(data):
             return data
 
         else:
-            raise TypeError(f"Unsupported data type: {type(data)}. Expected torch.Tensor or np.ndarray.")
+            raise TypeError(
+                f"Unsupported data type: {type(data)}. Expected torch.Tensor or np.ndarray."
+            )
 
     except IndexError:
         raise IndexError("Input data is empty or not an array-like structure.")

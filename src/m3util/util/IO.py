@@ -56,24 +56,24 @@ def make_folder(folder, **kwargs):
 
     return folder
 
-def download_files_from_txt(url_file, 
-                            download_path):
+
+def download_files_from_txt(url_file, download_path):
     """Download files from URLs listed in a text file.
-    
+
     Args:
     url_file (str): Path to the text file containing URLs, each on a new line.
     download_path (str): Directory to save the downloaded files. The directory must exist.
-    
+
     """
     # create folder if not yet
     make_folder(download_path)
     abs_path = os.path.abspath(download_path)
-    
+
     # set delay
     delay = 1
-    
+
     # Open the text file containing URLs
-    with open(url_file, 'r') as file:
+    with open(url_file, "r") as file:
         urls = file.readlines()
 
     # Iterate over each URL
@@ -87,15 +87,15 @@ def download_files_from_txt(url_file,
                     response.raise_for_status()  # Check if the request was successful
 
                     # Extract filename from URL if possible, or default to a name with its index
-                    filename = url.split('/')[-1]
+                    filename = url.split("/")[-1]
                     # skip download if file exists
-                    if os.path.exists(f'{abs_path}/{filename}'):
+                    if os.path.exists(f"{abs_path}/{filename}"):
                         print(f"File already exists: {filename}")
                         break
                     file_path = os.path.join(abs_path, filename)
 
                     # Save the content to a file in the specified download path
-                    with open(file_path, 'wb') as f:
+                    with open(file_path, "wb") as f:
                         for chunk in response.iter_content(chunk_size=8192):
                             f.write(chunk)
                     print(f"Downloaded: {filename}")

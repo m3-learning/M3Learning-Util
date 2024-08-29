@@ -2,10 +2,11 @@ import pytest
 from unittest.mock import patch
 from m3util.viz.style import set_style
 
+
 def test_set_style_default():
-    with patch("seaborn.reset_orig") as mock_reset_orig, \
-         patch("matplotlib.pyplot.rcParams", new_callable=dict) as mock_rcparams, \
-         patch("builtins.print") as mock_print:
+    with patch("seaborn.reset_orig") as mock_reset_orig, patch(
+        "matplotlib.pyplot.rcParams", new_callable=dict
+    ) as mock_rcparams, patch("builtins.print") as mock_print:
 
         # Call the function
         set_style("default")
@@ -28,10 +29,11 @@ def test_set_style_default():
         mock_print.assert_any_call("default set for seaborn")
         mock_print.assert_any_call("default set for matplotlib")
 
+
 def test_set_style_printing():
-    with patch("seaborn.reset_orig") as mock_reset_orig, \
-         patch("matplotlib.pyplot.rcParams", new_callable=dict) as mock_rcparams, \
-         patch("builtins.print") as mock_print:
+    with patch("seaborn.reset_orig") as mock_reset_orig, patch(
+        "matplotlib.pyplot.rcParams", new_callable=dict
+    ) as mock_rcparams, patch("builtins.print") as mock_print:
 
         # Call the function
         set_style("printing")

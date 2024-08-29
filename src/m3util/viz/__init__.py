@@ -5,4 +5,4 @@ from . import layout
 from . import style
 from . import printing
 
-__all__ = ['movies', 'layout', 'style', 'printing']
+__all__ = ["movies", "layout", "style", "printing"]

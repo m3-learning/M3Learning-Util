@@ -6,6 +6,7 @@ This file was generated with PyScaffold 4.5.
 PyScaffold helps you to put up the scaffold of your new Python project.
 Learn more under: https://pyscaffold.org/
 """
+
 from setuptools import setup
 
 if __name__ == "__main__":
@@ -13,8 +14,8 @@ if __name__ == "__main__":
         setup(
             use_scm_version={"version_scheme": "no-guess-dev"},
             entry_points={
-                'console_scripts': [
-                    'generate-init-py=m3util.util.generate_init:main',
+                "console_scripts": [
+                    "generate-init-py=m3util.util.generate_init:main",
                 ],
             },
         )
@@ -26,4 +27,3 @@ if __name__ == "__main__":
             "   pip install -U setuptools setuptools_scm wheel\n\n"
         )
         raise
-
