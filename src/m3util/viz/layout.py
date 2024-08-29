@@ -278,7 +278,6 @@ def inset_connector(fig, ax1, ax2, coord1=None, coord2=None, **kwargs):
         coord2 = [coord2_l1, coord2_l2]
 
     for p1, p2 in zip(coord1, coord2):
-
         # Create a connection between the two points
         con = ConnectionPatch(
             xyA=p1, xyB=p2, coordsA=ax1.transData, coordsB=ax2.transData, **kwargs
@@ -405,7 +404,6 @@ def embedding_maps(data, image, colorbar_shown=True, c_lim=None, mod=None, title
                     im.set_clim(c_lim)
 
     if title is not None:
-
         # Adds title to the figure
         fig.suptitle(title, fontsize=16, y=1, horizontalalignment="center")
 
@@ -627,8 +625,9 @@ def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
 
     # Get the size of the image
     x_lim, y_lim = axes.get_xlim(), axes.get_ylim()
-    x_size, y_size = np.abs(np.int64(np.floor(x_lim[1] - x_lim[0]))), np.abs(
-        np.int64(np.floor(y_lim[1] - y_lim[0]))
+    x_size, y_size = (
+        np.abs(np.int64(np.floor(x_lim[1] - x_lim[0]))),
+        np.abs(np.int64(np.floor(y_lim[1] - y_lim[0]))),
     )
     # Compute the fraction of the image for the scalebar
     fract = scale_size / image_size

@@ -132,7 +132,6 @@ def test_make_folder_called_with_correct_args(mock_makedirs):
 
 
 def test_reporthook():
-
     # Initial call to simulate the start of download
     reporthook(0, 1024, 10240)
 
