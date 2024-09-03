@@ -4,6 +4,14 @@ m3util.ml package
 Submodules
 ----------
 
+m3util.ml.inference module
+--------------------------
+
+.. automodule:: m3util.ml.inference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 m3util.ml.preprocessor module
 -----------------------------
 

@@ -46,7 +46,7 @@
     <link rel="prev" title="m3util.converters package" href="m3util.converters.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 29, 2024"/>
+    <meta name="docbuild:last-update" content="Sep 03, 2024"/>
   </head>
   
   
@@ -522,6 +522,32 @@ document.write(`
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
+<section id="module-m3util.ml.inference">
+<span id="m3util-ml-inference-module"></span><h2>m3util.ml.inference module<a class="headerlink" href="#module-m3util.ml.inference" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.ml.inference.computeTime">
+<span class="sig-prename descclassname"><span class="pre">m3util.ml.inference.</span></span><span class="sig-name descname"><span class="pre">computeTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_dataloader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cuda'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_to_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/inference.html#computeTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.inference.computeTime" title="Link to this definition">#</a></dt>
+<dd><p>Compute the execution time of a model on a given dataloader.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The model to evaluate.</p></li>
+<li><p><strong>train_dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – The dataloader containing the input data.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The batch size used during inference.</p></li>
+<li><p><strong>device</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The device to use for inference. Defaults to ‘cuda’.</p></li>
+<li><p><strong>write_to_file</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to write the execution time to a file. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The average execution time in milliseconds, if write_to_file is True.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-m3util.ml.preprocessor">
 <span id="m3util-ml-preprocessor-module"></span><h2>m3util.ml.preprocessor module<a class="headerlink" href="#module-m3util.ml.preprocessor" title="Link to this heading">#</a></h2>
 <dl class="py class">
@@ -687,6 +713,10 @@ This assumes that all values are considered as part of the scaling.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.ml.inference">m3util.ml.inference module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.inference.computeTime"><code class="docutils literal notranslate"><span class="pre">computeTime()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.ml.preprocessor">m3util.ml.preprocessor module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.preprocessor.GlobalScaler"><code class="docutils literal notranslate"><span class="pre">GlobalScaler</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.preprocessor.GlobalScaler.fit"><code class="docutils literal notranslate"><span class="pre">GlobalScaler.fit()</span></code></a></li>
