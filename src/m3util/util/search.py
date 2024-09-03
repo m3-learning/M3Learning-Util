@@ -61,14 +61,4 @@ def extract_number(s):
         return None
 
 
-def save_list_to_txt(lst, filename):
-    """
-    Saves a list of items to a text file.
 
-    Args:
-        lst (list): The list of items to save.
-        filename (str): The name of the file to save to.
-    """
-    with open(filename, "w") as file:
-        for item in lst:
-            file.write(str(item) + "\n")
