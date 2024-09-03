@@ -548,6 +548,41 @@ document.write(`
 </dd></dl>
 
 </section>
+<section id="module-m3util.ml.logging">
+<span id="m3util-ml-logging-module"></span><h2>m3util.ml.logging module<a class="headerlink" href="#module-m3util.ml.logging" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.ml.logging.write_csv">
+<span class="sig-prename descclassname"><span class="pre">m3util.ml.logging.</span></span><span class="sig-name descname"><span class="pre">write_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">write_CSV</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_loss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stoppage_early</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_updates</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/logging.html#write_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.logging.write_csv" title="Link to this definition">#</a></dt>
+<dd><p>Writes the training details to a CSV file if the ‘write_CSV’ path is provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>write_CSV</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The filename or path to the CSV file. If None, the function does nothing.</p></li>
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The directory path where the model is saved.</p></li>
+<li><p><strong>model_name</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the model.</p></li>
+<li><p><strong>optimizer_name</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the optimizer used during training.</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Training instance number or index.</p></li>
+<li><p><strong>noise</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The noise level in the dataset.</p></li>
+<li><p><strong>epochs</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of epochs completed during training.</p></li>
+<li><p><strong>total_time</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The total time taken for training in seconds.</p></li>
+<li><p><strong>train_loss</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The final training loss after all epochs.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The batch size used during training.</p></li>
+<li><p><strong>loss_func</strong> (<em>callable</em>) – The loss function used during training.</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The random seed used for reproducibility.</p></li>
+<li><p><strong>stoppage_early</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether early stopping was triggered during training.</p></li>
+<li><p><strong>model_updates</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of model updates (training steps) performed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Writes the data to the specified CSV file if ‘write_CSV’ is not None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-m3util.ml.preprocessor">
 <span id="m3util-ml-preprocessor-module"></span><h2>m3util.ml.preprocessor module<a class="headerlink" href="#module-m3util.ml.preprocessor" title="Link to this heading">#</a></h2>
 <dl class="py class">
@@ -715,6 +750,10 @@ This assumes that all values are considered as part of the scaling.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.ml.inference">m3util.ml.inference module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.inference.computeTime"><code class="docutils literal notranslate"><span class="pre">computeTime()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.ml.logging">m3util.ml.logging module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.logging.write_csv"><code class="docutils literal notranslate"><span class="pre">write_csv()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.ml.preprocessor">m3util.ml.preprocessor module</a><ul class="nav section-nav flex-column">

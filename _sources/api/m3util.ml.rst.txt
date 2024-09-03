@@ -12,6 +12,14 @@ m3util.ml.inference module
    :undoc-members:
    :show-inheritance:
 
+m3util.ml.logging module
+------------------------
+
+.. automodule:: m3util.ml.logging
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 m3util.ml.preprocessor module
 -----------------------------
 
