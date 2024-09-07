@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.ml package &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.ml package &#8212; M3Learning-Util 0.2.18 documentation</title>
   
   
   
@@ -36,17 +36,17 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=fbe5091d"></script>
+    <script src="../_static/documentation_options.js?v=ae23a911"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.ml';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="m3util.util package" href="m3util.util.html" />
+    <link rel="next" title="m3util.ml.optimizers package" href="m3util.ml.optimizers.html" />
     <link rel="prev" title="m3util.converters package" href="m3util.converters.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 03, 2024"/>
+    <meta name="docbuild:last-update" content="Sep 07, 2024"/>
   </head>
   
   
@@ -124,8 +124,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
-    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.0.po documentation - Home"/>`);</script>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.2.18 documentation - Home"/>
+    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.2.18 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -452,7 +452,10 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="m3util.html">m3util package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="m3util.converters.html">m3util.converters package</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">m3util.ml package</a></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">m3util.ml package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="m3util.ml.optimizers.html">m3util.ml.optimizers package</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="m3util.util.html">m3util.util package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="m3util.viz.html">m3util.viz package</a></li>
 </ul>
@@ -519,6 +522,51 @@ document.write(`
                   
   <section id="m3util-ml-package">
 <h1>m3util.ml package<a class="headerlink" href="#m3util-ml-package" title="Link to this heading">#</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="m3util.ml.optimizers.html">m3util.ml.optimizers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="m3util.ml.optimizers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="m3util.ml.optimizers.html#module-m3util.ml.optimizers.AdaHessian">m3util.ml.optimizers.AdaHessian module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.AdaHessian.AdaHessian"><code class="docutils literal notranslate"><span class="pre">AdaHessian</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.AdaHessian.AdaHessian.get_params"><code class="docutils literal notranslate"><span class="pre">AdaHessian.get_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.AdaHessian.AdaHessian.set_hessian"><code class="docutils literal notranslate"><span class="pre">AdaHessian.set_hessian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.AdaHessian.AdaHessian.step"><code class="docutils literal notranslate"><span class="pre">AdaHessian.step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.AdaHessian.AdaHessian.zero_hessian"><code class="docutils literal notranslate"><span class="pre">AdaHessian.zero_hessian()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="m3util.ml.optimizers.html#module-m3util.ml.optimizers.TrustRegion">m3util.ml.optimizers.TrustRegion module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG"><code class="docutils literal notranslate"><span class="pre">TRCG</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.model"><code class="docutils literal notranslate"><span class="pre">TRCG.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.radius"><code class="docutils literal notranslate"><span class="pre">TRCG.radius</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.device"><code class="docutils literal notranslate"><span class="pre">TRCG.device</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.closure_size"><code class="docutils literal notranslate"><span class="pre">TRCG.closure_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.cgopttol"><code class="docutils literal notranslate"><span class="pre">TRCG.cgopttol</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.radius_max"><code class="docutils literal notranslate"><span class="pre">TRCG.radius_max</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.radius_initial"><code class="docutils literal notranslate"><span class="pre">TRCG.radius_initial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.differentiable"><code class="docutils literal notranslate"><span class="pre">TRCG.differentiable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.CGSolver"><code class="docutils literal notranslate"><span class="pre">TRCG.CGSolver()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeDotProduct"><code class="docutils literal notranslate"><span class="pre">TRCG.computeDotProduct()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeGradient"><code class="docutils literal notranslate"><span class="pre">TRCG.computeGradient()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeGradientAndLoss"><code class="docutils literal notranslate"><span class="pre">TRCG.computeGradientAndLoss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeHessianVector"><code class="docutils literal notranslate"><span class="pre">TRCG.computeHessianVector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeLoss"><code class="docutils literal notranslate"><span class="pre">TRCG.computeLoss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeNorm"><code class="docutils literal notranslate"><span class="pre">TRCG.computeNorm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.findroot"><code class="docutils literal notranslate"><span class="pre">TRCG.findroot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.step"><code class="docutils literal notranslate"><span class="pre">TRCG.step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="m3util.ml.optimizers.html#module-m3util.ml.optimizers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
@@ -550,6 +598,20 @@ document.write(`
 </section>
 <section id="module-m3util.ml.logging">
 <span id="m3util-ml-logging-module"></span><h2>m3util.ml.logging module<a class="headerlink" href="#module-m3util.ml.logging" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.ml.logging.save_list_to_txt">
+<span class="sig-prename descclassname"><span class="pre">m3util.ml.logging.</span></span><span class="sig-name descname"><span class="pre">save_list_to_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/logging.html#save_list_to_txt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.logging.save_list_to_txt" title="Link to this definition">#</a></dt>
+<dd><p>Saves a list of items to a text file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lst</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The list of items to save.</p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the file to save to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="m3util.ml.logging.write_csv">
 <span class="sig-prename descclassname"><span class="pre">m3util.ml.logging.</span></span><span class="sig-name descname"><span class="pre">write_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">write_CSV</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_loss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stoppage_early</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_updates</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/logging.html#write_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.logging.write_csv" title="Link to this definition">#</a></dt>
@@ -721,11 +783,11 @@ This assumes that all values are considered as part of the scaling.</p>
       </div>
     </a>
     <a class="right-next"
-       href="m3util.util.html"
+       href="m3util.ml.optimizers.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">m3util.util package</p>
+        <p class="prev-next-title">m3util.ml.optimizers package</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -747,12 +809,14 @@ This assumes that all values are considered as part of the scaling.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.ml.inference">m3util.ml.inference module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.inference.computeTime"><code class="docutils literal notranslate"><span class="pre">computeTime()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.ml.logging">m3util.ml.logging module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.logging.save_list_to_txt"><code class="docutils literal notranslate"><span class="pre">save_list_to_txt()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.ml.logging.write_csv"><code class="docutils literal notranslate"><span class="pre">write_csv()</span></code></a></li>
 </ul>
 </li>

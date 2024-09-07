@@ -1,6 +1,14 @@
 m3util.ml package
 =================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   m3util.ml.optimizers
+
 Submodules
 ----------
 

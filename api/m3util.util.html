@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.util package &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.util package &#8212; M3Learning-Util 0.2.18 documentation</title>
   
   
   
@@ -36,17 +36,17 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=fbe5091d"></script>
+    <script src="../_static/documentation_options.js?v=ae23a911"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.util';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="m3util.viz package" href="m3util.viz.html" />
-    <link rel="prev" title="m3util.ml package" href="m3util.ml.html" />
+    <link rel="prev" title="m3util.ml.optimizers package" href="m3util.ml.optimizers.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 03, 2024"/>
+    <meta name="docbuild:last-update" content="Sep 07, 2024"/>
   </head>
   
   
@@ -124,8 +124,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
-    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.0.po documentation - Home"/>`);</script>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.2.18 documentation - Home"/>
+    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.2.18 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -452,7 +452,10 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="m3util.html">m3util package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="m3util.converters.html">m3util.converters package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="m3util.ml.html">m3util.ml package</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="m3util.ml.html">m3util.ml package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="m3util.ml.optimizers.html">m3util.ml.optimizers package</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">m3util.util package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="m3util.viz.html">m3util.viz package</a></li>
 </ul>
@@ -870,20 +873,6 @@ even if they are nested within other groups, and return their full paths.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="m3util.util.search.save_list_to_txt">
-<span class="sig-prename descclassname"><span class="pre">m3util.util.search.</span></span><span class="sig-name descname"><span class="pre">save_list_to_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/util/search.html#save_list_to_txt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.util.search.save_list_to_txt" title="Link to this definition">#</a></dt>
-<dd><p>Saves a list of items to a text file.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>lst</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The list of items to save.</p></li>
-<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the file to save to.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 <section id="module-m3util.util">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-m3util.util" title="Link to this heading">#</a></h2>
@@ -901,12 +890,12 @@ even if they are nested within other groups, and return their full paths.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="m3util.ml.html"
+       href="m3util.ml.optimizers.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">m3util.ml package</p>
+        <p class="prev-next-title">m3util.ml.optimizers package</p>
       </div>
     </a>
     <a class="right-next"
@@ -972,7 +961,6 @@ even if they are nested within other groups, and return their full paths.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.search.extract_number"><code class="docutils literal notranslate"><span class="pre">extract_number()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.search.get_tuple_names"><code class="docutils literal notranslate"><span class="pre">get_tuple_names()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.search.in_list"><code class="docutils literal notranslate"><span class="pre">in_list()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.search.save_list_to_txt"><code class="docutils literal notranslate"><span class="pre">save_list_to_txt()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.util">Module contents</a></li>
