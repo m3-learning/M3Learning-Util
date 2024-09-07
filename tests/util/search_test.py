@@ -3,7 +3,7 @@ from m3util.util.search import (
     get_tuple_names,
     extract_number,
 ) 
-from m3util.util.IO import save_list_to_txt
+from m3util.ml.logging import save_list_to_txt
 
 def test_in_list():
     """Test the in_list function."""
