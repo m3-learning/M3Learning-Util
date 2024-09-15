@@ -1,0 +1,21 @@
+m3util.notebooks package
+========================
+
+Submodules
+----------
+
+m3util.notebooks.checksum module
+--------------------------------
+
+.. automodule:: m3util.notebooks.checksum
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: m3util.notebooks
+   :members:
+   :undoc-members:
+   :show-inheritance:

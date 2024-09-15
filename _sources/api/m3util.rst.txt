@@ -12,6 +12,7 @@ Subpackages
    m3util.globus
    m3util.info
    m3util.ml
+   m3util.notebooks
    m3util.util
    m3util.viz
 

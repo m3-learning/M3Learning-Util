@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.info namespace &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.notebooks package &#8212; M3Learning-Util 0.0.po documentation</title>
   
   
   
@@ -39,11 +39,11 @@
     <script src="../_static/documentation_options.js?v=fbe5091d"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.info';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.notebooks';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="m3util.ml package" href="m3util.ml.html" />
-    <link rel="prev" title="m3util.globus package" href="m3util.globus.html" />
+    <link rel="next" title="m3util.util package" href="m3util.util.html" />
+    <link rel="prev" title="m3util.ml.optimizers package" href="m3util.ml.optimizers.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
     <meta name="docbuild:last-update" content="Sep 15, 2024"/>
@@ -454,12 +454,12 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="m3util.converters.html">m3util.converters package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="m3util.datafed.html">m3util.datafed namespace</a></li>
 <li class="toctree-l2"><a class="reference internal" href="m3util.globus.html">m3util.globus package</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">m3util.info namespace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="m3util.info.html">m3util.info namespace</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="m3util.ml.html">m3util.ml package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="m3util.ml.optimizers.html">m3util.ml.optimizers package</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="m3util.notebooks.html">m3util.notebooks package</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">m3util.notebooks package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="m3util.util.html">m3util.util package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="m3util.viz.html">m3util.viz package</a></li>
 </ul>
@@ -507,7 +507,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="m3util.html" class="nav-link">m3util package</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">m3util.info...</li>
+    <li class="breadcrumb-item active" aria-current="page">m3util.noteb...</li>
   </ul>
 </nav>
 </div>
@@ -524,18 +524,41 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-m3util.info">
-<span id="m3util-info-namespace"></span><h1>m3util.info namespace<a class="headerlink" href="#module-m3util.info" title="Link to this heading">#</a></h1>
+  <section id="m3util-notebooks-package">
+<h1>m3util.notebooks package<a class="headerlink" href="#m3util-notebooks-package" title="Link to this heading">#</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="module-m3util.info.computer">
-<span id="m3util-info-computer-module"></span><h2>m3util.info.computer module<a class="headerlink" href="#module-m3util.info.computer" title="Link to this heading">#</a></h2>
+<section id="module-m3util.notebooks.checksum">
+<span id="m3util-notebooks-checksum-module"></span><h2>m3util.notebooks.checksum module<a class="headerlink" href="#module-m3util.notebooks.checksum" title="Link to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="m3util.info.computer.parse_system_info">
-<span class="sig-prename descclassname"><span class="pre">m3util.info.computer.</span></span><span class="sig-name descname"><span class="pre">parse_system_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/info/computer.html#parse_system_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.info.computer.parse_system_info" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="m3util.notebooks.checksum.calculate_notebook_checksum">
+<span class="sig-prename descclassname"><span class="pre">m3util.notebooks.checksum.</span></span><span class="sig-name descname"><span class="pre">calculate_notebook_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notebook_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sha256'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/notebooks/checksum.html#calculate_notebook_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.notebooks.checksum.calculate_notebook_checksum" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the checksum of a Jupyter notebook (.ipynb) file using the specified hashing algorithm.</p>
+<p>This function reads the contents of a Jupyter notebook file and computes its checksum using
+one of the supported hashing algorithms: ‘sha256’, ‘md5’, or ‘sha1’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notebook_path</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The path to the Jupyter notebook file (.ipynb) to be hashed.</p></li>
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The hashing algorithm to use. Supported options are ‘sha256’ (default), ‘md5’, and ‘sha1’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The computed checksum as a hexadecimal string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.11/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – If an unsupported hashing algorithm is specified.</p>
+</dd>
+</dl>
+</dd></dl>
 
+</section>
+<section id="module-m3util.notebooks">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-m3util.notebooks" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -550,20 +573,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="m3util.globus.html"
+       href="m3util.ml.optimizers.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">m3util.globus package</p>
+        <p class="prev-next-title">m3util.ml.optimizers package</p>
       </div>
     </a>
     <a class="right-next"
-       href="m3util.ml.html"
+       href="m3util.util.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">m3util.ml package</p>
+        <p class="prev-next-title">m3util.util package</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -586,17 +609,18 @@ document.write(`
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.info.computer">m3util.info.computer module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.info.computer.parse_system_info"><code class="docutils literal notranslate"><span class="pre">parse_system_info()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.notebooks.checksum">m3util.notebooks.checksum module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.notebooks.checksum.calculate_notebook_checksum"><code class="docutils literal notranslate"><span class="pre">calculate_notebook_checksum()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.notebooks">Module contents</a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/api/m3util.info.rst.txt">
+    <a href="../_sources/api/m3util.notebooks.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>
