@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.ml.optimizers package &#8212; M3Learning-Util 0.2.18 documentation</title>
+    <title>m3util.ml.optimizers package &#8212; M3Learning-Util 0.0.po documentation</title>
   
   
   
@@ -29,14 +29,14 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4ea9af0a" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=19c47fc1" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=ae23a911"></script>
+    <script src="../_static/documentation_options.js?v=fbe5091d"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.ml.optimizers';</script>
@@ -46,7 +46,7 @@
     <link rel="prev" title="m3util.ml package" href="m3util.ml.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 07, 2024"/>
+    <meta name="docbuild:last-update" content="Sep 15, 2024"/>
   </head>
   
   
@@ -124,8 +124,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.2.18 documentation - Home"/>
-    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.2.18 documentation - Home"/>`);</script>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
+    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.0.po documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -452,6 +452,9 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="m3util.html">m3util package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="m3util.converters.html">m3util.converters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="m3util.datafed.html">m3util.datafed namespace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="m3util.globus.html">m3util.globus package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="m3util.info.html">m3util.info namespace</a></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="m3util.ml.html">m3util.ml package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">m3util.ml.optimizers package</a></li>
 </ul>
@@ -534,73 +537,52 @@ document.write(`
 <span id="m3util-ml-optimizers-adahessian-module"></span><h2>m3util.ml.optimizers.AdaHessian module<a class="headerlink" href="#module-m3util.ml.optimizers.AdaHessian" title="Link to this heading">#</a></h2>
 <p>Created on Sun Feb 26 16:34:00 2021
 &#64;author: Amir Gholami
-&#64;coauthor: David Samuel
-&#64;Modified by: Joshua C. Agar</p>
+&#64;coauthor: David Samuel</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="m3util.ml.optimizers.AdaHessian.AdaHessian">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">m3util.ml.optimizers.AdaHessian.</span></span><span class="sig-name descname"><span class="pre">AdaHessian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">betas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.9,</span> <span class="pre">0.999)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_decay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hessian_power</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_each</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">average_conv_kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/optimizers/AdaHessian.html#AdaHessian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.optimizers.AdaHessian.AdaHessian" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Optimizer</span></code></p>
-<p>Implements the AdaHessian algorithm from “ADAHESSIAN: An Adaptive Second Order Optimizer for Machine Learning”.</p>
-<p>This optimizer adapts the learning rate using second-order information, specifically the Hessian trace.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>params</strong> (<em>iterable</em>) – Iterable of parameters to optimize or dicts defining parameter groups.</p></li>
-<li><p><strong>lr</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – Learning rate (default: 0.1).</p></li>
-<li><p><strong>betas</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em>, </em><em>optional</em>) – Coefficients used for computing running averages of gradient and the squared Hessian trace (default: (0.9, 0.999)).</p></li>
-<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – Term added to the denominator to improve numerical stability (default: 1e-8).</p></li>
-<li><p><strong>weight_decay</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – Weight decay (L2 penalty) (default: 0.0).</p></li>
-<li><p><strong>hessian_power</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – Exponent of the Hessian trace (default: 1.0).</p></li>
-<li><p><strong>update_each</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – Compute the Hessian trace approximation only after this number of steps to save time (default: 1).</p></li>
-<li><p><strong>n_samples</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – Number of samples to use for the Hutchinson approximation of the Hessian trace (default: 1).</p></li>
-<li><p><strong>average_conv_kernel</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to average the Hessian trace across the convolutional kernel dimensions (default: False).</p></li>
-</ul>
-</dd>
-</dl>
+<p>Implements the AdaHessian algorithm from “ADAHESSIAN: An Adaptive Second OrderOptimizer for Machine Learning”
+:param params:
+:type params: iterable
+:param lr: 0.1)
+:type lr: float, optional
+:param betas: (0.9, 0.999))
+:type betas: (float, float), optional
+:param eps: 1e-8)
+:type eps: float, optional
+:param weight_decay: 0.0)
+:type weight_decay: float, optional) – weight decay (L2 penalty
+:param hessian_power: 1.0)
+:type hessian_power: float, optional
+:param update_each: 1)
+:type update_each: int, optional) – compute the hessian trace approximation only after <em>this</em> number of steps (to save time
+:param n_samples: 1)
+:type n_samples: int, optional</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="m3util.ml.optimizers.AdaHessian.AdaHessian.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/optimizers/AdaHessian.html#AdaHessian.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.optimizers.AdaHessian.AdaHessian.get_params" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves all parameters in all parameter groups that require gradients.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A generator yielding parameters that require gradients.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>generator</p>
-</dd>
-</dl>
+<dd><p>Gets all parameters in all param_groups with gradients</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="m3util.ml.optimizers.AdaHessian.AdaHessian.set_hessian">
 <span class="sig-name descname"><span class="pre">set_hessian</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/optimizers/AdaHessian.html#AdaHessian.set_hessian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.optimizers.AdaHessian.AdaHessian.set_hessian" title="Link to this definition">#</a></dt>
-<dd><p>Computes the Hutchinson approximation of the Hessian trace and accumulates it for each trainable parameter.</p>
-<p>This method uses random Rademacher vectors <cite>z</cite> to approximate the Hessian trace, and updates the hessian value
-for each parameter accordingly.</p>
+<dd><p>Computes the Hutchinson approximation of the hessian trace and accumulates it for each trainable parameter.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="m3util.ml.optimizers.AdaHessian.AdaHessian.step">
 <span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">closure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/optimizers/AdaHessian.html#AdaHessian.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.optimizers.AdaHessian.AdaHessian.step" title="Link to this definition">#</a></dt>
-<dd><p>Performs a single optimization step using the AdaHessian algorithm.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>closure</strong> (<em>callable</em><em>, </em><em>optional</em>) – A closure that reevaluates the model and returns the loss (default: None).</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The loss value after the closure evaluation, if provided.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>loss (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)">float</a>, optional)</p>
-</dd>
-</dl>
+<dd><p>Performs a single optimization step.
+:param closure: None)
+:type closure: callable, optional</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="m3util.ml.optimizers.AdaHessian.AdaHessian.zero_hessian">
 <span class="sig-name descname"><span class="pre">zero_hessian</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/ml/optimizers/AdaHessian.html#AdaHessian.zero_hessian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.ml.optimizers.AdaHessian.AdaHessian.zero_hessian" title="Link to this definition">#</a></dt>
-<dd><p>Zeros out the accumulated Hessian traces for all parameters.</p>
-<p>This is typically done at the beginning of each optimization step.</p>
+<dd><p>Zeros out the accumulated hessian traces.</p>
 </dd></dl>
 
 </dd></dl>

@@ -1,0 +1,15 @@
+m3util.info namespace
+=====================
+
+.. py:module:: m3util.info
+
+Submodules
+----------
+
+m3util.info.computer module
+---------------------------
+
+.. automodule:: m3util.info.computer
+   :members:
+   :undoc-members:
+   :show-inheritance:

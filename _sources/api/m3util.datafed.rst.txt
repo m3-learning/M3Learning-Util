@@ -1,0 +1,15 @@
+m3util.datafed namespace
+========================
+
+.. py:module:: m3util.datafed
+
+Submodules
+----------
+
+m3util.datafed.datafed module
+-----------------------------
+
+.. automodule:: m3util.datafed.datafed
+   :members:
+   :undoc-members:
+   :show-inheritance:

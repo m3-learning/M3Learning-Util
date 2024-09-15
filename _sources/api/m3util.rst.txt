@@ -8,6 +8,9 @@ Subpackages
    :maxdepth: 4
 
    m3util.converters
+   m3util.datafed
+   m3util.globus
+   m3util.info
    m3util.ml
    m3util.util
    m3util.viz
