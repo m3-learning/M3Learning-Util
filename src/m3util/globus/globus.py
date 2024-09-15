@@ -28,7 +28,7 @@ class GlobusAccessError(Exception):
     """Custom exception for Globus file access errors."""
     pass
 
-def check_globus_file_access(endpoint_id, file_path):
+def check_globus_file_access(endpoint_id, file_path, verbose=False):
     try:
         # Convert local path to full path
         file_path = os.path.abspath(file_path)
@@ -40,14 +40,7 @@ def check_globus_file_access(endpoint_id, file_path):
             stderr=subprocess.PIPE,
             text=True
         )
-        
-        # Check if there was an error (e.g., no access or file not found)
-        if result.returncode == 0:
-            return f"Access to '{file_path}' confirmed.\nOutput:\n{result.stdout}"
-        else:
-            # Raise a custom error with details from stderr
-            raise GlobusAccessError(f"Error accessing '{file_path}': {result.stderr.strip()}")
-    except subprocess.CalledProcessError as e:
-        raise GlobusAccessError(f"Subprocess error: {str(e)}")
+        if verbose: 
+            print(f"Access to '{file_path}' confirmed.\nOutput:\n{result.stdout}")
     except Exception as e:
-        raise GlobusAccessError(f"Unexpected error: {str(e)}")
+        raise GlobusAccessError(f"Error accessing '{file_path}': {result.stderr.strip()}")
