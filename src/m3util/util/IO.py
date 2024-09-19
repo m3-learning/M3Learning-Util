@@ -10,6 +10,7 @@ from os.path import exists
 import csv
 from tqdm import tqdm
 import requests
+import pathlib
 
 
 def download(url: str, destination: str, force: bool = False) -> None:
@@ -235,3 +236,21 @@ def append_to_csv(file_path, data, headers):
         if not file_exists:
             writer.writerow(headers)  # Write header row if the file is newly created
         writer.writerow(data)
+
+
+def find_files_recursive(start_dir, prefix):
+    """
+    Recursively finds files in a directory that contain a given prefix.
+
+    Args:
+        start_dir (str): The directory to start the search from.
+        prefix (str): The prefix to search for in the filenames.
+
+    Returns:
+        list: A list of file paths that match the given prefix.
+    """
+    path = pathlib.Path(start_dir)
+    # Use rglob to recursively search for files matching the prefix
+    files = path.rglob(f"*{prefix}*")
+    # Return the resolved file paths as strings
+    return [str(file.resolve()) for file in files if file.is_file()]
