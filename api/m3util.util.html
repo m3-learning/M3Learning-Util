@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.util package &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.util package &#8212; M3Learning-Util 0.3.0 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=fbe5091d"></script>
+    <script src="../_static/documentation_options.js?v=e259d695"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.util';</script>
@@ -46,7 +46,7 @@
     <link rel="prev" title="m3util.notebooks package" href="m3util.notebooks.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 15, 2024"/>
+    <meta name="docbuild:last-update" content="Sep 19, 2024"/>
   </head>
   
   
@@ -124,8 +124,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
-    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.0.po documentation - Home"/>`);</script>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.3.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.3.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -621,6 +621,26 @@ download_path (str): Directory to save the downloaded files. The directory must 
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="m3util.util.IO.find_files_recursive">
+<span class="sig-prename descclassname"><span class="pre">m3util.util.IO.</span></span><span class="sig-name descname"><span class="pre">find_files_recursive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/util/IO.html#find_files_recursive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.util.IO.find_files_recursive" title="Link to this definition">#</a></dt>
+<dd><p>Recursively finds files in a directory that contain a given prefix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_dir</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The directory to start the search from.</p></li>
+<li><p><strong>prefix</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The prefix to search for in the filenames.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of file paths that match the given prefix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="m3util.util.IO.get_size">
 <span class="sig-prename descclassname"><span class="pre">m3util.util.IO.</span></span><span class="sig-name descname"><span class="pre">get_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/util/IO.html#get_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.util.IO.get_size" title="Link to this definition">#</a></dt>
 <dd><p>A function that computes the size of a folder</p>
@@ -937,6 +957,7 @@ even if they are nested within other groups, and return their full paths.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.download_and_unzip"><code class="docutils literal notranslate"><span class="pre">download_and_unzip()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.download_file"><code class="docutils literal notranslate"><span class="pre">download_file()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.download_files_from_txt"><code class="docutils literal notranslate"><span class="pre">download_files_from_txt()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.find_files_recursive"><code class="docutils literal notranslate"><span class="pre">find_files_recursive()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.get_size"><code class="docutils literal notranslate"><span class="pre">get_size()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.make_folder"><code class="docutils literal notranslate"><span class="pre">make_folder()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.IO.reporthook"><code class="docutils literal notranslate"><span class="pre">reporthook()</span></code></a></li>
