@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.notebooks.checksum &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.pandas.filter &#8212; M3Learning-Util 0.0.po documentation</title>
   
   
   
@@ -38,7 +38,7 @@
     <script src="../../../_static/documentation_options.js?v=fbe5091d"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/notebooks/checksum';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/pandas/filter';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -474,7 +474,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">m3util.noteb...</li>
+    <li class="breadcrumb-item active" aria-current="page">m3util.pandas.filter</li>
   </ul>
 </nav>
 </div>
@@ -491,50 +491,62 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for m3util.notebooks.checksum</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">import</span> <span class="nn">json</span>
-
-<div class="viewcode-block" id="calculate_notebook_checksum">
-<a class="viewcode-back" href="../../../api/m3util.notebooks.html#m3util.notebooks.checksum.calculate_notebook_checksum">[docs]</a>
-<span class="k">def</span> <span class="nf">calculate_notebook_checksum</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;sha256&quot;</span><span class="p">):</span>
+  <h1>Source code for m3util.pandas.filter</h1><div class="highlight"><pre>
+<span></span>
+<div class="viewcode-block" id="find_min_max_by_group">
+<a class="viewcode-back" href="../../../api/m3util.pandas.html#m3util.pandas.filter.find_min_max_by_group">[docs]</a>
+<span class="k">def</span> <span class="nf">find_min_max_by_group</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">find</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="n">exclude_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate the checksum of a Jupyter notebook (.ipynb) file using the specified hashing algorithm.</span>
-<span class="sd">    </span>
-<span class="sd">    This function reads the contents of a Jupyter notebook file and computes its checksum using</span>
-<span class="sd">    one of the supported hashing algorithms: &#39;sha256&#39;, &#39;md5&#39;, or &#39;sha1&#39;.</span>
-<span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        notebook_path (str): The path to the Jupyter notebook file (.ipynb) to be hashed.</span>
-<span class="sd">        algorithm (str): The hashing algorithm to use. Supported options are &#39;sha256&#39; (default), &#39;md5&#39;, and &#39;sha1&#39;.</span>
-<span class="sd">    </span>
+<span class="sd">    Finds the minimum or maximum value for a specific column, grouped by unique values</span>
+<span class="sd">    of the specified kwargs, while excluding rows based on exclude_kwargs.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    df (pd.DataFrame): The DataFrame to filter, group, and search.</span>
+<span class="sd">    col_name (str): The column name to find the max or min value.</span>
+<span class="sd">    find (str): &#39;min&#39; or &#39;max&#39; to specify whether to find the minimum or maximum.</span>
+<span class="sd">    exclude_kwargs (dict): Column-value pairs to exclude from the DataFrame.</span>
+<span class="sd">    **kwargs: Column-value pairs to group by (values of these columns will be grouped).</span>
+
 <span class="sd">    Returns:</span>
-<span class="sd">        str: The computed checksum as a hexadecimal string.</span>
-<span class="sd">    </span>
-<span class="sd">    Raises:</span>
-<span class="sd">        ValueError: If an unsupported hashing algorithm is specified.</span>
+<span class="sd">    pd.DataFrame: A DataFrame containing the min/max row from each group.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="c1"># Open the notebook file in read mode with UTF-8 encoding and read its contents as a string</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">notebook_content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-    <span class="c1"># Select the hashing algorithm based on the user input</span>
-    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;sha256&quot;</span><span class="p">:</span>
-        <span class="n">hash_function</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;md5&quot;</span><span class="p">:</span>
-        <span class="n">hash_function</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;sha1&quot;</span><span class="p">:</span>
-        <span class="n">hash_function</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Raise an error if the algorithm is not supported</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unsupported hashing algorithm. Use &#39;sha256&#39;, &#39;md5&#39;, or &#39;sha1&#39;.&quot;</span><span class="p">)</span>
+    <span class="c1"># Filter the DataFrame based on the keyword arguments for inclusion</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">]</span>
 
-    <span class="c1"># Encode the notebook content as bytes and update the hash function with it</span>
-    <span class="n">hash_function</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">notebook_content</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-    
-    <span class="c1"># Return the checksum as a hexadecimal string</span>
-    <span class="k">return</span> <span class="n">hash_function</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+    <span class="c1"># Exclude rows based on the exclusion keyword arguments</span>
+    <span class="k">if</span> <span class="n">exclude_kwargs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ex_key</span><span class="p">,</span> <span class="n">ex_value</span> <span class="ow">in</span> <span class="n">exclude_kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">ex_key</span><span class="p">]</span> <span class="o">!=</span> <span class="n">ex_value</span><span class="p">]</span>
+
+    <span class="c1"># Check if any rows match the filters</span>
+    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;No rows match the filter criteria after inclusion and exclusion.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Group the DataFrame by the kwargs&#39; columns</span>
+    <span class="n">group_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">grouped_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_cols</span><span class="p">)</span>
+
+    <span class="c1"># Select only the columns we need for aggregation (excluding the grouping columns)</span>
+    <span class="n">df_to_agg</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">group_cols</span><span class="p">)</span>
+
+    <span class="c1"># Define a function to return the index of the min/max for each group</span>
+    <span class="k">def</span> <span class="nf">get_min_max_index</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">find</span> <span class="o">==</span> <span class="s2">&quot;min&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">group</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">find</span> <span class="o">==</span> <span class="s2">&quot;max&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">group</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid value for &#39;find&#39;. Use &#39;min&#39; or &#39;max&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Apply the function to each group and get the index of the min/max row</span>
+    <span class="n">min_max_indices</span> <span class="o">=</span> <span class="n">grouped_df</span><span class="p">[</span><span class="n">df_to_agg</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_min_max_index</span><span class="p">)</span>
+
+    <span class="c1"># Extract the corresponding rows from the original dataframe</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">min_max_indices</span><span class="p">]</span></div>
 
 </pre></div>
 

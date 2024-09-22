@@ -13,6 +13,7 @@ Subpackages
    m3util.info
    m3util.ml
    m3util.notebooks
+   m3util.pandas
    m3util.util
    m3util.viz
 

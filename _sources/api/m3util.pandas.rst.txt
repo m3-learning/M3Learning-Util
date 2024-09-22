@@ -1,0 +1,21 @@
+m3util.pandas package
+=====================
+
+Submodules
+----------
+
+m3util.pandas.filter module
+---------------------------
+
+.. automodule:: m3util.pandas.filter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: m3util.pandas
+   :members:
+   :undoc-members:
+   :show-inheritance:
