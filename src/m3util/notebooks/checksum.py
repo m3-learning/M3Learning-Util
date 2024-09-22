@@ -18,6 +18,10 @@ def calculate_notebook_code_checksum(notebook_path, algorithm="sha256"):
 
     Raises:
         ValueError: If an unsupported hashing algorithm is specified.
+
+    Example:
+        checksum = calculate_notebook_code_checksum("/path/to/notebook.ipynb", algorithm="sha256")
+        print(checksum)
     """
 
     # Load the notebook as a JSON object
@@ -52,11 +56,3 @@ def calculate_notebook_code_checksum(notebook_path, algorithm="sha256"):
 
     # Return the checksum as a hexadecimal string
     return hash_function.hexdigest()
-
-
-# Example usage:
-# Assuming you have a Jupyter notebook file named 'example_notebook.ipynb'
-checksum = calculate_notebook_code_checksum(
-    "example_notebook.ipynb", algorithm="sha256"
-)
-print("Checksum:", checksum)
