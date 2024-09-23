@@ -1,7 +1,8 @@
 import hashlib
 
+
 # TODO -- add a search for similar checksum and reference
-def calculate_h5file_checksum(file_path, algorithm="sha256"):
+def calculate_h5file_checksum(file_path, algorithm="sha256", chunk_size=1048576):
     """
     Calculate the checksum of an HDF5 (.h5) file using the specified hashing algorithm.
 
@@ -23,7 +24,7 @@ def calculate_h5file_checksum(file_path, algorithm="sha256"):
 
     # Open the file in binary mode and compute its checksum
     with open(file_path, "rb") as f:
-        while chunk := f.read(8192):  # Read the file in chunks (8192 bytes)
+        while chunk := f.read(chunk_size):  # Read the file in chunks (8192 bytes)
             hash_function.update(chunk)
 
     # Return the checksum as a hexadecimal string
