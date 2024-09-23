@@ -43,7 +43,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 22, 2024"/>
+    <meta name="docbuild:last-update" content="Sep 23, 2024"/>
   </head>
   
   
@@ -509,7 +509,8 @@ document.write(`
               <span class="n">loss_func</span><span class="p">,</span>
               <span class="n">seed</span><span class="p">,</span>
               <span class="n">stoppage_early</span><span class="p">,</span>
-              <span class="n">model_updates</span><span class="p">):</span>
+              <span class="n">model_updates</span><span class="p">,</span>
+              <span class="n">filename</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Writes the training details to a CSV file if the &#39;write_CSV&#39; path is provided.</span>
 
@@ -548,7 +549,8 @@ document.write(`
                    <span class="s2">&quot;Seed&quot;</span><span class="p">,</span>
                    <span class="s2">&quot;Filename&quot;</span><span class="p">,</span>
                    <span class="s2">&quot;Early Stoppage&quot;</span><span class="p">,</span>
-                   <span class="s2">&quot;Model Updates&quot;</span><span class="p">]</span>
+                   <span class="s2">&quot;Model Updates&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Filename&quot;</span><span class="p">]</span>
 
         <span class="c1"># Compile the data to be written to the CSV</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">model_name</span><span class="p">,</span>
@@ -563,7 +565,8 @@ document.write(`
                 <span class="n">seed</span><span class="p">,</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">_model_epoch_</span><span class="si">{</span><span class="n">epochs</span><span class="si">}</span><span class="s2">_train_loss_</span><span class="si">{</span><span class="n">train_loss</span><span class="si">}</span><span class="s2">.pth&quot;</span><span class="p">,</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stoppage_early</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model_updates</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model_updates</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">filename</span><span class="p">]</span>
 
         <span class="c1"># Append the data to the CSV file at the specified path</span>
         <span class="n">append_to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">write_CSV</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span></div>

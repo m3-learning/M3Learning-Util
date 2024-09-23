@@ -36,6 +36,14 @@ m3util.util.h5 module
    :undoc-members:
    :show-inheritance:
 
+m3util.util.hashing module
+--------------------------
+
+.. automodule:: m3util.util.hashing
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 m3util.util.search module
 -------------------------
 

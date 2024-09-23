@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.util.h5 &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.util.hashing &#8212; M3Learning-Util 0.0.po documentation</title>
   
   
   
@@ -38,7 +38,7 @@
     <script src="../../../_static/documentation_options.js?v=fbe5091d"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/util/h5';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/util/hashing';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -474,7 +474,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">m3util.util.h5</li>
+    <li class="breadcrumb-item active" aria-current="page">m3util.util.hashing</li>
   </ul>
 </nav>
 </div>
@@ -491,149 +491,58 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for m3util.util.h5</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">h5py</span>
+  <h1>Source code for m3util.util.hashing</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">hashlib</span>
 
-
-<div class="viewcode-block" id="print_tree">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.print_tree">[docs]</a>
-<span class="k">def</span> <span class="nf">print_tree</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
+<span class="c1"># TODO -- add a search for similar checksum and reference</span>
+<div class="viewcode-block" id="calculate_h5file_checksum">
+<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.hashing.calculate_h5file_checksum">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_h5file_checksum</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;sha256&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Utility function to print the tree structure of an h5 file.</span>
+<span class="sd">    Calculate the checksum of an HDF5 (.h5) file using the specified hashing algorithm.</span>
+
+<span class="sd">    This function reads the binary content of the HDF5 file and computes its checksum using</span>
+<span class="sd">    one of the supported hashing algorithms: &#39;sha256&#39;, &#39;md5&#39;, or &#39;sha1&#39;.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        parent (h5py.Group): The parent group to start printing the tree from.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">parent</span><span class="p">:</span>
-            <span class="n">print_tree</span><span class="p">(</span><span class="n">parent</span><span class="p">[</span><span class="n">child</span><span class="p">])</span></div>
-
-
-
-<div class="viewcode-block" id="get_tree">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.get_tree">[docs]</a>
-<span class="k">def</span> <span class="nf">get_tree</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Utility function to get the tree structure of an h5 file.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        parent (h5py.Group): The parent group to start getting the tree from.</span>
+<span class="sd">        file_path (str): The path to the HDF5 file (.h5) to be hashed.</span>
+<span class="sd">        algorithm (str): The hashing algorithm to use. Supported options are &#39;sha256&#39; (default), &#39;md5&#39;, and &#39;sha1&#39;.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list: A list containing the names of all groups and datasets in the tree.</span>
+<span class="sd">        str: The computed checksum as a hexadecimal string.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If an unsupported hashing algorithm is specified.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">tree</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">tree</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">parent</span><span class="p">:</span>
-            <span class="n">tree</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">get_tree</span><span class="p">(</span><span class="n">parent</span><span class="p">[</span><span class="n">child</span><span class="p">]))</span>
 
-    <span class="k">return</span> <span class="n">tree</span></div>
+    <span class="n">hash_function</span> <span class="o">=</span> <span class="n">select_hash_algorithm</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span>
 
+    <span class="c1"># Open the file in binary mode and compute its checksum</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">while</span> <span class="n">chunk</span> <span class="o">:=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8192</span><span class="p">):</span>  <span class="c1"># Read the file in chunks (8192 bytes)</span>
+            <span class="n">hash_function</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
 
-
-<div class="viewcode-block" id="make_group">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.make_group">[docs]</a>
-<span class="k">def</span> <span class="nf">make_group</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Utility function to add a group to an h5 file.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        base (h5py.File): The base h5 file to add the new group to.</span>
-<span class="sd">        group (str): The name of the group to add.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">base</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not add group - it might already exist.&quot;</span><span class="p">)</span></div>
+    <span class="c1"># Return the checksum as a hexadecimal string</span>
+    <span class="k">return</span> <span class="n">hash_function</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
 
 
 
-<div class="viewcode-block" id="make_dataset">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.make_dataset">[docs]</a>
-<span class="k">def</span> <span class="nf">make_dataset</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Utility function to write or overwrite an h5 dataset.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        base (h5py.Group): The base group of the h5 file.</span>
-<span class="sd">        dataset (str): The name of the dataset to create or overwrite.</span>
-<span class="sd">        data (np.array): The data to store in the dataset.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">base</span><span class="p">[</span><span class="n">dataset</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="k">del</span> <span class="n">base</span><span class="p">[</span><span class="n">dataset</span><span class="p">]</span>
-        <span class="n">base</span><span class="p">[</span><span class="n">dataset</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span></div>
-
-
-
-<div class="viewcode-block" id="find_groups_with_string">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.find_groups_with_string">[docs]</a>
-<span class="k">def</span> <span class="nf">find_groups_with_string</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">desired_string</span><span class="p">,</span> <span class="n">start_path</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Find all groups in an h5 file with a certain string in their name,</span>
-<span class="sd">    even if they are nested within other groups, and return their full paths.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        filename (str): The name of the h5 file.</span>
-<span class="sd">        desired_string (str): The string to search for in the group names.</span>
-<span class="sd">        start_path (str): The path within the h5 file to start the search from (default: &quot;/&quot;).</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        list: A list of full paths to groups that contain the desired string.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">group_paths_with_string</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-
-        <span class="k">def</span> <span class="nf">search_groups</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Recursively search through the groups in the given path.</span>
-
-<span class="sd">            Args:</span>
-<span class="sd">                path (str): The path to search for groups.</span>
-
-<span class="sd">            &quot;&quot;&quot;</span>
-            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">file</span><span class="p">[</span><span class="n">path</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
-                    <span class="n">group_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
-                    <span class="k">if</span> <span class="n">desired_string</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
-                        <span class="n">group_paths_with_string</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group_path</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-                    <span class="n">search_groups</span><span class="p">(</span><span class="n">group_path</span><span class="p">)</span>
-
-        <span class="n">search_groups</span><span class="p">(</span><span class="n">start_path</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">group_paths_with_string</span></div>
-
-
-
-<div class="viewcode-block" id="find_measurement">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.find_measurement">[docs]</a>
-<span class="k">def</span> <span class="nf">find_measurement</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">search_string</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">list_all</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Find measurements in an h5 file that match a certain string.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        file (str): The name of the h5 file.</span>
-<span class="sd">        search_string (str): The string to search for in the measurement names.</span>
-<span class="sd">        group (str): The name of the group to search within.</span>
-<span class="sd">        list_all (bool): Whether to return all matching measurement names or just the first one (default: False).</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        str or list: The matching measurement name(s) if found, or None if not found.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">f</span><span class="p">[</span><span class="n">group</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="n">search_string</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
-                <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">list_all</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">names</span>
-    <span class="k">return</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="select_hash_algorithm">
+<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.hashing.select_hash_algorithm">[docs]</a>
+<span class="k">def</span> <span class="nf">select_hash_algorithm</span><span class="p">(</span><span class="n">algorithm</span><span class="p">):</span>
+    <span class="c1"># Select the hashing algorithm based on the user input</span>
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;sha256&quot;</span><span class="p">:</span>
+        <span class="n">hash_function</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;md5&quot;</span><span class="p">:</span>
+        <span class="n">hash_function</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;sha1&quot;</span><span class="p">:</span>
+        <span class="n">hash_function</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Raise an error if the algorithm is not supported</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Unsupported hashing algorithm. Use &#39;sha256&#39;, &#39;md5&#39;, or &#39;sha1&#39;.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">hash_function</span></div>
 
 </pre></div>
 
