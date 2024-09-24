@@ -45,7 +45,7 @@
     <link rel="prev" title="m3util.util package" href="m3util.util.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 23, 2024"/>
+    <meta name="docbuild:last-update" content="Sep 24, 2024"/>
   </head>
   
   
@@ -774,6 +774,29 @@ tuple: Figure and axes.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.layout_subfigures">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">layout_subfigures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subfigures_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">margin_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#layout_subfigures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.layout_subfigures" title="Link to this definition">#</a></dt>
+<dd><p>Creates a matplotlib figure with subfigures arranged based on positions in inches,
+and manually adds margins (in points) to accommodate axis labels and titles.
+Allows skipping margins for specific subfigures using a ‘skip_margin’ flag,
+which defaults to False (i.e., margins are applied unless specified).</p>
+<p>Parameters:
+- size: tuple of (width, height) for the overall figure size in inches.
+- subfigures_dict: dictionary where keys are subfigure names and values are dictionaries</p>
+<blockquote>
+<div><p>containing ‘position’ as a tuple (x, y, width, height) in inches,
+‘plot_func’ as the function to create the specific subfigure, and
+‘skip_margin’ (optional) as a boolean to indicate whether to skip margins.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>margin_pts: margin in points (72 points = 1 inch) for labels, tick marks, and titles.</p></li>
+</ul>
+<p>Returns:
+- fig: the matplotlib figure object.
+- axes_dict: a dictionary where keys are the subfigure names and values are the corresponding axes.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="m3util.viz.layout.number_to_letters">
 <span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">number_to_letters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#number_to_letters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.number_to_letters" title="Link to this definition">#</a></dt>
 <dd><p>Convert a number to a string representation using letters.</p>
@@ -977,6 +1000,7 @@ ax (list): List of axes objects.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.inset_connector"><code class="docutils literal notranslate"><span class="pre">inset_connector()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.labelfigs"><code class="docutils literal notranslate"><span class="pre">labelfigs()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.layout_fig"><code class="docutils literal notranslate"><span class="pre">layout_fig()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.layout_subfigures"><code class="docutils literal notranslate"><span class="pre">layout_subfigures()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.number_to_letters"><code class="docutils literal notranslate"><span class="pre">number_to_letters()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.path_maker"><code class="docutils literal notranslate"><span class="pre">path_maker()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.plot_into_graph"><code class="docutils literal notranslate"><span class="pre">plot_into_graph()</span></code></a></li>
