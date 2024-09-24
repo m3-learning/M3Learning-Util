@@ -749,7 +749,7 @@ def get_axis_pos_inches(fig, ax):
 
     return center_bottom_display / fig.dpi
 
-def layout_subfigures(size, subfigures_dict, margin_pts=20):
+def layout_subfigures_inches(size, subfigures_dict, margin_pts=20):
     """
     Creates a matplotlib figure with subfigures arranged based on positions in inches,
     and manually adds margins (in points) to accommodate axis labels and titles.
