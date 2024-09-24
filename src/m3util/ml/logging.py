@@ -13,7 +13,8 @@ def write_csv(write_CSV,
               loss_func,
               seed,
               stoppage_early,
-              model_updates):
+              model_updates,
+              filename):
     """
     Writes the training details to a CSV file if the 'write_CSV' path is provided.
 
@@ -52,7 +53,8 @@ def write_csv(write_CSV,
                    "Seed",
                    "Filename",
                    "Early Stoppage",
-                   "Model Updates"]
+                   "Model Updates",
+                   "Filename"]
 
         # Compile the data to be written to the CSV
         data = [model_name,
@@ -67,7 +69,8 @@ def write_csv(write_CSV,
                 seed,
                 f"{path}/{model_name}_model_epoch_{epochs}_train_loss_{train_loss}.pth",
                 f"{stoppage_early}",
-                f"{model_updates}"]
+                f"{model_updates}",
+                filename]
 
         # Append the data to the CSV file at the specified path
         append_to_csv(f"{path}/{write_CSV}", data, headers)
