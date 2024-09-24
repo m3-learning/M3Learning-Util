@@ -248,45 +248,6 @@ def add_box(axs, pos, **kwargs):
     axs.add_patch(rect)
 
 
-def inset_connector(fig, ax1, ax2, coord1=None, coord2=None, **kwargs):
-    """
-    Create a connection between two axes in a figure.
-
-    Parameters:
-    fig (Figure): The figure to add the connection to.
-    ax1 (Axes): The first axes object.
-    ax2 (Axes): The second axes object.
-    coord1 (list, optional): The coordinates of the first connection point. Defaults to None.
-    coord2 (list, optional): The coordinates of the second connection point. Defaults to None.
-    **kwargs: Additional keyword arguments.
-
-    """
-    if coord1 is None:
-        coord1_xlim = ax1.get_xlim()
-        coord1_ylim = ax1.get_ylim()
-
-        coord1_l1 = (coord1_xlim[0], coord1_ylim[0])
-        coord1_l2 = (coord1_xlim[0], coord1_ylim[1])
-        coord1 = [coord1_l1, coord1_l2]
-
-    if coord2 is None:
-        coord2_xlim = ax2.get_xlim()
-        coord2_ylim = ax2.get_ylim()
-
-        coord2_l1 = (coord2_xlim[0], coord2_ylim[0])
-        coord2_l2 = (coord2_xlim[0], coord2_ylim[1])
-        coord2 = [coord2_l1, coord2_l2]
-
-    for p1, p2 in zip(coord1, coord2):
-        # Create a connection between the two points
-        con = ConnectionPatch(
-            xyA=p1, xyB=p2, coordsA=ax1.transData, coordsB=ax2.transData, **kwargs
-        )
-
-        # Add the connection to the plot
-        fig.add_artist(con)
-
-
 def path_maker(axes, locations, facecolor, edgecolor, linestyle, lineweight):
     """
     Create a path patch and add it to the axes.
@@ -720,10 +681,10 @@ def get_axis_range(axs):
     for ax in axs:
         ax_xmin, ax_xmax, ax_ymin, ax_ymax = get_axis_range_(ax)
         try:
-            xmin = min(xmin, ax_xmin)
-            xmax = max(xmax, ax_xmax)
-            ymin = min(ymin, ax_ymin)
-            ymax = max(ymax, ax_ymax)
+            xmin = np.min(xmin, ax_xmin)
+            xmax = np.max(xmax, ax_xmax)
+            ymin = np.min(ymin, ax_ymin)
+            ymax = np.max(ymax, ax_ymax)
         except:
             xmin = ax_xmin
             xmax = ax_xmax
@@ -788,6 +749,62 @@ def get_axis_pos_inches(fig, ax):
 
     return center_bottom_display / fig.dpi
 
+def layout_subfigures(size, subfigures_dict, margin_pts=20):
+    """
+    Creates a matplotlib figure with subfigures arranged based on positions in inches,
+    and manually adds margins (in points) to accommodate axis labels and titles.
+    Allows skipping margins for specific subfigures using a 'skip_margin' flag,
+    which defaults to False (i.e., margins are applied unless specified).
+
+    Parameters:
+    - size: tuple of (width, height) for the overall figure size in inches.
+    - subfigures_dict: dictionary where keys are subfigure names and values are dictionaries
+                       containing 'position' as a tuple (x, y, width, height) in inches,
+                       'plot_func' as the function to create the specific subfigure, and
+                       'skip_margin' (optional) as a boolean to indicate whether to skip margins.
+    - margin_pts: margin in points (72 points = 1 inch) for labels, tick marks, and titles.
+
+    Returns:
+    - fig: the matplotlib figure object.
+    - axes_dict: a dictionary where keys are the subfigure names and values are the corresponding axes.
+    """
+    # Convert points to inches (72 points = 1 inch)
+    margin_inch = margin_pts / 72.0
+
+    # Create the main figure with the specified size
+    fig = plt.figure(figsize=size)
+    axes_dict = {}
+
+    for name, subfig_data in subfigures_dict.items():
+        position = subfig_data["position"]  # (x, y, width, height) in inches
+        skip_margin = subfig_data.get("skip_margin", False)  # Defaults to False
+        right = subfig_data.get("right", False)  # Defaults to False
+        
+        if right == True: 
+            multiple = 2
+        else:
+            multiple = 1
+
+        # If skip_margin is False, apply the margin
+        if not skip_margin:
+            left = (position[0] + margin_inch) / size[0]
+            bottom = (position[1] + margin_inch) / size[1]
+            width = (position[2] - multiple * margin_inch) / size[0]
+            height = (position[3] - multiple * margin_inch) / size[1]
+        else:
+            # No margin adjustments
+            left = position[0] / size[0]
+            bottom = position[1] / size[1]
+            width = position[2] / size[0]
+            height = position[3] / size[1]
+
+        # Add an axes to the figure at the specified location
+        ax = fig.add_axes([left, bottom, width, height])
+
+        # Store the axes in the dictionary with the corresponding name
+        axes_dict[name] = ax
+
+    return fig, axes_dict
 
 class FigDimConverter:
     """class to convert between relative and inches dimensions of a figure"""
