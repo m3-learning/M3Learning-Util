@@ -560,37 +560,22 @@ def set_sci_notation_label(
         ha="left" if "left" in corner else "right",
         va="bottom" if "bottom" in corner else "top",
         size=plt.rcParams["xtick.labelsize"],
+        zorder=100,
     )
 
 
-def bring_text_to_front(ax, zorder=5):
+def bring_all_text_to_front(fig, zorder=5):
     """
-    Sets the zorder of all text objects in the Axes to the specified value.
+    Sets the zorder of all text objects in the Figure to the specified value.
 
     Args:
-        ax (matplotlib.axes.Axes): The Axes object to modify.
+        fig (matplotlib.figure.Figure): The Figure object to modify.
         zorder (int, optional): The zorder value to set for text objects. Default is 5.
     """
-    # Set zorder for axis labels and title
-    ax.title.set_zorder(zorder)
-    ax.xaxis.label.set_zorder(zorder)
-    ax.yaxis.label.set_zorder(zorder)
-
-    # Set zorder for tick labels
-    for tick in ax.xaxis.get_major_ticks():
-        tick.label1.set_zorder(zorder)
-    for tick in ax.yaxis.get_major_ticks():
-        tick.label1.set_zorder(zorder)
-
-    # Set zorder for text annotations
-    for child in ax.get_children():
-        if isinstance(child, matplotlib.text.Text):
-            child.set_zorder(zorder)
-
-    # Set zorder for legend, if it exists
-    legend = ax.get_legend()
-    if legend is not None:
-        legend.set_zorder(zorder)
+    # Find all text objects in the figure
+    text_objects = fig.findobj(match=matplotlib.text.Text)
+    for text in text_objects:
+        text.set_zorder(zorder)
 
 
 def labelfigs(
