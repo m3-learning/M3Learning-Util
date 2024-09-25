@@ -35,15 +35,15 @@ import numpy as np
 
 #     def draw_arrow(self, **arrowprops):
 #         # Convert from inches to figure fraction
-#         self.start_frac_inches = self.inches_to_fig_fraction(self.start_pos)
-#         self.end_frac_inches = self.inches_to_fig_fraction(self.end_pos)
+#         self.arrow_start_inches = self.inches_to_fig_fraction(self.start_pos)
+#         self.arrow_end_inches = self.inches_to_fig_fraction(self.end_pos)
 
 #         # Create an annotation with an arrow
 #         arrow = plt.annotate(
 #             "",
-#             xy=self.end_frac_inches,
+#             xy=self.arrow_end_inches,
 #             xycoords="figure fraction",
-#             xytext=self.start_frac_inches,
+#             xytext=self.arrow_start_inches,
 #             textcoords="figure fraction",
 #             arrowprops=dict(arrowstyle="->", **arrowprops),
 #         )
@@ -104,23 +104,23 @@ import numpy as np
 #     def _get_text_position(self):
 #         # Set text position and alignment
 #         if self.text_position == "top":
-#             text_x = (self.start_frac_inches[0] + self.end_frac_inches[0]) / 2
-#             text_y = (self.start_frac_inches[1] + self.end_frac_inches[1]) / 2 + 0.02  # small offset
+#             text_x = (self.arrow_start_inches[0] + self.arrow_end_inches[0]) / 2
+#             text_y = (self.arrow_start_inches[1] + self.arrow_end_inches[1]) / 2 + 0.02  # small offset
 #             ha = self.text_alignment
 #             va = "bottom"
 #         elif self.text_position == "bottom":
-#             text_x = (self.start_frac_inches[0] + self.end_frac_inches[0]) / 2
-#             text_y = (self.start_frac_inches[1] + self.end_frac_inches[1]) / 2 - 0.02  # small offset
+#             text_x = (self.arrow_start_inches[0] + self.arrow_end_inches[0]) / 2
+#             text_y = (self.arrow_start_inches[1] + self.arrow_end_inches[1]) / 2 - 0.02  # small offset
 #             ha = self.text_alignment
 #             va = "top"
 #         elif self.text_position == "left":
-#             text_x = self.start_frac_inches[0]
-#             text_y = self.start_frac_inches[1]
+#             text_x = self.arrow_start_inches[0]
+#             text_y = self.arrow_start_inches[1]
 #             ha = "right"
 #             va = "center"
 #         elif self.text_position == "right":
-#             text_x = self.end_frac_inches[0]
-#             text_y = self.end_frac_inches[1]
+#             text_x = self.arrow_end_inches[0]
+#             text_y = self.arrow_end_inches[1]
 #             ha = "left"
 #             va = "center"
 
@@ -173,15 +173,15 @@ class DrawArrow:
 
     def draw_arrow(self, **arrowprops):
         # Convert inches to figure fraction
-        self.start_frac_inches = self.inches_to_fig_fraction(self.start_pos)
-        self.end_frac_inches = self.inches_to_fig_fraction(self.end_pos)
+        self.arrow_start_inches = self.inches_to_fig_fraction(self.start_pos)
+        self.arrow_end_inches = self.inches_to_fig_fraction(self.end_pos)
 
         # Create an annotation with an arrow
         arrow = plt.annotate(
             "",
-            xy=self.end_frac_inches,
+            xy=self.arrow_end_inches,
             xycoords="figure fraction",
-            xytext=self.start_frac_inches,
+            xytext=self.arrow_start_inches,
             textcoords="figure fraction",
             arrowprops=dict(arrowstyle="->", **arrowprops),
         )
@@ -272,23 +272,23 @@ class DrawArrow:
     def _get_text_position(self):
         # Set text position and alignment
         if self.text_position == "top":
-            text_x = (self.start_frac_inches[0] + self.end_frac_inches[0]) / 2
-            text_y = (self.start_frac_inches[1] + self.end_frac_inches[1]) / 2 + 0.02  # small offset
+            text_x = (self.arrow_start_inches[0] + self.arrow_end_inches[0]) / 2
+            text_y = (self.arrow_start_inches[1] + self.arrow_end_inches[1]) / 2 + 0.02  # small offset
             ha = self.text_alignment
             va = "bottom"
         elif self.text_position == "bottom":
-            text_x = (self.start_frac_inches[0] + self.end_frac_inches[0]) / 2
-            text_y = (self.start_frac_inches[1] + self.end_frac_inches[1]) / 2 - 0.02  # small offset
+            text_x = (self.arrow_start_inches[0] + self.arrow_end_inches[0]) / 2
+            text_y = (self.arrow_start_inches[1] + self.arrow_end_inches[1]) / 2 - 0.02  # small offset
             ha = self.text_alignment
             va = "top"
         elif self.text_position == "left":
-            text_x = self.start_frac_inches[0]
-            text_y = self.start_frac_inches[1]
+            text_x = self.arrow_start_inches[0]
+            text_y = self.arrow_start_inches[1]
             ha = "right"
             va = "center"
         elif self.text_position == "right":
-            text_x = self.end_frac_inches[0]
-            text_y = self.end_frac_inches[1]
+            text_x = self.arrow_end_inches[0]
+            text_y = self.arrow_end_inches[1]
             ha = "left"
             va = "center"
 
