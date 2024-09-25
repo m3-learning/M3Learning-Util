@@ -60,3 +60,4 @@ def set_style(name="default"):
         plt.rcParams["legend.fontsize"] = 5
         plt.rcParams["legend.loc"] = "upper left"
         plt.rcParams["legend.frameon"] = False
+        plt.rcParams["font.size"] = 8
