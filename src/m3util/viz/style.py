@@ -1,6 +1,10 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.ticker import ScalarFormatter
+
 
 def set_style(name="default"):
     """Function to implement custom default style for graphs
@@ -45,9 +49,9 @@ def set_style(name="default"):
 
         # setting default plotting params
         plt.rcParams["image.cmap"] = "viridis"
-        plt.rcParams["axes.labelsize"] = 6
-        plt.rcParams["xtick.labelsize"] = 5
-        plt.rcParams["ytick.labelsize"] = 5
+        plt.rcParams["axes.labelsize"] = 8
+        plt.rcParams["xtick.labelsize"] = 6
+        plt.rcParams["ytick.labelsize"] = 6
         plt.rcParams["figure.titlesize"] = 8
         plt.rcParams["xtick.direction"] = "in"
         plt.rcParams["ytick.direction"] = "in"

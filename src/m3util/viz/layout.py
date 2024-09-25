@@ -1,4 +1,5 @@
 from matplotlib.patches import ConnectionPatch
+import matplotlib
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from itertools import product
@@ -463,6 +464,135 @@ def combine_lines(*args):
     return lines, labels
 
 
+def set_sci_notation_label(
+    ax, axis="y", corner="bottom right", offset_points=None, scilimits=(0, 0)
+):
+    """
+    Formats the specified axis to use scientific notation and places the exponent
+    label at a specified position relative to a corner of the axis.
+
+    Args:
+        ax (matplotlib.axes.Axes): The axis object to modify.
+        axis (str): Axis to format ('x' or 'y'). Defaults to 'y'.
+        corner (str): Corner of the axis to position the exponent label.
+                      Options are 'top left', 'top right', 'bottom left', 'bottom right'.
+                      Defaults to 'bottom right'.
+        offset_points (tuple): Offset in points (x_offset, y_offset) from the specified corner.
+                               Defaults to (5, 5).
+        scilimits (tuple): The range of exponents where scientific notation is used.
+
+    """
+
+    if offset_points is None:
+        # Default offset in points
+        offset_points = (
+            plt.rcParams["xtick.labelsize"] / 2,
+            plt.rcParams["xtick.labelsize"] / 2,
+        )
+
+    # Apply scientific notation formatting to the specified axis
+    ax.ticklabel_format(axis=axis, style="sci", scilimits=scilimits)
+
+    # Hide the default offset text (the default scientific notation label)
+    if axis == "x":
+        ax.get_xaxis().get_offset_text().set_visible(False)
+    else:
+        ax.get_yaxis().get_offset_text().set_visible(False)
+
+    # Get the maximum value from the ticks to determine the exponent
+    if axis == "x":
+        ticks = ax.get_xticks()
+    else:
+        ticks = ax.get_yticks()
+
+    # Avoid log of zero by filtering out non-positive ticks
+    ticks = ticks[ticks != 0]
+    if len(ticks) == 0:
+        exponent_axis = 0
+    else:
+        ax_max = max(abs(ticks))
+        exponent_axis = int(np.floor(np.log10(ax_max)))
+
+    # Create the exponent label using LaTeX formatting
+    exponent_text = r"$\times10^{%i}$" % (exponent_axis)
+
+    # Define corner positions in axis fraction coordinates
+    corners = {
+        "bottom left": (0, 0),
+        "bottom right": (1, 0),
+        "top left": (0, 1),
+        "top right": (1, 1),
+    }
+    if corner not in corners:
+        raise ValueError(
+            "Invalid corner position. Choose from 'top left', 'top right', 'bottom left', 'bottom right'."
+        )
+
+    # Get the base position for the annotation
+    base_x, base_y = corners[corner]
+
+    # Convert offset from points to axis fraction using the inverse transformation
+    # We need to account for the figure's DPI and size
+    fig = ax.figure
+    transform = ax.transAxes + fig.dpi_scale_trans.inverted()
+    offset_x = offset_points[0] / fig.dpi / fig.get_size_inches()[0]
+    offset_y = offset_points[1] / fig.dpi / fig.get_size_inches()[1]
+
+    # Adjust the position based on the corner
+    if "left" in corner:
+        offset_x = offset_x
+    else:
+        offset_x = -offset_x
+    if "bottom" in corner:
+        offset_y = offset_y
+    else:
+        offset_y = -offset_y
+
+    # Final position after applying the offset
+    text_x = base_x + offset_x
+    text_y = base_y + offset_y
+
+    # Annotate the exponent label at the calculated position
+    ax.annotate(
+        exponent_text,
+        xy=(text_x, text_y),
+        xycoords="axes fraction",
+        ha="left" if "left" in corner else "right",
+        va="bottom" if "bottom" in corner else "top",
+        size=plt.rcParams["xtick.labelsize"],
+    )
+
+
+def bring_text_to_front(ax, zorder=5):
+    """
+    Sets the zorder of all text objects in the Axes to the specified value.
+
+    Args:
+        ax (matplotlib.axes.Axes): The Axes object to modify.
+        zorder (int, optional): The zorder value to set for text objects. Default is 5.
+    """
+    # Set zorder for axis labels and title
+    ax.title.set_zorder(zorder)
+    ax.xaxis.label.set_zorder(zorder)
+    ax.yaxis.label.set_zorder(zorder)
+
+    # Set zorder for tick labels
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label1.set_zorder(zorder)
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label1.set_zorder(zorder)
+
+    # Set zorder for text annotations
+    for child in ax.get_children():
+        if isinstance(child, matplotlib.text.Text):
+            child.set_zorder(zorder)
+
+    # Set zorder for legend, if it exists
+    legend = ax.get_legend()
+    if legend is not None:
+        legend.set_zorder(zorder)
+
+
 def labelfigs(
     axes,
     number=None,
@@ -749,6 +879,7 @@ def get_axis_pos_inches(fig, ax):
 
     return center_bottom_display / fig.dpi
 
+
 def layout_subfigures_inches(size, subfigures_dict, margin_pts=20):
     """
     Creates a matplotlib figure with subfigures arranged based on positions in inches,
@@ -779,8 +910,8 @@ def layout_subfigures_inches(size, subfigures_dict, margin_pts=20):
         position = subfig_data["position"]  # (x, y, width, height) in inches
         skip_margin = subfig_data.get("skip_margin", False)  # Defaults to False
         right = subfig_data.get("right", False)  # Defaults to False
-        
-        if right == True: 
+
+        if right == True:
             multiple = 2
         else:
             multiple = 1
@@ -805,6 +936,7 @@ def layout_subfigures_inches(size, subfigures_dict, margin_pts=20):
         axes_dict[name] = ax
 
     return fig, axes_dict
+
 
 class FigDimConverter:
     """class to convert between relative and inches dimensions of a figure"""
