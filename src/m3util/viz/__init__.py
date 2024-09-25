@@ -5,5 +5,6 @@ from . import layout
 from . import style
 from . import printing
 from . import arrows
+from . import images
 
-__all__ = ["movies", "layout", "style", "printing", "arrows"]
+__all__ = ["movies", "layout", "style", "printing", "arrows", images]
