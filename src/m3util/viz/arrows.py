@@ -3,22 +3,36 @@ import numpy as np
 
 
 def place_text_in_inches(fig, text, x_inch, y_inch, angle, **textprops):
-    # Convert from inches to display coordinates using the figure's dpi scale transform
+    """
+    Places text on a matplotlib figure at a specified position in inches.
+
+    Args:
+        fig (matplotlib.figure.Figure): The matplotlib figure on which to place the text.
+        text (str): The text string to be displayed.
+        x_inch (float): The x-coordinate in inches from the left of the figure.
+        y_inch (float): The y-coordinate in inches from the bottom of the figure.
+        angle (float): The rotation angle of the text in degrees.
+        **textprops: Additional keyword arguments for text properties (e.g., fontsize, color).
+
+    Returns:
+        matplotlib.text.Text: The text artist object added to the figure.
+    """
+    # Convert from inches to display coordinates (pixels) using the figure's dpi scale transform
     display_coords = fig.dpi_scale_trans.transform((x_inch, y_inch))
 
     # Place the text using the calculated display coordinates
     text_artist = plt.text(
-        display_coords[0],
-        display_coords[1],
-        text,
-        horizontalalignment="center",
-        verticalalignment="center",
+        display_coords[0],  # x-coordinate in display (pixel) coordinates
+        display_coords[1],  # y-coordinate in display (pixel) coordinates
+        text,  # Text string to display
+        horizontalalignment="center",  # Horizontal alignment of the text
+        verticalalignment="center",  # Vertical alignment of the text
         transform=None,  # No additional transformation since we use display coordinates
-        rotation=angle,
-        **textprops,
+        rotation=angle,  # Rotation angle of the text
+        **textprops,  # Additional text properties
     )
 
-    # Trigger the figure redraw
+    # Trigger the figure redraw to update the display with the new text
     fig.canvas.draw()
 
     return text_artist
@@ -26,15 +40,18 @@ def place_text_in_inches(fig, text, x_inch, y_inch, angle, **textprops):
 
 def shift_object_in_inches(fig, position_inch, direction_vector, n_points):
     """
-    Shifts an object by n points along a specified vector direction, and returns the new position in inches.
+    Shifts a position by a specified number of points along a given vector direction, returning the new position in inches.
 
-    :param fig: The matplotlib figure to get the DPI for point-to-inch conversion
-    :param position_inch: The starting position in inches (tuple of x, y in inches)
-    :param direction_vector: The direction vector for the shift (tuple of dx, dy)
-    :param n_points: The number of points to shift along the direction vector
-    :return: The new position in inches (tuple of x, y in inches)
+    Args:
+        fig (matplotlib.figure.Figure): The matplotlib figure, used to get the DPI for point-to-inch conversion.
+        position_inch (tuple of float): The starting position in inches as (x, y).
+        direction_vector (tuple of float): The direction vector for the shift as (dx, dy).
+        n_points (float): The number of points to shift along the direction vector.
+
+    Returns:
+        tuple of float: The new position in inches as (x, y).
     """
-    # Normalize the direction vector
+    # Normalize the direction vector to get the unit direction
     direction_vector = np.array(direction_vector)
     direction_vector = direction_vector / np.linalg.norm(direction_vector)
 
@@ -45,7 +62,7 @@ def shift_object_in_inches(fig, position_inch, direction_vector, n_points):
     # Convert the shift in points to inches
     shift_inch = n_points / points_per_inch
 
-    # Calculate the shift vector in inches
+    # Calculate the shift vector in inches along the specified direction
     shift_vector_inch = direction_vector * shift_inch
 
     # Apply the shift to the original position (which is already in inches)
@@ -56,28 +73,33 @@ def shift_object_in_inches(fig, position_inch, direction_vector, n_points):
 
 def get_perpendicular_vector(point1, point2, clockwise=False):
     """
-    Computes the perpendicular vector from two endpoints.
+    Computes the perpendicular vector to the vector defined by two points.
 
-    :param point1: The first endpoint as a tuple (x1, y1)
-    :param point2: The second endpoint as a tuple (x2, y2)
-    :param clockwise: If True, returns the clockwise perpendicular vector.
-                      Otherwise, returns the counterclockwise perpendicular vector.
-    :return: The perpendicular vector as a tuple (dx, dy)
+    Args:
+        point1 (tuple of float): The first endpoint as (x1, y1).
+        point2 (tuple of float): The second endpoint as (x2, y2).
+        clockwise (bool, optional): If True, returns the clockwise perpendicular vector.
+            Otherwise, returns the counterclockwise perpendicular vector. Defaults to False.
+
+    Returns:
+        tuple of float: The perpendicular vector as (dx, dy).
     """
-    # Calculate the direction vector
+    # Calculate the direction vector from point1 to point2
     x1, y1 = point1
     x2, y2 = point2
     direction_vector = np.array([x2 - x1, y2 - y1])
 
     # Compute the perpendicular vector
     if clockwise:
+        # Rotate the direction vector by -90 degrees (clockwise)
         perpendicular_vector = np.array(
             [direction_vector[1], -direction_vector[0]]
-        )  # Clockwise
+        )  # Clockwise rotation
     else:
+        # Rotate the direction vector by +90 degrees (counterclockwise)
         perpendicular_vector = np.array(
             [-direction_vector[1], direction_vector[0]]
-        )  # Counterclockwise
+        )  # Counterclockwise rotation
 
     return tuple(perpendicular_vector)
 
@@ -93,6 +115,24 @@ class DrawArrow:
         text_alignment="center",
         vertical_text_displacement=None,
     ):
+        """
+        Initializes the DrawArrow object with arrow and text properties.
+
+        Args:
+            fig (matplotlib.figure.Figure): The matplotlib figure to draw on.
+            start_pos (tuple of float): The starting position of the arrow in inches (x, y).
+            end_pos (tuple of float): The ending position of the arrow in inches (x, y).
+            text (str, optional): The text to display alongside the arrow. Defaults to None.
+            text_position (str, optional): Position of the text relative to the arrow.
+                Options are 'center', 'start', or 'end'. Defaults to 'center'.
+            text_alignment (str, optional): Alignment of the text. Defaults to 'center'.
+            vertical_text_displacement (float or str, optional): Vertical displacement of the text in points.
+                If None or 'top', displaces the text upward by half the font size.
+                If 'bottom', displaces the text downward by half the font size.
+                If a float is provided, uses that value as the displacement.
+                Defaults to None.
+        """
+        # Initialize object properties
         self.fig = fig
         self.start_pos = start_pos
         self.end_pos = end_pos
@@ -103,27 +143,45 @@ class DrawArrow:
         self.set_vertical_text_displacement()
 
     def set_vertical_text_displacement(self):
+        """
+        Sets the vertical displacement for the text based on the provided option or value.
+        """
         if (
             self.vertical_text_displacement is None
             or self.vertical_text_displacement == "top"
         ):
-            self.vertical_text_displacement = plt.rcParams["font.size"]/2 * 1.2
-        elif self.vertical_text_diplacement == "bottom":
-            self.vertical_text_displacement = -1 * plt.rcParams["font.size"]/2 * 1.2
+            # Displace text upward by half the font size times a factor (e.g., 1.2)
+            self.vertical_text_displacement = plt.rcParams["font.size"] / 2 * 1.2
+        elif self.vertical_text_displacement == "bottom":
+            # Displace text downward by half the font size times a factor
+            self.vertical_text_displacement = -1 * plt.rcParams["font.size"] / 2 * 1.2
         else:
+            # Use the provided displacement value
             self.vertical_text_displacement = self.vertical_text_displacement
 
     def inches_to_fig_fraction(self, pos):
         """
-        Convert position from inches to figure fraction.
-        :param pos: Position in inches (tuple of x, y in inches)
-        :return: Position in figure fraction (x, y in fraction)
+        Converts a position from inches to figure fraction coordinates.
+
+        Args:
+            pos (tuple of float): Position in inches as (x, y).
+
+        Returns:
+            numpy.ndarray: Position in figure fraction coordinates as (x, y).
         """
+        # Convert position from inches to display coordinates (pixels)
         inch_pos = self.fig.dpi_scale_trans.transform(pos)
+        # Convert display coordinates to figure fraction (0 to 1)
         fig_fraction_pos = self.fig.transFigure.inverted().transform(inch_pos)
         return fig_fraction_pos
 
     def draw(self):
+        """
+        Draws the arrow and places the text on the figure.
+
+        Returns:
+            tuple: A tuple containing the arrow and text artist objects, or the arrow if no text.
+        """
         # Draw the arrow
         arrow = self.draw_arrow()
 
@@ -133,31 +191,48 @@ class DrawArrow:
         return (arrow, text_artist) if text_artist else arrow
 
     def draw_arrow(self, **arrowprops):
-        # Convert inches to figure fraction
+        """
+        Draws the arrow annotation on the figure.
+
+        Args:
+            **arrowprops: Additional properties for customizing the arrow appearance.
+
+        Returns:
+            matplotlib.text.Annotation: The arrow annotation artist object.
+        """
+        # Convert start and end positions from inches to figure fraction coordinates
         self.arrow_start_inches = self.inches_to_fig_fraction(self.start_pos)
         self.arrow_end_inches = self.inches_to_fig_fraction(self.end_pos)
 
-        # Create an annotation with an arrow
+        # Create an annotation with an arrow between the start and end positions
         arrow = plt.annotate(
-            "",
-            xy=self.arrow_end_inches,
+            "",  # No text in the annotation itself
+            xy=self.arrow_end_inches,  # End position of the arrow
             xycoords="figure fraction",
-            xytext=self.arrow_start_inches,
+            xytext=self.arrow_start_inches,  # Start position of the arrow
             textcoords="figure fraction",
-            arrowprops=dict(arrowstyle="->", **arrowprops),
+            arrowprops=dict(arrowstyle="->", **arrowprops),  # Arrow properties
         )
 
         return arrow
 
     def place_text(self, **textprops):
-        # get the position
+        """
+        Places the text on the figure at the specified position relative to the arrow.
+
+        Args:
+            **textprops: Additional text properties for customizing the text appearance.
+        """
+        # Get the base position for the text
         text_x, text_y, ha, va = self._get_text_position()
 
-        # Calculate the angle of the arrow
+        # Calculate the angle of the arrow to align the text
         angle = self.extract_angle()
 
+        # Get the perpendicular vector to the arrow direction
         perpendicular_vector = get_perpendicular_vector(self.start_pos, self.end_pos)
 
+        # Shift the text position along the perpendicular vector
         shifted_position = shift_object_in_inches(
             self.fig,
             (text_x, text_y),
@@ -165,6 +240,7 @@ class DrawArrow:
             self.vertical_text_displacement,
         )
 
+        # Place the text on the figure at the shifted position
         place_text_in_inches(
             self.fig,
             self.text,
@@ -175,22 +251,32 @@ class DrawArrow:
         )
 
     def _get_text_position(self):
+        """
+        Calculates the base position for the text based on the specified text position option.
+
+        Returns:
+            tuple: A tuple containing (text_x, text_y, horizontal_alignment, vertical_alignment).
+        """
         if self.text_position == "center":
+            # Position the text at the midpoint of the arrow
             text_x = (self.start_pos[0] + self.end_pos[0]) / 2
             text_y = (self.start_pos[1] + self.end_pos[1]) / 2
             ha = "center"
             va = "center"
         elif self.text_position == "start":
+            # Position the text at the start of the arrow
             text_x = self.start_pos[0]
             text_y = self.start_pos[1]
             ha = "center"
             va = "center"
         elif self.text_position == "end":
+            # Position the text at the end of the arrow
             text_x = self.end_pos[0]
             text_y = self.end_pos[1]
             ha = "center"
             va = "center"
         else:
+            # Raise an error if an invalid text position is specified
             raise ValueError(
                 f"Invalid text position: {self.text_position}, valid options are 'center', 'start', 'end'"
             )
@@ -198,71 +284,28 @@ class DrawArrow:
         return text_x, text_y, ha, va
 
     def get_dx_dy(self):
-        # Calculate the angle of the arrow
+        """
+        Calculates the difference in x and y coordinates between the start and end positions.
+
+        Returns:
+            tuple of float: The differences in x and y coordinates as (dx, dy).
+        """
+        # Calculate the differences in x and y
         self.dx = self.end_pos[0] - self.start_pos[0]
         self.dy = self.end_pos[1] - self.start_pos[1]
         return self.dx, self.dy
 
     def extract_angle(self):
+        """
+        Calculates the angle of the arrow in degrees.
+
+        Returns:
+            float: The angle of the arrow in degrees.
+        """
+        # Get the differences in x and y coordinates
         dx, dy = self.get_dx_dy()
 
+        # Calculate the angle in degrees using arctangent of dy/dx
         angle = np.degrees(np.arctan2(dy, dx))
 
         return angle
-
-    # def shift_perpendicular(self, position):
-    #     norm_perp_vector = self._get_perpendicular_vector()
-
-    #     # Calculate the shift in terms of the given distance
-    #     shift_vector = norm_perp_vector * self.vertical_text_displacement
-
-    #     # Calculate the new position
-    #     new_position = position + shift_vector
-
-    #     return tuple(new_position)
-
-    # def place_text(self, **textprops):
-    #     # Calculate the angle of the arrow
-    #     angle = self.extract_angle()
-
-    #     # get the text position
-    #     text_x, text_y, ha, va = self._get_text_position()
-
-    #     position = (text_x, text_y)
-
-    #     # # Shift the text perpendicular to the arrow
-    #     # position = self.shift_perpendicular((text_x, text_y))
-
-    #     # Create text at the specified position with initial settings
-    #     text_artist = plt.text(
-    #         position[0],
-    #         position[1],
-    #         self.text,
-    #         rotation=angle,
-    #         horizontalalignment="center",
-    #         verticalalignment="center",
-    #         transform=None,
-    #         **textprops,
-    #     )
-
-    #     # Draw the figure to update renderer
-    #     self.fig.canvas.draw()
-
-    #     # # Get the bounding box of the text in display coordinates
-    #     # bbox = text_artist.get_window_extent()
-
-    #     # # Calculate the adjustment needed to recenter the text
-    #     # # Since the rotation can displace the center, we adjust it back to the desired center
-    #     # bbox_center = np.array([bbox.x0 + bbox.width / 2, bbox.y0 + bbox.height / 2])
-    #     # shift = position - bbox_center
-
-    #     shift = (0, 0)
-
-    #     # Update the text position with the calculated shift
-    #     text_artist.set_x(position[0] + shift[0])
-    #     text_artist.set_y(position[1] + shift[1])
-
-    #     # Redraw the text in the new position
-    #     self.fig.canvas.draw()
-
-    #     return text_artist
