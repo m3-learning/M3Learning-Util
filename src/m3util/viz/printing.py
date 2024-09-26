@@ -1,6 +1,6 @@
 from m3util.util.IO import make_folder
-from m3util.viz.layout import labelfigs
-from m3util.viz.layout import bring_text_to_front
+from m3util.viz.text import labelfigs
+from m3util.viz.text import bring_text_to_front
 import matplotlib.pyplot as plt
 
 

@@ -11,6 +11,7 @@ from matplotlib import (
 )
 import PIL
 import io
+from m3util.viz.text import number_to_letters
 
 Path = path.Path
 PathPatch = patches.PathPatch

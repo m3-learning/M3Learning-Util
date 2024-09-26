@@ -9,78 +9,43 @@ import numpy as np
 def set_sci_notation_label(
     ax, axis="y", corner="bottom right", offset_points=None, scilimits=(0, 0), linewidth=None, stroke_color=None
 ):
-    """
-    Formats the specified axis to use scientific notation and places the exponent
-    label at a specified position relative to a corner of the axis.
-
-    Args:
-        ax (matplotlib.axes.Axes): The axis object to modify.
-        axis (str): Axis to format ('x' or 'y'). Defaults to 'y'.
-        corner (str): Corner of the axis to position the exponent label.
-                      Options are 'top left', 'top right', 'bottom left', 'bottom right'.
-                      Defaults to 'bottom right'.
-        offset_points (tuple): Offset in points (x_offset, y_offset) from the specified corner.
-                               Defaults to (5, 5).
-        scilimits (tuple): The range of exponents where scientific notation is used.
-        linewidth (int): The width of the stroke around the text. Defaults to None.
-        stroke_color (str): The color of the stroke around the text. Defaults to None.
-    """
-
     if offset_points is None:
-        # Default offset in points
         offset_points = (
             plt.rcParams["xtick.labelsize"] / 2,
             plt.rcParams["xtick.labelsize"] / 2,
         )
 
-    # Apply scientific notation formatting to the specified axis
     ax.ticklabel_format(axis=axis, style="sci", scilimits=scilimits)
 
-    # Hide the default offset text (the default scientific notation label)
     if axis == "x":
         ax.get_xaxis().get_offset_text().set_visible(False)
     else:
         ax.get_yaxis().get_offset_text().set_visible(False)
 
-    # Get the maximum value from the ticks to determine the exponent
-    if axis == "x":
-        ticks = ax.get_xticks()
-    else:
-        ticks = ax.get_yticks()
-
-    # Avoid log of zero by filtering out non-positive ticks
-    ticks = ticks[ticks != 0]
+    ticks = ax.get_xticks() if axis == "x" else ax.get_yticks()
+    ticks = ticks[ticks > 0]  # Filter out non-positive values to avoid log error
     if len(ticks) == 0:
-        exponent_axis = 0
-    else:
-        ax_max = max(abs(ticks))
-        exponent_axis = int(np.floor(np.log10(ax_max)))
+        return  # No valid ticks to calculate the exponent, skip setting the label
 
-    # Create the exponent label using LaTeX formatting
-    exponent_text = r"$\times10^{%i}$" % (exponent_axis)
+    ax_max = max(ticks)
+    exponent_axis = int(np.floor(np.log10(ax_max)))
+    exponent_text = r"$\times10^{%i}$" % exponent_axis
 
-    # Define corner positions in axis fraction coordinates
     corners = {
         "bottom left": (0, 0),
         "bottom right": (1, 0),
         "top left": (0, 1),
         "top right": (1, 1),
     }
+
     if corner not in corners:
-        raise ValueError(
-            "Invalid corner position. Choose from 'top left', 'top right', 'bottom left', 'bottom right'."
-        )
+        raise ValueError("Invalid corner position. Choose from 'top left', 'top right', 'bottom left', 'bottom right'.")
 
-    # Get the base position for the text placement
     base_x, base_y = corners[corner]
-
-    # Convert offset from points to axis fraction using the inverse transformation
-    # We need to account for the figure's DPI and size
     fig = ax.figure
     offset_x = offset_points[0] / fig.dpi / fig.get_size_inches()[0]
     offset_y = offset_points[1] / fig.dpi / fig.get_size_inches()[1]
 
-    # Adjust the position based on the corner
     if "left" in corner:
         offset_x = offset_x
     else:
@@ -90,23 +55,15 @@ def set_sci_notation_label(
     else:
         offset_y = -offset_y
 
-    # Final position after applying the offset
     text_x = base_x + offset_x
     text_y = base_y + offset_y
-    
-    if linewidth is not None and stroke_color is not None:
-        pass
-    elif stroke_color is not None:
-        linewidth = .5
-    else:
-        linewidth = None
-        
-    
-    path_effects = (
-    [patheffects.withStroke(linewidth=linewidth, foreground=stroke_color)]
-        )   
 
-    # Use ax.text() instead of annotate to directly place the text
+    path_effects_config = (
+        [patheffects.withStroke(linewidth=linewidth, foreground=stroke_color)]
+        if linewidth is not None and stroke_color is not None
+        else None
+    )
+
     ax.text(
         text_x,
         text_y,
@@ -115,7 +72,7 @@ def set_sci_notation_label(
         ha="left" if "left" in corner else "right",
         va="bottom" if "bottom" in corner else "top",
         size=plt.rcParams["xtick.labelsize"]*.6,
-        path_effects=path_effects,
+        path_effects=path_effects_config,
         zorder=1000,
     )
 
@@ -172,9 +129,10 @@ def labelfigs(
 
     # Sets up various color options
     formatting_key = {
-        "wb": dict(color="w", linewidth=0.75),
+        "wb": dict(color="w", linewidth=0.75, foreground="k"),
         "b": dict(color="k", linewidth=0),
         "w": dict(color="w", linewidth=0),
+        "bw": dict(color="k", linewidth=0.75, foreground="w"),
     }
 
     # Stores the selected option
@@ -214,7 +172,7 @@ def labelfigs(
         va=text_pos,
         ha="center",
         path_effects=[
-            patheffects.withStroke(linewidth=formatting["linewidth"], foreground="k")
+            patheffects.withStroke(linewidth=formatting["linewidth"], foreground=formatting["foreground"])
         ],
         color=formatting["color"],
         size=size,
