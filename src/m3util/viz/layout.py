@@ -560,11 +560,11 @@ def set_sci_notation_label(
         ha="left" if "left" in corner else "right",
         va="bottom" if "bottom" in corner else "top",
         size=plt.rcParams["xtick.labelsize"],
-        zorder=100,
+        zorder=np.inf,
     )
 
 
-def bring_all_text_to_front(fig, zorder=5):
+def bring_text_to_front(fig, zorder=np.inf):
     """
     Sets the zorder of all text objects in the Figure to the specified value.
 
