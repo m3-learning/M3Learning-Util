@@ -563,7 +563,7 @@ def set_sci_notation_label(
     )
 
 
-def bring_text_to_front(fig, zorder=np.inf):
+def bring_text_to_front(fig, zorder=100):
     """
     Sets the zorder of all text objects in the Figure to the specified value.
 
@@ -968,3 +968,36 @@ class FigDimConverter:
             x[2] / self.fig_width,
             x[3] / self.fig_height,
         )
+        
+def get_zorders(fig):
+    """
+    Retrieves the z-order of all objects in a given Matplotlib figure.
+
+    Parameters:
+    - fig: Matplotlib Figure object
+
+    Returns:
+    - List of tuples containing (object description, zorder)
+    """
+    zorder_list = []
+
+    # Iterate over all axes in the figure
+    for ax in fig.get_axes():
+        # Check items in axes (lines, text, etc.)
+        for item in ax.get_children():
+            desc = str(item)  # Get a string description of the item
+            try:
+                # Append description and zorder to the list
+                zorder_list.append((desc, item.get_zorder()))
+            except AttributeError:
+                # Not all elements have a zorder attribute
+                continue
+
+        # Check zorder for major and minor ticks
+        for axis in [ax.xaxis, ax.yaxis]:
+            for which in ['major', 'minor']:
+                ticks = axis.get_ticklabels(which=which)
+                for tick in ticks:
+                    zorder_list.append((f'Tick Label ({tick.get_text()})', tick.get_zorder()))
+
+    return zorder_list

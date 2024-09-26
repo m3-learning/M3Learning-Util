@@ -1,5 +1,6 @@
 from m3util.util.IO import make_folder
 from m3util.viz.layout import labelfigs
+from m3util.viz.layout import bring_text_to_front
 import matplotlib.pyplot as plt
 
 
@@ -29,6 +30,7 @@ class printer:
         basepath=None,
         label_figs=None,
         fileformats=None,
+        text_on_top=True,
         **kwargs,
     ):
         """
@@ -41,11 +43,15 @@ class printer:
             basepath (str, optional): The base path for saving the figure. If None, uses self.basepath. Defaults to None.
             label_figs (list of axes, optional): List of axes to label. If None, no axes are labeled. Defaults to None.
             fileformats (list of str, optional): List of file formats to save the figure in. If None, uses self.fileformats. Defaults to None.
+            text_on_top (bool, optional): If True, the text is placed on top of the figure. Defaults to True.
             **kwargs: Additional keyword arguments for the labelfigs function.
         """
 
         if tight_layout:
             fig.tight_layout()
+            
+        if text_on_top:
+            bring_text_to_front(fig)
 
         if basepath is None:
             basepath = self.basepath
@@ -53,6 +59,7 @@ class printer:
         if label_figs is not None:
             for i, ax in enumerate(label_figs):
                 labelfigs(ax, i, **kwargs)
+                
 
         if fileformats is None:
             fileformats = self.fileformats
