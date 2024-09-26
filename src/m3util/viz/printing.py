@@ -1,5 +1,6 @@
 from m3util.util.IO import make_folder
 from m3util.viz.layout import labelfigs
+import matplotlib.pyplot as plt
 
 
 class printer:

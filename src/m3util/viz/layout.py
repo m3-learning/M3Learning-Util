@@ -480,7 +480,6 @@ def set_sci_notation_label(
         offset_points (tuple): Offset in points (x_offset, y_offset) from the specified corner.
                                Defaults to (5, 5).
         scilimits (tuple): The range of exponents where scientific notation is used.
-
     """
 
     if offset_points is None:
@@ -528,13 +527,12 @@ def set_sci_notation_label(
             "Invalid corner position. Choose from 'top left', 'top right', 'bottom left', 'bottom right'."
         )
 
-    # Get the base position for the annotation
+    # Get the base position for the text placement
     base_x, base_y = corners[corner]
 
     # Convert offset from points to axis fraction using the inverse transformation
     # We need to account for the figure's DPI and size
     fig = ax.figure
-    transform = ax.transAxes + fig.dpi_scale_trans.inverted()
     offset_x = offset_points[0] / fig.dpi / fig.get_size_inches()[0]
     offset_y = offset_points[1] / fig.dpi / fig.get_size_inches()[1]
 
@@ -552,15 +550,16 @@ def set_sci_notation_label(
     text_x = base_x + offset_x
     text_y = base_y + offset_y
 
-    # Annotate the exponent label at the calculated position
-    ax.annotate(
+    # Use ax.text() instead of annotate to directly place the text
+    ax.text(
+        text_x,
+        text_y,
         exponent_text,
-        xy=(text_x, text_y),
-        xycoords="axes fraction",
+        transform=ax.transAxes,
         ha="left" if "left" in corner else "right",
         va="bottom" if "bottom" in corner else "top",
         size=plt.rcParams["xtick.labelsize"],
-        zorder=np.inf,
+        zorder=1000,
     )
 
 
