@@ -1,6 +1,99 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.patches import Ellipse
+from m3util.viz.layout import get_closest_point
 
+def draw_ellipse_with_arrow(ax, x_data, y_data, value, width, height, axis='x',
+                                    line_direction='horizontal', arrow_position='top',
+                                    arrow_length_frac=0.3, color='blue', linewidth=2,
+                                    arrow_props=None, ellipse_props=None):
+    """
+    Draw an ellipse with an arrow at a specific point on a line plot.
+
+    Args:
+        ax (matplotlib.axes.Axes): Matplotlib axis where the ellipse and arrow will be drawn.
+        x_data (array-like): X data points of the line plot.
+        y_data (array-like): Y data points of the line plot.
+        value (float): The x or y value at which to place the ellipse.
+        width (float): Width of the ellipse as a fraction of the x-axis range.
+        height (float): Height of the ellipse as a fraction of the y-axis range.
+        axis (str, optional): Axis to find the closest point on (default is 'x').
+        line_direction (str, optional): Direction of the line to which the ellipse and arrow are related (default is 'horizontal').
+        arrow_position (str, optional): Position to place the arrow relative to the ellipse (default is 'top').
+        arrow_length_frac (float, optional): Length of the arrow as a fraction of the axis range (default is 0.3).
+        color (str, optional): Color of the ellipse and arrow (default is 'blue').
+        linewidth (float, optional): Line width of the ellipse (default is 2).
+        arrow_props (dict, optional): Additional properties to customize the arrow appearance.
+        ellipse_props (dict, optional): Additional properties to customize the ellipse appearance.
+
+    Raises:
+        ValueError: If invalid values are provided for axis, line_direction, or arrow_position.
+    """
+    # Ensure x_data and y_data are NumPy arrays
+    x_data = np.asarray(x_data)
+    y_data = np.asarray(y_data)
+
+    # Check that x_data and y_data have the same length
+    if x_data.shape != y_data.shape:
+        raise ValueError("x_data and y_data must have the same shape.")
+
+    # Get the closest point on the line plot
+    ellipse_center = get_closest_point(x_data, y_data, value, axis=axis)
+
+    # Get axis limits for scaling dimensions and arrow length
+    x_min, x_max = ax.get_xlim()
+    y_min, y_max = ax.get_ylim()
+
+    # Calculate arrow length based on line direction
+    if line_direction == 'horizontal':
+        arrow_length = arrow_length_frac * (x_max - x_min)
+    elif line_direction == 'vertical':
+        arrow_length = arrow_length_frac * (y_max - y_min)
+    else:
+        raise ValueError("line_direction must be 'horizontal' or 'vertical'")
+
+    # Scale the width and height of the ellipse
+    width_scaled = width * (x_max - x_min)
+    height_scaled = height * (y_max - y_min)
+
+    # Set default properties for the ellipse and update with any additional properties
+    default_ellipse_props = {'edgecolor': color, 'facecolor': 'none', 'lw': linewidth}
+    if ellipse_props:
+        default_ellipse_props.update(ellipse_props)
+
+    # Draw the ellipse
+    ellipse = Ellipse(xy=ellipse_center, width=width_scaled, height=height_scaled, **default_ellipse_props)
+    ax.add_patch(ellipse)
+
+    # Calculate the start and end points of the arrow based on position and direction
+    if line_direction == 'horizontal':
+        if arrow_position == 'top':
+            start_point = (ellipse_center[0], ellipse_center[1] + height_scaled / 2)
+            end_point = (ellipse_center[0] + arrow_length, ellipse_center[1] + height_scaled / 2)
+        elif arrow_position == 'bottom':
+            start_point = (ellipse_center[0], ellipse_center[1] - height_scaled / 2)
+            end_point = (ellipse_center[0] + arrow_length, ellipse_center[1] - height_scaled / 2)
+        else:
+            raise ValueError("arrow_position must be 'top' or 'bottom'")
+    elif line_direction == 'vertical':
+        if arrow_position == 'top':
+            start_point = (ellipse_center[0] + width_scaled / 2, ellipse_center[1])
+            end_point = (ellipse_center[0] + width_scaled / 2, ellipse_center[1] + arrow_length)
+        elif arrow_position == 'bottom':
+            start_point = (ellipse_center[0] - width_scaled / 2, ellipse_center[1])
+            end_point = (ellipse_center[0] - width_scaled / 2, ellipse_center[1] + arrow_length)
+        else:
+            raise ValueError("arrow_position must be 'top' or 'bottom'")
+    else:
+        raise ValueError("line_direction must be 'horizontal' or 'vertical'")
+
+    # Set default properties for the arrow and update with any additional properties
+    default_arrow_props = {'facecolor': color, 'width': 2, 'headwidth': 10, 'headlength': 10, 'linewidth': 0}
+    if arrow_props:
+        default_arrow_props.update(arrow_props)
+
+    # Draw the arrow
+    ax.annotate('', xy=end_point, xytext=start_point, arrowprops=default_arrow_props)
 
 def place_text_in_inches(fig, text, x_inch, y_inch, angle, **textprops):
     """

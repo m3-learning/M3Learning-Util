@@ -17,6 +17,40 @@ Path = path.Path
 PathPatch = patches.PathPatch
 
 
+def get_closest_point(x_data, y_data, value, axis='x'):
+    """Get the closest point on a line plot to a provided x or y value.
+
+    Args:
+        x_data (array-like): Array of x data points.
+        y_data (array-like): Array of y data points.
+        value (float): The x or y value to find the closest point to.
+        axis (str, optional): Specify which axis to use for finding the closest point. 
+            Must be 'x' or 'y'. Defaults to 'x'.
+
+    Returns:
+        tuple: (closest_x, closest_y) The closest point on the line plot.
+
+    Raises:
+        ValueError: If the axis is not 'x' or 'y', or if x_data and y_data have different lengths.
+    """
+    # Ensure x_data and y_data are NumPy arrays
+    x_data = np.asarray(x_data)
+    y_data = np.asarray(y_data)
+
+    # Check that x_data and y_data have the same length
+    if x_data.shape != y_data.shape:
+        raise ValueError("x_data and y_data must have the same shape.")
+
+    # Find the index of the closest point
+    if axis == 'x':
+        idx = np.abs(x_data - value).argmin()
+    elif axis == 'y':
+        idx = np.abs(y_data - value).argmin()
+    else:
+        raise ValueError("axis must be 'x' or 'y'")
+
+    return x_data[idx], y_data[idx]
+
 def plot_into_graph(axg, fig, colorbar_=True, clim=None, **kwargs):
     """Given an axes and figure, it will convert the figure to an image and plot it in
 

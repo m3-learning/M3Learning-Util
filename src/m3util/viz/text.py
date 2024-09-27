@@ -1,14 +1,19 @@
 import matplotlib.pyplot as plt
 from matplotlib import (
-    path,
-    patches,
     patheffects,
 )
 import numpy as np
+import matplotlib
 
 def set_sci_notation_label(
-    ax, axis="y", corner="bottom right", offset_points=None, scilimits=(0, 0), linewidth=None, stroke_color=None
+    ax, axis="y", corner="bottom right", offset_points=None, scilimits=(0, 0), linewidth=None, stroke_color=None, write_to_axis = None,
 ):
+    
+    # allows for manually setting the axis to write to
+    if write_to_axis is None:
+        write_to_axis = ax
+        
+    
     if offset_points is None:
         offset_points = (
             plt.rcParams["xtick.labelsize"] / 2,
@@ -64,14 +69,14 @@ def set_sci_notation_label(
         else None
     )
 
-    ax.text(
+    write_to_axis.text(
         text_x,
         text_y,
         exponent_text,
         transform=ax.transAxes,
         ha="left" if "left" in corner else "right",
         va="bottom" if "bottom" in corner else "top",
-        size=plt.rcParams["xtick.labelsize"]*.6,
+        size=plt.rcParams["xtick.labelsize"]*.85,
         path_effects=path_effects_config,
         zorder=1000,
     )
