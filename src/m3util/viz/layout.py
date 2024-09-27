@@ -771,3 +771,132 @@ def get_zorders(fig):
                     zorder_list.append((f'Tick Label ({tick.get_text()})', tick.get_zorder()))
 
     return zorder_list
+
+def draw_line_with_text(ax, x_data, y_data, value, axis='x', span='full', text='', text_offset=5, zorder=2, **kwargs):
+    """
+    Draw a horizontal or vertical line on a plot, either spanning the axis or between the closest two data points,
+    with optional text offset by a fixed number of points perpendicular to the line.
+
+    Args:
+        ax (matplotlib.axes.Axes): The axis to draw on.
+        x_data (array-like): The x data points of the plot.
+        y_data (array-like): The y data points of the plot.
+        value (float): The x or y value at which to draw the line.
+        axis (str, optional): Specifies whether to draw a vertical ('x') or horizontal ('y') line (default is 'x').
+        span (str, optional): Specifies whether the line spans the full axis ('full') or between the closest two data points ('data').
+        text (str, optional): Text to place near the line.
+        text_offset (float, optional): Offset in points perpendicular to the line for the text (default is 5).
+        zorder (int or float, optional): The z-order of the line and text (default is 2).
+        **kwargs: Additional keyword arguments passed to the line drawing function (e.g., color, linewidth).
+
+    Raises:
+        ValueError: If invalid values are provided for axis or span.
+    """
+    # Ensure x_data and y_data are NumPy arrays
+    x_data = np.asarray(x_data)
+    y_data = np.asarray(y_data)
+
+    # Validate axis parameter
+    if axis not in ['x', 'y']:
+        raise ValueError("axis must be 'x' or 'y'")
+
+    # Validate span parameter
+    if span not in ['full', 'data']:
+        raise ValueError("span must be 'full' or 'data'")
+
+    # Get axis limits
+    x_min, x_max = ax.get_xlim()
+    y_min, y_max = ax.get_ylim()
+
+    # Initialize line start and end points
+    if span == 'full':
+        if axis == 'x':
+            # Vertical line spanning full y-axis
+            line_x = [value, value]
+            line_y = [y_min, y_max]
+        else:
+            # Horizontal line spanning full x-axis
+            line_x = [x_min, x_max]
+            line_y = [value, value]
+    else:
+        # Span between closest data points
+        if axis == 'x':
+            # Vertical line between two y-values at closest x-values to 'value'
+            idx_below = np.where(x_data <= value)[0]
+            idx_above = np.where(x_data >= value)[0]
+
+            if idx_below.size == 0 or idx_above.size == 0:
+                raise ValueError("Value is outside the range of x_data.")
+
+            idx1 = idx_below[-1]
+            idx2 = idx_above[0]
+
+            y1 = y_data[idx1]
+            y2 = y_data[idx2]
+
+            line_x = [value, value]
+            line_y = [y1, y2]
+        else:
+            # Horizontal line between two x-values at closest y-values to 'value'
+            idx_below = np.where(y_data <= value)[0]
+            idx_above = np.where(y_data >= value)[0]
+
+            if idx_below.size == 0 or idx_above.size == 0:
+                raise ValueError("Value is outside the range of y_data.")
+
+            idx1 = idx_below[-1]
+            idx2 = idx_above[0]
+
+            x1 = x_data[idx1]
+            x2 = x_data[idx2]
+
+            line_x = [x1, x2]
+            line_y = [value, value]
+
+    # Set zorder in line properties
+    line_kwargs = kwargs.copy()
+    line_kwargs['zorder'] = zorder
+
+    # Draw the line
+    line = ax.plot(line_x, line_y, **line_kwargs)
+
+    # Add text if provided
+    if text:
+        # Calculate the midpoint of the line
+        mid_x = np.mean(line_x)
+        mid_y = np.mean(line_y)
+
+        # Set text alignment and offsets
+        if axis == 'x':
+            # Vertical line, so offset text horizontally
+            text_x = value
+            text_y = mid_y
+            ha = 'left' if text_offset >= 0 else 'right'
+            va = 'center'
+            ax.annotate(
+                text,
+                xy=(text_x, text_y),
+                xycoords='data',
+                xytext=(text_offset, 0),
+                textcoords='offset points',
+                ha=ha,
+                va=va,
+                zorder=zorder
+            )
+        else:
+            # Horizontal line, so offset text vertically
+            text_x = mid_x
+            text_y = value
+            ha = 'center'
+            va = 'bottom' if text_offset >= 0 else 'top'
+            ax.annotate(
+                text,
+                xy=(text_x, text_y),
+                xycoords='data',
+                xytext=(0, text_offset),
+                textcoords='offset points',
+                ha=ha,
+                va=va,
+                zorder=zorder
+            )
+
