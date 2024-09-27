@@ -6,7 +6,7 @@ from m3util.viz.layout import get_closest_point
 def draw_ellipse_with_arrow(ax, x_data, y_data, value, width, height, axis='x',
                                     line_direction='horizontal', arrow_position='top',
                                     arrow_length_frac=0.3, color='blue', linewidth=2,
-                                    arrow_props=None, ellipse_props=None):
+                                    arrow_props=None, ellipse_props=None, arrow_direction = 'positive'):
     """
     Draw an ellipse with an arrow at a specific point on a line plot.
 
@@ -25,6 +25,7 @@ def draw_ellipse_with_arrow(ax, x_data, y_data, value, width, height, axis='x',
         linewidth (float, optional): Line width of the ellipse (default is 2).
         arrow_props (dict, optional): Additional properties to customize the arrow appearance.
         ellipse_props (dict, optional): Additional properties to customize the ellipse appearance.
+        arrow_direction (str, optional): Direction of the arrow (default is 'positive').
 
     Raises:
         ValueError: If invalid values are provided for axis, line_direction, or arrow_position.
@@ -47,8 +48,12 @@ def draw_ellipse_with_arrow(ax, x_data, y_data, value, width, height, axis='x',
     # Calculate arrow length based on line direction
     if line_direction == 'horizontal':
         arrow_length = arrow_length_frac * (x_max - x_min)
+        if arrow_direction == 'negative':
+            arrow_length = -arrow_length
     elif line_direction == 'vertical':
         arrow_length = arrow_length_frac * (y_max - y_min)
+        if arrow_direction == 'negative':
+            arrow_length = -arrow_length
     else:
         raise ValueError("line_direction must be 'horizontal' or 'vertical'")
 

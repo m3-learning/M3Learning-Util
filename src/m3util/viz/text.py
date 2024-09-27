@@ -34,6 +34,8 @@ def set_sci_notation_label(
 
     ax_max = max(ticks)
     exponent_axis = int(np.floor(np.log10(ax_max)))
+    if exponent_axis == 0:
+        return None # No need to display exponent if it is 0
     exponent_text = r"$\times10^{%i}$" % exponent_axis
 
     corners = {
