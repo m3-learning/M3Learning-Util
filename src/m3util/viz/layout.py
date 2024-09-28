@@ -1,5 +1,5 @@
 from matplotlib.patches import ConnectionPatch
-import matplotlib
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from itertools import product
@@ -11,20 +11,21 @@ from matplotlib import (
 )
 import PIL
 import io
-from m3util.viz.text import number_to_letters
+from m3util.viz.text import text_offset
+from m3util.util.kwargs import _filter_kwargs
 
 Path = path.Path
 PathPatch = patches.PathPatch
 
 
-def get_closest_point(x_data, y_data, value, axis='x'):
+def get_closest_point(x_data, y_data, value, axis="x"):
     """Get the closest point on a line plot to a provided x or y value.
 
     Args:
         x_data (array-like): Array of x data points.
         y_data (array-like): Array of y data points.
         value (float): The x or y value to find the closest point to.
-        axis (str, optional): Specify which axis to use for finding the closest point. 
+        axis (str, optional): Specify which axis to use for finding the closest point.
             Must be 'x' or 'y'. Defaults to 'x'.
 
     Returns:
@@ -42,14 +43,15 @@ def get_closest_point(x_data, y_data, value, axis='x'):
         raise ValueError("x_data and y_data must have the same shape.")
 
     # Find the index of the closest point
-    if axis == 'x':
+    if axis == "x":
         idx = np.abs(x_data - value).argmin()
-    elif axis == 'y':
+    elif axis == "y":
         idx = np.abs(y_data - value).argmin()
     else:
         raise ValueError("axis must be 'x' or 'y'")
 
     return x_data[idx], y_data[idx]
+
 
 def plot_into_graph(axg, fig, colorbar_=True, clim=None, **kwargs):
     """Given an axes and figure, it will convert the figure to an image and plot it in
@@ -116,8 +118,6 @@ def subfigures(
     ax.reverse()
 
     return fig, ax
-
-
 
 
 def add_box(axs, pos, **kwargs):
@@ -219,9 +219,6 @@ def subfigures(
     ax.reverse()
 
     return fig, ax
-
-
-
 
 
 def add_box(axs, pos, **kwargs):
@@ -452,8 +449,6 @@ def combine_lines(*args):
         labels += label
 
     return lines, labels
-
-
 
 
 def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
@@ -738,7 +733,8 @@ class FigDimConverter:
             x[2] / self.fig_width,
             x[3] / self.fig_height,
         )
-        
+
+
 def get_zorders(fig):
     """
     Retrieves the z-order of all objects in a given Matplotlib figure.
@@ -765,14 +761,28 @@ def get_zorders(fig):
 
         # Check zorder for major and minor ticks
         for axis in [ax.xaxis, ax.yaxis]:
-            for which in ['major', 'minor']:
+            for which in ["major", "minor"]:
                 ticks = axis.get_ticklabels(which=which)
                 for tick in ticks:
-                    zorder_list.append((f'Tick Label ({tick.get_text()})', tick.get_zorder()))
+                    zorder_list.append(
+                        (f"Tick Label ({tick.get_text()})", tick.get_zorder())
+                    )
 
     return zorder_list
 
-def draw_line_with_text(ax, x_data, y_data, value, axis='x', span='full', text='', text_offset=5, zorder=2, **kwargs):
+
+def draw_line_with_text(
+    ax,
+    x_data,
+    y_data,
+    value,
+    axis="x",
+    span="full",
+    text="",
+    zorder=2,
+    line_kwargs={},
+    annotation_kwargs={},
+):
     """
     Draw a horizontal or vertical line on a plot, either spanning the axis or between the closest two data points,
     with optional text offset by a fixed number of points perpendicular to the line.
@@ -785,7 +795,6 @@ def draw_line_with_text(ax, x_data, y_data, value, axis='x', span='full', text='
         axis (str, optional): Specifies whether to draw a vertical ('x') or horizontal ('y') line (default is 'x').
         span (str, optional): Specifies whether the line spans the full axis ('full') or between the closest two data points ('data').
         text (str, optional): Text to place near the line.
-        text_offset (float, optional): Offset in points perpendicular to the line for the text (default is 5).
         zorder (int or float, optional): The z-order of the line and text (default is 2).
         **kwargs: Additional keyword arguments passed to the line drawing function (e.g., color, linewidth).
 
@@ -797,11 +806,11 @@ def draw_line_with_text(ax, x_data, y_data, value, axis='x', span='full', text='
     y_data = np.asarray(y_data)
 
     # Validate axis parameter
-    if axis not in ['x', 'y']:
+    if axis not in ["x", "y"]:
         raise ValueError("axis must be 'x' or 'y'")
 
     # Validate span parameter
-    if span not in ['full', 'data']:
+    if span not in ["full", "axis", "data"]:
         raise ValueError("span must be 'full' or 'data'")
 
     # Get axis limits
@@ -809,8 +818,8 @@ def draw_line_with_text(ax, x_data, y_data, value, axis='x', span='full', text='
     y_min, y_max = ax.get_ylim()
 
     # Initialize line start and end points
-    if span == 'full':
-        if axis == 'x':
+    if span == "full":
+        if axis == "x":
             # Vertical line spanning full y-axis
             line_x = [value, value]
             line_y = [y_min, y_max]
@@ -818,9 +827,12 @@ def draw_line_with_text(ax, x_data, y_data, value, axis='x', span='full', text='
             # Horizontal line spanning full x-axis
             line_x = [x_min, x_max]
             line_y = [value, value]
+    elif span == "axis":
+        connect_to = line_kwargs.get("connect_to", "left")
+        line_x, line_y = span_to_axis(ax, value, x_data, y_data, connect_to=connect_to)
     else:
         # Span between closest data points
-        if axis == 'x':
+        if axis == "x":
             # Vertical line between two y-values at closest x-values to 'value'
             idx_below = np.where(x_data <= value)[0]
             idx_above = np.where(x_data >= value)[0]
@@ -854,49 +866,109 @@ def draw_line_with_text(ax, x_data, y_data, value, axis='x', span='full', text='
             line_y = [value, value]
 
     # Set zorder in line properties
-    line_kwargs = kwargs.copy()
-    line_kwargs['zorder'] = zorder
+    line_kwargs["zorder"] = zorder
 
     # Draw the line
     line = ax.plot(line_x, line_y, **line_kwargs)
 
     # Add text if provided
     if text:
+        # Set text alignment
+        ha = annotation_kwargs.get("ha", "center")
+        va = annotation_kwargs.get("va", "center")
+
+        # offset text
+
         # Calculate the midpoint of the line
         mid_x = np.mean(line_x)
         mid_y = np.mean(line_y)
+        
+        xytext = (0, 0)
+        
+        filtered_kwargs = _filter_kwargs(ax.annotate, annotation_kwargs)
 
-        # Set text alignment and offsets
-        if axis == 'x':
-            # Vertical line, so offset text horizontally
-            text_x = value
-            text_y = mid_y
-            ha = 'left' if text_offset >= 0 else 'right'
-            va = 'center'
-            ax.annotate(
-                text,
-                xy=(text_x, text_y),
-                xycoords='data',
-                xytext=(text_offset, 0),
-                textcoords='offset points',
-                ha=ha,
-                va=va,
-                zorder=zorder
-            )
+        # Vertical line, so offset text horizontally
+        ax.annotate(
+            text,
+            xy=(mid_x, mid_y),
+            xycoords="data",
+            xytext=text_offset(xytext, **annotation_kwargs),
+            textcoords="offset points",
+            ha=ha,
+            va=va,
+            zorder=zorder,
+            **filtered_kwargs,
+        )
+
+        # # Set text alignment and offsets
+        # if axis == 'x':
+        #     # Vertical line, so offset text horizontally
+        #     text_x = value
+        #     text_y = mid_y
+        #     ha = 'left' if text_offset >= 0 else 'right'
+        #     va = 'center'
+        #     ax.annotate(
+        #         text,
+        #         xy=(text_x, text_y),
+        #         xycoords='data',
+        #         xytext=(text_offset, 0),
+        #         textcoords='offset points',
+        #         ha=ha,
+        #         va=va,
+        #         zorder=zorder
+        #     )
+        # else:
+        #     # Horizontal line, so offset text vertically
+        #     text_x = mid_x
+        #     text_y = value
+        #     ha = 'center'
+        #     va = 'bottom' if text_offset >= 0 else 'top'
+        #     ax.annotate(
+        #         text,
+        #         xy=(text_x, text_y),
+        #         xycoords='data',
+        #         xytext=(0, text_offset),
+        #         textcoords='offset points',
+        #         ha=ha,
+        #         va=va,
+        #         zorder=zorder
+        #     )
+
+
+def span_to_axis(ax, value, x_data, y_data, connect_to="left"):
+    # Get axis limits
+    x_min, x_max = ax.get_xlim()
+    y_min, y_max = ax.get_ylim()
+
+    # Span between closest data points
+    if connect_to == "left" or connect_to == "right":
+        x_, y_ = get_closest_point(x_data, y_data, value, axis="x")
+
+        # Determine which axis to connect to
+        if connect_to == "left":
+            line_x = [x_, x_min]  # Connect to left y-axis
+            line_y = [y_, y_]
+        elif connect_to == "right":
+            line_x = [x_, x_max]  # Connect to right y-axis
+            line_y = [y_, y_]
         else:
-            # Horizontal line, so offset text vertically
-            text_x = mid_x
-            text_y = value
-            ha = 'center'
-            va = 'bottom' if text_offset >= 0 else 'top'
-            ax.annotate(
-                text,
-                xy=(text_x, text_y),
-                xycoords='data',
-                xytext=(0, text_offset),
-                textcoords='offset points',
-                ha=ha,
-                va=va,
-                zorder=zorder
-            )
+            raise ValueError("Invalid connect_to value. Choose 'left', 'right'")
+    elif connect_to == "bottom" or connect_to == "top":
+        x_, y_ = get_closest_point(x_data, y_data, value, axis="y")
+
+        if connect_to == "bottom":
+            line_x = [x_, x_]
+            line_y = [y_, y_min]  # Connect to bottom x-axis
+        elif connect_to == "top":
+            line_x = [x_, x_]
+            line_y = [y_, y_max]  # Connect to top x-axis
+        else:
+            raise ValueError("Invalid connect_to value. Choose 'bottom', 'top'")
+    else:
+        raise ValueError(
+            "Invalid connect_to value. Choose 'left', 'right', 'bottom', 'top'"
+        )
+    return line_x, line_y
+
+
 

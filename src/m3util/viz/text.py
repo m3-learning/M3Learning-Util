@@ -231,3 +231,72 @@ def add_text_to_figure(fig, text, text_position_in_inches, **kwargs):
 
     # Add the text to the figure with the calculated relative position
     fig.text(text_position_relative[0], text_position_relative[1], text, **kwargs)
+
+def text_offset(
+    xy, text_offset= None, text_offset_units="fontsize", ax=None, **kwargs
+):
+    """
+    Annotate a point on the plot with an offset applied to the text position.
+
+    Parameters:
+        ax (matplotlib.axes.Axes): The axes to annotate on.
+        text (str): The annotation text.
+        xy (tuple): The (x, y) position to annotate.
+        text_offset (str): Direction to offset the text ('left', 'right', 'up', 'down').
+        text_offset_units (str): The units for the offset ('fontsize', 'inches', 'points'). Default is 'fontsize'.
+    """
+
+    # Get the default font size in points
+    fontsize = plt.rcParams["font.size"]/2*1.2
+    
+    print(text_offset)
+
+    if type(text_offset) is str:
+        # Default offset: move by fontsize in the specified direction
+        if text_offset_units == "fontsize":
+            offset_x = (
+                fontsize
+                if text_offset == "right"
+                else -fontsize
+                if text_offset == "left"
+                else 0
+            )
+            offset_y = (
+                fontsize
+                if text_offset == "up"
+                else -fontsize
+                if text_offset == "down"
+                else 0
+            )
+        else:
+            raise ValueError(
+                "Please provide offset in 'fontsize' units or provide an explicit offset tuple."
+            )
+    elif type(text_offset) is tuple:
+        # Apply custom offset in inches or points
+        offset_x, offset_y = text_offset
+
+        if text_offset_units == "inches":
+            if ax is None:
+                raise ValueError(
+                    "Please provide an axes object when using 'inches' units.")
+                
+            # Convert inches to display coordinates
+            offset_x = ax.figure.dpi * offset_x
+            offset_y = ax.figure.dpi * offset_y
+        elif text_offset_units == "points":
+            # Use the provided values directly in points
+            pass
+        else:
+            raise ValueError("Units must be 'fontsize', 'inches', or 'points'.")
+    else:
+        offset_y = 0
+        offset_x = 0
+
+    # Calculate new text position based on offset
+    new_x = xy[0] + offset_x
+    new_y = xy[1] + offset_y
+    
+    print(new_x, new_y)
+
+    return (new_x, new_y)
