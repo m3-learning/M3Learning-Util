@@ -212,24 +212,11 @@ class DrawArrow:
         text_position="center",
         text_alignment="center",
         vertical_text_displacement=None,
+        units="inches",
+        scale="figure fraction",
+        arrow_props = dict(arrowstyle="->")
     ):
-        """
-        Initializes the DrawArrow object with arrow and text properties.
-
-        Args:
-            fig (matplotlib.figure.Figure): The matplotlib figure to draw on.
-            start_pos (tuple of float): The starting position of the arrow in inches (x, y).
-            end_pos (tuple of float): The ending position of the arrow in inches (x, y).
-            text (str, optional): The text to display alongside the arrow. Defaults to None.
-            text_position (str, optional): Position of the text relative to the arrow.
-                Options are 'center', 'start', or 'end'. Defaults to 'center'.
-            text_alignment (str, optional): Alignment of the text. Defaults to 'center'.
-            vertical_text_displacement (float or str, optional): Vertical displacement of the text in points.
-                If None or 'top', displaces the text upward by half the font size.
-                If 'bottom', displaces the text downward by half the font size.
-                If a float is provided, uses that value as the displacement.
-                Defaults to None.
-        """
+       
         # Initialize object properties
         self.fig = fig
         self.start_pos = start_pos
@@ -238,6 +225,9 @@ class DrawArrow:
         self.text_position = text_position
         self.text_alignment = text_alignment
         self.vertical_text_displacement = vertical_text_displacement
+        self.units = units
+        self.scale = scale
+        self.arrow_props = arrow_props
         self.set_vertical_text_displacement()
 
     def set_vertical_text_displacement(self):
@@ -301,15 +291,15 @@ class DrawArrow:
         # Convert start and end positions from inches to figure fraction coordinates
         self.arrow_start_inches = self.inches_to_fig_fraction(self.start_pos)
         self.arrow_end_inches = self.inches_to_fig_fraction(self.end_pos)
-
+        
         # Create an annotation with an arrow between the start and end positions
         arrow = plt.annotate(
             "",  # No text in the annotation itself
             xy=self.arrow_end_inches,  # End position of the arrow
-            xycoords="figure fraction",
+            xycoords=self.scale,
             xytext=self.arrow_start_inches,  # Start position of the arrow
-            textcoords="figure fraction",
-            arrowprops=dict(arrowstyle="->", **arrowprops),  # Arrow properties
+            textcoords=self.scale,
+            arrowprops=self.arrow_props,  # Arrow properties
         )
 
         return arrow
