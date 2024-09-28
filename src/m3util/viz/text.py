@@ -4,6 +4,8 @@ from matplotlib import (
 )
 import numpy as np
 import matplotlib
+from m3util.util.kwargs import _filter_kwargs
+
 
 def set_sci_notation_label(
     ax, axis="y", corner="bottom right", offset_points=None, scilimits=(0, 0), linewidth=None, stroke_color=None, write_to_axis = None,
@@ -300,3 +302,32 @@ def text_offset(
     print(new_x, new_y)
 
     return (new_x, new_y)
+
+def line_annotation(ax, text, line_x, line_y, annotation_kwargs, zorder=100):
+    
+    # Set text alignment
+    ha = annotation_kwargs.get("ha", "center")
+    va = annotation_kwargs.get("va", "center")
+
+    # offset text
+
+    # Calculate the midpoint of the line
+    mid_x = np.mean(line_x)
+    mid_y = np.mean(line_y)
+
+    xytext = (0, 0)
+
+    filtered_kwargs = _filter_kwargs(ax.annotate, annotation_kwargs)
+
+    # Vertical line, so offset text horizontally
+    ax.annotate(
+        text,
+        xy=(mid_x, mid_y),
+        xycoords="data",
+        xytext=text_offset(xytext, **annotation_kwargs),
+        textcoords="offset points",
+        ha=ha,
+        va=va,
+        zorder=zorder,
+        **filtered_kwargs,
+    )
