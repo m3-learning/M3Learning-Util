@@ -209,6 +209,7 @@ class DrawArrow:
         start_pos,
         end_pos,
         text=None,
+        ax = None,
         text_position="center",
         text_alignment="center",
         vertical_text_displacement=None,
@@ -216,6 +217,11 @@ class DrawArrow:
         scale="figure fraction",
         arrow_props = dict(arrowstyle="->")
     ):
+        
+        if ax is None:
+            self.ax = plt
+        else:
+            self.ax = ax
        
         # Initialize object properties
         self.fig = fig
@@ -293,7 +299,7 @@ class DrawArrow:
         self.arrow_end_inches = self.inches_to_fig_fraction(self.end_pos)
         
         # Create an annotation with an arrow between the start and end positions
-        arrow = plt.annotate(
+        arrow = self.ax.annotate(
             "",  # No text in the annotation itself
             xy=self.arrow_end_inches,  # End position of the arrow
             xycoords=self.scale,
