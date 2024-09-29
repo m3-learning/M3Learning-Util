@@ -135,6 +135,30 @@ def place_text_in_inches(fig, text, x_inch, y_inch, angle, **textprops):
 
     return text_artist
 
+def shift_object_in_points(fig, position_pts, direction_vector, n_points):
+    """
+    Shifts a position by a specified number of points along a given vector direction, returning the new position in points.
+
+    Args:
+        fig (matplotlib.figure.Figure): The matplotlib figure, used to get the DPI for point-to-inch conversion.
+        position_pts (tuple of float): The starting position in points as (x, y).
+        direction_vector (tuple of float): The direction vector for the shift as (dx, dy).
+        n_points (float): The number of points to shift along the direction vector.
+
+    Returns:
+        tuple of float: The new position in points as (x, y).
+    """
+    # Normalize the direction vector to get the unit direction
+    direction_vector = np.array(direction_vector)
+    direction_vector = direction_vector / np.linalg.norm(direction_vector)
+
+    # Calculate the shift vector in points along the specified direction
+    shift_vector_pts = direction_vector * n_points
+
+    # Apply the shift to the original position (which is already in points)
+    new_position_pts = np.array(position_pts) + shift_vector_pts
+
+    return tuple(new_position_pts)
 
 def shift_object_in_inches(fig, position_inch, direction_vector, n_points):
     """
@@ -215,7 +239,7 @@ class DrawArrow:
         vertical_text_displacement=None,
         units="inches",
         scale="figure fraction",
-        arrow_props = dict(arrowstyle="->")
+        arrow_props = dict(arrowstyle="->"),
     ):
         
         if ax is None:
@@ -269,7 +293,7 @@ class DrawArrow:
         fig_fraction_pos = self.fig.transFigure.inverted().transform(inch_pos)
         return fig_fraction_pos
 
-    def draw(self):
+    def draw(self, arrowprops={}):
         """
         Draws the arrow and places the text on the figure.
 
@@ -277,7 +301,7 @@ class DrawArrow:
             tuple: A tuple containing the arrow and text artist objects, or the arrow if no text.
         """
         # Draw the arrow
-        arrow = self.draw_arrow()
+        arrow = self.draw_arrow(**arrowprops)
 
         # Place the text if it exists
         text_artist = self.place_text() if self.text else None
@@ -294,17 +318,22 @@ class DrawArrow:
         Returns:
             matplotlib.text.Annotation: The arrow annotation artist object.
         """
-        # Convert start and end positions from inches to figure fraction coordinates
-        self.arrow_start_inches = self.inches_to_fig_fraction(self.start_pos)
-        self.arrow_end_inches = self.inches_to_fig_fraction(self.end_pos)
         
+        if self.units == "inches":
+            # Convert start and end positions from inches to figure fraction coordinates
+            self.arrow_start_inches = self.inches_to_fig_fraction(self.start_pos)
+            self.arrow_end_inches = self.inches_to_fig_fraction(self.end_pos)
+        else:
+            self.arrow_start_inches = self.start_pos
+            self.arrow_end_inches = self.end_pos
+        
+        print(self.arrow_start_inches, self.arrow_end_inches)
         # Create an annotation with an arrow between the start and end positions
         arrow = self.ax.annotate(
             "",  # No text in the annotation itself
             xy=self.arrow_end_inches,  # End position of the arrow
             xycoords=self.scale,
             xytext=self.arrow_start_inches,  # Start position of the arrow
-            textcoords=self.scale,
             arrowprops=self.arrow_props,  # Arrow properties
         )
 
@@ -326,13 +355,16 @@ class DrawArrow:
         # Get the perpendicular vector to the arrow direction
         perpendicular_vector = get_perpendicular_vector(self.start_pos, self.end_pos)
 
-        # Shift the text position along the perpendicular vector
-        shifted_position = shift_object_in_inches(
-            self.fig,
-            (text_x, text_y),
-            perpendicular_vector,
-            self.vertical_text_displacement,
-        )
+        if self.units == "inches":
+            # Shift the text position along the perpendicular vector
+            shifted_position = shift_object_in_inches(
+                self.fig,
+                (text_x, text_y),
+                perpendicular_vector,
+                self.vertical_text_displacement,
+            )
+        elif self.units == "points":
+            pass
 
         # Place the text on the figure at the shifted position
         place_text_in_inches(

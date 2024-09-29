@@ -8,14 +8,19 @@ from m3util.util.kwargs import _filter_kwargs
 
 
 def set_sci_notation_label(
-    ax, axis="y", corner="bottom right", offset_points=None, scilimits=(0, 0), linewidth=None, stroke_color=None, write_to_axis = None,
+    ax,
+    axis="y",
+    corner="bottom right",
+    offset_points=None,
+    scilimits=(0, 0),
+    linewidth=None,
+    stroke_color=None,
+    write_to_axis=None,
 ):
-    
     # allows for manually setting the axis to write to
     if write_to_axis is None:
         write_to_axis = ax
-        
-    
+
     if offset_points is None:
         offset_points = (
             plt.rcParams["xtick.labelsize"] / 2,
@@ -37,7 +42,7 @@ def set_sci_notation_label(
     ax_max = max(ticks)
     exponent_axis = int(np.floor(np.log10(ax_max)))
     if exponent_axis == 0:
-        return None # No need to display exponent if it is 0
+        return None  # No need to display exponent if it is 0
     exponent_text = r"$\times10^{%i}$" % exponent_axis
 
     corners = {
@@ -48,7 +53,9 @@ def set_sci_notation_label(
     }
 
     if corner not in corners:
-        raise ValueError("Invalid corner position. Choose from 'top left', 'top right', 'bottom left', 'bottom right'.")
+        raise ValueError(
+            "Invalid corner position. Choose from 'top left', 'top right', 'bottom left', 'bottom right'."
+        )
 
     base_x, base_y = corners[corner]
     fig = ax.figure
@@ -80,7 +87,7 @@ def set_sci_notation_label(
         transform=ax.transAxes,
         ha="left" if "left" in corner else "right",
         va="bottom" if "bottom" in corner else "top",
-        size=plt.rcParams["xtick.labelsize"]*.85,
+        size=plt.rcParams["xtick.labelsize"] * 0.85,
         path_effects=path_effects_config,
         zorder=1000,
     )
@@ -181,7 +188,9 @@ def labelfigs(
         va=text_pos,
         ha="center",
         path_effects=[
-            patheffects.withStroke(linewidth=formatting["linewidth"], foreground=formatting["foreground"])
+            patheffects.withStroke(
+                linewidth=formatting["linewidth"], foreground=formatting["foreground"]
+            )
         ],
         color=formatting["color"],
         size=size,
@@ -234,77 +243,91 @@ def add_text_to_figure(fig, text, text_position_in_inches, **kwargs):
     # Add the text to the figure with the calculated relative position
     fig.text(text_position_relative[0], text_position_relative[1], text, **kwargs)
 
-def text_offset(
-    xy, text_offset= None, text_offset_units="fontsize", ax=None, **kwargs
+
+def obj_offset(
+    xy, offset=None, offset_units="fontsize", ax=None, **kwargs
 ):
     """
-    Annotate a point on the plot with an offset applied to the text position.
+    Offset a point on the plot based on the specified units.
 
     Parameters:
-        ax (matplotlib.axes.Axes): The axes to annotate on.
-        text (str): The annotation text.
-        xy (tuple): The (x, y) position to annotate.
-        text_offset (str): Direction to offset the text ('left', 'right', 'up', 'down').
-        text_offset_units (str): The units for the offset ('fontsize', 'inches', 'points'). Default is 'fontsize'.
+        xy (tuple): The (x, y) position of the object.
+        offset (tuple or str): Offset values in (offset_x, offset_y) or direction ('left', 'right', 'up', 'down').
+        offset_units (str): The units for the offset ('fontsize', 'inches', 'points', 'fraction'). Default is 'fontsize'.
+        fraction (tuple): Fraction of axis range to offset (fraction_x, fraction_y). Only used if offset_units is 'fraction'.
+        ax (matplotlib.axes.Axes): The axes to annotate on. Needed for 'inches' or 'fraction' units.
     """
 
     # Get the default font size in points
-    fontsize = plt.rcParams["font.size"]/2*1.2
-    
-    print(text_offset)
+    fontsize = plt.rcParams["font.size"] / 2 * 1.2
 
-    if type(text_offset) is str:
-        # Default offset: move by fontsize in the specified direction
-        if text_offset_units == "fontsize":
+    # Default axis is required for 'inches' or 'fraction' units
+    if ax is None and offset_units in ["inches", "fraction"]:
+        raise ValueError(
+            "Please provide an axes object when using 'inches' or 'fraction' units."
+        )
+
+    # Handle string-based offset directions
+    if isinstance(offset, str):
+        # Offset based on fontsize in the specified direction
+        if offset_units == "fontsize":
             offset_x = (
-                fontsize
-                if text_offset == "right"
-                else -fontsize
-                if text_offset == "left"
-                else 0
+                fontsize if offset == "right" else -fontsize if offset == "left" else 0
             )
             offset_y = (
-                fontsize
-                if text_offset == "up"
-                else -fontsize
-                if text_offset == "down"
-                else 0
+                fontsize if offset == "up" else -fontsize if offset == "down" else 0
             )
         else:
             raise ValueError(
                 "Please provide offset in 'fontsize' units or provide an explicit offset tuple."
             )
-    elif type(text_offset) is tuple:
-        # Apply custom offset in inches or points
-        offset_x, offset_y = text_offset
 
-        if text_offset_units == "inches":
-            if ax is None:
-                raise ValueError(
-                    "Please provide an axes object when using 'inches' units.")
-                
-            # Convert inches to display coordinates
+    elif isinstance(offset, tuple):
+        # Custom offset in inches, points, or fraction of axis
+        offset_x, offset_y = offset
+
+        if offset_units == "inches":
+            # Convert inches to display coordinates using the figure's DPI
             offset_x = ax.figure.dpi * offset_x
             offset_y = ax.figure.dpi * offset_y
-        elif text_offset_units == "points":
-            # Use the provided values directly in points
+
+        elif offset_units == "points":
+            # Points are already the unit, so we don't modify the offset_x or offset_y
             pass
+
+        elif offset_units == "fraction":
+            # Fraction of axis, based on the axis data range
+            x_range = ax.get_xlim()
+            y_range = ax.get_ylim()
+
+            # Apply custom fraction offsets if provided
+            offset_x = offset[0] * (
+                x_range[1] - x_range[0]
+            )  # Fraction of x-axis range
+            offset_y = offset[1] * (
+                y_range[1] - y_range[0]
+            )  # Fraction of y-axis range
+
         else:
-            raise ValueError("Units must be 'fontsize', 'inches', or 'points'.")
+            raise ValueError(
+                "Units must be 'fontsize', 'inches', 'points', or 'fraction'."
+            )
+
     else:
+        # No valid offset, set to zero
         offset_y = 0
         offset_x = 0
 
-    # Calculate new text position based on offset
+    # Calculate new object position based on offset
     new_x = xy[0] + offset_x
     new_y = xy[1] + offset_y
-    
-    print(new_x, new_y)
+
+    print(f"New object position: ({new_x}, {new_y})")
 
     return (new_x, new_y)
 
+
 def line_annotation(ax, text, line_x, line_y, annotation_kwargs, zorder=100):
-    
     # Set text alignment
     ha = annotation_kwargs.get("ha", "center")
     va = annotation_kwargs.get("va", "center")
@@ -324,7 +347,7 @@ def line_annotation(ax, text, line_x, line_y, annotation_kwargs, zorder=100):
         text,
         xy=(mid_x, mid_y),
         xycoords="data",
-        xytext=text_offset(xytext, **annotation_kwargs),
+        xytext=obj_offset(xytext, **annotation_kwargs),
         textcoords="offset points",
         ha=ha,
         va=va,
