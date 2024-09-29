@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Ellipse
 from m3util.viz.layout import get_closest_point
-
+from m3util.layout import obj_offset
 
 def draw_ellipse_with_arrow(
     ax,
@@ -303,7 +303,8 @@ class DrawArrow:
         vertical_text_displacement=None,
         units="inches",
         scale="figure fraction",
-        arrow_props=dict(arrowstyle="->"),
+        arrowprops=dict(arrowstyle="->"),
+        textprops=None,
     ):
         
         self._ax = ax
@@ -324,7 +325,8 @@ class DrawArrow:
         self.vertical_text_displacement = vertical_text_displacement
         self.units = units
         self.scale = scale
-        self.arrow_props = arrow_props
+        self.arrowprops = arrowprops
+        self.textprops = textprops
         self.set_vertical_text_displacement()
 
     def set_vertical_text_displacement(self):
@@ -360,7 +362,7 @@ class DrawArrow:
         fig_fraction_pos = self.fig.transFigure.inverted().transform(inch_pos)
         return fig_fraction_pos
 
-    def draw(self, arrowprops={}):
+    def draw(self):
         """
         Draws the arrow and places the text on the figure.
 
@@ -368,19 +370,17 @@ class DrawArrow:
             tuple: A tuple containing the arrow and text artist objects, or the arrow if no text.
         """
         # Draw the arrow
-        arrow = self.draw_arrow(**arrowprops)
+        arrow = self.draw_arrow()
 
         # Place the text if it exists
         text_artist = self.place_text() if self.text else None
 
         return (arrow, text_artist) if text_artist else arrow
 
-    def draw_arrow(self, **arrowprops):
+    def draw_arrow(self):
         """
         Draws the arrow annotation on the figure.
 
-        Args:
-            **arrowprops: Additional properties for customizing the arrow appearance.
 
         Returns:
             matplotlib.text.Annotation: The arrow annotation artist object.
@@ -401,18 +401,30 @@ class DrawArrow:
             xy=self.arrow_end_inches,  # End position of the arrow
             xycoords=self.scale,
             xytext=self.arrow_start_inches,  # Start position of the arrow
-            arrowprops=self.arrow_props,  # Arrow properties
+            arrowprops=self.arrowprops,  # Arrow properties
         )
 
         return arrow
 
-    def place_text(self, **textprops):
+    def place_text(self):
         """
         Places the text on the figure at the specified position relative to the arrow.
 
         Args:
             **textprops: Additional text properties for customizing the text appearance.
         """
+
+        # If textprops is not provided, initialize it as an empty dictionary
+        if self.textprops is None:
+            self.textprops = {}
+
+        # Set the text color to match the arrow color if no text color is specified
+        if "color" not in self.textprops:
+            text_color = self.arrowprops.get(
+                "color", "black"
+            )  # Default to black if no color is in arrowprops
+            self.textprops["color"] = text_color
+            
         # Get the base position for the text
         text_x, text_y, ha, va = self._get_text_position()
 
@@ -452,7 +464,7 @@ class DrawArrow:
             shifted_position[1],
             angle,
             self._ax,
-            **textprops,
+            **self.textprops,
         )
 
     def _get_text_position(self):
@@ -514,3 +526,32 @@ class DrawArrow:
         angle = np.degrees(np.arctan2(dy, dx))
 
         return angle
+
+def draw_extended_arrow_indicator(fig, x, y, offset=(-0.4, 0),offset_units="fraction", ax=None, arrowprops, **annotation_kwargs):
+
+    
+    arrow = DrawArrow(
+            fig,
+            obj_offset(
+                (x[0], y[0]),  # position
+                offset=offset,
+                offset_units="fraction",
+                ax=ax,
+            ),
+            obj_offset(
+                (x[1], y[1]),  # position
+                offset=offset,
+                offset_units="fraction",
+                ax=ax,
+            ),
+            text="Amplitude",
+            ax=ax[0],
+            text_position="center",
+            text_alignment="center",
+            vertical_text_displacement=None,
+            units="points",
+            scale=annotation_kwargs.get("xycoords", "data"),
+            arrowprops=arrowprops,
+        )
+
+    arrow.draw()
