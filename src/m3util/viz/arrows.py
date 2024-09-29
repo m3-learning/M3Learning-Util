@@ -3,10 +3,24 @@ import numpy as np
 from matplotlib.patches import Ellipse
 from m3util.viz.layout import get_closest_point
 
-def draw_ellipse_with_arrow(ax, x_data, y_data, value, width, height, axis='x',
-                                    line_direction='horizontal', arrow_position='top',
-                                    arrow_length_frac=0.3, color='blue', linewidth=2,
-                                    arrow_props=None, ellipse_props=None, arrow_direction = 'positive'):
+
+def draw_ellipse_with_arrow(
+    ax,
+    x_data,
+    y_data,
+    value,
+    width,
+    height,
+    axis="x",
+    line_direction="horizontal",
+    arrow_position="top",
+    arrow_length_frac=0.3,
+    color="blue",
+    linewidth=2,
+    arrow_props=None,
+    ellipse_props=None,
+    arrow_direction="positive",
+):
     """
     Draw an ellipse with an arrow at a specific point on a line plot.
 
@@ -46,13 +60,13 @@ def draw_ellipse_with_arrow(ax, x_data, y_data, value, width, height, axis='x',
     y_min, y_max = ax.get_ylim()
 
     # Calculate arrow length based on line direction
-    if line_direction == 'horizontal':
+    if line_direction == "horizontal":
         arrow_length = arrow_length_frac * (x_max - x_min)
-        if arrow_direction == 'negative':
+        if arrow_direction == "negative":
             arrow_length = -arrow_length
-    elif line_direction == 'vertical':
+    elif line_direction == "vertical":
         arrow_length = arrow_length_frac * (y_max - y_min)
-        if arrow_direction == 'negative':
+        if arrow_direction == "negative":
             arrow_length = -arrow_length
     else:
         raise ValueError("line_direction must be 'horizontal' or 'vertical'")
@@ -62,45 +76,69 @@ def draw_ellipse_with_arrow(ax, x_data, y_data, value, width, height, axis='x',
     height_scaled = height * (y_max - y_min)
 
     # Set default properties for the ellipse and update with any additional properties
-    default_ellipse_props = {'edgecolor': color, 'facecolor': 'none', 'lw': linewidth}
+    default_ellipse_props = {"edgecolor": color, "facecolor": "none", "lw": linewidth}
     if ellipse_props:
         default_ellipse_props.update(ellipse_props)
 
     # Draw the ellipse
-    ellipse = Ellipse(xy=ellipse_center, width=width_scaled, height=height_scaled, **default_ellipse_props)
+    ellipse = Ellipse(
+        xy=ellipse_center,
+        width=width_scaled,
+        height=height_scaled,
+        **default_ellipse_props,
+    )
     ax.add_patch(ellipse)
 
     # Calculate the start and end points of the arrow based on position and direction
-    if line_direction == 'horizontal':
-        if arrow_position == 'top':
+    if line_direction == "horizontal":
+        if arrow_position == "top":
             start_point = (ellipse_center[0], ellipse_center[1] + height_scaled / 2)
-            end_point = (ellipse_center[0] + arrow_length, ellipse_center[1] + height_scaled / 2)
-        elif arrow_position == 'bottom':
+            end_point = (
+                ellipse_center[0] + arrow_length,
+                ellipse_center[1] + height_scaled / 2,
+            )
+        elif arrow_position == "bottom":
             start_point = (ellipse_center[0], ellipse_center[1] - height_scaled / 2)
-            end_point = (ellipse_center[0] + arrow_length, ellipse_center[1] - height_scaled / 2)
+            end_point = (
+                ellipse_center[0] + arrow_length,
+                ellipse_center[1] - height_scaled / 2,
+            )
         else:
             raise ValueError("arrow_position must be 'top' or 'bottom'")
-    elif line_direction == 'vertical':
-        if arrow_position == 'top':
+    elif line_direction == "vertical":
+        if arrow_position == "top":
             start_point = (ellipse_center[0] + width_scaled / 2, ellipse_center[1])
-            end_point = (ellipse_center[0] + width_scaled / 2, ellipse_center[1] + arrow_length)
-        elif arrow_position == 'bottom':
+            end_point = (
+                ellipse_center[0] + width_scaled / 2,
+                ellipse_center[1] + arrow_length,
+            )
+        elif arrow_position == "bottom":
             start_point = (ellipse_center[0] - width_scaled / 2, ellipse_center[1])
-            end_point = (ellipse_center[0] - width_scaled / 2, ellipse_center[1] + arrow_length)
+            end_point = (
+                ellipse_center[0] - width_scaled / 2,
+                ellipse_center[1] + arrow_length,
+            )
         else:
             raise ValueError("arrow_position must be 'top' or 'bottom'")
     else:
         raise ValueError("line_direction must be 'horizontal' or 'vertical'")
 
     # Set default properties for the arrow and update with any additional properties
-    default_arrow_props = {'facecolor': color, 'width': 2, 'headwidth': 10, 'headlength': 10, 'linewidth': 0}
+    default_arrow_props = {
+        "facecolor": color,
+        "width": 2,
+        "headwidth": 10,
+        "headlength": 10,
+        "linewidth": 0,
+    }
     if arrow_props:
         default_arrow_props.update(arrow_props)
 
     # Draw the arrow
-    ax.annotate('', xy=end_point, xytext=start_point, arrowprops=default_arrow_props)
+    ax.annotate("", xy=end_point, xytext=start_point, arrowprops=default_arrow_props)
 
-def place_text_in_inches(fig, text, x_inch, y_inch, angle, **textprops):
+
+def place_text_points(fig, text, x_inch, y_inch, angle, **textprops):
     """
     Places text on a matplotlib figure at a specified position in inches.
 
@@ -135,6 +173,7 @@ def place_text_in_inches(fig, text, x_inch, y_inch, angle, **textprops):
 
     return text_artist
 
+
 def shift_object_in_points(fig, position_pts, direction_vector, n_points):
     """
     Shifts a position by a specified number of points along a given vector direction, returning the new position in points.
@@ -159,6 +198,7 @@ def shift_object_in_points(fig, position_pts, direction_vector, n_points):
     new_position_pts = np.array(position_pts) + shift_vector_pts
 
     return tuple(new_position_pts)
+
 
 def shift_object_in_inches(fig, position_inch, direction_vector, n_points):
     """
@@ -233,20 +273,19 @@ class DrawArrow:
         start_pos,
         end_pos,
         text=None,
-        ax = None,
+        ax=None,
         text_position="center",
         text_alignment="center",
         vertical_text_displacement=None,
         units="inches",
         scale="figure fraction",
-        arrow_props = dict(arrowstyle="->"),
+        arrow_props=dict(arrowstyle="->"),
     ):
-        
         if ax is None:
             self.ax = plt
         else:
             self.ax = ax
-       
+
         # Initialize object properties
         self.fig = fig
         self.start_pos = start_pos
@@ -318,7 +357,7 @@ class DrawArrow:
         Returns:
             matplotlib.text.Annotation: The arrow annotation artist object.
         """
-        
+
         if self.units == "inches":
             # Convert start and end positions from inches to figure fraction coordinates
             self.arrow_start_inches = self.inches_to_fig_fraction(self.start_pos)
@@ -326,7 +365,7 @@ class DrawArrow:
         else:
             self.arrow_start_inches = self.start_pos
             self.arrow_end_inches = self.end_pos
-        
+
         print(self.arrow_start_inches, self.arrow_end_inches)
         # Create an annotation with an arrow between the start and end positions
         arrow = self.ax.annotate(
@@ -364,10 +403,15 @@ class DrawArrow:
                 self.vertical_text_displacement,
             )
         elif self.units == "points":
-            pass
+            shifted_position = shift_object_in_points(
+                self.fig,
+                (text_x, text_y),
+                perpendicular_vector,
+                self.vertical_text_displacement,
+            )
 
         # Place the text on the figure at the shifted position
-        place_text_in_inches(
+        place_text_points(
             self.fig,
             self.text,
             shifted_position[0],
