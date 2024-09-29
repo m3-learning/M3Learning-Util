@@ -344,7 +344,8 @@ class DrawArrow:
         scale="figure fraction",
         arrowprops=dict(arrowstyle="->"),
         textprops=None,
-    ):
+        halo={},
+         ):
         
         self._ax = ax
         
@@ -366,6 +367,7 @@ class DrawArrow:
         self.scale = scale
         self.arrowprops = arrowprops
         self.textprops = textprops
+        self.halo = halo
         self.set_vertical_text_displacement()
 
     def set_vertical_text_displacement(self):
@@ -418,31 +420,61 @@ class DrawArrow:
 
     def draw_arrow(self):
         """
-        Draws the arrow annotation on the figure.
-
+        Draws the arrow annotation on the figure with an optional halo (outline) around the arrow.
+        The halo properties are extracted from the self.halo dictionary if provided.
 
         Returns:
             matplotlib.text.Annotation: The arrow annotation artist object.
         """
 
+        # Default halo settings
+        halo_defaults = {
+            'enabled': False,  # Whether to enable the halo or not
+            'color': 'white',  # Default halo color
+            'scale': 3         # Default scale of the halo relative to the arrow's linewidth
+        }
+
+        # Merge the provided halo settings with the defaults
+        halo_settings = {**halo_defaults, **getattr(self, 'halo', {})}
+
+        # Check if units are in inches and convert positions if necessary
         if self.units == "inches":
-            # Convert start and end positions from inches to figure fraction coordinates
             self.arrow_start_inches = self.inches_to_fig_fraction(self.start_pos)
             self.arrow_end_inches = self.inches_to_fig_fraction(self.end_pos)
         else:
             self.arrow_start_inches = self.start_pos
             self.arrow_end_inches = self.end_pos
 
-        # Create an annotation with an arrow between the start and end positions
+        # If a halo is enabled, draw a thick arrow behind the actual arrow
+        if halo_settings['enabled']:
+            print("runs")
+            halo_arrowprops = self.arrowprops.copy()
+            halo_arrowprops['color'] = halo_settings['color']  # Set the halo color
+            # Scale the linewidth of the halo based on the original linewidth or lw
+            halo_linewidth = self.arrowprops.get('linewidth', self.arrowprops.get('lw', 2))
+            halo_arrowprops['linewidth'] = halo_linewidth * halo_settings['scale']
+            halo_arrowprops["lw"] = halo_linewidth * halo_settings["scale"]
+
+            # Draw the halo (outline)
+            self.ax.annotate(
+                "",  # No text in the annotation itself
+                xy=self.arrow_end_inches,  # End position of the arrow
+                xycoords=self.scale,
+                xytext=self.arrow_start_inches,  # Start position of the arrow
+                arrowprops=halo_arrowprops,  # Arrow properties for the halo
+            )
+
+        # Draw the actual arrow on top
         arrow = self.ax.annotate(
             "",  # No text in the annotation itself
             xy=self.arrow_end_inches,  # End position of the arrow
             xycoords=self.scale,
             xytext=self.arrow_start_inches,  # Start position of the arrow
-            arrowprops=self.arrowprops,  # Arrow properties
+            arrowprops=self.arrowprops,  # Arrow properties for the main arrow
         )
 
         return arrow
+
 
     def place_text(self):
         """
@@ -591,6 +623,7 @@ def draw_extended_arrow_indicator(
     units="points",
     arrowprops={},
     line_style={},
+    halo=None,
     **annotation_kwargs,
 ):
     
@@ -618,6 +651,7 @@ def draw_extended_arrow_indicator(
         units=units,
         scale=annotation_kwargs.get("xycoords", "data"),
         arrowprops=arrowprops,
+        halo=halo,
     )
 
     arrow.draw()
