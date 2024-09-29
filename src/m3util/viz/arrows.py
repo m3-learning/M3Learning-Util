@@ -138,6 +138,41 @@ def draw_ellipse_with_arrow(
     # Draw the arrow
     ax.annotate("", xy=end_point, xytext=start_point, arrowprops=default_arrow_props)
 
+def place_text_in_inches(fig, text, x_inch, y_inch, angle, **textprops):
+    """
+    Places text on a matplotlib figure at a specified position in inches.
+
+    Args:
+        fig (matplotlib.figure.Figure): The matplotlib figure on which to place the text.
+        text (str): The text string to be displayed.
+        x_inch (float): The x-coordinate in inches from the left of the figure.
+        y_inch (float): The y-coordinate in inches from the bottom of the figure.
+        angle (float): The rotation angle of the text in degrees.
+        **textprops: Additional keyword arguments for text properties (e.g., fontsize, color).
+
+    Returns:
+        matplotlib.text.Text: The text artist object added to the figure.
+    """
+    # Convert from inches to display coordinates (pixels) using the figure's dpi scale transform
+    display_coords = fig.dpi_scale_trans.transform((x_inch, y_inch))
+
+    # Place the text using the calculated display coordinates
+    text_artist = plt.text(
+        display_coords[0],  # x-coordinate in display (pixel) coordinates
+        display_coords[1],  # y-coordinate in display (pixel) coordinates
+        text,  # Text string to display
+        horizontalalignment="center",  # Horizontal alignment of the text
+        verticalalignment="center",  # Vertical alignment of the text
+        transform=None,  # No additional transformation since we use display coordinates
+        rotation=angle,  # Rotation angle of the text
+        **textprops,  # Additional text properties
+    )
+
+    # Trigger the figure redraw to update the display with the new text
+    fig.canvas.draw()
+
+    return text_artist
+
 def place_text_points(fig, text, x, y, angle, ax=None, **textprops):
     """
     Places text on a matplotlib figure or axis at a specified position in inches.
@@ -443,6 +478,17 @@ class DrawArrow:
                 perpendicular_vector,
                 self.vertical_text_displacement,
             )
+
+            # Place the text on the figure at the shifted position
+            place_text_in_inches(
+                self.fig,
+                self.text,
+                shifted_position[0],
+                shifted_position[1],
+                angle,
+                **self.textprops,
+            ) 
+            
         elif self.units == "points":
             if self._ax is not None:
                 obj = self.ax
@@ -457,16 +503,16 @@ class DrawArrow:
                 self.vertical_text_displacement,
             )
 
-        # Place the text on the figure at the shifted position
-        place_text_points(
-            self.fig,
-            self.text,
-            shifted_position[0],
-            shifted_position[1],
-            angle,
-            self._ax,
-            **self.textprops,
-        )
+            # Place the text on the figure at the shifted position
+            place_text_points(
+                self.fig,
+                self.text,
+                shifted_position[0],
+                shifted_position[1],
+                angle,
+                self._ax,
+                **self.textprops,
+            )
 
     def _get_text_position(self):
         """
