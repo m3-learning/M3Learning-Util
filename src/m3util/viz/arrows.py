@@ -2,7 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Ellipse
 from m3util.viz.layout import get_closest_point
-from m3util.layout import obj_offset
+from m3util.viz.layout import obj_offset
+from m3util.viz.lines import draw_lines
 
 def draw_ellipse_with_arrow(
     ax,
@@ -527,31 +528,55 @@ class DrawArrow:
 
         return angle
 
-def draw_extended_arrow_indicator(fig, x, y, offset=(-0.4, 0),offset_units="fraction", ax=None, arrowprops, **annotation_kwargs):
-
+def draw_extended_arrow_indicator(
+    fig,
+    x,
+    y,
+    direction = "vertical",
+    text=None,
+    offset=(-0.4, 0),
+    offset_units="fraction",
+    ax=None,
+    vertical_text_displacement=None,
+    text_position="center",
+    text_alignment="center",
+    units="points",
+    arrowprops={},
+    line_style={},
+    **annotation_kwargs,
+):
     
-    arrow = DrawArrow(
-            fig,
-            obj_offset(
-                (x[0], y[0]),  # position
-                offset=offset,
-                offset_units="fraction",
-                ax=ax,
-            ),
-            obj_offset(
-                (x[1], y[1]),  # position
-                offset=offset,
-                offset_units="fraction",
-                ax=ax,
-            ),
-            text="Amplitude",
-            ax=ax[0],
-            text_position="center",
-            text_alignment="center",
-            vertical_text_displacement=None,
-            units="points",
-            scale=annotation_kwargs.get("xycoords", "data"),
-            arrowprops=arrowprops,
+    point_0 = obj_offset(
+            (x[0], y[0]),  # position
+            offset=offset,
+            offset_units=offset_units,
+            ax=ax,
         )
+    point_1 = obj_offset(
+            (x[1], y[1]),  # position
+            offset=offset,
+            offset_units=offset_units,
+            ax=ax,
+        )
+    arrow = DrawArrow(
+        fig,
+        point_0,
+        point_1,
+        text=text,
+        ax=ax,
+        text_position=text_position,
+        text_alignment=text_alignment,
+        vertical_text_displacement=vertical_text_displacement,
+        units=units,
+        scale=annotation_kwargs.get("xycoords", "data"),
+        arrowprops=arrowprops,
+    )
 
     arrow.draw()
+
+    if direction == "vertical":
+        draw_lines(ax, [x[0], point_0[0]], [y[0],y[0]], style=line_style)
+        draw_lines(ax, [x[0], point_1[0]], [y[1],y[1]], style=line_style)
+    elif direction == "horoizontal":
+        draw_lines(ax, [x[0], x[0]], [y[0], point_0[1]], style=line_style)
+        draw_lines(ax, [x[1], x[1]], [y[0], point_1[1]], style=line_style)
