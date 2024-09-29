@@ -189,44 +189,47 @@ def place_text_points(fig, text, x, y, angle, ax=None, **textprops):
     Returns:
         matplotlib.text.Text: The text artist object added to the figure or axis.
     """
-
-    # If placing the text on the figure
-    if ax is None:
-        # Convert from inches to figure coordinates using the figure's DPI scale transform
-        # dpi_scale_trans transforms from inches to display coordinates
-        display_coords = fig.dpi_scale_trans.transform((x, y))
-        
-        
-        # Use display coordinates but transform to figure-relative coordinates
-        fig_coords = fig.transFigure.inverted().transform(display_coords)
-        text_artist = fig.text(
-            fig_coords[0],  # x-coordinate in figure coordinates
-            fig_coords[1],  # y-coordinate in figure coordinates
-            text,  # Text string to display
-            horizontalalignment="center",  # Horizontal alignment of the text
-            verticalalignment="center",  # Vertical alignment of the text
-            rotation=angle,  # Rotation angle of the text
-            **textprops,  # Additional text properties
-        )
-    else:
-        # # Use display coordinates but transform to axis-relative coordinates
-        # ax_coords = ax.transAxes.inverted().transform(display_coords)
-        
-        text_artist = ax.text(
-            x,  # x-coordinate in axis coordinates
-            y,  # y-coordinate in axis coordinates
-            text,  # Text string to display
-            horizontalalignment="center",  # Horizontal alignment of the text
-            verticalalignment="center",  # Vertical alignment of the text
-            rotation=angle,  # Rotation angle of the text
-            # transform=ax.transAxes,  # Use axis transformation
-            **textprops,  # Additional text properties
-        )
+    
+    text_artist = ax.text(
+        x,  # x-coordinate in axis coordinates
+        y,  # y-coordinate in axis coordinates
+        text,  # Text string to display
+        horizontalalignment="center",  # Horizontal alignment of the text
+        verticalalignment="center",  # Vertical alignment of the text
+        rotation=angle,  # Rotation angle of the text
+        # transform=ax.transAxes,  # Use axis transformation
+        **textprops,  # Additional text properties
+    )
 
     # Trigger the figure redraw to update the display with the new text
     fig.canvas.draw()
 
     return text_artist
+
+def place_text(fig, text, x, y, angle, ax=None, **textprops):
+    
+    if ax is None:
+        # Convert from inches to display coordinates (pixels) using the figure's dpi scale transform
+        display_coords = fig.dpi_scale_trans.transform((x, y))
+        x_, y_ = display_coords[0], display_coords[1]
+    else:
+        x_, y_ = x, y
+    
+    text_artist = ax.text(
+        x_,  # x-coordinate in axis coordinates
+        y_,  # y-coordinate in axis coordinates
+        text,  # Text string to display
+        horizontalalignment="center",  # Horizontal alignment of the text
+        verticalalignment="center",  # Vertical alignment of the text
+        rotation=angle,  # Rotation angle of the text
+        **textprops,  # Additional text properties
+    )
+    
+    # Trigger the figure redraw to update the display with the new text
+    fig.canvas.draw()
+
+    return text_artist
+    
 
 def shift_object_in_points(ax, position_axis, direction_vector, n_points):
     """
@@ -430,7 +433,6 @@ class DrawArrow:
             self.arrow_start_inches = self.start_pos
             self.arrow_end_inches = self.end_pos
 
-        print(self.arrow_start_inches, self.arrow_end_inches)
         # Create an annotation with an arrow between the start and end positions
         arrow = self.ax.annotate(
             "",  # No text in the annotation itself

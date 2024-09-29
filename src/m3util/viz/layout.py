@@ -1055,6 +1055,4 @@ def obj_offset(xy, offset=None, offset_units="fontsize", ax=None, **kwargs):
     new_x = xy[0] + offset_x
     new_y = xy[1] + offset_y
 
-    print(f"New object position: ({new_x}, {new_y})")
-
     return (new_x, new_y)
