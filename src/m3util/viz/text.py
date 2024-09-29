@@ -307,7 +307,7 @@ def obj_offset(
             offset_y = offset[1] * (
                 y_range[1] - y_range[0]
             )  # Fraction of y-axis range
-
+obj_
         else:
             raise ValueError(
                 "Units must be 'fontsize', 'inches', 'points', or 'fraction'."

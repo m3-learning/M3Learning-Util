@@ -137,10 +137,9 @@ def draw_ellipse_with_arrow(
     # Draw the arrow
     ax.annotate("", xy=end_point, xytext=start_point, arrowprops=default_arrow_props)
 
-
-def place_text_points(fig, text, x_inch, y_inch, angle, **textprops):
+def place_text_points(fig, text, x, y, angle, ax=None, **textprops):
     """
-    Places text on a matplotlib figure at a specified position in inches.
+    Places text on a matplotlib figure or axis at a specified position in inches.
 
     Args:
         fig (matplotlib.figure.Figure): The matplotlib figure on which to place the text.
@@ -148,45 +147,67 @@ def place_text_points(fig, text, x_inch, y_inch, angle, **textprops):
         x_inch (float): The x-coordinate in inches from the left of the figure.
         y_inch (float): The y-coordinate in inches from the bottom of the figure.
         angle (float): The rotation angle of the text in degrees.
+        ax (matplotlib.axes.Axes, optional): The axes on which to place the text. If None, the text is placed on the figure.
         **textprops: Additional keyword arguments for text properties (e.g., fontsize, color).
 
     Returns:
-        matplotlib.text.Text: The text artist object added to the figure.
+        matplotlib.text.Text: The text artist object added to the figure or axis.
     """
-    # Convert from inches to display coordinates (pixels) using the figure's dpi scale transform
-    display_coords = fig.dpi_scale_trans.transform((x_inch, y_inch))
 
-    # Place the text using the calculated display coordinates
-    text_artist = plt.text(
-        display_coords[0],  # x-coordinate in display (pixel) coordinates
-        display_coords[1],  # y-coordinate in display (pixel) coordinates
-        text,  # Text string to display
-        horizontalalignment="center",  # Horizontal alignment of the text
-        verticalalignment="center",  # Vertical alignment of the text
-        transform=None,  # No additional transformation since we use display coordinates
-        rotation=angle,  # Rotation angle of the text
-        **textprops,  # Additional text properties
-    )
+    # If placing the text on the figure
+    if ax is None:
+        # Convert from inches to figure coordinates using the figure's DPI scale transform
+        # dpi_scale_trans transforms from inches to display coordinates
+        display_coords = fig.dpi_scale_trans.transform((x, y))
+        
+        
+        # Use display coordinates but transform to figure-relative coordinates
+        fig_coords = fig.transFigure.inverted().transform(display_coords)
+        text_artist = fig.text(
+            fig_coords[0],  # x-coordinate in figure coordinates
+            fig_coords[1],  # y-coordinate in figure coordinates
+            text,  # Text string to display
+            horizontalalignment="center",  # Horizontal alignment of the text
+            verticalalignment="center",  # Vertical alignment of the text
+            rotation=angle,  # Rotation angle of the text
+            **textprops,  # Additional text properties
+        )
+    else:
+        # # Use display coordinates but transform to axis-relative coordinates
+        # ax_coords = ax.transAxes.inverted().transform(display_coords)
+        
+        text_artist = ax.text(
+            x,  # x-coordinate in axis coordinates
+            y,  # y-coordinate in axis coordinates
+            text,  # Text string to display
+            horizontalalignment="center",  # Horizontal alignment of the text
+            verticalalignment="center",  # Vertical alignment of the text
+            rotation=angle,  # Rotation angle of the text
+            # transform=ax.transAxes,  # Use axis transformation
+            **textprops,  # Additional text properties
+        )
 
     # Trigger the figure redraw to update the display with the new text
     fig.canvas.draw()
 
     return text_artist
 
-
-def shift_object_in_points(fig, position_pts, direction_vector, n_points):
+def shift_object_in_points(ax, position_axis, direction_vector, n_points):
     """
-    Shifts a position by a specified number of points along a given vector direction, returning the new position in points.
+    Shifts a position by a specified number of points along a given vector direction, returning the new position in axis coordinates.
 
     Args:
-        fig (matplotlib.figure.Figure): The matplotlib figure, used to get the DPI for point-to-inch conversion.
-        position_pts (tuple of float): The starting position in points as (x, y).
+        ax (matplotlib.axes.Axes): The matplotlib axes on which to perform the shift.
+        position_axis (tuple of float): The starting position in axis coordinates as (x, y).
         direction_vector (tuple of float): The direction vector for the shift as (dx, dy).
         n_points (float): The number of points to shift along the direction vector.
 
     Returns:
-        tuple of float: The new position in points as (x, y).
+        tuple of float: The new position in axis coordinates as (x, y).
     """
+    # Convert the starting position from axis coordinates to display (points) coordinates
+    position_display = ax.transData.transform(position_axis)
+
     # Normalize the direction vector to get the unit direction
     direction_vector = np.array(direction_vector)
     direction_vector = direction_vector / np.linalg.norm(direction_vector)
@@ -194,10 +215,13 @@ def shift_object_in_points(fig, position_pts, direction_vector, n_points):
     # Calculate the shift vector in points along the specified direction
     shift_vector_pts = direction_vector * n_points
 
-    # Apply the shift to the original position (which is already in points)
-    new_position_pts = np.array(position_pts) + shift_vector_pts
+    # Apply the shift to the original position in display coordinates
+    new_position_display = position_display + shift_vector_pts
 
-    return tuple(new_position_pts)
+    # Convert the new display coordinates back to axis (data) coordinates
+    new_position_axis = ax.transData.inverted().transform(new_position_display)
+
+    return tuple(new_position_axis)
 
 
 def shift_object_in_inches(fig, position_inch, direction_vector, n_points):
@@ -281,10 +305,14 @@ class DrawArrow:
         scale="figure fraction",
         arrow_props=dict(arrowstyle="->"),
     ):
+        
+        self._ax = ax
+        
         if ax is None:
             self.ax = plt
         else:
             self.ax = ax
+            
 
         # Initialize object properties
         self.fig = fig
@@ -403,8 +431,14 @@ class DrawArrow:
                 self.vertical_text_displacement,
             )
         elif self.units == "points":
+            if self._ax is not None:
+                obj = self.ax
+            else:
+                obj = self.fig
+            
+            # Shift the text position along the perpendicular vector
             shifted_position = shift_object_in_points(
-                self.fig,
+                obj,
                 (text_x, text_y),
                 perpendicular_vector,
                 self.vertical_text_displacement,
@@ -417,6 +451,7 @@ class DrawArrow:
             shifted_position[0],
             shifted_position[1],
             angle,
+            self._ax,
             **textprops,
         )
 
