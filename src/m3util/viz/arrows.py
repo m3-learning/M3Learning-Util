@@ -4,6 +4,8 @@ from matplotlib.patches import Ellipse
 from m3util.viz.layout import get_closest_point
 from m3util.viz.layout import obj_offset
 from m3util.viz.lines import draw_lines
+import matplotlib.patheffects as path_effects
+
 
 def draw_ellipse_with_arrow(
     ax,
@@ -138,9 +140,19 @@ def draw_ellipse_with_arrow(
     # Draw the arrow
     ax.annotate("", xy=end_point, xytext=start_point, arrowprops=default_arrow_props)
 
-def place_text_in_inches(fig, text, x_inch, y_inch, angle, **textprops):
+
+def place_text_in_inches(
+    fig,
+    text,
+    x_inch,
+    y_inch,
+    angle,
+    stroke_width=None,
+    stroke_color="black",
+    **textprops,
+):
     """
-    Places text on a matplotlib figure at a specified position in inches.
+    Places text on a matplotlib figure at a specified position in inches, with an optional stroke (outline).
 
     Args:
         fig (matplotlib.figure.Figure): The matplotlib figure on which to place the text.
@@ -148,6 +160,8 @@ def place_text_in_inches(fig, text, x_inch, y_inch, angle, **textprops):
         x_inch (float): The x-coordinate in inches from the left of the figure.
         y_inch (float): The y-coordinate in inches from the bottom of the figure.
         angle (float): The rotation angle of the text in degrees.
+        stroke_width (int, optional): The width of the stroke (outline) in points. Default is None (no stroke).
+        stroke_color (str, optional): The color of the stroke (outline). Default is 'black'.
         **textprops: Additional keyword arguments for text properties (e.g., fontsize, color).
 
     Returns:
@@ -168,28 +182,51 @@ def place_text_in_inches(fig, text, x_inch, y_inch, angle, **textprops):
         **textprops,  # Additional text properties
     )
 
+    # If stroke is enabled, apply the PathEffects to add a stroke around the text
+    if stroke_width is not None:
+        text_artist.set_path_effects(
+            [
+                path_effects.Stroke(linewidth=stroke_width, foreground=stroke_color),
+                path_effects.Normal(),  # Ensure the original text is drawn over the stroke
+            ]
+        )
+
     # Trigger the figure redraw to update the display with the new text
     fig.canvas.draw()
 
     return text_artist
 
-def place_text_points(fig, text, x, y, angle, ax=None, **textprops):
+
+def place_text_points(
+    fig,
+    text,
+    x,
+    y,
+    angle,
+    ax=None,
+    stroke_width=None,
+    stroke_color="black",
+    **textprops,
+):
     """
-    Places text on a matplotlib figure or axis at a specified position in inches.
+    Places text on a matplotlib figure or axis at a specified position in inches, with an optional stroke (outline).
 
     Args:
         fig (matplotlib.figure.Figure): The matplotlib figure on which to place the text.
         text (str): The text string to be displayed.
-        x_inch (float): The x-coordinate in inches from the left of the figure.
-        y_inch (float): The y-coordinate in inches from the bottom of the figure.
+        x (float): The x-coordinate in axis coordinates.
+        y (float): The y-coordinate in axis coordinates.
         angle (float): The rotation angle of the text in degrees.
         ax (matplotlib.axes.Axes, optional): The axes on which to place the text. If None, the text is placed on the figure.
+        stroke_width (int, optional): The width of the stroke (outline) in points. Default is None (no stroke).
+        stroke_color (str, optional): The color of the stroke (outline). Default is 'black'.
         **textprops: Additional keyword arguments for text properties (e.g., fontsize, color).
 
     Returns:
         matplotlib.text.Text: The text artist object added to the figure or axis.
     """
-    
+
+    # Create the text artist
     text_artist = ax.text(
         x,  # x-coordinate in axis coordinates
         y,  # y-coordinate in axis coordinates
@@ -197,39 +234,48 @@ def place_text_points(fig, text, x, y, angle, ax=None, **textprops):
         horizontalalignment="center",  # Horizontal alignment of the text
         verticalalignment="center",  # Vertical alignment of the text
         rotation=angle,  # Rotation angle of the text
-        # transform=ax.transAxes,  # Use axis transformation
         **textprops,  # Additional text properties
     )
+
+    # If stroke is enabled, apply the PathEffects to add a stroke around the text
+    if stroke_width is not None:
+        text_artist.set_path_effects(
+            [
+                path_effects.Stroke(linewidth=stroke_width, foreground=stroke_color),
+                path_effects.Normal(),  # Ensure the original text is drawn over the stroke
+            ]
+        )
 
     # Trigger the figure redraw to update the display with the new text
     fig.canvas.draw()
 
     return text_artist
 
-def place_text(fig, text, x, y, angle, ax=None, **textprops):
-    
-    if ax is None:
-        # Convert from inches to display coordinates (pixels) using the figure's dpi scale transform
-        display_coords = fig.dpi_scale_trans.transform((x, y))
-        x_, y_ = display_coords[0], display_coords[1]
-    else:
-        x_, y_ = x, y
-    
-    text_artist = ax.text(
-        x_,  # x-coordinate in axis coordinates
-        y_,  # y-coordinate in axis coordinates
-        text,  # Text string to display
-        horizontalalignment="center",  # Horizontal alignment of the text
-        verticalalignment="center",  # Vertical alignment of the text
-        rotation=angle,  # Rotation angle of the text
-        **textprops,  # Additional text properties
-    )
-    
-    # Trigger the figure redraw to update the display with the new text
-    fig.canvas.draw()
 
-    return text_artist
-    
+# def place_text(fig, text, x, y, angle, ax=None, **textprops):
+
+#     if ax is None:
+#         # Convert from inches to display coordinates (pixels) using the figure's dpi scale transform
+#         display_coords = fig.dpi_scale_trans.transform((x, y))
+#         x_, y_ = display_coords[0], display_coords[1]
+#     else:
+#         x_, y_ = x, y
+
+#     text_artist = ax.text(
+#         x_,  # x-coordinate in axis coordinates
+#         y_,  # y-coordinate in axis coordinates
+#         text,  # Text string to display
+#         horizontalalignment="center",  # Horizontal alignment of the text
+#         verticalalignment="center",  # Vertical alignment of the text
+#         rotation=angle,  # Rotation angle of the text
+#         **textprops,  # Additional text properties
+#     )
+
+#     # Trigger the figure redraw to update the display with the new text
+#     fig.canvas.draw()
+
+#     return text_artist
+
 
 def shift_object_in_points(ax, position_axis, direction_vector, n_points):
     """
@@ -345,15 +391,13 @@ class DrawArrow:
         arrowprops=dict(arrowstyle="->"),
         textprops=None,
         halo={},
-         ):
-        
+    ):
         self._ax = ax
-        
+
         if ax is None:
             self.ax = plt
         else:
             self.ax = ax
-            
 
         # Initialize object properties
         self.fig = fig
@@ -429,13 +473,13 @@ class DrawArrow:
 
         # Default halo settings
         halo_defaults = {
-            'enabled': False,  # Whether to enable the halo or not
-            'color': 'white',  # Default halo color
-            'scale': 3         # Default scale of the halo relative to the arrow's linewidth
+            "enabled": False,  # Whether to enable the halo or not
+            "color": "white",  # Default halo color
+            "scale": 3,  # Default scale of the halo relative to the arrow's linewidth
         }
 
         # Merge the provided halo settings with the defaults
-        halo_settings = {**halo_defaults, **getattr(self, 'halo', {})}
+        halo_settings = {**halo_defaults, **getattr(self, "halo", {})}
 
         # Check if units are in inches and convert positions if necessary
         if self.units == "inches":
@@ -446,13 +490,15 @@ class DrawArrow:
             self.arrow_end_inches = self.end_pos
 
         # If a halo is enabled, draw a thick arrow behind the actual arrow
-        if halo_settings['enabled']:
-            print("runs")
+        if halo_settings["enabled"]:
+
             halo_arrowprops = self.arrowprops.copy()
-            halo_arrowprops['color'] = halo_settings['color']  # Set the halo color
+            halo_arrowprops["color"] = halo_settings["color"]  # Set the halo color
             # Scale the linewidth of the halo based on the original linewidth or lw
-            halo_linewidth = self.arrowprops.get('linewidth', self.arrowprops.get('lw', 2))
-            halo_arrowprops['linewidth'] = halo_linewidth * halo_settings['scale']
+            halo_linewidth = self.arrowprops.get(
+                "linewidth", self.arrowprops.get("lw", 2)
+            )
+            halo_arrowprops["linewidth"] = halo_linewidth * halo_settings["scale"]
             halo_arrowprops["lw"] = halo_linewidth * halo_settings["scale"]
 
             # Draw the halo (outline)
@@ -475,7 +521,6 @@ class DrawArrow:
 
         return arrow
 
-
     def place_text(self):
         """
         Places the text on the figure at the specified position relative to the arrow.
@@ -483,6 +528,11 @@ class DrawArrow:
         Args:
             **textprops: Additional text properties for customizing the text appearance.
         """
+
+        stroke_width = self.halo.get("font_stroke_width", None)
+        stroke_color = self.halo.get("font_stroke_color", "black")
+        
+        
 
         # If textprops is not provided, initialize it as an empty dictionary
         if self.textprops is None:
@@ -494,7 +544,7 @@ class DrawArrow:
                 "color", "black"
             )  # Default to black if no color is in arrowprops
             self.textprops["color"] = text_color
-            
+
         # Get the base position for the text
         text_x, text_y, ha, va = self._get_text_position()
 
@@ -520,15 +570,17 @@ class DrawArrow:
                 shifted_position[0],
                 shifted_position[1],
                 angle,
+                stroke_width=stroke_width,
+                stroke_color=stroke_color,
                 **self.textprops,
-            ) 
-            
+            )
+
         elif self.units == "points":
             if self._ax is not None:
                 obj = self.ax
             else:
                 obj = self.fig
-            
+
             # Shift the text position along the perpendicular vector
             shifted_position = shift_object_in_points(
                 obj,
@@ -545,6 +597,8 @@ class DrawArrow:
                 shifted_position[1],
                 angle,
                 self._ax,
+                stroke_width=stroke_width,
+                stroke_color=stroke_color,
                 **self.textprops,
             )
 
@@ -608,11 +662,12 @@ class DrawArrow:
 
         return angle
 
+
 def draw_extended_arrow_indicator(
     fig,
     x,
     y,
-    direction = "vertical",
+    direction="vertical",
     text=None,
     offset=(-0.4, 0),
     offset_units="fraction",
@@ -626,19 +681,19 @@ def draw_extended_arrow_indicator(
     halo=None,
     **annotation_kwargs,
 ):
-    
     point_0 = obj_offset(
-            (x[0], y[0]),  # position
-            offset=offset,
-            offset_units=offset_units,
-            ax=ax,
-        )
+        (x[0], y[0]),  # position
+        offset=offset,
+        offset_units=offset_units,
+        ax=ax,
+    )
     point_1 = obj_offset(
-            (x[1], y[1]),  # position
-            offset=offset,
-            offset_units=offset_units,
-            ax=ax,
-        )
+        (x[1], y[1]),  # position
+        offset=offset,
+        offset_units=offset_units,
+        ax=ax,
+    )
+    
     arrow = DrawArrow(
         fig,
         point_0,
@@ -657,8 +712,8 @@ def draw_extended_arrow_indicator(
     arrow.draw()
 
     if direction == "vertical":
-        draw_lines(ax, [x[0], point_0[0]], [y[0],y[0]], style=line_style)
-        draw_lines(ax, [x[0], point_1[0]], [y[1],y[1]], style=line_style)
+        draw_lines(ax, [x[0], point_0[0]], [y[0], y[0]], style=line_style, halo=halo)
+        draw_lines(ax, [x[0], point_1[0]], [y[1], y[1]], style=line_style, halo=halo)
     elif direction == "horoizontal":
-        draw_lines(ax, [x[0], x[0]], [y[0], point_0[1]], style=line_style)
-        draw_lines(ax, [x[1], x[1]], [y[0], point_1[1]], style=line_style)
+        draw_lines(ax, [x[0], x[0]], [y[0], point_0[1]], style=line_style, halo=halo)
+        draw_lines(ax, [x[1], x[1]], [y[0], point_1[1]], style=line_style, halo=halo)
