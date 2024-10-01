@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Ellipse
 from m3util.viz.layout import get_closest_point
-from m3util.viz.layout import obj_offset
+from m3util.viz.positioning import obj_offset
 from m3util.viz.lines import draw_lines
 import matplotlib.patheffects as path_effects
 
@@ -714,6 +714,6 @@ def draw_extended_arrow_indicator(
     if direction == "vertical":
         draw_lines(ax, [x[0], point_0[0]], [y[0], y[0]], style=line_style, halo=halo)
         draw_lines(ax, [x[0], point_1[0]], [y[1], y[1]], style=line_style, halo=halo)
-    elif direction == "horoizontal":
+    elif direction == "horizontal":
         draw_lines(ax, [x[0], x[0]], [y[0], point_0[1]], style=line_style, halo=halo)
         draw_lines(ax, [x[1], x[1]], [y[0], point_1[1]], style=line_style, halo=halo)

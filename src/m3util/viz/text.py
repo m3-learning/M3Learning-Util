@@ -5,7 +5,7 @@ from matplotlib import (
 import numpy as np
 import matplotlib
 from m3util.util.kwargs import _filter_kwargs
-from m3util.layout import obj_offset
+from m3util.viz.positioning import obj_offset
 
 
 def set_sci_notation_label(
@@ -147,8 +147,8 @@ def labelfigs(
     # Sets up various color options
     formatting_key = {
         "wb": dict(color="w", linewidth=0.75, foreground="k"),
-        "b": dict(color="k", linewidth=0),
-        "w": dict(color="w", linewidth=0),
+        "b": dict(color="k", linewidth=0, foreground="k"), 
+        "w": dict(color="w", linewidth=0, foreground="w"),
         "bw": dict(color="k", linewidth=0.75, foreground="w"),
     }
 
