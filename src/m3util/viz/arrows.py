@@ -163,46 +163,56 @@ def place_text_in_inches(
     **textprops,
 ):
     """
-    Places text on a matplotlib figure at a specified position in inches, with an optional stroke (outline).
+    Places a text element on a matplotlib figure at a specific position given in inches, 
+    with options for rotating the text and adding a stroke (outline) for enhanced visibility.
 
     Args:
         fig (matplotlib.figure.Figure): The matplotlib figure on which to place the text.
-        text (str): The text string to be displayed.
-        x_inch (float): The x-coordinate in inches from the left of the figure.
-        y_inch (float): The y-coordinate in inches from the bottom of the figure.
-        angle (float): The rotation angle of the text in degrees.
-        stroke_width (int, optional): The width of the stroke (outline) in points. Default is None (no stroke).
-        stroke_color (str, optional): The color of the stroke (outline). Default is 'black'.
-        **textprops: Additional keyword arguments for text properties (e.g., fontsize, color).
+        text (str): The string to display as text.
+        x_inch (float): The x-coordinate in inches, relative to the left of the figure.
+        y_inch (float): The y-coordinate in inches, relative to the bottom of the figure.
+        angle (float): The angle to rotate the text, in degrees.
+        stroke_width (int, optional): The width of the text outline (stroke) in points. Default is None, meaning no stroke.
+        stroke_color (str, optional): The color of the text outline (stroke). Default is 'black'.
+        **textprops: Additional keyword arguments for customizing the text properties 
+                    (e.g., fontsize, color, fontweight, etc.).
 
     Returns:
         matplotlib.text.Text: The text artist object added to the figure.
+
+    Notes:
+        - The position is specified in inches, and the function converts it to pixel-based display coordinates.
+        - Stroke (outline) is achieved using `matplotlib.patheffects` to enhance text visibility.
+        - The figure is redrawn after adding the text to ensure the update appears immediately.
+
+    Example:
+        place_text_in_inches(fig, "Sample Text", 2, 3, angle=45, fontsize=12, color="red")
     """
-    # Convert from inches to display coordinates (pixels) using the figure's dpi scale transform
+    # Convert from inches to display coordinates (pixel units) using the figure's DPI scaling transformation
     display_coords = fig.dpi_scale_trans.transform((x_inch, y_inch))
 
-    # Place the text using the calculated display coordinates
+    # Add the text at the computed display coordinates
     text_artist = plt.text(
-        display_coords[0],  # x-coordinate in display (pixel) coordinates
-        display_coords[1],  # y-coordinate in display (pixel) coordinates
-        text,  # Text string to display
-        horizontalalignment="center",  # Horizontal alignment of the text
-        verticalalignment="center",  # Vertical alignment of the text
-        transform=None,  # No additional transformation since we use display coordinates
-        rotation=angle,  # Rotation angle of the text
-        **textprops,  # Additional text properties
+        display_coords[0],  # X-coordinate in pixel coordinates
+        display_coords[1],  # Y-coordinate in pixel coordinates
+        text,               # Text string to be displayed
+        horizontalalignment="center",  # Center text horizontally
+        verticalalignment="center",    # Center text vertically
+        transform=None,     # Coordinates are already in display space, no additional transform needed
+        rotation=angle,     # Rotate the text to the specified angle
+        **textprops,        # Pass additional text properties such as fontsize, color, etc.
     )
 
-    # If stroke is enabled, apply the PathEffects to add a stroke around the text
+    # If stroke (outline) is specified, apply the stroke effect using PathEffects
     if stroke_width is not None:
         text_artist.set_path_effects(
             [
-                path_effects.Stroke(linewidth=stroke_width, foreground=stroke_color),
-                path_effects.Normal(),  # Ensure the original text is drawn over the stroke
+                path_effects.Stroke(linewidth=stroke_width, foreground=stroke_color),  # Stroke with given width and color
+                path_effects.Normal(),  # Draw the text over the stroke to maintain readability
             ]
         )
 
-    # Trigger the figure redraw to update the display with the new text
+    # Redraw the figure to ensure the new text is displayed immediately
     fig.canvas.draw()
 
     return text_artist
