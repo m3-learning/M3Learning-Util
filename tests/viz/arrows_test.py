@@ -8,7 +8,7 @@ from matplotlib.text import Text
 
 
 # Assuming draw_ellipse_with_arrow is in a module named 'plot_utils'
-from m3util.viz.arrows import draw_ellipse_with_arrow, place_text_in_inches
+from m3util.viz.arrows import draw_ellipse_with_arrow, place_text_in_inches, place_text_points
 
 
 ####### Draw ellipse with arrow tests #######
@@ -201,6 +201,98 @@ def test_text_properties():
         2, 
         3, 
         angle=0, 
+        fontsize=20, 
+        color="purple"
+    )
+    
+    # Check that the text properties are set correctly
+    assert text_artist.get_fontsize() == 20, "The fontsize is incorrect"
+    assert text_artist.get_color() == "purple", "The text color is incorrect"
+
+##### Place Text in Points tests #####
+
+def test_basic_text_placement_points():
+    """Test that the text is placed correctly at the specified position in axis coordinates."""
+    fig, ax = plt.subplots()
+    
+    text_str = "Test Text"
+    x_coord, y_coord = 0.5, 0.5
+
+    # Call the function to place text
+    text_artist = place_text_points(fig, text_str, x_coord, y_coord, angle=0, ax=ax)
+    
+    assert isinstance(text_artist, Text), "The returned object is not a matplotlib.text.Text instance"
+    assert text_artist.get_text() == text_str, "The text content is incorrect"
+    
+    # Verify the text is placed at the right coordinates
+    assert text_artist.get_position() == (x_coord, y_coord), "Text position is incorrect"
+    assert text_artist.get_rotation() == 0, "Text rotation angle is incorrect"
+
+def test_text_with_rotation_points():
+    """Test that the text is placed and rotated correctly."""
+    fig, ax = plt.subplots()
+    
+    x_coord, y_coord = 0.5, 0.5
+    angle = 45
+
+    # Call the function to place text with rotation
+    text_artist = place_text_points(fig, "Rotated Text", x_coord, y_coord, angle=angle, ax=ax)
+    
+    # Check that the rotation angle is correctly set
+    assert text_artist.get_rotation() == angle, "The rotation angle of the text is incorrect"
+
+def test_text_with_stroke_points():
+    """Test that the text stroke is applied correctly."""
+    fig, ax = plt.subplots()
+    
+    # Call the function with stroke enabled
+    text_artist = place_text_points(
+        fig, 
+        "Stroke Text", 
+        0.5, 
+        0.5, 
+        angle=0, 
+        ax=ax, 
+        stroke_width=2, 
+        stroke_color="red", 
+        fontsize=12, 
+        color="blue"
+    )
+    
+    # Force a draw of the figure to ensure path effects are applied
+    fig.canvas.draw()
+
+    # Check that stroke is applied correctly
+    path_effects_list = text_artist.get_path_effects()
+    assert len(path_effects_list) == 2, "There should be two path effects: Stroke and Normal"
+    
+    # The first path effect should be a stroke
+    stroke_effect = path_effects_list[0]
+    assert isinstance(stroke_effect, path_effects.Stroke), "First path effect is not a Stroke"
+
+def test_text_without_stroke_points():
+    """Test that no stroke is applied when stroke_width is None."""
+    fig, ax = plt.subplots()
+    
+    # Place text without stroke
+    text_artist = place_text_points(fig, "No Stroke", 0.5, 0.5, angle=0, ax=ax, fontsize=12, color="green")
+    
+    # Check that no path effects are applied
+    path_effects_list = text_artist.get_path_effects()
+    assert len(path_effects_list) == 0, "There should be no path effects applied"
+
+def test_text_properties_points():
+    """Test that additional text properties are applied correctly."""
+    fig, ax = plt.subplots()
+    
+    # Place text with additional properties (fontsize and color)
+    text_artist = place_text_points(
+        fig, 
+        "Custom Text", 
+        0.5, 
+        0.5, 
+        angle=0, 
+        ax=ax, 
         fontsize=20, 
         color="purple"
     )

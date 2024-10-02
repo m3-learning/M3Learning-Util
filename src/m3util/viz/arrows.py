@@ -230,44 +230,57 @@ def place_text_points(
     **textprops,
 ):
     """
-    Places text on a matplotlib figure or axis at a specified position in axis coordinates, with an optional stroke (outline).
+    Places a text element on a specified position in axis coordinates (or figure coordinates if no axis is provided) 
+    with options for rotating the text and adding a stroke (outline) for enhanced visibility.
 
     Args:
-        fig (matplotlib.figure.Figure): The matplotlib figure on which to place the text.
+        fig (matplotlib.figure.Figure): The matplotlib figure where the text will be placed.
         text (str): The text string to be displayed.
-        x (float): The x-coordinate in axis coordinates.
-        y (float): The y-coordinate in axis coordinates.
-        angle (float): The rotation angle of the text in degrees.
-        ax (matplotlib.axes.Axes, optional): The axes on which to place the text. If None, the text is placed on the figure.
-        stroke_width (int, optional): The width of the stroke (outline) in points. Default is None (no stroke).
+        x (float): The x-coordinate for placing the text in axis coordinates (or figure coordinates if `ax` is None).
+        y (float): The y-coordinate for placing the text in axis coordinates (or figure coordinates if `ax` is None).
+        angle (float): The angle to rotate the text, in degrees.
+        ax (matplotlib.axes.Axes, optional): The axes on which to place the text. If None, the text is placed directly on the figure.
+        stroke_width (int, optional): The width of the stroke (outline) around the text, in points. Default is None (no stroke).
         stroke_color (str, optional): The color of the stroke (outline). Default is 'black'.
-        **textprops: Additional keyword arguments for text properties (e.g., fontsize, color).
+        **textprops: Additional keyword arguments to customize text properties (e.g., `fontsize`, `color`, `fontweight`, etc.).
 
     Returns:
-        matplotlib.text.Text: The text artist object added to the figure or axis.
+        matplotlib.text.Text: The `Text` artist object added to the figure or axis.
+
+    Notes:
+        - If no axis (`ax`) is provided, the text is placed on the figure, and the coordinates are relative to the figure.
+        - Stroke (outline) can be applied to the text using `path_effects` for improved visibility, particularly over complex backgrounds.
+        - The figure is redrawn immediately after placing the text to ensure the new text is displayed.
+
+    Example:
+        place_text_points(fig, "Label", x=0.5, y=0.5, angle=45, ax=ax, fontsize=12, color="red", stroke_width=1.5)
     """
 
-    # Create the text artist
+    # Ensure the axis is provided; otherwise, the figure will be used
+    if ax is None:
+        ax = fig.gca()  # Get current axis if not provided
+
+    # Create the text artist on the specified axis or figure
     text_artist = ax.text(
         x,  # x-coordinate in axis coordinates
         y,  # y-coordinate in axis coordinates
         text,  # Text string to display
-        horizontalalignment="center",  # Horizontal alignment of the text
-        verticalalignment="center",  # Vertical alignment of the text
-        rotation=angle,  # Rotation angle of the text
-        **textprops,  # Additional text properties
+        horizontalalignment="center",  # Center the text horizontally
+        verticalalignment="center",    # Center the text vertically
+        rotation=angle,  # Apply the specified rotation angle to the text
+        **textprops,  # Pass additional text properties such as fontsize, color, etc.
     )
 
-    # If stroke is enabled, apply the PathEffects to add a stroke around the text
+    # Apply a stroke (outline) around the text if stroke_width is specified
     if stroke_width is not None:
         text_artist.set_path_effects(
             [
-                path_effects.Stroke(linewidth=stroke_width, foreground=stroke_color),
-                path_effects.Normal(),  # Ensure the original text is drawn over the stroke
+                path_effects.Stroke(linewidth=stroke_width, foreground=stroke_color),  # Set stroke width and color
+                path_effects.Normal(),  # Draw the text over the stroke to maintain readability
             ]
         )
 
-    # Trigger the figure redraw to update the display with the new text
+    # Redraw the figure to ensure the text and any applied effects are rendered
     fig.canvas.draw()
 
     return text_artist
