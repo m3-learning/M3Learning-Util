@@ -25,44 +25,55 @@ def draw_ellipse_with_arrow(
     arrow_direction="positive",
 ):
     """
-    Draw an ellipse with an arrow at a specific point on a line plot.
+    Draws an ellipse at a specified location on a line plot and adds an arrow originating 
+    from the ellipse.
 
     Args:
-        ax (matplotlib.axes.Axes): Matplotlib axis where the ellipse and arrow will be drawn.
-        x_data (array-like): X data points of the line plot.
-        y_data (array-like): Y data points of the line plot.
-        value (float): The x or y value at which to place the ellipse.
-        width (float): Width of the ellipse as a fraction of the x-axis range.
-        height (float): Height of the ellipse as a fraction of the y-axis range.
-        axis (str, optional): Axis to find the closest point on (default is 'x').
-        line_direction (str, optional): Direction of the line to which the ellipse and arrow are related (default is 'horizontal').
-        arrow_position (str, optional): Position to place the arrow relative to the ellipse (default is 'top').
-        arrow_length_frac (float, optional): Length of the arrow as a fraction of the axis range (default is 0.3).
-        color (str, optional): Color of the ellipse and arrow (default is 'blue').
-        linewidth (float, optional): Line width of the ellipse (default is 2).
-        arrow_props (dict, optional): Additional properties to customize the arrow appearance.
-        ellipse_props (dict, optional): Additional properties to customize the ellipse appearance.
-        arrow_direction (str, optional): Direction of the arrow (default is 'positive').
+        ax (matplotlib.axes.Axes): The matplotlib axis where the ellipse and arrow are to be drawn.
+        x_data (array-like): X-axis data points of the line plot.
+        y_data (array-like): Y-axis data points of the line plot.
+        value (float): The x or y value where the ellipse should be placed, depending on the `axis`.
+        width (float): The width of the ellipse, specified as a fraction of the x-axis range.
+        height (float): The height of the ellipse, specified as a fraction of the y-axis range.
+        axis (str, optional): The axis ('x' or 'y') used to find the closest point for placing the ellipse.
+                              Default is 'x'.
+        line_direction (str, optional): Defines the orientation of the line ('horizontal' or 'vertical') to 
+                                        which the ellipse and arrow are aligned. Default is 'horizontal'.
+        arrow_position (str, optional): The position of the arrow relative to the ellipse ('top' or 'bottom').
+                                        Default is 'top'.
+        arrow_length_frac (float, optional): The length of the arrow as a fraction of the axis range. 
+                                             Default is 0.3.
+        color (str, optional): The color of both the ellipse and the arrow. Default is 'blue'.
+        linewidth (float, optional): The line width of the ellipse outline. Default is 2.
+        arrow_props (dict, optional): Additional properties to customize the arrow's appearance, passed as 
+                                      a dictionary. Default is None.
+        ellipse_props (dict, optional): Additional properties to customize the ellipse's appearance, passed 
+                                        as a dictionary. Default is None.
+        arrow_direction (str, optional): The direction of the arrow ('positive' or 'negative'). Determines 
+                                         the direction of arrow relative to the axis. Default is 'positive'.
 
     Raises:
-        ValueError: If invalid values are provided for axis, line_direction, or arrow_position.
+        ValueError: Raised if invalid values are provided for `axis`, `line_direction`, or `arrow_position`.
+
+    Example:
+        draw_ellipse_with_arrow(ax, x_data, y_data, value=5.0, width=0.1, height=0.05, axis='x')
     """
-    # Ensure x_data and y_data are NumPy arrays
+    # Ensure x_data and y_data are converted to NumPy arrays
     x_data = np.asarray(x_data)
     y_data = np.asarray(y_data)
 
-    # Check that x_data and y_data have the same length
+    # Check if x_data and y_data have the same length
     if x_data.shape != y_data.shape:
         raise ValueError("x_data and y_data must have the same shape.")
 
-    # Get the closest point on the line plot
+    # Find the closest point on the line (either along x-axis or y-axis)
     ellipse_center = get_closest_point(x_data, y_data, value, axis=axis)
 
-    # Get axis limits for scaling dimensions and arrow length
+    # Get the axis limits to properly scale the ellipse dimensions and arrow length
     x_min, x_max = ax.get_xlim()
     y_min, y_max = ax.get_ylim()
 
-    # Calculate arrow length based on line direction
+    # Compute the arrow length based on the direction of the line
     if line_direction == "horizontal":
         arrow_length = arrow_length_frac * (x_max - x_min)
         if arrow_direction == "negative":
@@ -72,18 +83,18 @@ def draw_ellipse_with_arrow(
         if arrow_direction == "negative":
             arrow_length = -arrow_length
     else:
-        raise ValueError("line_direction must be 'horizontal' or 'vertical'")
+        raise ValueError("line_direction must be 'horizontal' or 'vertical'.")
 
-    # Scale the width and height of the ellipse
+    # Scale the width and height of the ellipse based on the axis limits
     width_scaled = width * (x_max - x_min)
     height_scaled = height * (y_max - y_min)
 
-    # Set default properties for the ellipse and update with any additional properties
+    # Define default ellipse properties and update with user-provided values if applicable
     default_ellipse_props = {"edgecolor": color, "facecolor": "none", "lw": linewidth}
     if ellipse_props:
         default_ellipse_props.update(ellipse_props)
 
-    # Draw the ellipse
+    # Draw the ellipse at the computed location
     ellipse = Ellipse(
         xy=ellipse_center,
         width=width_scaled,
@@ -92,7 +103,7 @@ def draw_ellipse_with_arrow(
     )
     ax.add_patch(ellipse)
 
-    # Calculate the start and end points of the arrow based on position and direction
+    # Determine the arrow start and end points based on line direction and arrow position
     if line_direction == "horizontal":
         if arrow_position == "top":
             start_point = (ellipse_center[0], ellipse_center[1] + height_scaled / 2)
@@ -107,7 +118,7 @@ def draw_ellipse_with_arrow(
                 ellipse_center[1] - height_scaled / 2,
             )
         else:
-            raise ValueError("arrow_position must be 'top' or 'bottom'")
+            raise ValueError("arrow_position must be 'top' or 'bottom'.")
     elif line_direction == "vertical":
         if arrow_position == "top":
             start_point = (ellipse_center[0] + width_scaled / 2, ellipse_center[1])
@@ -122,11 +133,11 @@ def draw_ellipse_with_arrow(
                 ellipse_center[1] + arrow_length,
             )
         else:
-            raise ValueError("arrow_position must be 'top' or 'bottom'")
+            raise ValueError("arrow_position must be 'top' or 'bottom'.")
     else:
-        raise ValueError("line_direction must be 'horizontal' or 'vertical'")
+        raise ValueError("line_direction must be 'horizontal' or 'vertical'.")
 
-    # Set default properties for the arrow and update with any additional properties
+    # Define default arrow properties and update with user-provided values if applicable
     default_arrow_props = {
         "facecolor": color,
         "width": 2,
@@ -137,7 +148,7 @@ def draw_ellipse_with_arrow(
     if arrow_props:
         default_arrow_props.update(arrow_props)
 
-    # Draw the arrow
+    # Draw the arrow on the plot using the defined start and end points
     ax.annotate("", xy=end_point, xytext=start_point, arrowprops=default_arrow_props)
 
 
@@ -209,7 +220,7 @@ def place_text_points(
     **textprops,
 ):
     """
-    Places text on a matplotlib figure or axis at a specified position in inches, with an optional stroke (outline).
+    Places text on a matplotlib figure or axis at a specified position in axis coordinates, with an optional stroke (outline).
 
     Args:
         fig (matplotlib.figure.Figure): The matplotlib figure on which to place the text.
