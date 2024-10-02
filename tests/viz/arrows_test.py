@@ -8,7 +8,7 @@ from matplotlib.text import Text
 
 
 # Assuming draw_ellipse_with_arrow is in a module named 'plot_utils'
-from m3util.viz.arrows import draw_ellipse_with_arrow, place_text_in_inches, place_text_points
+from m3util.viz.arrows import draw_ellipse_with_arrow, place_text_in_inches, place_text_points, shift_object_in_points
 
 
 ####### Draw ellipse with arrow tests #######
@@ -300,3 +300,95 @@ def test_text_properties_points():
     # Check that the text properties are set correctly
     assert text_artist.get_fontsize() == 20, "The fontsize is incorrect"
     assert text_artist.get_color() == "purple", "The text color is incorrect"
+
+
+###### Shift Object in Points tests ######
+
+def test_shift_positive_x():
+    """Test shifting a point along the positive x-axis."""
+    fig, ax = plt.subplots()
+    
+    # Start at (0.5, 0.5) and shift by 10 points along the x-axis
+    start_pos = (0.5, 0.5)
+    direction = (1, 0)
+    n_points = 10
+    
+    new_pos = shift_object_in_points(ax, start_pos, direction, n_points)
+    
+    # Check that the new position is correctly shifted along the x-axis
+    assert new_pos[0] > start_pos[0], "Position should shift positively along x-axis."
+    assert new_pos[1] == pytest.approx(start_pos[1], abs=1e-6), "y-coordinate should remain unchanged."
+
+def test_shift_positive_y():
+    """Test shifting a point along the positive y-axis."""
+    fig, ax = plt.subplots()
+    
+    # Start at (0.5, 0.5) and shift by 15 points along the y-axis
+    start_pos = (0.5, 0.5)
+    direction = (0, 1)
+    n_points = 15
+    
+    new_pos = shift_object_in_points(ax, start_pos, direction, n_points)
+    
+    # Check that the new position is correctly shifted along the y-axis
+    assert new_pos[1] > start_pos[1], "Position should shift positively along y-axis."
+    assert new_pos[0] == pytest.approx(start_pos[0], abs=1e-6), "x-coordinate should remain unchanged."
+
+def test_shift_negative_direction():
+    """Test shifting a point along a negative direction."""
+    fig, ax = plt.subplots()
+    
+    # Start at (0.5, 0.5) and shift by 10 points in the negative x direction
+    start_pos = (0.5, 0.5)
+    direction = (-1, 0)
+    n_points = 10
+    
+    new_pos = shift_object_in_points(ax, start_pos, direction, n_points)
+    
+    # Check that the new position is correctly shifted negatively along the x-axis
+    assert new_pos[0] < start_pos[0], "Position should shift negatively along x-axis."
+    assert new_pos[1] == pytest.approx(start_pos[1], abs=1e-6), "y-coordinate should remain unchanged."
+
+def test_shift_diagonal():
+    """Test shifting a point along a diagonal vector."""
+    fig, ax = plt.subplots()
+    
+    # Start at (0.5, 0.5) and shift by 10 points along the diagonal (1, 1)
+    start_pos = (0.5, 0.5)
+    direction = (1, 1)
+    n_points = 10
+    
+    new_pos = shift_object_in_points(ax, start_pos, direction, n_points)
+    
+    # Check that the new position is shifted in both x and y directions
+    assert new_pos[0] > start_pos[0], "Position should shift positively along x-axis."
+    assert new_pos[1] > start_pos[1], "Position should shift positively along y-axis."
+
+def test_shift_zero_points():
+    """Test that no shift occurs when the shift is 0 points."""
+    fig, ax = plt.subplots()
+    
+    # Start at (0.5, 0.5) and shift by 0 points
+    start_pos = (0.5, 0.5)
+    direction = (1, 0)
+    n_points = 0
+    
+    new_pos = shift_object_in_points(ax, start_pos, direction, n_points)
+    
+    # Check that the position remains unchanged
+    assert new_pos == pytest.approx(start_pos), "Position should remain unchanged when shifting by 0 points."
+
+def test_shift_non_normalized_vector():
+    """Test shifting with a non-normalized direction vector."""
+    fig, ax = plt.subplots()
+    
+    # Start at (0.5, 0.5) and shift by 10 points with a non-normalized direction vector (3, 4)
+    start_pos = (0.5, 0.5)
+    direction = (3, 4)
+    n_points = 10
+    
+    new_pos = shift_object_in_points(ax, start_pos, direction, n_points)
+    
+    # Check that the new position is shifted correctly, as the function normalizes the vector
+    assert new_pos[0] > start_pos[0], "Position should shift positively along x-axis."
+    assert new_pos[1] > start_pos[1], "Position should shift positively along y-axis."

@@ -287,25 +287,32 @@ def place_text_points(
 
 def shift_object_in_points(ax, position_axis, direction_vector, n_points):
     """
-    Shifts a position by a specified number of points along a given vector direction, returning the new position in axis coordinates.
+    Shifts a given position on a matplotlib axis by a specified number of points along a direction vector, 
+    and returns the new position in axis (data) coordinates.
 
     Args:
-        ax (matplotlib.axes.Axes): The matplotlib axes on which to perform the shift.
-        position_axis (tuple of float): The starting position in axis coordinates as (x, y).
-        direction_vector (tuple of float): The direction vector for the shift as (dx, dy).
-        n_points (float): The number of points to shift along the direction vector.
+        ax (matplotlib.axes.Axes): The matplotlib axes on which the shift is performed.
+        position_axis (tuple of float): The starting position in axis (data) coordinates as (x, y).
+        direction_vector (tuple of float): The direction vector for the shift as (dx, dy), 
+                                           indicating the direction of the shift.
+        n_points (float): The number of points (in display units) by which to shift the position 
+                          along the direction vector.
 
     Returns:
-        tuple of float: The new position in axis coordinates as (x, y).
+        tuple of float: The new position in axis (data) coordinates as (x, y).
+
+    Example:
+        # Shift a point (0.5, 0.5) by 10 points along the direction (1, 0)
+        new_position = shift_object_in_points(ax, (0.5, 0.5), (1, 0), 10)
     """
-    # Convert the starting position from axis coordinates to display (points) coordinates
+    # Convert the starting position from axis (data) coordinates to display (points) coordinates
     position_display = ax.transData.transform(position_axis)
 
-    # Normalize the direction vector to get the unit direction
+    # Normalize the direction vector to get the unit vector
     direction_vector = np.array(direction_vector)
     direction_vector = direction_vector / np.linalg.norm(direction_vector)
 
-    # Calculate the shift vector in points along the specified direction
+    # Calculate the shift in points along the specified direction
     shift_vector_pts = direction_vector * n_points
 
     # Apply the shift to the original position in display coordinates
