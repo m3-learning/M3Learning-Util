@@ -326,34 +326,54 @@ def shift_object_in_points(ax, position_axis, direction_vector, n_points):
 
 def shift_object_in_inches(fig, position_inch, direction_vector, n_points):
     """
-    Shifts a position by a specified number of points along a given vector direction, returning the new position in inches.
+    Shifts a position in a matplotlib figure by a specified number of points along a given direction vector, 
+    returning the new position in inches. This is useful for adjusting graphical elements in relation to 
+    the figure's DPI and point-based positioning system.
 
     Args:
-        fig (matplotlib.figure.Figure): The matplotlib figure, used to get the DPI for point-to-inch conversion.
-        position_inch (tuple of float): The starting position in inches as (x, y).
-        direction_vector (tuple of float): The direction vector for the shift as (dx, dy).
-        n_points (float): The number of points to shift along the direction vector.
+        fig (matplotlib.figure.Figure): The matplotlib figure, used to access the DPI (dots per inch) 
+                                        for converting points to inches.
+        position_inch (tuple of float): The starting position in inches as (x, y) relative to the figure's coordinates.
+        direction_vector (tuple of float): The direction vector for the shift as (dx, dy), which determines 
+                                           the direction of movement. The vector will be normalized internally.
+        n_points (float): The number of points to shift along the direction vector. 
+                          (Note: 1 inch = 72 points).
 
     Returns:
-        tuple of float: The new position in inches as (x, y).
+        tuple of float: The new position in inches as (x, y) after the shift is applied.
+
+    Example:
+        # Shift a point located at (2, 3) inches by 15 points along a diagonal direction (1, 1)
+        new_position = shift_object_in_inches(fig, (2, 3), (1, 1), 15)
+
+    Notes:
+        - This function performs a shift in a vector direction, first normalizing the direction vector 
+          to ensure consistent movement regardless of the vector's magnitude.
+        - The shift is specified in points, which is a common unit in graphic design (1 inch = 72 points).
+        - The position and shift are handled in figure units of inches to maintain compatibility with 
+          the figure’s coordinate system, particularly for DPI scaling.
+
     """
-    # Normalize the direction vector to get the unit direction
+    # Normalize the direction vector to ensure consistent movement regardless of magnitude.
+    # This gives a unit vector in the direction specified by (dx, dy).
     direction_vector = np.array(direction_vector)
     direction_vector = direction_vector / np.linalg.norm(direction_vector)
 
-    # Get the figure's DPI to convert points to inches
+    # Get the DPI (dots per inch) of the figure to convert between points and inches.
     dpi = fig.dpi
-    points_per_inch = 72  # 1 inch = 72 points
+    points_per_inch = 72  # Standard conversion: 1 inch = 72 points
 
-    # Convert the shift in points to inches
+    # Convert the desired shift from points to inches using the figure's DPI.
     shift_inch = n_points / points_per_inch
 
-    # Calculate the shift vector in inches along the specified direction
+    # Calculate the shift vector in inches by scaling the unit direction vector by the computed shift in inches.
     shift_vector_inch = direction_vector * shift_inch
 
-    # Apply the shift to the original position (which is already in inches)
+    # Apply the calculated shift vector to the original position in inches.
+    # This adds the shift to the initial (x, y) position.
     new_position_inch = np.array(position_inch) + shift_vector_inch
 
+    # Return the new position as a tuple in inches.
     return tuple(new_position_inch)
 
 
