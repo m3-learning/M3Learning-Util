@@ -285,32 +285,6 @@ def place_text_points(
 
     return text_artist
 
-
-# def place_text(fig, text, x, y, angle, ax=None, **textprops):
-
-#     if ax is None:
-#         # Convert from inches to display coordinates (pixels) using the figure's dpi scale transform
-#         display_coords = fig.dpi_scale_trans.transform((x, y))
-#         x_, y_ = display_coords[0], display_coords[1]
-#     else:
-#         x_, y_ = x, y
-
-#     text_artist = ax.text(
-#         x_,  # x-coordinate in axis coordinates
-#         y_,  # y-coordinate in axis coordinates
-#         text,  # Text string to display
-#         horizontalalignment="center",  # Horizontal alignment of the text
-#         verticalalignment="center",  # Vertical alignment of the text
-#         rotation=angle,  # Rotation angle of the text
-#         **textprops,  # Additional text properties
-#     )
-
-#     # Trigger the figure redraw to update the display with the new text
-#     fig.canvas.draw()
-
-#     return text_artist
-
-
 def shift_object_in_points(ax, position_axis, direction_vector, n_points):
     """
     Shifts a position by a specified number of points along a given vector direction, returning the new position in axis coordinates.
