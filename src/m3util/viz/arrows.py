@@ -379,34 +379,50 @@ def shift_object_in_inches(fig, position_inch, direction_vector, n_points):
 
 def get_perpendicular_vector(point1, point2, clockwise=False):
     """
-    Computes the perpendicular vector to the vector defined by two points.
+    Computes a perpendicular vector to the line segment defined by two points. The result can either be
+    the clockwise or counterclockwise perpendicular vector, based on the input flag.
 
     Args:
-        point1 (tuple of float): The first endpoint as (x1, y1).
-        point2 (tuple of float): The second endpoint as (x2, y2).
-        clockwise (bool, optional): If True, returns the clockwise perpendicular vector.
-            Otherwise, returns the counterclockwise perpendicular vector. Defaults to False.
+        point1 (tuple of float): The first point (x1, y1) representing one end of the vector.
+        point2 (tuple of float): The second point (x2, y2) representing the other end of the vector.
+        clockwise (bool, optional): If True, returns the clockwise perpendicular vector 
+                                    (i.e., the vector rotated by -90 degrees). 
+                                    If False, returns the counterclockwise perpendicular vector 
+                                    (rotated by +90 degrees). Defaults to False.
 
     Returns:
-        tuple of float: The perpendicular vector as (dx, dy).
+        tuple of float: The perpendicular vector as (dx, dy), which is perpendicular to the 
+                        direction vector formed by point1 and point2.
+
+    Example:
+        # Compute the counterclockwise perpendicular vector
+        perp_vector = get_perpendicular_vector((0, 0), (1, 0))  # Should return (0, 1)
+        
+        # Compute the clockwise perpendicular vector
+        perp_vector_clockwise = get_perpendicular_vector((0, 0), (1, 0), clockwise=True)  # Should return (0, -1)
+
+    Notes:
+        - The direction vector is first calculated as the difference between the coordinates of `point2` and `point1`.
+        - Depending on the `clockwise` argument, the direction vector is then rotated either by +90 degrees 
+          (counterclockwise) or -90 degrees (clockwise) to get the perpendicular vector.
     """
-    # Calculate the direction vector from point1 to point2
+    
+    # Unpack the coordinates of the two points
     x1, y1 = point1
     x2, y2 = point2
+
+    # Calculate the direction vector from point1 to point2
     direction_vector = np.array([x2 - x1, y2 - y1])
 
-    # Compute the perpendicular vector
+    # Compute the perpendicular vector by rotating the direction vector
     if clockwise:
-        # Rotate the direction vector by -90 degrees (clockwise)
-        perpendicular_vector = np.array(
-            [direction_vector[1], -direction_vector[0]]
-        )  # Clockwise rotation
+        # Rotate by -90 degrees for the clockwise perpendicular vector
+        perpendicular_vector = np.array([direction_vector[1], -direction_vector[0]])
     else:
-        # Rotate the direction vector by +90 degrees (counterclockwise)
-        perpendicular_vector = np.array(
-            [-direction_vector[1], direction_vector[0]]
-        )  # Counterclockwise rotation
+        # Rotate by +90 degrees for the counterclockwise perpendicular vector
+        perpendicular_vector = np.array([-direction_vector[1], direction_vector[0]])
 
+    # Return the perpendicular vector as a tuple
     return tuple(perpendicular_vector)
 
 
@@ -699,56 +715,96 @@ class DrawArrow:
 
 
 def draw_extended_arrow_indicator(
-    fig,
-    x,
-    y,
-    direction="vertical",
-    text=None,
-    offset=(-0.4, 0),
-    offset_units="fraction",
-    ax=None,
-    vertical_text_displacement=None,
-    text_position="center",
-    text_alignment="center",
-    units="points",
-    arrowprops={},
-    line_style={},
-    halo=None,
-    **annotation_kwargs,
+    fig,  # Figure object to draw on
+    x,  # Tuple or list of two x-coordinates (start and end points for the arrow)
+    y,  # Tuple or list of two y-coordinates (start and end points for the arrow)
+    direction="vertical",  # Direction of the extended lines ("vertical" or "horizontal")
+    text=None,  # Optional text annotation along the arrow
+    offset=(
+        -0.4,
+        0,
+    ),  # Offset applied to the position of the arrow (in specified units)
+    offset_units="fraction",  # Units for offset ("fraction" of the axis or "points")
+    ax=None,  # Axis on which to draw (default: current axis)
+    vertical_text_displacement=None,  # Optional displacement for text in the vertical direction
+    text_position="center",  # Position of text relative to the arrow ("center", "start", "end")
+    text_alignment="center",  # Text alignment (e.g., "center", "left", "right")
+    units="points",  # Units for the drawing (e.g., "points", "data")
+    arrowprops={},  # Properties for the arrow (width, color, etc.)
+    line_style={},  # Style for the extended lines (dash pattern, color, etc.)
+    halo=None,  # Optional halo effect around the arrow or lines (for emphasis)
+    **annotation_kwargs,  # Additional keyword arguments for annotation
 ):
+    """
+    Draws an extended arrow with optional annotation text and custom line styling.
+
+    This function allows you to draw an arrow with start and end points, extended
+    lines beyond the arrow, and optional annotations. It supports flexible positioning,
+    text placement, and line customization.
+
+    Parameters:
+    - fig: matplotlib figure object where the arrow will be drawn.
+    - x: Tuple or list containing two x-coordinates (start and end) for the arrow.
+    - y: Tuple or list containing two y-coordinates (start and end) for the arrow.
+    - direction: Direction of the extended lines. Options: "vertical", "horizontal".
+    - text: Text to display near the arrow. Defaults to None.
+    - offset: Offset for the start and end positions of the arrow. Defaults to (-0.4, 0).
+    - offset_units: Units of the offset. Can be "fraction" (relative to the axis) or "points". Defaults to "fraction".
+    - ax: Axis to draw on. If None, the current axis is used.
+    - vertical_text_displacement: Additional vertical shift for the text. Defaults to None.
+    - text_position: Position of the text relative to the arrow. Options: "center", "start", "end". Defaults to "center".
+    - text_alignment: Alignment of the text. Options: "center", "left", "right". Defaults to "center".
+    - units: Units for the arrow drawing. Defaults to "points".
+    - arrowprops: Dictionary specifying arrow properties such as arrowstyle, color, etc.
+    - line_style: Dictionary specifying style of the extended lines (color, dash style).
+    - halo: Optional halo effect around the arrow or lines to enhance visibility.
+    - **annotation_kwargs: Additional keyword arguments for annotation (e.g., font size, style).
+
+    Returns:
+    None: The function draws the arrow and extended lines directly on the figure.
+
+    """
+    # Calculate the starting and ending points of the arrow with the applied offset
     point_0 = obj_offset(
-        (x[0], y[0]),  # position
+        (x[0], y[0]),  # Position of the first point (start)
         offset=offset,
         offset_units=offset_units,
         ax=ax,
     )
     point_1 = obj_offset(
-        (x[1], y[1]),  # position
+        (x[1], y[1]),  # Position of the second point (end)
         offset=offset,
         offset_units=offset_units,
         ax=ax,
     )
-    
+
+    # Create the arrow object using the calculated points and provided properties
     arrow = DrawArrow(
         fig,
-        point_0,
-        point_1,
-        text=text,
-        ax=ax,
-        text_position=text_position,
-        text_alignment=text_alignment,
-        vertical_text_displacement=vertical_text_displacement,
-        units=units,
-        scale=annotation_kwargs.get("xycoords", "data"),
-        arrowprops=arrowprops,
-        halo=halo,
+        point_0,  # Starting point of the arrow (with offset)
+        point_1,  # Ending point of the arrow (with offset)
+        text=text,  # Optional annotation text
+        ax=ax,  # Axis to draw on
+        text_position=text_position,  # Positioning of the annotation text relative to the arrow
+        text_alignment=text_alignment,  # Alignment of the text
+        vertical_text_displacement=vertical_text_displacement,  # Vertical shift for text
+        units=units,  # Units for the arrow drawing (e.g., "data", "points")
+        scale=annotation_kwargs.get(
+            "xycoords", "data"
+        ),  # Coordinate system for scaling
+        arrowprops=arrowprops,  # Arrow properties such as style, color
+        halo=halo,  # Optional halo effect around the arrow
     )
 
+    # Draw the arrow on the figure
     arrow.draw()
 
+    # Depending on the direction, draw vertical or horizontal extended lines
     if direction == "vertical":
+        # Draw vertical lines extending from the arrow's start and end points
         draw_lines(ax, [x[0], point_0[0]], [y[0], y[0]], style=line_style, halo=halo)
         draw_lines(ax, [x[0], point_1[0]], [y[1], y[1]], style=line_style, halo=halo)
     elif direction == "horizontal":
+        # Draw horizontal lines extending from the arrow's start and end points
         draw_lines(ax, [x[0], x[0]], [y[0], point_0[1]], style=line_style, halo=halo)
         draw_lines(ax, [x[1], x[1]], [y[0], point_1[1]], style=line_style, halo=halo)

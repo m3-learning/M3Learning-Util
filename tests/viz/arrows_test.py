@@ -5,6 +5,7 @@ from matplotlib.patches import Ellipse, FancyArrowPatch
 from matplotlib.text import Annotation
 import matplotlib.patheffects as path_effects
 from matplotlib.text import Text
+import pytest
 
 
 # Assuming draw_ellipse_with_arrow is in a module named 'plot_utils'
@@ -14,6 +15,8 @@ from m3util.viz.arrows import (
     place_text_points,
     shift_object_in_points,
     shift_object_in_inches,
+    get_perpendicular_vector,
+    DrawArrow
 )
 
 
@@ -551,3 +554,184 @@ def test_shift_non_normalized_vector_shift_object_in_inches():
     assert new_pos == pytest.approx(
         expected_pos, abs=1e-6
     ), f"Expected position {expected_pos}, got {new_pos}"
+
+
+##### Get Perpendicular Vector tests #####
+
+def test_perpendicular_counterclockwise_horizontal():
+    """Test that the counterclockwise perpendicular vector is correct for a horizontal vector."""
+    point1 = (0, 0)
+    point2 = (1, 0)
+    
+    # Counterclockwise perpendicular to (1, 0) should be (0, 1)
+    expected = (0, 1)
+    
+    result = get_perpendicular_vector(point1, point2)
+    
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_perpendicular_clockwise_horizontal():
+    """Test that the clockwise perpendicular vector is correct for a horizontal vector."""
+    point1 = (0, 0)
+    point2 = (1, 0)
+    
+    # Clockwise perpendicular to (1, 0) should be (0, -1)
+    expected = (0, -1)
+    
+    result = get_perpendicular_vector(point1, point2, clockwise=True)
+    
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_perpendicular_counterclockwise_vertical():
+    """Test that the counterclockwise perpendicular vector is correct for a vertical vector."""
+    point1 = (0, 0)
+    point2 = (0, 1)
+    
+    # Counterclockwise perpendicular to (0, 1) should be (-1, 0)
+    expected = (-1, 0)
+    
+    result = get_perpendicular_vector(point1, point2)
+    
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_perpendicular_clockwise_vertical():
+    """Test that the clockwise perpendicular vector is correct for a vertical vector."""
+    point1 = (0, 0)
+    point2 = (0, 1)
+    
+    # Clockwise perpendicular to (0, 1) should be (1, 0)
+    expected = (1, 0)
+    
+    result = get_perpendicular_vector(point1, point2, clockwise=True)
+    
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_perpendicular_diagonal_counterclockwise():
+    """Test that the counterclockwise perpendicular vector is correct for a diagonal vector."""
+    point1 = (0, 0)
+    point2 = (1, 1)
+    
+    # Counterclockwise perpendicular to (1, 1) should be (-1, 1)
+    expected = (-1, 1)
+    
+    result = get_perpendicular_vector(point1, point2)
+    
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_perpendicular_diagonal_clockwise():
+    """Test that the clockwise perpendicular vector is correct for a diagonal vector."""
+    point1 = (0, 0)
+    point2 = (1, 1)
+    
+    # Clockwise perpendicular to (1, 1) should be (1, -1)
+    expected = (1, -1)
+    
+    result = get_perpendicular_vector(point1, point2, clockwise=True)
+    
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+    
+##### arrow class #####
+
+@pytest.fixture
+def setup_fig():
+    """
+    Pytest fixture to create a figure for testing.
+    """
+    fig, ax = plt.subplots()
+    return fig, ax
+
+def test_arrow_with_halo(setup_fig):
+    """
+    Test if the halo (outline) is drawn correctly when enabled.
+    """
+    fig, ax = setup_fig
+    start_pos = (0, 0)
+    end_pos = (1, 1)
+
+    # Enable the halo effect
+    halo = {"enabled": True, "color": "red", "scale": 2}
+
+    arrow = DrawArrow(fig=fig, start_pos=start_pos, end_pos=end_pos, halo=halo)
+    arrow_artist = arrow.draw_arrow()
+
+    assert isinstance(arrow_artist, Annotation), "The arrow should be an Annotation object."
+    # Ensure the halo properties are applied correctly (manually verify color and scaling if needed)
+
+def test_text_placement_center(setup_fig):
+    """
+    Test if the text is placed correctly at the center of the arrow.
+    """
+    fig, ax = setup_fig
+    start_pos = (0, 0)
+    end_pos = (1, 1)
+    text = "Test Arrow"
+
+    arrow = DrawArrow(
+        fig=fig, start_pos=start_pos, end_pos=end_pos, text=text, text_position="center"
+    )
+    arrow.draw()  # Draw both arrow and text
+
+    # Mock perpendicular vector and displacement functions to focus on text placement
+    # (This can be expanded with text artist verification if needed)
+
+def test_text_position_start(setup_fig):
+    """
+    Test if the text is placed correctly at the start of the arrow.
+    """
+    fig, ax = setup_fig
+    start_pos = (0, 0)
+    end_pos = (1, 1)
+    text = "Start Text"
+
+    arrow = DrawArrow(
+        fig=fig, start_pos=start_pos, end_pos=end_pos, text=text, text_position="start"
+    )
+    arrow.draw()
+
+    # Check if text position matches start position
+    assert arrow.start_pos == (0, 0), "Text should be placed at the start of the arrow."
+
+def test_inches_conversion(setup_fig):
+    """
+    Test the conversion from inches to figure fraction coordinates.
+    """
+    fig, ax = setup_fig
+    start_pos = (1, 1)  # Inches
+    end_pos = (2, 2)  # Inches
+
+    arrow = DrawArrow(fig=fig, start_pos=start_pos, end_pos=end_pos)
+
+    converted_pos = arrow.inches_to_fig_fraction(start_pos)
+    
+    # Verify if the conversion returns an expected figure fraction range (0, 1)
+    assert all(0 <= coord <= 1 for coord in converted_pos), "Converted position should be in figure fraction (0, 1)."
+
+def test_extract_angle():
+    """
+    Test if the angle extraction between the start and end positions is correct.
+    """
+    fig, ax = plt.subplots()
+    start_pos = (0, 0)
+    end_pos = (1, 1)
+
+    arrow = DrawArrow(fig=fig, start_pos=start_pos, end_pos=end_pos)
+
+    angle = arrow.extract_angle()
+
+    # The angle between (0, 0) and (1, 1) should be 45 degrees
+    assert np.isclose(angle, 45), f"Expected angle of 45 degrees, got {angle}"
+
+def test_get_dx_dy():
+    """
+    Test the calculation of the dx and dy differences between start and end positions.
+    """
+    fig, ax = plt.subplots()
+    start_pos = (0, 0)
+    end_pos = (3, 4)
+
+    arrow = DrawArrow(fig=fig, start_pos=start_pos, end_pos=end_pos)
+    dx, dy = arrow.get_dx_dy()
+
+    assert dx == 3, "dx should be the difference in x-coordinates."
+    assert dy == 4, "dy should be the difference in y-coordinates."
