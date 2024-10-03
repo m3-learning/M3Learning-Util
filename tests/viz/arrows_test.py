@@ -6,6 +6,7 @@ from matplotlib.text import Annotation
 import matplotlib.patheffects as path_effects
 from matplotlib.text import Text
 import pytest
+from unittest.mock import patch
 
 
 # Assuming draw_ellipse_with_arrow is in a module named 'plot_utils'
@@ -16,7 +17,8 @@ from m3util.viz.arrows import (
     shift_object_in_points,
     shift_object_in_inches,
     get_perpendicular_vector,
-    DrawArrow
+    DrawArrow,
+    draw_extended_arrow_indicator,
 )
 
 
@@ -558,80 +560,87 @@ def test_shift_non_normalized_vector_shift_object_in_inches():
 
 ##### Get Perpendicular Vector tests #####
 
+
 def test_perpendicular_counterclockwise_horizontal():
     """Test that the counterclockwise perpendicular vector is correct for a horizontal vector."""
     point1 = (0, 0)
     point2 = (1, 0)
-    
+
     # Counterclockwise perpendicular to (1, 0) should be (0, 1)
     expected = (0, 1)
-    
+
     result = get_perpendicular_vector(point1, point2)
-    
+
     assert result == expected, f"Expected {expected}, but got {result}"
+
 
 def test_perpendicular_clockwise_horizontal():
     """Test that the clockwise perpendicular vector is correct for a horizontal vector."""
     point1 = (0, 0)
     point2 = (1, 0)
-    
+
     # Clockwise perpendicular to (1, 0) should be (0, -1)
     expected = (0, -1)
-    
+
     result = get_perpendicular_vector(point1, point2, clockwise=True)
-    
+
     assert result == expected, f"Expected {expected}, but got {result}"
+
 
 def test_perpendicular_counterclockwise_vertical():
     """Test that the counterclockwise perpendicular vector is correct for a vertical vector."""
     point1 = (0, 0)
     point2 = (0, 1)
-    
+
     # Counterclockwise perpendicular to (0, 1) should be (-1, 0)
     expected = (-1, 0)
-    
+
     result = get_perpendicular_vector(point1, point2)
-    
+
     assert result == expected, f"Expected {expected}, but got {result}"
+
 
 def test_perpendicular_clockwise_vertical():
     """Test that the clockwise perpendicular vector is correct for a vertical vector."""
     point1 = (0, 0)
     point2 = (0, 1)
-    
+
     # Clockwise perpendicular to (0, 1) should be (1, 0)
     expected = (1, 0)
-    
+
     result = get_perpendicular_vector(point1, point2, clockwise=True)
-    
+
     assert result == expected, f"Expected {expected}, but got {result}"
+
 
 def test_perpendicular_diagonal_counterclockwise():
     """Test that the counterclockwise perpendicular vector is correct for a diagonal vector."""
     point1 = (0, 0)
     point2 = (1, 1)
-    
+
     # Counterclockwise perpendicular to (1, 1) should be (-1, 1)
     expected = (-1, 1)
-    
+
     result = get_perpendicular_vector(point1, point2)
-    
+
     assert result == expected, f"Expected {expected}, but got {result}"
+
 
 def test_perpendicular_diagonal_clockwise():
     """Test that the clockwise perpendicular vector is correct for a diagonal vector."""
     point1 = (0, 0)
     point2 = (1, 1)
-    
+
     # Clockwise perpendicular to (1, 1) should be (1, -1)
     expected = (1, -1)
-    
+
     result = get_perpendicular_vector(point1, point2, clockwise=True)
-    
+
     assert result == expected, f"Expected {expected}, but got {result}"
 
-    
+
 ##### arrow class #####
+
 
 @pytest.fixture
 def setup_fig():
@@ -640,6 +649,7 @@ def setup_fig():
     """
     fig, ax = plt.subplots()
     return fig, ax
+
 
 def test_arrow_with_halo(setup_fig):
     """
@@ -655,8 +665,11 @@ def test_arrow_with_halo(setup_fig):
     arrow = DrawArrow(fig=fig, start_pos=start_pos, end_pos=end_pos, halo=halo)
     arrow_artist = arrow.draw_arrow()
 
-    assert isinstance(arrow_artist, Annotation), "The arrow should be an Annotation object."
+    assert isinstance(
+        arrow_artist, Annotation
+    ), "The arrow should be an Annotation object."
     # Ensure the halo properties are applied correctly (manually verify color and scaling if needed)
+
 
 def test_text_placement_center(setup_fig):
     """
@@ -675,6 +688,7 @@ def test_text_placement_center(setup_fig):
     # Mock perpendicular vector and displacement functions to focus on text placement
     # (This can be expanded with text artist verification if needed)
 
+
 def test_text_position_start(setup_fig):
     """
     Test if the text is placed correctly at the start of the arrow.
@@ -692,6 +706,7 @@ def test_text_position_start(setup_fig):
     # Check if text position matches start position
     assert arrow.start_pos == (0, 0), "Text should be placed at the start of the arrow."
 
+
 def test_inches_conversion(setup_fig):
     """
     Test the conversion from inches to figure fraction coordinates.
@@ -703,9 +718,12 @@ def test_inches_conversion(setup_fig):
     arrow = DrawArrow(fig=fig, start_pos=start_pos, end_pos=end_pos)
 
     converted_pos = arrow.inches_to_fig_fraction(start_pos)
-    
+
     # Verify if the conversion returns an expected figure fraction range (0, 1)
-    assert all(0 <= coord <= 1 for coord in converted_pos), "Converted position should be in figure fraction (0, 1)."
+    assert all(
+        0 <= coord <= 1 for coord in converted_pos
+    ), "Converted position should be in figure fraction (0, 1)."
+
 
 def test_extract_angle():
     """
@@ -722,6 +740,7 @@ def test_extract_angle():
     # The angle between (0, 0) and (1, 1) should be 45 degrees
     assert np.isclose(angle, 45), f"Expected angle of 45 degrees, got {angle}"
 
+
 def test_get_dx_dy():
     """
     Test the calculation of the dx and dy differences between start and end positions.
@@ -735,3 +754,154 @@ def test_get_dx_dy():
 
     assert dx == 3, "dx should be the difference in x-coordinates."
     assert dy == 4, "dy should be the difference in y-coordinates."
+
+
+####### draw_extended_arrow_indicator tests #######
+
+
+@pytest.fixture
+def create_figure():
+    """Fixture to create a matplotlib figure and axis for testing."""
+    fig, ax = plt.subplots()
+    return fig, ax
+
+
+@patch("m3util.viz.arrows.DrawArrow")  # Mock the DrawArrow class
+@patch("m3util.viz.arrows.obj_offset")  # Mock obj_offset to control its output
+@patch("m3util.viz.arrows.draw_lines")  # Mock draw_lines to control its output
+def test_vertical_arrow_draw(
+    mock_draw_lines, mock_obj_offset, mock_DrawArrow, create_figure
+):
+    """Test vertical arrow drawing with default parameters."""
+
+    # Setup mock behavior for obj_offset
+    mock_obj_offset.side_effect = [(0.5, 0.5), (0.7, 0.7)]  # Mocked offset positions
+
+    # Setup figure and axis
+    fig, ax = create_figure
+
+    # Call the function with mock inputs
+    draw_extended_arrow_indicator(fig, x=[0, 1], y=[0, 1], direction="vertical", ax=ax)
+
+    # Check if the arrow was initialized with the right points and properties
+    mock_DrawArrow.assert_called_once_with(
+        fig,
+        (0.5, 0.5),
+        (0.7, 0.7),
+        text=None,
+        ax=ax,
+        text_position="center",
+        text_alignment="center",
+        vertical_text_displacement=None,
+        units="points",
+        scale="data",
+        arrowprops={},
+        halo=None,
+    )
+
+    # Ensure the draw method was called once on the arrow instance
+    mock_DrawArrow.return_value.draw.assert_called_once()
+
+    # Check that draw_lines is called for the vertical direction
+    mock_draw_lines.assert_any_call(ax, [0, 0.5], [0, 0], style={}, halo=None)
+    mock_draw_lines.assert_any_call(ax, [0, 0.7], [1, 1], style={}, halo=None)
+
+
+@patch("m3util.viz.arrows.DrawArrow")
+@patch("m3util.viz.arrows.obj_offset")
+@patch("m3util.viz.arrows.draw_lines")
+def test_horizontal_arrow_draw(
+    mock_draw_lines, mock_obj_offset, mock_DrawArrow, create_figure
+):
+    """Test horizontal arrow drawing with horizontal direction."""
+
+    # Mock obj_offset to return fake offset positions
+    mock_obj_offset.side_effect = [(0.5, 0.3), (0.7, 0.9)]  # Mocked positions
+
+    fig, ax = create_figure
+
+    # Call the function with mock inputs and horizontal direction
+    draw_extended_arrow_indicator(
+        fig, x=[0, 1], y=[0, 1], direction="horizontal", ax=ax
+    )
+
+    # Check if the arrow was initialized with the right parameters
+    mock_DrawArrow.assert_called_once_with(
+        fig,
+        (0.5, 0.3),
+        (0.7, 0.9),
+        text=None,
+        ax=ax,
+        text_position="center",
+        text_alignment="center",
+        vertical_text_displacement=None,
+        units="points",
+        scale="data",
+        arrowprops={},
+        halo=None,
+    )
+
+    # Check that the draw method is called
+    mock_DrawArrow.return_value.draw.assert_called_once()
+
+    # Ensure draw_lines is called for the horizontal direction
+    mock_draw_lines.assert_any_call(ax, [0, 0], [0, 0.3], style={}, halo=None)
+    mock_draw_lines.assert_any_call(ax, [1, 1], [0, 0.9], style={}, halo=None)
+
+
+@patch("m3util.viz.arrows.DrawArrow")
+@patch("m3util.viz.arrows.obj_offset")
+@patch("m3util.viz.arrows.draw_lines")
+def test_custom_text_and_arrowprops(
+    mock_draw_lines, mock_obj_offset, mock_DrawArrow, create_figure
+):
+    """Test the function with custom text and arrow properties."""
+
+    # Mock obj_offset to return fixed positions
+    mock_obj_offset.side_effect = [(0.5, 0.3), (0.8, 0.7)]  # Mocked positions
+
+    fig, ax = create_figure
+
+    # Custom arrow properties and text
+    arrowprops = {"arrowstyle": "->", "color": "blue"}
+    custom_text = "Test Arrow"
+
+    draw_extended_arrow_indicator(
+        fig,
+        x=[0, 1],
+        y=[0, 1],
+        direction="vertical",
+        ax=ax,
+        text=custom_text,
+        arrowprops=arrowprops,
+    )
+
+    # Check if the arrow was initialized with the custom text and properties
+    mock_DrawArrow.assert_called_once_with(
+        fig,
+        (0.5, 0.3),
+        (0.8, 0.7),
+        text=custom_text,
+        ax=ax,
+        text_position="center",
+        text_alignment="center",
+        vertical_text_displacement=None,
+        units="points",
+        scale="data",
+        arrowprops=arrowprops,
+        halo=None,
+    )
+
+    # Ensure draw method was called
+    mock_DrawArrow.return_value.draw.assert_called_once()
+
+
+def test_invalid_direction(create_figure):
+    """Test the function with an invalid direction input."""
+    fig, ax = create_figure
+
+    with pytest.raises(ValueError):
+        # Call the function with an invalid direction
+        draw_extended_arrow_indicator(
+            fig, x=[0, 1], y=[0, 1], direction="diagonal", ax=ax
+        )

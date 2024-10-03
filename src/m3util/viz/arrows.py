@@ -764,6 +764,10 @@ def draw_extended_arrow_indicator(
     None: The function draws the arrow and extended lines directly on the figure.
 
     """
+    
+    if direction not in ["vertical", "horizontal"]:
+        raise ValueError("Direction must be 'vertical' or 'horizontal'.")
+    
     # Calculate the starting and ending points of the arrow with the applied offset
     point_0 = obj_offset(
         (x[0], y[0]),  # Position of the first point (start)
