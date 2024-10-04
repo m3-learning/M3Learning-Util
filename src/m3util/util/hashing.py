@@ -32,7 +32,19 @@ def calculate_h5file_checksum(file_path, algorithm="sha256", chunk_size=1048576)
 
 
 def select_hash_algorithm(algorithm):
-    # Select the hashing algorithm based on the user input
+    """
+    Select the hashing algorithm based on the user input.
+
+    Args:
+        algorithm (str): The name of the hashing algorithm to use. Supported options are 'sha256', 'md5', and 'sha1'.
+
+    Returns:
+        hashlib._hashlib.HASH: An instance of the selected hashing algorithm.
+
+    Raises:
+        ValueError: If an unsupported hashing algorithm is specified.
+    """
+    # Check the algorithm and return the corresponding hash function
     if algorithm == "sha256":
         hash_function = hashlib.sha256()
     elif algorithm == "md5":
