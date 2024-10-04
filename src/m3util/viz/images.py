@@ -5,12 +5,12 @@ def display_image(ax, image):
     """
     Display an image on the given matplotlib axis.
 
-    Parameters:
-    ax (matplotlib.axes.Axes): The axis on which to display the image.
-    image (str): The file path to the image to be displayed.
+    Args:
+        ax (matplotlib.axes.Axes): The axis on which to display the image.
+        image (str): The file path to the image to be displayed.
 
     Returns:
-    None
+        None
     """
     img = mpimg.imread(image)
     ax.imshow(img)
