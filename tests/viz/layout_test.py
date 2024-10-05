@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import patches
 from matplotlib.patches import Rectangle, ConnectionPatch
+from unittest.mock import patch, MagicMock
 from m3util.viz.layout import (
     plot_into_graph,
     subfigures,
@@ -21,10 +22,11 @@ from m3util.viz.layout import (
     add_scalebar,
     get_axis_pos_inches,
     get_closest_point,
+    span_to_axis,
+    draw_line_with_text,
     FigDimConverter,
 )
 from m3util.viz.text import add_text_to_figure, labelfigs, number_to_letters
-
 
 @pytest.fixture
 def sample_figure():
@@ -698,3 +700,178 @@ def test_scalebar_different_image_size():
     assert any(
         isinstance(text, plt.Text) and text.get_text() == "20 nm" for text in ax.texts
     ), "The scalebar label should be added to the axes."
+
+
+###### Span to axis #####
+
+import pytest
+from unittest.mock import MagicMock
+
+
+# Mock the get_closest_point function for testing purposes
+def mock_get_closest_point(x_data, y_data, value, axis="x"):
+    # For testing, return a simple value depending on the axis
+    if axis == "x":
+        return value, 10  # mock a y-value of 10 for any x
+    elif axis == "y":
+        return 10, value  # mock an x-value of 10 for any y
+
+
+# Test cases
+@pytest.fixture
+def mock_axis():
+    # Create a mock axis object with predefined x and y limits
+    ax = MagicMock()
+    ax.get_xlim.return_value = (0, 100)  # x-axis limits
+    ax.get_ylim.return_value = (0, 50)  # y-axis limits
+    return ax
+
+
+# Patch the get_closest_point function
+@pytest.mark.parametrize(
+    "connect_to, expected_x, expected_y",
+    [
+        ("left", [50, 0], [10, 10]),  # Connecting to the left y-axis
+        ("right", [50, 100], [10, 10]),  # Connecting to the right y-axis
+        ("bottom", [10, 10], [20, 0]),  # Connecting to the bottom x-axis
+        ("top", [10, 10], [20, 50]),  # Connecting to the top x-axis
+    ],
+)
+@patch("m3util.viz.layout.get_closest_point", side_effect=mock_get_closest_point)
+def test_span_to_axis(
+    mock_get_closest_point, mock_axis, connect_to, expected_x, expected_y
+):
+    x_data = [10, 50, 90]
+    y_data = [5, 10, 15]
+    value = 50 if connect_to in ["left", "right"] else 20
+
+    # Call the span_to_axis function
+    line_x, line_y = span_to_axis(mock_axis, value, x_data, y_data, connect_to)
+
+    # Assert that the output matches the expected values
+    assert line_x == expected_x
+    assert line_y == expected_y
+
+
+@patch("m3util.viz.layout.get_closest_point", side_effect=mock_get_closest_point)
+def test_span_to_axis_invalid_connect_to(mock_get_closest_point, mock_axis):
+    x_data = [10, 50, 90]
+    y_data = [5, 10, 15]
+    value = 50
+
+    # Test invalid `connect_to` value
+    with pytest.raises(ValueError, match="Invalid connect_to value"):
+        span_to_axis(mock_axis, value, x_data, y_data, connect_to="invalid")
+
+
+@patch("m3util.viz.layout.get_closest_point", side_effect=mock_get_closest_point)
+def test_span_to_axis_invalid_connect_to_for_axis(mock_get_closest_point, mock_axis):
+    x_data = [10, 50, 90]
+    y_data = [5, 10, 15]
+    value = 50
+
+    # Test invalid connect_to value for axis-specific
+    with pytest.raises(
+        ValueError, match="Invalid connect_to value. Choose 'left', 'right'"
+    ):
+        span_to_axis(mock_axis, value, x_data, y_data, connect_to="center")
+
+
+# Mock line_annotation since it's used internally
+def mock_line_annotation(ax, text, line_x, line_y, annotation_kwargs, zorder=2):
+    # A simple mock to bypass actual text annotation
+    pass
+
+
+@pytest.fixture
+def mock_axis():
+    # Create a mock axis object with predefined x and y limits
+    ax = MagicMock()
+    ax.get_xlim.return_value = (0, 100)  # x-axis limits
+    ax.get_ylim.return_value = (0, 50)  # y-axis limits
+    return ax
+
+
+@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
+def test_draw_line_with_text_vertical_full(mock_line_annotation, mock_axis):
+    x_data = np.array([10, 50, 90])
+    y_data = np.array([5, 10, 15])
+    value = 50
+
+    # Call the function for a vertical line spanning the full y-axis
+    draw_line_with_text(mock_axis, x_data, y_data, value, axis="x", span="full")
+
+    # Assert that ax.plot is called with the correct line coordinates
+    mock_axis.plot.assert_called_once_with([value, value], [0, 50], zorder=2)
+
+
+@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
+def test_draw_line_with_text_horizontal_full(mock_line_annotation, mock_axis):
+    x_data = np.array([10, 50, 90])
+    y_data = np.array([5, 10, 15])
+    value = 10
+
+    # Call the function for a horizontal line spanning the full x-axis
+    draw_line_with_text(mock_axis, x_data, y_data, value, axis="y", span="full")
+
+    # Assert that ax.plot is called with the correct line coordinates
+    mock_axis.plot.assert_called_once_with([0, 100], [value, value], zorder=2)
+
+
+@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
+def test_draw_line_with_text_span_data_vertical(mock_line_annotation, mock_axis):
+    x_data = np.array([10, 50, 90])
+    y_data = np.array([5, 10, 15])
+    value = 50
+
+    # Call the function for a vertical line between closest y-values
+    draw_line_with_text(mock_axis, x_data, y_data, value, axis="x", span="data")
+
+    # Assert that ax.plot is called with the correct line coordinates between y1 and y2
+    mock_axis.plot.assert_called_once_with([value, value], [10, 10], zorder=2)
+
+
+@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
+def test_draw_line_with_text_span_data_horizontal(mock_line_annotation, mock_axis):
+    x_data = np.array([10, 50, 90])
+    y_data = np.array([5, 10, 15])
+    value = 10
+
+    # Call the function for a horizontal line between closest x-values
+    draw_line_with_text(mock_axis, x_data, y_data, value, axis="y", span="data")
+
+    # Assert that ax.plot is called with the correct line coordinates between x1 and x2
+    mock_axis.plot.assert_called_once_with([10, 50], [value, value], zorder=2)
+
+
+@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
+def test_draw_line_with_text_invalid_axis(mock_line_annotation, mock_axis):
+    x_data = np.array([10, 50, 90])
+    y_data = np.array([5, 10, 15])
+    value = 10
+
+    # Test invalid axis value
+    with pytest.raises(ValueError, match="axis must be 'x' or 'y'"):
+        draw_line_with_text(mock_axis, x_data, y_data, value, axis="z", span="full")
+
+
+@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
+def test_draw_line_with_text_invalid_span(mock_line_annotation, mock_axis):
+    x_data = np.array([10, 50, 90])
+    y_data = np.array([5, 10, 15])
+    value = 10
+
+    # Test invalid span value
+    with pytest.raises(ValueError, match="span must be 'full' or 'data'"):
+        draw_line_with_text(mock_axis, x_data, y_data, value, axis="x", span="invalid")
+
+
+@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
+def test_draw_line_with_text_data_outside_range(mock_line_annotation, mock_axis):
+    x_data = np.array([10, 50, 90])
+    y_data = np.array([5, 10, 15])
+    value = 100  # Value outside the range of x_data
+
+    # Test value outside the range of data points
+    with pytest.raises(ValueError, match="Value is outside the range of x_data."):
+        draw_line_with_text(mock_axis, x_data, y_data, value, axis="x", span="data")

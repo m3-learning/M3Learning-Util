@@ -5,7 +5,6 @@ from matplotlib.patches import Ellipse, FancyArrowPatch
 from matplotlib.text import Annotation
 import matplotlib.patheffects as path_effects
 from matplotlib.text import Text
-import pytest
 from unittest.mock import patch
 from unittest import mock
 
