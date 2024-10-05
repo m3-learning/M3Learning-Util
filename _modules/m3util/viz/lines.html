@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.notebooks.checksum &#8212; M3Learning-Util 2.0.0 documentation</title>
+    <title>m3util.viz.lines &#8212; M3Learning-Util 2.0.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
     <script src="../../../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/notebooks/checksum';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/viz/lines';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -474,7 +474,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">m3util.noteb...</li>
+    <li class="breadcrumb-item active" aria-current="page">m3util.viz.lines</li>
   </ul>
 </nav>
 </div>
@@ -491,56 +491,107 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for m3util.notebooks.checksum</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">m3util.util.hashing</span> <span class="kn">import</span> <span class="n">select_hash_algorithm</span>
-
-
-<div class="viewcode-block" id="calculate_notebook_checksum">
-<a class="viewcode-back" href="../../../api/m3util.notebooks.html#m3util.notebooks.checksum.calculate_notebook_checksum">[docs]</a>
-<span class="k">def</span> <span class="nf">calculate_notebook_checksum</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;sha256&quot;</span><span class="p">):</span>
+  <h1>Source code for m3util.viz.lines</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="handle_linewidth_conflicts">
+<a class="viewcode-back" href="../../../api/m3util.viz.html#m3util.viz.lines.handle_linewidth_conflicts">[docs]</a>
+<span></span><span class="k">def</span> <span class="nf">handle_linewidth_conflicts</span><span class="p">(</span><span class="n">textprops</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate the checksum of the code cells in a Jupyter notebook (.ipynb) file using the specified hashing algorithm.</span>
-
-<span class="sd">    This function reads the contents of a Jupyter notebook file, extracts the code cells (ignoring metadata, execution counts,</span>
-<span class="sd">    and other non-code content), and computes its checksum using one of the supported hashing algorithms: &#39;sha256&#39;, &#39;md5&#39;, or &#39;sha1&#39;.</span>
+<span class="sd">    Handle both &#39;linewidth&#39; and &#39;lw&#39; in the text properties, selecting the larger value if both are provided.</span>
+<span class="sd">    Also forces &#39;linestyle&#39; to be &#39;solid&#39;.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        notebook_path (str): The path to the Jupyter notebook file (.ipynb) to be hashed.</span>
-<span class="sd">        algorithm (str): The hashing algorithm to use. Supported options are &#39;sha256&#39; (default), &#39;md5&#39;, and &#39;sha1&#39;.</span>
+<span class="sd">        textprops (dict): A dictionary of text properties.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        str: The computed checksum as a hexadecimal string.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        ValueError: If an unsupported hashing algorithm is specified.</span>
-
-<span class="sd">    Example:</span>
-<span class="sd">        checksum = calculate_notebook_checksum(&quot;/path/to/notebook.ipynb&quot;, algorithm=&quot;sha256&quot;)</span>
-<span class="sd">        print(checksum)</span>
+<span class="sd">        dict: The updated text properties with conflicts resolved.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Handle both &#39;linewidth&#39; and &#39;lw&#39;, selecting the larger value if both are provided</span>
+    <span class="k">if</span> <span class="s2">&quot;lw&quot;</span> <span class="ow">in</span> <span class="n">textprops</span> <span class="ow">and</span> <span class="s2">&quot;linewidth&quot;</span> <span class="ow">in</span> <span class="n">textprops</span><span class="p">:</span>
+        <span class="c1"># Select the larger of the two</span>
+        <span class="n">larger_linewidth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">textprops</span><span class="p">[</span><span class="s2">&quot;lw&quot;</span><span class="p">],</span> <span class="n">textprops</span><span class="p">[</span><span class="s2">&quot;linewidth&quot;</span><span class="p">])</span>
+        <span class="c1"># Remove the smaller one to avoid conflicts</span>
+        <span class="n">textprops</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;lw&quot;</span><span class="p">)</span>
+        <span class="n">textprops</span><span class="p">[</span><span class="s2">&quot;linewidth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">larger_linewidth</span>
+    <span class="k">elif</span> <span class="s2">&quot;lw&quot;</span> <span class="ow">in</span> <span class="n">textprops</span><span class="p">:</span>
+        <span class="c1"># If only &#39;lw&#39; is present, map it to &#39;linewidth&#39;</span>
+        <span class="n">textprops</span><span class="p">[</span><span class="s2">&quot;linewidth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">textprops</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;lw&quot;</span><span class="p">)</span>
 
-    <span class="n">hash_function</span> <span class="o">=</span> <span class="n">select_hash_algorithm</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;ls&quot;</span> <span class="ow">in</span> <span class="n">textprops</span> <span class="ow">and</span> <span class="s2">&quot;linestyle&quot;</span> <span class="ow">in</span> <span class="n">textprops</span><span class="p">:</span>
+        <span class="n">textprops</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;ls&quot;</span><span class="p">)</span>
+        <span class="n">textprops</span><span class="p">[</span><span class="s2">&quot;linestyle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;solid&quot;</span>
 
-    <span class="c1"># Load the notebook as a JSON object</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">notebook</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">textprops</span></div>
 
-    <span class="c1"># Initialize an empty string to hold all code from code cells</span>
-    <span class="n">code_cells_content</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-    <span class="c1"># Loop over all cells in the notebook</span>
-    <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">notebook</span><span class="p">[</span><span class="s2">&quot;cells&quot;</span><span class="p">]:</span>
-        <span class="c1"># Check if the cell type is &#39;code&#39;</span>
-        <span class="k">if</span> <span class="n">cell</span><span class="p">[</span><span class="s2">&quot;cell_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;code&quot;</span><span class="p">:</span>
-            <span class="c1"># Join the source lines of the code cell (if it&#39;s not empty)</span>
-            <span class="n">code_cells_content</span> <span class="o">+=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="p">[]))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
 
-    <span class="c1"># Encode the concatenated code cells content as bytes and update the hash function</span>
-    <span class="n">hash_function</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">code_cells_content</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+<div class="viewcode-block" id="draw_lines">
+<a class="viewcode-back" href="../../../api/m3util.viz.html#m3util.viz.lines.draw_lines">[docs]</a>
+<span class="k">def</span> <span class="nf">draw_lines</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">halo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Draws lines on a matplotlib axis based on x and y values, with an optional halo effect.</span>
 
-    <span class="c1"># Return the checksum as a hexadecimal string</span>
-    <span class="k">return</span> <span class="n">hash_function</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+<span class="sd">    Args:</span>
+<span class="sd">        ax (matplotlib.axes.Axes): The axis on which to draw the lines.</span>
+<span class="sd">        x_values (list or array): A list or array of x-values for the line.</span>
+<span class="sd">        y_values (list or array): A list or array of y-values for the line.</span>
+<span class="sd">        style (dict, optional): A dictionary specifying line style properties.</span>
+<span class="sd">                                Keys can include &#39;color&#39;, &#39;linewidth&#39;, &#39;linestyle&#39;, etc.</span>
+<span class="sd">        halo (dict, optional): A dictionary specifying halo properties.</span>
+<span class="sd">                               Keys can include &#39;enabled&#39;, &#39;color&#39;, &#39;scale&#39;.</span>
+<span class="sd">                               Defaults to None (no halo).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        matplotlib.lines.Line2D: The line artist object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Default style if none is provided</span>
+    <span class="k">if</span> <span class="n">style</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span><span class="p">,</span> <span class="o">**</span><span class="n">style</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid style parameter: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;The axis object cannot be None&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">x_values</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">y_values</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;x_values and y_values cannot be empty&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Handle linewidth conflicts in the main line style</span>
+    <span class="n">style</span> <span class="o">=</span> <span class="n">handle_linewidth_conflicts</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
+
+    <span class="c1"># Default halo settings if not provided</span>
+    <span class="n">halo_defaults</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># Whether to enable the halo or not</span>
+        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>  <span class="c1"># Default halo color</span>
+        <span class="s2">&quot;scale&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>  <span class="c1"># Scale the halo size relative to the linewidth</span>
+    <span class="p">}</span>
+    <span class="n">halo_settings</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">halo_defaults</span><span class="p">,</span> <span class="o">**</span><span class="p">(</span><span class="n">halo</span> <span class="ow">or</span> <span class="p">{})}</span>
+
+    <span class="c1"># If a halo is enabled, draw a thick line beneath the main line</span>
+    <span class="k">if</span> <span class="n">halo_settings</span><span class="p">[</span><span class="s2">&quot;enabled&quot;</span><span class="p">]:</span>
+        <span class="n">halo_style</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Copy the main style for the halo</span>
+        <span class="n">halo_linewidth</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">style</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;linewidth&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lw&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">halo_settings</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">halo_style</span><span class="p">[</span><span class="s2">&quot;linewidth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">halo_linewidth</span>
+        <span class="n">halo_style</span><span class="p">[</span><span class="s2">&quot;lw&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">halo_linewidth</span>
+        <span class="n">halo_style</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">halo_settings</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span>  <span class="c1"># Halo color</span>
+        <span class="n">halo_style</span><span class="p">[</span><span class="s2">&quot;linestyle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;solid&quot;</span>  <span class="c1"># Halo should always be solid, regardless of main line style</span>
+        <span class="p">)</span>
+        <span class="n">halo_style</span> <span class="o">=</span> <span class="n">handle_linewidth_conflicts</span><span class="p">(</span>
+            <span class="n">halo_style</span>
+        <span class="p">)</span>  <span class="c1"># Handle conflicts between &#39;linewidth&#39; and &#39;lw&#39;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">halo_style</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span><span class="p">,</span> <span class="o">**</span><span class="n">halo_style</span><span class="p">)</span>
+
+    <span class="c1"># Draw the actual line with the provided style</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span><span class="p">,</span> <span class="o">**</span><span class="n">style</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">line</span></div>
 
 </pre></div>
 

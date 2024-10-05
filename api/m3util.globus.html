@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.globus package &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.globus package &#8212; M3Learning-Util 2.0.0 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=fbe5091d"></script>
+    <script src="../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.globus';</script>
@@ -46,7 +46,7 @@
     <link rel="prev" title="m3util.datafed namespace" href="m3util.datafed.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 24, 2024"/>
+    <meta name="docbuild:last-update" content="Oct 05, 2024"/>
   </head>
   
   
@@ -124,8 +124,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
-    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.0.po documentation - Home"/>`);</script>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 2.0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -542,12 +542,51 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="m3util.globus.globus.check_globus_endpoint">
 <span class="sig-prename descclassname"><span class="pre">m3util.globus.globus.</span></span><span class="sig-name descname"><span class="pre">check_globus_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/globus/globus.html#check_globus_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.globus.globus.check_globus_endpoint" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Check the status of a Globus endpoint by its ID.</p>
+<p>This function uses the Globus CLI to check whether a given endpoint is active
+or not. It parses the output in JSON format to determine the endpoint’s
+connection status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>endpoint_id</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the Globus endpoint to check.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message indicating whether the endpoint is active or not,
+or an error message if the check fails.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.11/library/exceptions.html#Exception" title="(in Python v3.11)"><strong>Exception</strong></a> – If the subprocess or JSON parsing fails.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="m3util.globus.globus.check_globus_file_access">
 <span class="sig-prename descclassname"><span class="pre">m3util.globus.globus.</span></span><span class="sig-name descname"><span class="pre">check_globus_file_access</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/globus/globus.html#check_globus_file_access"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.globus.globus.check_globus_file_access" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Check whether a file or directory is accessible via a Globus endpoint.</p>
+<p>This function uses the Globus CLI to list the content of a file or directory
+at a given path associated with a specific Globus endpoint. If the path is
+accessible, it prints the output or raises an error if access fails.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint_id</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the Globus endpoint.</p></li>
+<li><p><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The path of the file or directory to check.</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to print detailed information about the access check.
+Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#m3util.globus.globus.GlobusAccessError" title="m3util.globus.globus.GlobusAccessError"><strong>GlobusAccessError</strong></a> – If the file access fails, an error message is raised.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 <section id="module-m3util.globus">

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.util.hashing &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.util.hashing &#8212; M3Learning-Util 2.0.0 documentation</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../_static/documentation_options.js?v=fbe5091d"></script>
+    <script src="../../../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/util/hashing';</script>
@@ -43,7 +43,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 24, 2024"/>
+    <meta name="docbuild:last-update" content="Oct 05, 2024"/>
   </head>
   
   
@@ -121,8 +121,8 @@
       
     
     
-    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
-    <script>document.write(`<img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.0.po documentation - Home"/>`);</script>
+    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.0 documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 2.0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -531,7 +531,19 @@ document.write(`
 <div class="viewcode-block" id="select_hash_algorithm">
 <a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.hashing.select_hash_algorithm">[docs]</a>
 <span class="k">def</span> <span class="nf">select_hash_algorithm</span><span class="p">(</span><span class="n">algorithm</span><span class="p">):</span>
-    <span class="c1"># Select the hashing algorithm based on the user input</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Select the hashing algorithm based on the user input.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        algorithm (str): The name of the hashing algorithm to use. Supported options are &#39;sha256&#39;, &#39;md5&#39;, and &#39;sha1&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        hashlib._hashlib.HASH: An instance of the selected hashing algorithm.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If an unsupported hashing algorithm is specified.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Check the algorithm and return the corresponding hash function</span>
     <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;sha256&quot;</span><span class="p">:</span>
         <span class="n">hash_function</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;md5&quot;</span><span class="p">:</span>

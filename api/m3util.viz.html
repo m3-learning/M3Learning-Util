@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.viz package &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.viz package &#8212; M3Learning-Util 2.0.0 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=fbe5091d"></script>
+    <script src="../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.viz';</script>
@@ -45,7 +45,7 @@
     <link rel="prev" title="m3util.util package" href="m3util.util.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 24, 2024"/>
+    <meta name="docbuild:last-update" content="Oct 05, 2024"/>
   </head>
   
   
@@ -123,8 +123,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
-    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.0.po documentation - Home"/>`);</script>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 2.0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -529,6 +529,372 @@ document.write(`
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
+<section id="module-m3util.viz.arrows">
+<span id="m3util-viz-arrows-module"></span><h2>m3util.viz.arrows module<a class="headerlink" href="#module-m3util.viz.arrows" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="m3util.viz.arrows.DrawArrow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">m3util.viz.arrows.</span></span><span class="sig-name descname"><span class="pre">DrawArrow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_alignment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_text_displacement</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'inches'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'figure</span> <span class="pre">fraction'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrowprops</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'arrowstyle':</span> <span class="pre">'-&gt;'}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">textprops</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">halo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#DrawArrow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.DrawArrow" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.11/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="m3util.viz.arrows.DrawArrow.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#DrawArrow.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.DrawArrow.draw" title="Link to this definition">#</a></dt>
+<dd><p>Draws the arrow and places the text on the figure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing the arrow and text artist objects, or the arrow if no text.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="m3util.viz.arrows.DrawArrow.draw_arrow">
+<span class="sig-name descname"><span class="pre">draw_arrow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#DrawArrow.draw_arrow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.DrawArrow.draw_arrow" title="Link to this definition">#</a></dt>
+<dd><p>Draws the arrow annotation on the figure with an optional halo (outline) around the arrow.
+The halo properties are extracted from the self.halo dictionary if provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The arrow annotation artist object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://matplotlib.org/stable/api/text_api.html#matplotlib.text.Annotation" title="(in Matplotlib v3.9.2)">matplotlib.text.Annotation</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="m3util.viz.arrows.DrawArrow.extract_angle">
+<span class="sig-name descname"><span class="pre">extract_angle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#DrawArrow.extract_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.DrawArrow.extract_angle" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the angle of the arrow in degrees.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The angle of the arrow in degrees.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="m3util.viz.arrows.DrawArrow.get_dx_dy">
+<span class="sig-name descname"><span class="pre">get_dx_dy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#DrawArrow.get_dx_dy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.DrawArrow.get_dx_dy" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the difference in x and y coordinates between the start and end positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The differences in x and y coordinates as (dx, dy).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)">tuple</a> of <a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="m3util.viz.arrows.DrawArrow.inches_to_fig_fraction">
+<span class="sig-name descname"><span class="pre">inches_to_fig_fraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#DrawArrow.inches_to_fig_fraction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.DrawArrow.inches_to_fig_fraction" title="Link to this definition">#</a></dt>
+<dd><p>Converts a position from inches to figure fraction coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pos</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Position in inches as (x, y).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Position in figure fraction coordinates as (x, y).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="m3util.viz.arrows.DrawArrow.place_text">
+<span class="sig-name descname"><span class="pre">place_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#DrawArrow.place_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.DrawArrow.place_text" title="Link to this definition">#</a></dt>
+<dd><p>Places the text on the figure at the specified position relative to the arrow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**textprops</strong> – Additional text properties for customizing the text appearance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="m3util.viz.arrows.DrawArrow.set_vertical_text_displacement">
+<span class="sig-name descname"><span class="pre">set_vertical_text_displacement</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#DrawArrow.set_vertical_text_displacement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.DrawArrow.set_vertical_text_displacement" title="Link to this definition">#</a></dt>
+<dd><p>Sets the vertical displacement for the text based on the provided option or value.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.arrows.draw_ellipse_with_arrow">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.arrows.</span></span><span class="sig-name descname"><span class="pre">draw_ellipse_with_arrow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'x'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'horizontal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrow_position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrow_length_frac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blue'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrow_props</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ellipse_props</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrow_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'positive'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#draw_ellipse_with_arrow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.draw_ellipse_with_arrow" title="Link to this definition">#</a></dt>
+<dd><p>Draws an ellipse at a specified location on a line plot and adds an arrow originating
+from the ellipse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.9.2)"><em>matplotlib.axes.Axes</em></a>) – The matplotlib axis where the ellipse and arrow are to be drawn.</p></li>
+<li><p><strong>x_data</strong> (<em>array-like</em>) – X-axis data points of the line plot.</p></li>
+<li><p><strong>y_data</strong> (<em>array-like</em>) – Y-axis data points of the line plot.</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The x or y value where the ellipse should be placed, depending on the <cite>axis</cite>.</p></li>
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The width of the ellipse, specified as a fraction of the x-axis range.</p></li>
+<li><p><strong>height</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The height of the ellipse, specified as a fraction of the y-axis range.</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The axis (‘x’ or ‘y’) used to find the closest point for placing the ellipse.
+Default is ‘x’.</p></li>
+<li><p><strong>line_direction</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Defines the orientation of the line (‘horizontal’ or ‘vertical’) to
+which the ellipse and arrow are aligned. Default is ‘horizontal’.</p></li>
+<li><p><strong>arrow_position</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The position of the arrow relative to the ellipse (‘top’ or ‘bottom’).
+Default is ‘top’.</p></li>
+<li><p><strong>arrow_length_frac</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – The length of the arrow as a fraction of the axis range.
+Default is 0.3.</p></li>
+<li><p><strong>color</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The color of both the ellipse and the arrow. Default is ‘blue’.</p></li>
+<li><p><strong>linewidth</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – The line width of the ellipse outline. Default is 2.</p></li>
+<li><p><strong>arrow_props</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a><em>, </em><em>optional</em>) – Additional properties to customize the arrow’s appearance, passed as
+a dictionary. Default is None.</p></li>
+<li><p><strong>ellipse_props</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a><em>, </em><em>optional</em>) – Additional properties to customize the ellipse’s appearance, passed
+as a dictionary. Default is None.</p></li>
+<li><p><strong>arrow_direction</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The direction of the arrow (‘positive’ or ‘negative’). Determines
+the direction of arrow relative to the axis. Default is ‘positive’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.11/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – Raised if invalid values are provided for <cite>axis</cite>, <cite>line_direction</cite>, or <cite>arrow_position</cite>.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>draw_ellipse_with_arrow(ax, x_data, y_data, value=5.0, width=0.1, height=0.05, axis=’x’)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.arrows.draw_extended_arrow_indicator">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.arrows.</span></span><span class="sig-name descname"><span class="pre">draw_extended_arrow_indicator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vertical'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(-0.4,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fraction'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_text_displacement</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_alignment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'points'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrowprops</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">halo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">annotation_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#draw_extended_arrow_indicator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.draw_extended_arrow_indicator" title="Link to this definition">#</a></dt>
+<dd><p>Draws an extended arrow with optional annotation text and custom line styling.</p>
+<p>This function allows you to draw an arrow with start and end points, extended
+lines beyond the arrow, and optional annotations. It supports flexible positioning,
+text placement, and line customization.</p>
+<p>Parameters:
+- fig: matplotlib figure object where the arrow will be drawn.
+- x: Tuple or list containing two x-coordinates (start and end) for the arrow.
+- y: Tuple or list containing two y-coordinates (start and end) for the arrow.
+- direction: Direction of the extended lines. Options: “vertical”, “horizontal”.
+- text: Text to display near the arrow. Defaults to None.
+- offset: Offset for the start and end positions of the arrow. Defaults to (-0.4, 0).
+- offset_units: Units of the offset. Can be “fraction” (relative to the axis) or “points”. Defaults to “fraction”.
+- ax: Axis to draw on. If None, the current axis is used.
+- vertical_text_displacement: Additional vertical shift for the text. Defaults to None.
+- text_position: Position of the text relative to the arrow. Options: “center”, “start”, “end”. Defaults to “center”.
+- text_alignment: Alignment of the text. Options: “center”, “left”, “right”. Defaults to “center”.
+- units: Units for the arrow drawing. Defaults to “points”.
+- arrowprops: Dictionary specifying arrow properties such as arrowstyle, color, etc.
+- line_style: Dictionary specifying style of the extended lines (color, dash style).
+- halo: Optional halo effect around the arrow or lines to enhance visibility.
+- <a href="#id1"><span class="problematic" id="id2">**</span></a>annotation_kwargs: Additional keyword arguments for annotation (e.g., font size, style).</p>
+<p>Returns:
+None: The function draws the arrow and extended lines directly on the figure.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.arrows.get_perpendicular_vector">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.arrows.</span></span><span class="sig-name descname"><span class="pre">get_perpendicular_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clockwise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#get_perpendicular_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.get_perpendicular_vector" title="Link to this definition">#</a></dt>
+<dd><p>Computes a perpendicular vector to the line segment defined by two points. The result can either be
+the clockwise or counterclockwise perpendicular vector, based on the input flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point1</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The first point (x1, y1) representing one end of the vector.</p></li>
+<li><p><strong>point2</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The second point (x2, y2) representing the other end of the vector.</p></li>
+<li><p><strong>clockwise</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, returns the clockwise perpendicular vector
+(i.e., the vector rotated by -90 degrees).
+If False, returns the counterclockwise perpendicular vector
+(rotated by +90 degrees). Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The perpendicular vector as (dx, dy), which is perpendicular to the</dt><dd><p>direction vector formed by point1 and point2.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)">tuple</a> of <a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p># Compute the counterclockwise perpendicular vector
+perp_vector = get_perpendicular_vector((0, 0), (1, 0))  # Should return (0, 1)</p>
+<p># Compute the clockwise perpendicular vector
+perp_vector_clockwise = get_perpendicular_vector((0, 0), (1, 0), clockwise=True)  # Should return (0, -1)</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The direction vector is first calculated as the difference between the coordinates of <cite>point2</cite> and <cite>point1</cite>.</p></li>
+<li><p>Depending on the <cite>clockwise</cite> argument, the direction vector is then rotated either by +90 degrees
+(counterclockwise) or -90 degrees (clockwise) to get the perpendicular vector.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.arrows.place_text_in_inches">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.arrows.</span></span><span class="sig-name descname"><span class="pre">place_text_in_inches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_inch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_inch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stroke_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stroke_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">textprops</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#place_text_in_inches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.place_text_in_inches" title="Link to this definition">#</a></dt>
+<dd><p>Places a text element on a matplotlib figure at a specific position given in inches,
+with options for rotating the text and adding a stroke (outline) for enhanced visibility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fig</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.9.2)"><em>matplotlib.figure.Figure</em></a>) – The matplotlib figure on which to place the text.</p></li>
+<li><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The string to display as text.</p></li>
+<li><p><strong>x_inch</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The x-coordinate in inches, relative to the left of the figure.</p></li>
+<li><p><strong>y_inch</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The y-coordinate in inches, relative to the bottom of the figure.</p></li>
+<li><p><strong>angle</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The angle to rotate the text, in degrees.</p></li>
+<li><p><strong>stroke_width</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The width of the text outline (stroke) in points. Default is None, meaning no stroke.</p></li>
+<li><p><strong>stroke_color</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The color of the text outline (stroke). Default is ‘black’.</p></li>
+<li><p><strong>**textprops</strong> – Additional keyword arguments for customizing the text properties
+(e.g., fontsize, color, fontweight, etc.).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The text artist object added to the figure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/text_api.html#matplotlib.text.Text" title="(in Matplotlib v3.9.2)">matplotlib.text.Text</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The position is specified in inches, and the function converts it to pixel-based display coordinates.</p></li>
+<li><p>Stroke (outline) is achieved using <cite>matplotlib.patheffects</cite> to enhance text visibility.</p></li>
+<li><p>The figure is redrawn after adding the text to ensure the update appears immediately.</p></li>
+</ul>
+<p class="rubric">Example</p>
+<p>place_text_in_inches(fig, “Sample Text”, 2, 3, angle=45, fontsize=12, color=”red”)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.arrows.place_text_points">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.arrows.</span></span><span class="sig-name descname"><span class="pre">place_text_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stroke_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stroke_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">textprops</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#place_text_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.place_text_points" title="Link to this definition">#</a></dt>
+<dd><p>Places a text element on a specified position in axis coordinates (or figure coordinates if no axis is provided)
+with options for rotating the text and adding a stroke (outline) for enhanced visibility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fig</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.9.2)"><em>matplotlib.figure.Figure</em></a>) – The matplotlib figure where the text will be placed.</p></li>
+<li><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The text string to be displayed.</p></li>
+<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The x-coordinate for placing the text in axis coordinates (or figure coordinates if <cite>ax</cite> is None).</p></li>
+<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The y-coordinate for placing the text in axis coordinates (or figure coordinates if <cite>ax</cite> is None).</p></li>
+<li><p><strong>angle</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The angle to rotate the text, in degrees.</p></li>
+<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.9.2)"><em>matplotlib.axes.Axes</em></a><em>, </em><em>optional</em>) – The axes on which to place the text. If None, the text is placed directly on the figure.</p></li>
+<li><p><strong>stroke_width</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The width of the stroke (outline) around the text, in points. Default is None (no stroke).</p></li>
+<li><p><strong>stroke_color</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The color of the stroke (outline). Default is ‘black’.</p></li>
+<li><p><strong>**textprops</strong> – Additional keyword arguments to customize text properties (e.g., <cite>fontsize</cite>, <cite>color</cite>, <cite>fontweight</cite>, etc.).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The <cite>Text</cite> artist object added to the figure or axis.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/text_api.html#matplotlib.text.Text" title="(in Matplotlib v3.9.2)">matplotlib.text.Text</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>If no axis (<cite>ax</cite>) is provided, the text is placed on the figure, and the coordinates are relative to the figure.</p></li>
+<li><p>Stroke (outline) can be applied to the text using <cite>path_effects</cite> for improved visibility, particularly over complex backgrounds.</p></li>
+<li><p>The figure is redrawn immediately after placing the text to ensure the new text is displayed.</p></li>
+</ul>
+<p class="rubric">Example</p>
+<p>place_text_points(fig, “Label”, x=0.5, y=0.5, angle=45, ax=ax, fontsize=12, color=”red”, stroke_width=1.5)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.arrows.shift_object_in_inches">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.arrows.</span></span><span class="sig-name descname"><span class="pre">shift_object_in_inches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position_inch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_points</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#shift_object_in_inches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.shift_object_in_inches" title="Link to this definition">#</a></dt>
+<dd><p>Shifts a position in a matplotlib figure by a specified number of points along a given direction vector,
+returning the new position in inches. This is useful for adjusting graphical elements in relation to
+the figure’s DPI and point-based positioning system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fig</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.9.2)"><em>matplotlib.figure.Figure</em></a>) – The matplotlib figure, used to access the DPI (dots per inch)
+for converting points to inches.</p></li>
+<li><p><strong>position_inch</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The starting position in inches as (x, y) relative to the figure’s coordinates.</p></li>
+<li><p><strong>direction_vector</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The direction vector for the shift as (dx, dy), which determines
+the direction of movement. The vector will be normalized internally.</p></li>
+<li><p><strong>n_points</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The number of points to shift along the direction vector.
+(Note: 1 inch = 72 points).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The new position in inches as (x, y) after the shift is applied.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)">tuple</a> of <a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p># Shift a point located at (2, 3) inches by 15 points along a diagonal direction (1, 1)
+new_position = shift_object_in_inches(fig, (2, 3), (1, 1), 15)</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>This function performs a shift in a vector direction, first normalizing the direction vector
+to ensure consistent movement regardless of the vector’s magnitude.</p></li>
+<li><p>The shift is specified in points, which is a common unit in graphic design (1 inch = 72 points).</p></li>
+<li><p>The position and shift are handled in figure units of inches to maintain compatibility with
+the figure’s coordinate system, particularly for DPI scaling.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.arrows.shift_object_in_points">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.arrows.</span></span><span class="sig-name descname"><span class="pre">shift_object_in_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_points</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/arrows.html#shift_object_in_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.arrows.shift_object_in_points" title="Link to this definition">#</a></dt>
+<dd><p>Shifts a given position on a matplotlib axis by a specified number of points along a direction vector,
+and returns the new position in axis (data) coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.9.2)"><em>matplotlib.axes.Axes</em></a>) – The matplotlib axes on which the shift is performed.</p></li>
+<li><p><strong>position_axis</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The starting position in axis (data) coordinates as (x, y).</p></li>
+<li><p><strong>direction_vector</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The direction vector for the shift as (dx, dy),
+indicating the direction of the shift.</p></li>
+<li><p><strong>n_points</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The number of points (in display units) by which to shift the position
+along the direction vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The new position in axis (data) coordinates as (x, y).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)">tuple</a> of <a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p># Shift a point (0.5, 0.5) by 10 points along the direction (1, 0)
+new_position = shift_object_in_points(ax, (0.5, 0.5), (1, 0), 10)</p>
+</dd></dl>
+
+</section>
+<section id="module-m3util.viz.images">
+<span id="m3util-viz-images-module"></span><h2>m3util.viz.images module<a class="headerlink" href="#module-m3util.viz.images" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.images.display_image">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.images.</span></span><span class="sig-name descname"><span class="pre">display_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/images.html#display_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.images.display_image" title="Link to this definition">#</a></dt>
+<dd><p>Display an image on the given matplotlib axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.9.2)"><em>matplotlib.axes.Axes</em></a>) – The axis on which to display the image.</p></li>
+<li><p><strong>image</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The file path to the image to be displayed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-m3util.viz.layout">
 <span id="m3util-viz-layout-module"></span><h2>m3util.viz.layout module<a class="headerlink" href="#module-m3util.viz.layout" title="Link to this heading">#</a></h2>
 <dl class="py function">
@@ -590,7 +956,7 @@ None</p>
 <p>Parameters:
 axs (Axes): The axes to add the box to.
 pos (tuple): The position of the box in the form (xmin, ymin, xmax, ymax).
-<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: Additional keyword arguments.</p>
+<a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs: Additional keyword arguments.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -608,17 +974,6 @@ pos (tuple): The position of the box in the form (xmin, ymin, xmax, ymax).
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="m3util.viz.layout.add_text_to_figure">
-<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">add_text_to_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_position_in_inches</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#add_text_to_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.add_text_to_figure" title="Link to this definition">#</a></dt>
-<dd><p>Add text to a figure at a specified position.</p>
-<p>Parameters:
-fig (Figure): The figure to add the text to.
-text (str): The text to be added.
-text_position_in_inches (tuple): The position of the text in inches.
-<a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs: Additional keyword arguments.</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="m3util.viz.layout.combine_lines">
 <span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">combine_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#combine_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.combine_lines" title="Link to this definition">#</a></dt>
 <dd><p>Combine the lines and labels from multiple plots into a single legend.</p>
@@ -632,6 +987,31 @@ text_position_in_inches (tuple): The position of the text in inches.
 </dl>
 <p class="rubric">Example</p>
 <p>lines, labels = combine_lines(plot1, plot2, plot3)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.draw_line_with_text">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">draw_line_with_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'x'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">span</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'full'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#draw_line_with_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.draw_line_with_text" title="Link to this definition">#</a></dt>
+<dd><p>Draw a horizontal or vertical line on a plot, either spanning the axis or between the closest two data points,
+with optional text offset by a fixed number of points perpendicular to the line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.9.2)"><em>matplotlib.axes.Axes</em></a>) – The axis to draw on.</p></li>
+<li><p><strong>x_data</strong> (<em>array-like</em>) – The x data points of the plot.</p></li>
+<li><p><strong>y_data</strong> (<em>array-like</em>) – The y data points of the plot.</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The x or y value at which to draw the line.</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies whether to draw a vertical (‘x’) or horizontal (‘y’) line (default is ‘x’).</p></li>
+<li><p><strong>span</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies whether the line spans the full axis (‘full’) or between the closest two data points (‘data’).</p></li>
+<li><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Text to place near the line.</p></li>
+<li><p><strong>zorder</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – The z-order of the line and text (default is 2).</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to the line drawing function (e.g., color, linewidth).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.11/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – If invalid values are provided for axis or span.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -711,6 +1091,42 @@ text_position_in_inches (tuple): The position of the text in inches.
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.get_closest_point">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">get_closest_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'x'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#get_closest_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.get_closest_point" title="Link to this definition">#</a></dt>
+<dd><p>Get the closest point on a line plot to a provided x or y value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_data</strong> (<em>array-like</em>) – Array of x data points.</p></li>
+<li><p><strong>y_data</strong> (<em>array-like</em>) – Array of y data points.</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The x or y value to find the closest point to.</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specify which axis to use for finding the closest point.
+Must be ‘x’ or ‘y’. Defaults to ‘x’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(closest_x, closest_y) The closest point on the line plot.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)">tuple</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.11/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – If the axis is not ‘x’ or ‘y’, or if x_data and y_data have different lengths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.get_zorders">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">get_zorders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#get_zorders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.get_zorders" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the z-order of all objects in a given Matplotlib figure.</p>
+<p>Parameters:
+- fig: Matplotlib Figure object</p>
+<p>Returns:
+- List of tuples containing (object description, zorder)</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="m3util.viz.layout.imagemap">
 <span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">imagemap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">divider_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cbar_number_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%.1e'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#imagemap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.imagemap" title="Link to this definition">#</a></dt>
 <dd><p>pretty way to plot image maps with standard formats</p>
@@ -740,26 +1156,6 @@ coord2 (list, optional): The coordinates of the second connection point. Default
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="m3util.viz.layout.labelfigs">
-<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">labelfigs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tl'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string_add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inset_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.15,</span> <span class="pre">0.15)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#labelfigs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.labelfigs" title="Link to this definition">#</a></dt>
-<dd><p>Add labels to figures.</p>
-<p>Parameters:
-axes (Axes): The axes to add the labels to.
-number (int, optional): The number to be added as a label. Defaults to None.
-style (str, optional): The style of the label. Defaults to “wb”.
-loc (str, optional): The location of the label. Defaults to “tl”.
-string_add (str, optional): Additional string to be added to the label. Defaults to “”.
-size (int, optional): The font size of the label. Defaults to 8.
-text_pos (str, optional): The position of the label text. Defaults to “center”.
-inset_fraction (tuple, optional): The fraction of the axes to inset the label. Defaults to (0.15, 0.15).
-<a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs: Additional keyword arguments.</p>
-<p>Returns:
-Text: The created text object.</p>
-<p>Raises:
-ValueError: If an invalid position is provided.</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="m3util.viz.layout.layout_fig">
 <span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">layout_fig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'compressed'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#layout_fig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.layout_fig" title="Link to this definition">#</a></dt>
 <dd><p>Utility function that helps lay out many figures.</p>
@@ -768,14 +1164,14 @@ graph (int): Number of graphs.
 mod (int, optional): Value that assists in determining the number of rows and columns. Defaults to None.
 figsize (tuple, optional): Size of the figure. Defaults to None.
 layout (str, optional): Layout style of the subplots. Defaults to ‘compressed’.
-<a href="#id9"><span class="problematic" id="id10">**</span></a>kwargs: Additional keyword arguments.</p>
+<a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs: Additional keyword arguments.</p>
 <p>Returns:
 tuple: Figure and axes.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="m3util.viz.layout.layout_subfigures">
-<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">layout_subfigures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subfigures_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">margin_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#layout_subfigures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.layout_subfigures" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="m3util.viz.layout.layout_subfigures_inches">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">layout_subfigures_inches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subfigures_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">margin_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#layout_subfigures_inches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.layout_subfigures_inches" title="Link to this definition">#</a></dt>
 <dd><p>Creates a matplotlib figure with subfigures arranged based on positions in inches,
 and manually adds margins (in points) to accommodate axis labels and titles.
 Allows skipping margins for specific subfigures using a ‘skip_margin’ flag,
@@ -797,14 +1193,9 @@ which defaults to False (i.e., margins are applied unless specified).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="m3util.viz.layout.number_to_letters">
-<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">number_to_letters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#number_to_letters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.number_to_letters" title="Link to this definition">#</a></dt>
-<dd><p>Convert a number to a string representation using letters.</p>
-<p>Parameters:
-num (int): The number to convert.</p>
-<p>Returns:
-str: The string representation of the number.</p>
-</dd></dl>
+<dt class="sig sig-object py" id="m3util.viz.layout.mock_line_annotation">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">mock_line_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_kwargs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#mock_line_annotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.mock_line_annotation" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="m3util.viz.layout.path_maker">
@@ -857,19 +1248,71 @@ None</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.layout.span_to_axis">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">span_to_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connect_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#span_to_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.span_to_axis" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="m3util.viz.layout.subfigures">
 <span class="sig-prename descclassname"><span class="pre">m3util.viz.layout.</span></span><span class="sig-name descname"><span class="pre">subfigures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nrows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.25,</span> <span class="pre">1.25)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.8,</span> <span class="pre">0.33)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#subfigures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.layout.subfigures" title="Link to this definition">#</a></dt>
 <dd><p>Create subfigures with specified number of rows and columns.</p>
 <p>Parameters:
 nrows (int): Number of rows.
 ncols (int): Number of columns.
-size (tuple, optional): Size of each subfigure. Defaults to (1.25, 1.25).
+size (tuple, optional): Size of each subfigures. Defaults to (1.25, 1.25).
 gaps (tuple, optional): Gaps between subfigures. Defaults to (.8, .33).
 figsize (tuple, optional): Size of the figure. Defaults to None.
-<a href="#id11"><span class="problematic" id="id12">**</span></a>kwargs: Additional keyword arguments.</p>
+<a href="#id9"><span class="problematic" id="id10">**</span></a>kwargs: Additional keyword arguments.</p>
 <p>Returns:
 fig (Figure): The created figure.
 ax (list): List of axes objects.</p>
+</dd></dl>
+
+</section>
+<section id="module-m3util.viz.lines">
+<span id="m3util-viz-lines-module"></span><h2>m3util.viz.lines module<a class="headerlink" href="#module-m3util.viz.lines" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.lines.draw_lines">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.lines.</span></span><span class="sig-name descname"><span class="pre">draw_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">halo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/lines.html#draw_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.lines.draw_lines" title="Link to this definition">#</a></dt>
+<dd><p>Draws lines on a matplotlib axis based on x and y values, with an optional halo effect.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.9.2)"><em>matplotlib.axes.Axes</em></a>) – The axis on which to draw the lines.</p></li>
+<li><p><strong>x_values</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> or </em><em>array</em>) – A list or array of x-values for the line.</p></li>
+<li><p><strong>y_values</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> or </em><em>array</em>) – A list or array of y-values for the line.</p></li>
+<li><p><strong>style</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary specifying line style properties.
+Keys can include ‘color’, ‘linewidth’, ‘linestyle’, etc.</p></li>
+<li><p><strong>halo</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary specifying halo properties.
+Keys can include ‘enabled’, ‘color’, ‘scale’.
+Defaults to None (no halo).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The line artist object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D" title="(in Matplotlib v3.9.2)">matplotlib.lines.Line2D</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.lines.handle_linewidth_conflicts">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.lines.</span></span><span class="sig-name descname"><span class="pre">handle_linewidth_conflicts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">textprops</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/lines.html#handle_linewidth_conflicts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.lines.handle_linewidth_conflicts" title="Link to this definition">#</a></dt>
+<dd><p>Handle both ‘linewidth’ and ‘lw’ in the text properties, selecting the larger value if both are provided.
+Also forces ‘linestyle’ to be ‘solid’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>textprops</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary of text properties.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated text properties with conflicts resolved.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -895,6 +1338,26 @@ ax (list): List of axes objects.</p>
 </dd></dl>
 
 </section>
+<section id="module-m3util.viz.positioning">
+<span id="m3util-viz-positioning-module"></span><h2>m3util.viz.positioning module<a class="headerlink" href="#module-m3util.viz.positioning" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.positioning.obj_offset">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.positioning.</span></span><span class="sig-name descname"><span class="pre">obj_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fontsize'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/positioning.html#obj_offset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.positioning.obj_offset" title="Link to this definition">#</a></dt>
+<dd><p>Offset a point on the plot based on the specified units.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xy</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a>) – The (x, y) position of the object.</p></li>
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Offset values in (offset_x, offset_y) or direction (‘left’, ‘right’, ‘up’, ‘down’).</p></li>
+<li><p><strong>offset_units</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The units for the offset (‘fontsize’, ‘inches’, ‘points’, ‘fraction’). Default is ‘fontsize’.</p></li>
+<li><p><strong>fraction</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a>) – Fraction of axis range to offset (fraction_x, fraction_y). Only used if offset_units is ‘fraction’.</p></li>
+<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.9.2)"><em>matplotlib.axes.Axes</em></a>) – The axes to annotate on. Needed for ‘inches’ or ‘fraction’ units.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-m3util.viz.printing">
 <span id="m3util-viz-printing-module"></span><h2>m3util.viz.printing module<a class="headerlink" href="#module-m3util.viz.printing" title="Link to this heading">#</a></h2>
 <dl class="py class">
@@ -904,7 +1367,7 @@ ax (list): List of axes objects.</p>
 <p>Class to save figures to a folder</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="m3util.viz.printing.printer.savefig">
-<span class="sig-name descname"><span class="pre">savefig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tight_layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_figs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/printing.html#printer.savefig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.printing.printer.savefig" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">savefig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tight_layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_figs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_on_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/printing.html#printer.savefig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.printing.printer.savefig" title="Link to this definition">#</a></dt>
 <dd><p>Function to save a figure in one or multiple formats.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -915,6 +1378,7 @@ ax (list): List of axes objects.</p>
 <li><p><strong>basepath</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The base path for saving the figure. If None, uses self.basepath. Defaults to None.</p></li>
 <li><p><strong>label_figs</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>axes</em><em>, </em><em>optional</em>) – List of axes to label. If None, no axes are labeled. Defaults to None.</p></li>
 <li><p><strong>fileformats</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – List of file formats to save the figure in. If None, uses self.fileformats. Defaults to None.</p></li>
+<li><p><strong>text_on_top</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the text is placed on top of the figure. Defaults to True.</p></li>
 <li><p><strong>**kwargs</strong> – Additional keyword arguments for the labelfigs function.</p></li>
 </ul>
 </dd>
@@ -935,6 +1399,89 @@ ax (list): List of axes objects.</p>
 <dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – style name. Defaults to “default”.</p>
 </dd>
 </dl>
+</dd></dl>
+
+</section>
+<section id="module-m3util.viz.text">
+<span id="m3util-viz-text-module"></span><h2>m3util.viz.text module<a class="headerlink" href="#module-m3util.viz.text" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.text.add_text_to_figure">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.text.</span></span><span class="sig-name descname"><span class="pre">add_text_to_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_position_in_inches</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/text.html#add_text_to_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.text.add_text_to_figure" title="Link to this definition">#</a></dt>
+<dd><p>Add text to a figure at a specified position.</p>
+<p>Parameters:
+fig (Figure): The figure to add the text to.
+text (str): The text to be added.
+text_position_in_inches (tuple): The position of the text in inches.
+<a href="#id11"><span class="problematic" id="id12">**</span></a>kwargs: Additional keyword arguments.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.text.bring_text_to_front">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.text.</span></span><span class="sig-name descname"><span class="pre">bring_text_to_front</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/text.html#bring_text_to_front"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.text.bring_text_to_front" title="Link to this definition">#</a></dt>
+<dd><p>Sets the zorder of all text objects in the Figure to the specified value.</p>
+<p>Parameters:
+fig (matplotlib.figure.Figure): The Figure object to modify.
+zorder (int, optional): The zorder value to set for text objects. Default is 100.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.text.labelfigs">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.text.</span></span><span class="sig-name descname"><span class="pre">labelfigs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tl'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string_add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inset_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.15,</span> <span class="pre">0.15)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/text.html#labelfigs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.text.labelfigs" title="Link to this definition">#</a></dt>
+<dd><p>Add labels to figures.</p>
+<p>Parameters:
+axes (Axes): The axes to add the labels to.
+number (int, optional): The number to be added as a label. Defaults to None.
+style (str, optional): The style of the label. Defaults to “wb”.
+loc (str, optional): The location of the label. Defaults to “tl”.
+string_add (str, optional): Additional string to be added to the label. Defaults to “”.
+size (int, optional): The font size of the label. Defaults to 8.
+text_pos (str, optional): The position of the label text. Defaults to “center”.
+inset_fraction (tuple, optional): The fraction of the axes to inset the label. Defaults to (0.15, 0.15).
+<a href="#id13"><span class="problematic" id="id14">**</span></a>kwargs: Additional keyword arguments.</p>
+<p>Returns:
+Text: The created text object.</p>
+<p>Raises:
+ValueError: If an invalid position is provided.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.text.line_annotation">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.text.</span></span><span class="sig-name descname"><span class="pre">line_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_kwargs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/text.html#line_annotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.text.line_annotation" title="Link to this definition">#</a></dt>
+<dd><p>Annotate a line on a plot with text at its midpoint.</p>
+<p>Parameters:
+ax (matplotlib.axes.Axes): The axes to add the annotation to.
+text (str): The text to annotate the line with.
+line_x (array-like): The x-coordinates of the line.
+line_y (array-like): The y-coordinates of the line.
+annotation_kwargs (dict): Additional keyword arguments for the annotation.
+zorder (int, optional): The zorder value for the annotation. Default is 100.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.text.number_to_letters">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.text.</span></span><span class="sig-name descname"><span class="pre">number_to_letters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/text.html#number_to_letters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.text.number_to_letters" title="Link to this definition">#</a></dt>
+<dd><p>Convert a number to a string representation using letters.</p>
+<p>Parameters:
+num (int): The number to convert.</p>
+<p>Returns:
+str: The string representation of the number.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.text.set_sci_notation_label">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.text.</span></span><span class="sig-name descname"><span class="pre">set_sci_notation_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bottom</span> <span class="pre">right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scilimits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stroke_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_to_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/text.html#set_sci_notation_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.text.set_sci_notation_label" title="Link to this definition">#</a></dt>
+<dd><p>Set scientific notation label on the specified axis of a plot.</p>
+<p>Parameters:
+ax (matplotlib.axes.Axes): The axes to add the label to.
+axis (str, optional): The axis to apply the label to (‘x’ or ‘y’). Defaults to ‘y’.
+corner (str, optional): The corner of the plot to place the label. Defaults to ‘bottom right’.
+offset_points (tuple, optional): Offset of the label in points. Defaults to None.
+scilimits (tuple, optional): The scientific notation limits. Defaults to (0, 0).
+linewidth (float, optional): The linewidth for the stroke effect. Defaults to None.
+stroke_color (str, optional): The stroke color for the text. Defaults to None.
+write_to_axis (matplotlib.axes.Axes, optional): The axis to write the label to. Defaults to None.</p>
+<p>Raises:
+ValueError: If an invalid corner position is provided.</p>
 </dd></dl>
 
 </section>
@@ -981,6 +1528,30 @@ ax (list): List of axes objects.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.arrows">m3util.viz.arrows module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.DrawArrow"><code class="docutils literal notranslate"><span class="pre">DrawArrow</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.DrawArrow.draw"><code class="docutils literal notranslate"><span class="pre">DrawArrow.draw()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.DrawArrow.draw_arrow"><code class="docutils literal notranslate"><span class="pre">DrawArrow.draw_arrow()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.DrawArrow.extract_angle"><code class="docutils literal notranslate"><span class="pre">DrawArrow.extract_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.DrawArrow.get_dx_dy"><code class="docutils literal notranslate"><span class="pre">DrawArrow.get_dx_dy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.DrawArrow.inches_to_fig_fraction"><code class="docutils literal notranslate"><span class="pre">DrawArrow.inches_to_fig_fraction()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.DrawArrow.place_text"><code class="docutils literal notranslate"><span class="pre">DrawArrow.place_text()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.DrawArrow.set_vertical_text_displacement"><code class="docutils literal notranslate"><span class="pre">DrawArrow.set_vertical_text_displacement()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.draw_ellipse_with_arrow"><code class="docutils literal notranslate"><span class="pre">draw_ellipse_with_arrow()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.draw_extended_arrow_indicator"><code class="docutils literal notranslate"><span class="pre">draw_extended_arrow_indicator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.get_perpendicular_vector"><code class="docutils literal notranslate"><span class="pre">get_perpendicular_vector()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.place_text_in_inches"><code class="docutils literal notranslate"><span class="pre">place_text_in_inches()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.place_text_points"><code class="docutils literal notranslate"><span class="pre">place_text_points()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.shift_object_in_inches"><code class="docutils literal notranslate"><span class="pre">shift_object_in_inches()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.shift_object_in_points"><code class="docutils literal notranslate"><span class="pre">shift_object_in_points()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.images">m3util.viz.images module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.images.display_image"><code class="docutils literal notranslate"><span class="pre">display_image()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.layout">m3util.viz.layout module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.Axis_Ratio"><code class="docutils literal notranslate"><span class="pre">Axis_Ratio()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.FigDimConverter"><code class="docutils literal notranslate"><span class="pre">FigDimConverter</span></code></a><ul class="nav section-nav flex-column">
@@ -990,27 +1561,38 @@ ax (list): List of axes objects.</p>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.add_box"><code class="docutils literal notranslate"><span class="pre">add_box()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.add_scalebar"><code class="docutils literal notranslate"><span class="pre">add_scalebar()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.add_text_to_figure"><code class="docutils literal notranslate"><span class="pre">add_text_to_figure()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.combine_lines"><code class="docutils literal notranslate"><span class="pre">combine_lines()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.draw_line_with_text"><code class="docutils literal notranslate"><span class="pre">draw_line_with_text()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.embedding_maps"><code class="docutils literal notranslate"><span class="pre">embedding_maps()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.find_nearest"><code class="docutils literal notranslate"><span class="pre">find_nearest()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.get_axis_pos_inches"><code class="docutils literal notranslate"><span class="pre">get_axis_pos_inches()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.get_axis_range"><code class="docutils literal notranslate"><span class="pre">get_axis_range()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.get_closest_point"><code class="docutils literal notranslate"><span class="pre">get_closest_point()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.get_zorders"><code class="docutils literal notranslate"><span class="pre">get_zorders()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.imagemap"><code class="docutils literal notranslate"><span class="pre">imagemap()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.inset_connector"><code class="docutils literal notranslate"><span class="pre">inset_connector()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.labelfigs"><code class="docutils literal notranslate"><span class="pre">labelfigs()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.layout_fig"><code class="docutils literal notranslate"><span class="pre">layout_fig()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.layout_subfigures"><code class="docutils literal notranslate"><span class="pre">layout_subfigures()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.number_to_letters"><code class="docutils literal notranslate"><span class="pre">number_to_letters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.layout_subfigures_inches"><code class="docutils literal notranslate"><span class="pre">layout_subfigures_inches()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.mock_line_annotation"><code class="docutils literal notranslate"><span class="pre">mock_line_annotation()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.path_maker"><code class="docutils literal notranslate"><span class="pre">path_maker()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.plot_into_graph"><code class="docutils literal notranslate"><span class="pre">plot_into_graph()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.scalebar"><code class="docutils literal notranslate"><span class="pre">scalebar()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.set_axis"><code class="docutils literal notranslate"><span class="pre">set_axis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.span_to_axis"><code class="docutils literal notranslate"><span class="pre">span_to_axis()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.layout.subfigures"><code class="docutils literal notranslate"><span class="pre">subfigures()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.lines">m3util.viz.lines module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.lines.draw_lines"><code class="docutils literal notranslate"><span class="pre">draw_lines()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.lines.handle_linewidth_conflicts"><code class="docutils literal notranslate"><span class="pre">handle_linewidth_conflicts()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.movies">m3util.viz.movies module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.movies.make_movie"><code class="docutils literal notranslate"><span class="pre">make_movie()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.positioning">m3util.viz.positioning module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.positioning.obj_offset"><code class="docutils literal notranslate"><span class="pre">obj_offset()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.printing">m3util.viz.printing module</a><ul class="nav section-nav flex-column">
@@ -1022,6 +1604,15 @@ ax (list): List of axes objects.</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.style">m3util.viz.style module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.style.set_style"><code class="docutils literal notranslate"><span class="pre">set_style()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.text">m3util.viz.text module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.text.add_text_to_figure"><code class="docutils literal notranslate"><span class="pre">add_text_to_figure()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.text.bring_text_to_front"><code class="docutils literal notranslate"><span class="pre">bring_text_to_front()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.text.labelfigs"><code class="docutils literal notranslate"><span class="pre">labelfigs()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.text.line_annotation"><code class="docutils literal notranslate"><span class="pre">line_annotation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.text.number_to_letters"><code class="docutils literal notranslate"><span class="pre">number_to_letters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.text.set_sci_notation_label"><code class="docutils literal notranslate"><span class="pre">set_sci_notation_label()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz">Module contents</a></li>

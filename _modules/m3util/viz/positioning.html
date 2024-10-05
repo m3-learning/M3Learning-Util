@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.notebooks.checksum &#8212; M3Learning-Util 2.0.0 documentation</title>
+    <title>m3util.viz.positioning &#8212; M3Learning-Util 2.0.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
     <script src="../../../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/notebooks/checksum';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/viz/positioning';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -474,7 +474,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">m3util.noteb...</li>
+    <li class="breadcrumb-item active" aria-current="page">m3util.viz.p...</li>
   </ul>
 </nav>
 </div>
@@ -491,56 +491,85 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for m3util.notebooks.checksum</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">m3util.util.hashing</span> <span class="kn">import</span> <span class="n">select_hash_algorithm</span>
+  <h1>Source code for m3util.viz.positioning</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 
-<div class="viewcode-block" id="calculate_notebook_checksum">
-<a class="viewcode-back" href="../../../api/m3util.notebooks.html#m3util.notebooks.checksum.calculate_notebook_checksum">[docs]</a>
-<span class="k">def</span> <span class="nf">calculate_notebook_checksum</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;sha256&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="obj_offset">
+<a class="viewcode-back" href="../../../api/m3util.viz.html#m3util.viz.positioning.obj_offset">[docs]</a>
+<span class="k">def</span> <span class="nf">obj_offset</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">offset_units</span><span class="o">=</span><span class="s2">&quot;fontsize&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate the checksum of the code cells in a Jupyter notebook (.ipynb) file using the specified hashing algorithm.</span>
+<span class="sd">    Offset a point on the plot based on the specified units.</span>
 
-<span class="sd">    This function reads the contents of a Jupyter notebook file, extracts the code cells (ignoring metadata, execution counts,</span>
-<span class="sd">    and other non-code content), and computes its checksum using one of the supported hashing algorithms: &#39;sha256&#39;, &#39;md5&#39;, or &#39;sha1&#39;.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        notebook_path (str): The path to the Jupyter notebook file (.ipynb) to be hashed.</span>
-<span class="sd">        algorithm (str): The hashing algorithm to use. Supported options are &#39;sha256&#39; (default), &#39;md5&#39;, and &#39;sha1&#39;.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        str: The computed checksum as a hexadecimal string.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        ValueError: If an unsupported hashing algorithm is specified.</span>
-
-<span class="sd">    Example:</span>
-<span class="sd">        checksum = calculate_notebook_checksum(&quot;/path/to/notebook.ipynb&quot;, algorithm=&quot;sha256&quot;)</span>
-<span class="sd">        print(checksum)</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        xy (tuple): The (x, y) position of the object.</span>
+<span class="sd">        offset (tuple or str): Offset values in (offset_x, offset_y) or direction (&#39;left&#39;, &#39;right&#39;, &#39;up&#39;, &#39;down&#39;).</span>
+<span class="sd">        offset_units (str): The units for the offset (&#39;fontsize&#39;, &#39;inches&#39;, &#39;points&#39;, &#39;fraction&#39;). Default is &#39;fontsize&#39;.</span>
+<span class="sd">        fraction (tuple): Fraction of axis range to offset (fraction_x, fraction_y). Only used if offset_units is &#39;fraction&#39;.</span>
+<span class="sd">        ax (matplotlib.axes.Axes): The axes to annotate on. Needed for &#39;inches&#39; or &#39;fraction&#39; units.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">hash_function</span> <span class="o">=</span> <span class="n">select_hash_algorithm</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span>
+    <span class="c1"># Get the default font size in points</span>
+    <span class="n">fontsize</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.size&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mf">1.2</span>
 
-    <span class="c1"># Load the notebook as a JSON object</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">notebook</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="c1"># Default axis is required for &#39;inches&#39; or &#39;fraction&#39; units</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">offset_units</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;inches&quot;</span><span class="p">,</span> <span class="s2">&quot;fraction&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Please provide an axes object when using &#39;inches&#39; or &#39;fraction&#39; units.&quot;</span>
+        <span class="p">)</span>
 
-    <span class="c1"># Initialize an empty string to hold all code from code cells</span>
-    <span class="n">code_cells_content</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="c1"># Handle string-based offset directions</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="c1"># Offset based on fontsize in the specified direction</span>
+        <span class="k">if</span> <span class="n">offset_units</span> <span class="o">==</span> <span class="s2">&quot;fontsize&quot;</span><span class="p">:</span>
+            <span class="n">offset_x</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">fontsize</span> <span class="k">if</span> <span class="n">offset</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="n">fontsize</span> <span class="k">if</span> <span class="n">offset</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="p">)</span>
+            <span class="n">offset_y</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">fontsize</span> <span class="k">if</span> <span class="n">offset</span> <span class="o">==</span> <span class="s2">&quot;up&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="n">fontsize</span> <span class="k">if</span> <span class="n">offset</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Please provide offset in &#39;fontsize&#39; units or provide an explicit offset tuple.&quot;</span>
+            <span class="p">)</span>
 
-    <span class="c1"># Loop over all cells in the notebook</span>
-    <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">notebook</span><span class="p">[</span><span class="s2">&quot;cells&quot;</span><span class="p">]:</span>
-        <span class="c1"># Check if the cell type is &#39;code&#39;</span>
-        <span class="k">if</span> <span class="n">cell</span><span class="p">[</span><span class="s2">&quot;cell_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;code&quot;</span><span class="p">:</span>
-            <span class="c1"># Join the source lines of the code cell (if it&#39;s not empty)</span>
-            <span class="n">code_cells_content</span> <span class="o">+=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="p">[]))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="c1"># Custom offset in inches, points, or fraction of axis</span>
+        <span class="n">offset_x</span><span class="p">,</span> <span class="n">offset_y</span> <span class="o">=</span> <span class="n">offset</span>
 
-    <span class="c1"># Encode the concatenated code cells content as bytes and update the hash function</span>
-    <span class="n">hash_function</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">code_cells_content</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">offset_units</span> <span class="o">==</span> <span class="s2">&quot;inches&quot;</span><span class="p">:</span>
+            <span class="c1"># Convert inches to display coordinates using the figure&#39;s DPI</span>
+            <span class="n">offset_x</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">dpi</span> <span class="o">*</span> <span class="n">offset_x</span>
+            <span class="n">offset_y</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">dpi</span> <span class="o">*</span> <span class="n">offset_y</span>
 
-    <span class="c1"># Return the checksum as a hexadecimal string</span>
-    <span class="k">return</span> <span class="n">hash_function</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+        <span class="k">elif</span> <span class="n">offset_units</span> <span class="o">==</span> <span class="s2">&quot;points&quot;</span><span class="p">:</span>
+            <span class="c1"># Points are already the unit, so we don&#39;t modify the offset_x or offset_y</span>
+            <span class="k">pass</span>
+
+        <span class="k">elif</span> <span class="n">offset_units</span> <span class="o">==</span> <span class="s2">&quot;fraction&quot;</span><span class="p">:</span>
+            <span class="c1"># Fraction of axis, based on the axis data range</span>
+            <span class="n">x_range</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+            <span class="n">y_range</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+
+            <span class="c1"># Apply custom fraction offsets if provided</span>
+            <span class="n">offset_x</span> <span class="o">=</span> <span class="n">offset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># Fraction of x-axis range</span>
+            <span class="n">offset_y</span> <span class="o">=</span> <span class="n">offset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># Fraction of y-axis range</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Units must be &#39;fontsize&#39;, &#39;inches&#39;, &#39;points&#39;, or &#39;fraction&#39;.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># No valid offset, set to zero</span>
+        <span class="n">offset_y</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">offset_x</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Calculate new object position based on offset</span>
+    <span class="n">new_x</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">offset_x</span>
+    <span class="n">new_y</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">offset_y</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">)</span></div>
 
 </pre></div>
 

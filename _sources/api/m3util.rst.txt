@@ -17,17 +17,6 @@ Subpackages
    m3util.util
    m3util.viz
 
-Submodules
-----------
-
-m3util.skeleton module
-----------------------
-
-.. automodule:: m3util.skeleton
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

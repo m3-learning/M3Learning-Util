@@ -44,6 +44,14 @@ m3util.util.hashing module
    :undoc-members:
    :show-inheritance:
 
+m3util.util.kwargs module
+-------------------------
+
+.. automodule:: m3util.util.kwargs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 m3util.util.search module
 -------------------------
 

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.ml.optimizers.TrustRegion &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.ml.optimizers.TrustRegion &#8212; M3Learning-Util 2.0.0 documentation</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../../_static/documentation_options.js?v=fbe5091d"></script>
+    <script src="../../../../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/ml/optimizers/TrustRegion';</script>
@@ -43,7 +43,7 @@
     <link rel="search" title="Search" href="../../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 24, 2024"/>
+    <meta name="docbuild:last-update" content="Oct 05, 2024"/>
   </head>
   
   
@@ -121,8 +121,8 @@
       
     
     
-    <img src="../../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
-    <script>document.write(`<img src="../../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.0.po documentation - Home"/>`);</script>
+    <img src="../../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.0 documentation - Home"/>
+    <script>document.write(`<img src="../../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 2.0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -562,6 +562,7 @@ document.write(`
 <span class="sd">            radius_initial (float, optional): Initial radius value. Defaults to 0.1.</span>
 <span class="sd">            differentiable (bool, optional): Whether the optimization is differentiable. Defaults to False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradient_cache</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cgopttol</span> <span class="o">=</span> <span class="n">cgopttol</span>
@@ -920,6 +921,55 @@ document.write(`
 
         <span class="k">return</span> <span class="n">outFval</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">cnt_compute</span><span class="p">,</span> <span class="n">cg_iter</span></div>
 </div>
+
+
+
+<div class="viewcode-block" id="SimpleModel4">
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.SimpleModel4">[docs]</a>
+<span class="k">class</span> <span class="nc">SimpleModel4</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SimpleModel4</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SimpleModel4.forward">
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.SimpleModel4.forward">[docs]</a>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="closure_fn3">
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.closure_fn3">[docs]</a>
+<span class="k">def</span> <span class="nf">closure_fn3</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">closure</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="n">closure_size</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">]],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loss</span>
+
+    <span class="k">return</span> <span class="n">closure</span></div>
+
+
+
+<div class="viewcode-block" id="test_trcg_step_shrink_radius">
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.test_trcg_step_shrink_radius">[docs]</a>
+<span class="k">def</span> <span class="nf">test_trcg_step_shrink_radius</span><span class="p">():</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">SimpleModel4</span><span class="p">()</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">TRCG</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">closure_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">closure</span> <span class="o">=</span> <span class="n">closure_fn3</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+
+    <span class="c1"># Perform a step</span>
+    <span class="n">outFval</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">cnt_compute</span><span class="p">,</span> <span class="n">cg_iter</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">closure</span><span class="p">)</span>
+
+    <span class="c1"># Check if the radius was shrunk</span>
+    <span class="k">assert</span> <span class="n">radius</span> <span class="o">&lt;</span> <span class="mf">1.0</span>
+    <span class="k">assert</span> <span class="n">outFval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">cnt_compute</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">cg_iter</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
 
 </pre></div>
 

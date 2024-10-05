@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.viz.style &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.viz.style &#8212; M3Learning-Util 2.0.0 documentation</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../_static/documentation_options.js?v=fbe5091d"></script>
+    <script src="../../../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/viz/style';</script>
@@ -43,7 +43,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 24, 2024"/>
+    <meta name="docbuild:last-update" content="Oct 05, 2024"/>
   </head>
   
   
@@ -121,8 +121,8 @@
       
     
     
-    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
-    <script>document.write(`<img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.0.po documentation - Home"/>`);</script>
+    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.0 documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 2.0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -496,6 +496,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 
+
 <div class="viewcode-block" id="set_style">
 <a class="viewcode-back" href="../../../api/m3util.viz.html#m3util.viz.style.set_style">[docs]</a>
 <span class="k">def</span> <span class="nf">set_style</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">):</span>
@@ -511,7 +512,7 @@ document.write(`
 
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> set for seaborn&quot;</span><span class="p">)</span>
 
-        <span class="k">except</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">pass</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -526,7 +527,7 @@ document.write(`
             <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;xtick.top&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;ytick.right&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> set for matplotlib&quot;</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">pass</span>
 
     <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;printing&quot;</span><span class="p">:</span>
@@ -536,14 +537,14 @@ document.write(`
 
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> set for seaborn&quot;</span><span class="p">)</span>
 
-        <span class="k">except</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">pass</span>
 
         <span class="c1"># setting default plotting params</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;image.cmap&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;viridis&quot;</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;xtick.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;ytick.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;xtick.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;ytick.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.titlesize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;xtick.direction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;in&quot;</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;ytick.direction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;in&quot;</span>
@@ -555,7 +556,8 @@ document.write(`
         <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.linewidth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;legend.fontsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;legend.loc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;upper left&quot;</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;legend.frameon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;legend.frameon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span></div>
 
 </pre></div>
 
