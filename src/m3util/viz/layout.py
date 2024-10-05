@@ -1,5 +1,4 @@
 from matplotlib.patches import ConnectionPatch
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from itertools import product
@@ -874,80 +873,6 @@ def draw_line_with_text(
     # Add text if provided
     if text:
         line_annotation(ax, text, line_x, line_y, annotation_kwargs, zorder=zorder)
-
-
-def draw_extended_label(
-    ax, point1, point2, text, direction, fraction, annotation_kwargs={}, line_kwargs={},
-):
-    if "left" or "right" in direction:
-        y_arrow_offset = 0
-        if direction == "left":
-            x_arrow_offset = -1 * (ax.get_xlim()[1] - ax.get_xlim()[0]) * fraction
-        else:
-            x_arrow_offset = (ax.get_xlim()[1] - ax.get_xlim()[0]) * fraction
-    elif "up" or "down" in direction:
-        x_arrow_offset = 0
-        if direction == "up":
-            y_arrow_offset = (ax.get_ylim()[1] - ax.get_ylim()[0]) * fraction
-        else:
-            y_arrow_offset = -1 * (ax.get_ylim()[1] - ax.get_ylim()[0]) * fraction
-    else:
-        raise ValueError("Invalid direction. Choose 'left', 'right', 'up', 'down'")
-    
-    # calculte the points for the arrow    
-    point3 = (point1[0] + x_arrow_offset, point1[1] + y_arrow_offset)
-    point4 = (point2[0] + x_arrow_offset, point2[1] + y_arrow_offset)
-    
-    draw_line_with_text(
-        ax,
-        (point3[0], point4[0]),
-        (point3[1], point4[1]),
-        value,
-        axis="x",
-        span="full",
-        text="",
-        zorder=2,
-        line_kwargs={},
-        annotation_kwargs={},
-    )
-    
-    
-    pass
-
-    # # Set text alignment and offsets
-    # if axis == 'x':
-    #     # Vertical line, so offset text horizontally
-    #     text_x = value
-    #     text_y = mid_y
-    #     ha = 'left' if text_offset >= 0 else 'right'
-    #     va = 'center'
-    #     ax.annotate(
-    #         text,
-    #         xy=(text_x, text_y),
-    #         xycoords='data',
-    #         xytext=(text_offset, 0),
-    #         textcoords='offset points',
-    #         ha=ha,
-    #         va=va,
-    #         zorder=zorder
-    #     )
-    # else:
-    #     # Horizontal line, so offset text vertically
-    #     text_x = mid_x
-    #     text_y = value
-    #     ha = 'center'
-    #     va = 'bottom' if text_offset >= 0 else 'top'
-    #     ax.annotate(
-    #         text,
-    #         xy=(text_x, text_y),
-    #         xycoords='data',
-    #         xytext=(0, text_offset),
-    #         textcoords='offset points',
-    #         ha=ha,
-    #         va=va,
-    #         zorder=zorder
-    #     )
-
 
 def span_to_axis(ax, value, x_data, y_data, connect_to="left"):
     # Get axis limits
