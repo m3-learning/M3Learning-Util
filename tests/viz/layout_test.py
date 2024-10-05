@@ -1,6 +1,7 @@
 import pytest
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib import patches
 from matplotlib.patches import Rectangle, ConnectionPatch
 from m3util.viz.layout import (
     plot_into_graph,
@@ -19,6 +20,7 @@ from m3util.viz.layout import (
     set_axis,
     add_scalebar,
     get_axis_pos_inches,
+    get_closest_point,
     FigDimConverter,
 )
 from m3util.viz.text import add_text_to_figure, labelfigs, number_to_letters
@@ -230,78 +232,6 @@ def test_add_box():
     assert rect.get_linewidth() == 2, "The line width of the rectangle is incorrect"
 
 
-def test_inset_connector():
-    # Create a figure and two axes
-    fig, (ax1, ax2) = plt.subplots(1, 2)
-
-    # Set limits for both axes to test connection points calculation
-    ax1.set_xlim(0, 10)
-    ax1.set_ylim(0, 10)
-    ax2.set_xlim(0, 20)
-    ax2.set_ylim(0, 20)
-
-    # Call the inset_connector function
-    inset_connector(fig, ax1, ax2, color="blue", linestyle="--", linewidth=2)
-
-    # Retrieve the added ConnectionPatch objects from the figure
-    connections = [obj for obj in fig.findobj(ConnectionPatch)]
-
-    # Check that exactly two connections have been added (since coord1 and coord2 each have 2 points by default)
-    assert (
-        len(connections) == 2
-    ), "Expected exactly two ConnectionPatch objects to be added to the figure."
-
-    # Check the properties of the connections
-    for con in connections:
-        assert con.get_edgecolor()[:3] == (
-            0.0,
-            0.0,
-            1.0,
-        ), "The color of the ConnectionPatch should be blue."
-        assert (
-            con.get_linestyle() == "--"
-        ), "The linestyle of the ConnectionPatch should be dashed."
-        assert (
-            con.get_linewidth() == 2
-        ), "The linewidth of the ConnectionPatch should be 2."
-
-    # Test with specific coordinates
-    coord1 = [(1, 1), (1, 9)]
-    coord2 = [(2, 2), (2, 18)]
-
-    # Call the inset_connector function with specific coordinates
-    inset_connector(
-        fig,
-        ax1,
-        ax2,
-        coord1=coord1,
-        coord2=coord2,
-        color="green",
-        linestyle="-",
-        linewidth=1,
-    )
-
-    # Retrieve the added ConnectionPatch objects again
-    connections = [obj for obj in fig.findobj(ConnectionPatch)]
-
-    # There should now be 4 ConnectionPatch objects in total
-    assert (
-        len(connections) == 4
-    ), "Expected four ConnectionPatch objects to be added to the figure after the second call."
-
-    # Check the properties of the last two connections with a tolerance for color comparison
-    for con in connections[2:]:
-        assert all(
-            abs(a - b) < 0.01 for a, b in zip(con.get_edgecolor()[:3], (0.0, 0.5, 0.0))
-        ), "The color of the ConnectionPatch should be green."
-        assert (
-            con.get_linestyle() == "-"
-        ), "The linestyle of the ConnectionPatch should be solid."
-        assert (
-            con.get_linewidth() == 1
-        ), "The linewidth of the ConnectionPatch should be 1."
-
-
 def test_subfigures_default():
     # Test with default size and gaps
     nrows, ncols = 2, 3
@@ -421,3 +351,350 @@ def test_subfigures_size_and_gaps():
         fig.get_size_inches(), expected_figsize
     ), f"Expected figure size {expected_figsize}, but got {fig.get_size_inches()}."
 
+
+def test_get_closest_point_x_axis():
+    x_data = np.array([1, 2, 3, 4, 5])
+    y_data = np.array([10, 20, 30, 40, 50])
+    value = 3.7
+    closest_x, closest_y = get_closest_point(x_data, y_data, value, axis="x")
+    assert closest_x == 4, "The closest x value should be 4."
+    assert closest_y == 40, "The closest y value should be 40."
+
+
+def test_get_closest_point_y_axis():
+    x_data = np.array([1, 2, 3, 4, 5])
+    y_data = np.array([10, 20, 30, 40, 50])
+    value = 25
+    closest_x, closest_y = get_closest_point(x_data, y_data, value, axis="y")
+    assert closest_x == 2, "The closest x value should be 2."
+    assert closest_y == 20, "The closest y value should be 20."
+
+
+def test_get_closest_point_invalid_axis():
+    x_data = np.array([1, 2, 3, 4, 5])
+    y_data = np.array([10, 20, 30, 40, 50])
+    value = 3
+    try:
+        get_closest_point(x_data, y_data, value, axis="z")
+    except ValueError as e:
+        assert (
+            str(e) == "axis must be 'x' or 'y'"
+        ), "Should raise ValueError for invalid axis."
+
+
+def test_get_closest_point_different_lengths():
+    x_data = np.array([1, 2, 3])
+    y_data = np.array([10, 20])
+    value = 2
+    try:
+        get_closest_point(x_data, y_data, value, axis="x")
+    except ValueError as e:
+        assert (
+            str(e) == "x_data and y_data must have the same shape."
+        ), "Should raise ValueError for different lengths."
+
+
+def test_get_closest_point_exact_match():
+    x_data = np.array([1, 2, 3, 4, 5])
+    y_data = np.array([10, 20, 30, 40, 50])
+    value = 3
+    closest_x, closest_y = get_closest_point(x_data, y_data, value, axis="x")
+    assert closest_x == 3, "The closest x value should be 3."
+    assert closest_y == 30, "The closest y value should be 30."
+
+
+def test_inset_connector_default_coords():
+    fig, ax1 = plt.subplots()
+    fig2, ax2 = plt.subplots()
+    inset_connector(fig, ax1, ax2)
+    assert (
+        len(fig.findobj(ConnectionPatch)) > 0
+    ), "A connection patch should be added between axes with default coordinates."
+
+
+def test_inset_connector_with_kwargs():
+    fig, ax1 = plt.subplots()
+    fig2, ax2 = plt.subplots()
+    inset_connector(fig, ax1, ax2, color="red", linestyle="--")
+    connection_patches = fig.findobj(ConnectionPatch)
+    assert (
+        len(connection_patches) > 0
+    ), "A connection patch should be added between axes with additional kwargs."
+    assert connection_patches[0].get_edgecolor() == (
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+    ), "The connection patch should have the correct color."
+    assert (
+        connection_patches[0].get_linestyle() == "--"
+    ), "The connection patch should have the correct linestyle."
+
+
+def test_layout_fig_default():
+    fig, axes = layout_fig(6)
+    assert len(axes) == 6, "Should create 6 subplots."
+    assert isinstance(fig, plt.Figure), "Should return a matplotlib figure."
+    assert all(isinstance(ax, plt.Axes) for ax in axes), "All elements should be Axes."
+
+
+def test_layout_fig_custom_mod():
+    fig, axes = layout_fig(6, mod=2)
+    assert len(axes) == 6, "Should create 6 subplots."
+    assert isinstance(fig, plt.Figure), "Should return a matplotlib figure."
+    assert all(isinstance(ax, plt.Axes) for ax in axes), "All elements should be Axes."
+    assert fig.get_size_inches() == pytest.approx(
+        (6, 9)
+    ), "Figure size should be (6, 9)."
+
+
+def test_layout_fig_custom_figsize():
+    fig, axes = layout_fig(6, figsize=(12, 8))
+    assert len(axes) == 6, "Should create 6 subplots."
+    assert isinstance(fig, plt.Figure), "Should return a matplotlib figure."
+    assert all(isinstance(ax, plt.Axes) for ax in axes), "All elements should be Axes."
+    assert fig.get_size_inches() == pytest.approx(
+        (12, 8)
+    ), "Figure size should be (12, 8)."
+
+
+def test_layout_fig_custom_layout():
+    fig, axes = layout_fig(6, layout="tight")
+    assert len(axes) == 6, "Should create 6 subplots."
+    assert isinstance(fig, plt.Figure), "Should return a matplotlib figure."
+    assert all(isinstance(ax, plt.Axes) for ax in axes), "All elements should be Axes."
+
+
+def test_layout_fig_extra_axes_deleted():
+    fig, axes = layout_fig(5, mod=3)
+    assert len(axes) == 5, "Should create 5 subplots."
+    assert isinstance(fig, plt.Figure), "Should return a matplotlib figure."
+    assert all(isinstance(ax, plt.Axes) for ax in axes), "All elements should be Axes."
+    assert len(fig.get_axes()) == 5, "Should only have 5 axes in the figure."
+
+
+def test_embedding_maps_default():
+    data = np.random.rand(100, 4)
+    image = np.random.rand(10, 10)
+    embedding_maps(data, image)
+    plt.close()
+
+
+def test_embedding_maps_with_colorbar():
+    data = np.random.rand(100, 4)
+    image = np.random.rand(10, 10)
+    embedding_maps(data, image, colorbar_shown=True)
+    plt.close()
+
+
+def test_embedding_maps_without_colorbar():
+    data = np.random.rand(100, 4)
+    image = np.random.rand(10, 10)
+    embedding_maps(data, image, colorbar_shown=False)
+    plt.close()
+
+
+def test_embedding_maps_with_clim():
+    data = np.random.rand(100, 4)
+    image = np.random.rand(10, 10)
+    c_lim = [0, 1]
+    embedding_maps(data, image, c_lim=c_lim)
+    plt.close()
+
+
+def test_embedding_maps_with_title():
+    data = np.random.rand(100, 4)
+    image = np.random.rand(10, 10)
+    title = "Test Title"
+    embedding_maps(data, image, title=title)
+    plt.close()
+
+
+def test_embedding_maps_with_mod():
+    data = np.random.rand(100, 4)
+    image = np.random.rand(10, 10)
+    mod = 2
+    embedding_maps(data, image, mod=mod)
+    plt.close()
+
+
+def test_imagemap_default(sample_figure):
+    fig, ax = sample_figure
+    data = np.random.rand(10, 10)
+    imagemap(ax, data)
+    assert len(ax.get_images()) > 0, "The data should be plotted as an image map."
+    assert (
+        ax.get_images()[0].get_cmap().name == "viridis"
+    ), "Default colormap should be 'viridis'."
+
+
+def test_imagemap_with_clim(sample_figure):
+    fig, ax = sample_figure
+    data = np.random.rand(10, 10)
+    clim = (0.2, 0.8)
+    imagemap(ax, data, clim=clim)
+    im = ax.get_images()[0]
+    assert im.get_clim() == clim, "Color limits should be set correctly."
+
+
+def test_imagemap_with_colorbar(sample_figure):
+    fig, ax = sample_figure
+    data = np.random.rand(10, 10)
+    imagemap(ax, data, colorbars=True)
+    assert len(fig.axes) > 1, "Colorbar should be added to the figure."
+
+
+def test_imagemap_without_colorbar(sample_figure):
+    fig, ax = sample_figure
+    data = np.random.rand(10, 10)
+    imagemap(ax, data, colorbars=False)
+    assert len(fig.axes) == 1, "No colorbar should be added to the figure."
+
+
+def test_imagemap_custom_cmap(sample_figure):
+    fig, ax = sample_figure
+    data = np.random.rand(10, 10)
+    custom_cmap = "plasma"
+    imagemap(ax, data, cmap_=custom_cmap)
+    assert (
+        ax.get_images()[0].get_cmap().name == custom_cmap
+    ), f"Colormap should be '{custom_cmap}'."
+
+
+def test_imagemap_1d_data(sample_figure):
+    fig, ax = sample_figure
+    data = np.random.rand(100)
+    imagemap(ax, data)
+    assert (
+        len(ax.get_images()) > 0
+    ), "1D data should be reshaped and plotted as an image map."
+    assert ax.get_images()[0].get_array().shape == (
+        10,
+        10,
+    ), "1D data should be reshaped to 2D."
+
+
+def test_imagemap_with_divider(sample_figure):
+    fig, ax = sample_figure
+    data = np.random.rand(10, 10)
+    imagemap(ax, data, divider_=True)
+    assert len(fig.axes) > 1, "Divider should be added to the figure."
+
+
+def test_find_nearest_single_neighbor():
+    array = np.array([1, 3, 7, 8, 9])
+    idx = find_nearest(array, 5, 1)
+    assert len(idx) == 1, "Should find the single nearest neighbor."
+    assert array[idx[0]] == 3, "The nearest neighbor should be 3."
+
+
+def test_find_nearest_multiple_neighbors():
+    array = np.array([1, 3, 7, 8, 9])
+    idx = find_nearest(array, 5, 2)
+    assert len(idx) == 2, "Should find the two nearest neighbors."
+    assert set(array[idx]) == {3, 7}, "The nearest neighbors should be 3 and 7."
+
+
+def test_find_nearest_exact_match():
+    array = np.array([1, 3, 5, 7, 9])
+    idx = find_nearest(array, 5, 1)
+    assert len(idx) == 1, "Should find the single nearest neighbor."
+    assert array[idx[0]] == 5, "The nearest neighbor should be 5."
+
+
+def test_find_nearest_large_averaging_number():
+    array = np.array([1, 3, 7, 8, 9])
+    idx = find_nearest(array, 5, 10)
+    assert len(idx) == len(
+        array
+    ), "Should return all elements when averaging number is larger than array length."
+
+
+def test_find_nearest_empty_array():
+    array = np.array([])
+    idx = find_nearest(array, 5, 1)
+    assert len(idx) == 0, "Should return an empty array when input array is empty."
+
+
+def test_combine_lines_single_axis(sample_figure):
+    fig, ax = sample_figure
+    ax.plot([1, 2], [3, 4], label="Line 1")
+    lines, labels = combine_lines(ax)
+    assert len(lines) == 1, "Should combine the lines from the single axis."
+    assert len(labels) == 1, "Should combine the labels from the single axis."
+    assert labels[0] == "Line 1", "The label should be 'Line 1'."
+
+
+def test_combine_lines_multiple_axes(sample_figure):
+    fig, ax = sample_figure
+    ax.plot([1, 2], [3, 4], label="Line 1")
+    ax2 = fig.add_subplot(111)
+    ax2.plot([2, 3], [4, 5], label="Line 2")
+    lines, labels = combine_lines(ax, ax2)
+    assert len(lines) == 2, "Should combine the lines from both axes."
+    assert len(labels) == 2, "Should combine the labels from both axes."
+    assert labels == ["Line 1", "Line 2"], "The labels should be 'Line 1' and 'Line 2'."
+
+
+def test_combine_lines_empty_axes(sample_figure):
+    fig, ax = sample_figure
+    ax2 = fig.add_subplot(111)
+    lines, labels = combine_lines(ax, ax2)
+    assert len(lines) == 0, "Should handle empty axes without errors."
+    assert len(labels) == 0, "Should handle empty axes without errors."
+
+
+def test_scalebar_bottom_right():
+    fig, ax = plt.subplots()
+    image_size = 100
+    scale_size = 10
+    scalebar(ax, image_size, scale_size, units="nm", loc="br")
+    assert len(ax.patches) > 0, "A scalebar should be added to the axes."
+    assert any(
+        isinstance(patch, patches.PathPatch) for patch in ax.patches
+    ), "A PathPatch should be added to the axes."
+    assert any(
+        isinstance(text, plt.Text) and text.get_text() == "10 nm" for text in ax.texts
+    ), "The scalebar label should be added to the axes."
+
+
+def test_scalebar_top_right():
+    fig, ax = plt.subplots()
+    image_size = 100
+    scale_size = 10
+    scalebar(ax, image_size, scale_size, units="nm", loc="tr")
+    assert len(ax.patches) > 0, "A scalebar should be added to the axes."
+    assert any(
+        isinstance(patch, patches.PathPatch) for patch in ax.patches
+    ), "A PathPatch should be added to the axes."
+    assert any(
+        isinstance(text, plt.Text) and text.get_text() == "10 nm" for text in ax.texts
+    ), "The scalebar label should be added to the axes."
+
+
+def test_scalebar_custom_units():
+    fig, ax = plt.subplots()
+    image_size = 100
+    scale_size = 10
+    scalebar(ax, image_size, scale_size, units="µm", loc="br")
+    assert len(ax.patches) > 0, "A scalebar should be added to the axes."
+    assert any(
+        isinstance(patch, patches.PathPatch) for patch in ax.patches
+    ), "A PathPatch should be added to the axes."
+    assert any(
+        isinstance(text, plt.Text) and text.get_text() == "10 µm" for text in ax.texts
+    ), "The scalebar label should be added to the axes."
+
+
+def test_scalebar_different_image_size():
+    fig, ax = plt.subplots()
+    image_size = 200
+    scale_size = 20
+    scalebar(ax, image_size, scale_size, units="nm", loc="br")
+    assert len(ax.patches) > 0, "A scalebar should be added to the axes."
+    assert any(
+        isinstance(patch, patches.PathPatch) for patch in ax.patches
+    ), "A PathPatch should be added to the axes."
+    assert any(
+        isinstance(text, plt.Text) and text.get_text() == "20 nm" for text in ax.texts
+    ), "The scalebar label should be added to the axes."
