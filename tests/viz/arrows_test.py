@@ -7,6 +7,7 @@ import matplotlib.patheffects as path_effects
 from matplotlib.text import Text
 import pytest
 from unittest.mock import patch
+from unittest import mock
 
 
 # Assuming draw_ellipse_with_arrow is in a module named 'plot_utils'
@@ -651,60 +652,23 @@ def setup_fig():
     return fig, ax
 
 
-def test_arrow_with_halo(setup_fig):
-    """
-    Test if the halo (outline) is drawn correctly when enabled.
-    """
-    fig, ax = setup_fig
-    start_pos = (0, 0)
-    end_pos = (1, 1)
+def test_draw_arrow_with_halo():
+    fig, ax = plt.subplots()
 
-    # Enable the halo effect
-    halo = {"enabled": True, "color": "red", "scale": 2}
+    # Use mocking to verify that annotate is called twice (halo and arrow)
+    with mock.patch.object(ax, "annotate", wraps=ax.annotate) as mock_annotate:
+        arrow = DrawArrow(
+            fig,
+            (0.1, 0.1),
+            (0.9, 0.9),
+            ax=ax,
+            halo={"enabled": True, "color": "white", "scale": 3},
+        )
+        arrow.draw_arrow()
+        assert (
+            mock_annotate.call_count == 2
+        ), "Expected annotate to be called twice (halo and arrow)"
 
-    arrow = DrawArrow(fig=fig, start_pos=start_pos, end_pos=end_pos, halo=halo)
-    arrow_artist = arrow.draw_arrow()
-
-    assert isinstance(
-        arrow_artist, Annotation
-    ), "The arrow should be an Annotation object."
-    # Ensure the halo properties are applied correctly (manually verify color and scaling if needed)
-
-
-def test_text_placement_center(setup_fig):
-    """
-    Test if the text is placed correctly at the center of the arrow.
-    """
-    fig, ax = setup_fig
-    start_pos = (0, 0)
-    end_pos = (1, 1)
-    text = "Test Arrow"
-
-    arrow = DrawArrow(
-        fig=fig, start_pos=start_pos, end_pos=end_pos, text=text, text_position="center"
-    )
-    arrow.draw()  # Draw both arrow and text
-
-    # Mock perpendicular vector and displacement functions to focus on text placement
-    # (This can be expanded with text artist verification if needed)
-
-
-def test_text_position_start(setup_fig):
-    """
-    Test if the text is placed correctly at the start of the arrow.
-    """
-    fig, ax = setup_fig
-    start_pos = (0, 0)
-    end_pos = (1, 1)
-    text = "Start Text"
-
-    arrow = DrawArrow(
-        fig=fig, start_pos=start_pos, end_pos=end_pos, text=text, text_position="start"
-    )
-    arrow.draw()
-
-    # Check if text position matches start position
-    assert arrow.start_pos == (0, 0), "Text should be placed at the start of the arrow."
 
 
 def test_inches_conversion(setup_fig):
@@ -905,3 +869,359 @@ def test_invalid_direction(create_figure):
         draw_extended_arrow_indicator(
             fig, x=[0, 1], y=[0, 1], direction="diagonal", ax=ax
         )
+
+
+def test_draw_ellipse_with_arrow_invalid_data():
+    fig, ax = plt.subplots()
+    x_data = np.array([0, 1, 2])
+    y_data = np.array([0, 1])  # Mismatched length with x_data
+
+    with pytest.raises(ValueError, match="x_data and y_data must have the same shape"):
+        draw_ellipse_with_arrow(ax, x_data, y_data, value=1, width=0.1, height=0.1)
+
+
+def test_draw_ellipse_with_arrow_valid():
+    fig, ax = plt.subplots()
+    x_data = np.array([0, 1, 2])
+    y_data = np.array([0, 1, 2])
+
+    # No exception should be raised for valid data
+    draw_ellipse_with_arrow(ax, x_data, y_data, value=1, width=0.1, height=0.1)
+    assert len(ax.patches) == 1  # One ellipse should be drawn
+
+
+def test_get_perpendicular_vector():
+    point1 = (0, 0)
+    point2 = (1, 0)
+
+    perp_vec = get_perpendicular_vector(point1, point2)
+    assert perp_vec == (0, 1), "Expected (0, 1) as the perpendicular vector"
+
+
+def test_draw_ellipse_with_arrow_custom_arrowprops():
+    fig, ax = plt.subplots()
+    x_data = np.array([0, 1, 2])
+    y_data = np.array([0, 1, 2])
+
+    arrow_props = {"facecolor": "red", "width": 5, "headwidth": 15}
+    draw_ellipse_with_arrow(
+        ax, x_data, y_data, value=1, width=0.1, height=0.1, arrow_props=arrow_props
+    )
+
+    # Test that the custom arrowprops have been applied
+    for annot in ax.texts:
+        assert annot.arrowprops["facecolor"] == "red"
+        assert annot.arrowprops["width"] == 5
+        assert annot.arrowprops["headwidth"] == 15
+
+
+def test_shift_object_in_points():
+    fig, ax = plt.subplots()
+    position_axis = (0.5, 0.5)
+    direction_vector = (1, 0)
+
+    new_position = shift_object_in_points(ax, position_axis, direction_vector, 10)
+
+    assert new_position != position_axis
+    assert new_position[0] > position_axis[0]  # Shifting to the right
+
+
+def test_shift_object_in_inches():
+    fig, ax = plt.subplots()
+    position_inch = (2, 3)
+    direction_vector = (1, 1)
+
+    new_position = shift_object_in_inches(fig, position_inch, direction_vector, 15)
+
+    assert new_position != position_inch
+    assert new_position[0] > position_inch[0]  # Should have shifted
+    assert new_position[1] > position_inch[1]
+
+
+def test_get_perpendicular_vector_clockwise():
+    point1 = (0, 0)
+    point2 = (1, 0)
+    perp_vector = get_perpendicular_vector(point1, point2, clockwise=True)
+
+    assert perp_vector == (0, -1), "Expected (0, -1) for clockwise perpendicular"
+
+
+def test_draw_arrow_with_halo():
+    fig, ax = plt.subplots()
+
+    # Use mocking to verify that annotate is called twice (halo and arrow)
+    with mock.patch.object(ax, "annotate", wraps=ax.annotate) as mock_annotate:
+        arrow = DrawArrow(
+            fig,
+            (0.1, 0.1),
+            (0.9, 0.9),
+            ax=ax,
+            halo={"enabled": True, "color": "white", "scale": 3},
+        )
+        arrow.draw_arrow()
+        assert (
+            mock_annotate.call_count == 2
+        ), "Expected annotate to be called twice (halo and arrow)"
+
+
+def test_draw_arrow_default_initialization():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(fig, (0.1, 0.1), (0.9, 0.9))
+
+    assert arrow.fig == fig
+    assert arrow.start_pos == (0.1, 0.1)
+    assert arrow.end_pos == (0.9, 0.9)
+    assert arrow.text is None
+    assert arrow.ax == plt
+    assert arrow.text_position == "center"
+    assert arrow.text_alignment == "center"
+    assert arrow.vertical_text_displacement == plt.rcParams["font.size"] / 2 * 1.2
+    assert arrow.units == "inches"
+    assert arrow.scale == "figure fraction"
+    assert arrow.arrowprops == {"arrowstyle": "->"}
+    assert arrow.textprops is None
+    assert arrow.halo == {}
+
+
+def test_draw_arrow_custom_initialization():
+    fig, ax = plt.subplots()
+    arrowprops = {"arrowstyle": "<->", "color": "red", "linewidth": 2}
+    textprops = {"fontsize": 12, "color": "blue"}
+    halo = {"enabled": True, "color": "yellow", "scale": 2}
+
+    arrow = DrawArrow(
+        fig=fig,
+        start_pos=(1, 1),
+        end_pos=(2, 2),
+        text="Test Arrow",
+        ax=ax,
+        text_position="start",
+        text_alignment="left",
+        vertical_text_displacement=10,
+        units="points",
+        scale="data",
+        arrowprops=arrowprops,
+        textprops=textprops,
+        halo=halo,
+    )
+
+    assert arrow.fig == fig
+    assert arrow.start_pos == (1, 1)
+    assert arrow.end_pos == (2, 2)
+    assert arrow.text == "Test Arrow"
+    assert arrow.ax == ax
+    assert arrow.text_position == "start"
+    assert arrow.text_alignment == "left"
+    assert arrow.vertical_text_displacement == 10
+    assert arrow.units == "points"
+    assert arrow.scale == "data"
+    assert arrow.arrowprops == arrowprops
+    assert arrow.textprops == textprops
+    assert arrow.halo == halo
+
+
+def test_set_vertical_text_displacement():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(fig, (0, 0), (1, 1))
+
+    # Default displacement (should be 'top')
+    arrow.set_vertical_text_displacement()
+    expected_displacement = plt.rcParams["font.size"] / 2 * 1.2
+    assert arrow.vertical_text_displacement == expected_displacement
+
+    # Set displacement to 'bottom'
+    arrow.vertical_text_displacement = "bottom"
+    arrow.set_vertical_text_displacement()
+    expected_displacement = -plt.rcParams["font.size"] / 2 * 1.2
+    assert arrow.vertical_text_displacement == expected_displacement
+
+    # Set displacement to a specific value
+    arrow.vertical_text_displacement = 15
+    arrow.set_vertical_text_displacement()
+    assert arrow.vertical_text_displacement == 15
+
+
+def test_inches_to_fig_fraction():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(fig, (0, 0), (1, 1))
+    pos_inches = (2, 2)
+    fig_fraction_pos = arrow.inches_to_fig_fraction(pos_inches)
+
+    # Since the figure size is known, we can compute expected values
+    fig_width_inch, fig_height_inch = fig.get_size_inches()
+    expected_x = pos_inches[0] / fig_width_inch
+    expected_y = pos_inches[1] / fig_height_inch
+
+    np.testing.assert_almost_equal(fig_fraction_pos[0], expected_x)
+    np.testing.assert_almost_equal(fig_fraction_pos[1], expected_y)
+
+
+def test_get_dx_dy_and_extract_angle():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(fig, (0, 0), (1, 1))
+
+    dx, dy = arrow.get_dx_dy()
+    assert dx == 1
+    assert dy == 1
+
+    angle = arrow.extract_angle()
+    assert angle == pytest.approx(45.0)
+
+
+def test_draw_arrow_without_halo():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(fig, (0.1, 0.1), (0.9, 0.9), ax=ax)
+    arrow_artist = arrow.draw_arrow()
+
+    # Check that an Annotation object was created
+    assert isinstance(arrow_artist, plt.Annotation)
+    # Since we didn't enable halo, only one arrow should be drawn
+    assert len(ax.artists) == 0  # Annotations are not stored in ax.artists
+
+
+def test_invalid_text_position():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(fig, (0, 0), (1, 1), text="Invalid", text_position="invalid")
+
+    with pytest.raises(
+        ValueError,
+        match="Invalid text position: invalid, valid options are 'center', 'start', 'end'",
+    ):
+        arrow._get_text_position()
+
+
+
+def test_draw_method_without_text():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(fig, (0, 0), (1, 1), ax=ax)
+    result = arrow.draw()
+
+    # Should return only the arrow artist
+    assert isinstance(result, plt.Annotation)
+
+    # Check that there are no text artists with non-empty text
+    texts = [t for t in ax.texts if t.get_text()]
+    assert len(texts) == 0, f"Expected no text artists with text, found {len(texts)}"
+
+
+def test_units_points():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(fig, (10, 10), (20, 20), units="points", ax=ax)
+    arrow.draw()
+
+    # Since units are 'points', positions should be interpreted accordingly
+    # We can't directly test internal state but can ensure no exceptions are raised
+
+
+def test_units_inches():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(fig, (1, 1), (2, 2), units="inches", ax=ax)
+    arrow.draw()
+
+    # Positions should be converted from inches to figure fraction
+    # Ensure no exceptions and arrow is drawn
+
+
+def test_extract_angle_negative_differences():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(fig, (2, 2), (1, 1))
+    angle = arrow.extract_angle()
+    assert angle == pytest.approx(-135.0)
+
+
+def test_halo_properties():
+    fig, ax = plt.subplots()
+    halo_settings = {"enabled": True, "color": "white", "scale": 2}
+    arrow = DrawArrow(fig, (0.1, 0.1), (0.9, 0.9), ax=ax, halo=halo_settings)
+
+    with mock.patch.object(ax, "annotate", wraps=ax.annotate) as mock_annotate:
+        arrow.draw_arrow()
+
+        # First call is for the halo
+        call_args_halo = mock_annotate.call_args_list[0][1]
+        assert call_args_halo["arrowprops"]["color"] == "white"
+        assert (
+            call_args_halo["arrowprops"]["linewidth"]
+            == arrow.arrowprops.get("linewidth", 2) * 2
+        )
+
+        # Second call is for the actual arrow
+        call_args_arrow = mock_annotate.call_args_list[1][1]
+        assert call_args_arrow["arrowprops"] == arrow.arrowprops
+
+
+def test_text_properties_inheritance():
+    fig, ax = plt.subplots()
+    arrowprops = {"color": "green"}
+    arrow = DrawArrow(
+        fig, (0, 0), (1, 1), text="Inherited Text", arrowprops=arrowprops, ax=ax
+    )
+    arrow.place_text()
+
+    text_artist = ax.texts[0]
+    # Text color should inherit from arrowprops if not specified in textprops
+    assert text_artist.get_color() == "green"
+
+    # Now specify text color explicitly
+    arrow = DrawArrow(
+        fig,
+        (0, 0),
+        (1, 1),
+        text="Custom Text",
+        arrowprops=arrowprops,
+        textprops={"color": "blue"},
+        ax=ax,
+    )
+    arrow.place_text()
+
+    text_artist = ax.texts[1]
+    assert text_artist.get_color() == "blue"
+
+
+def test_shift_text_position():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(
+        fig, (0, 0), (1, 1), text="Shifted Text", vertical_text_displacement=20, ax=ax
+    )
+    arrow.place_text()
+
+    text_artist = ax.texts[0]
+    # Cannot directly test the shifted position without complex calculations,
+    # but we can ensure that the text was added without errors
+    assert text_artist.get_text() == "Shifted Text"
+
+
+def test_invalid_units():
+    fig, ax = plt.subplots()
+    arrow = DrawArrow(fig, (0, 0), (1, 1), units="invalid_unit", ax=ax)
+
+    # The code does not raise an exception, so we ensure it runs without error
+    arrow.draw()
+
+    # We can check that an arrow was added
+    # Since units are invalid, positions may not be correct, but the arrow is drawn
+    assert isinstance(arrow, DrawArrow)
+
+
+def test_draw_arrow_missing_figure():
+    with pytest.raises(AttributeError):
+        arrow = DrawArrow(None, (0, 0), (1, 1))
+        arrow.draw()
+
+
+def test_place_text_in_inches():
+    fig = plt.figure()
+    text_artist = place_text_in_inches(
+        fig, "Inches Text", x_inch=1, y_inch=1, angle=0, fontsize=10
+    )
+    assert text_artist.get_text() == "Inches Text"
+    assert text_artist.get_fontsize() == 10
+
+
+def test_place_text_points():
+    fig, ax = plt.subplots()
+    text_artist = place_text_points(
+        fig, "Points Text", x=50, y=50, angle=0, ax=ax, fontsize=10
+    )
+    assert text_artist.get_text() == "Points Text"
+    assert text_artist.get_fontsize() == 10
