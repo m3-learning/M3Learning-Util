@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from m3util.ml.optimizers.AdaHessian import AdaHessian
 import numpy as np
 
+
 def simple_model():
     """Creates a simple neural network model for testing."""
     model = nn.Sequential(nn.Linear(10, 5), nn.ReLU(), nn.Linear(5, 2))
@@ -145,6 +146,7 @@ def test_adahessian_weight_decay():
 
 
 def test_adahessian_learning():
+    torch.manual_seed(0)
     model = simple_model()
     optimizer = AdaHessian(model.parameters(), lr=0.1)
     criterion = nn.CrossEntropyLoss()
@@ -281,10 +283,9 @@ def test_adahessian_weight_decay_zero():
 
 
 def test_adahessian_closure():
-    
     np.random.seed(0)
     torch.random.manual_seed(0)
-    
+
     model = simple_model()
     optimizer = AdaHessian(model.parameters())
     criterion = nn.CrossEntropyLoss()
@@ -353,9 +354,8 @@ def test_adahessian_state_initialization():
 
 
 def test_adahessian_multiple_steps():
-    
     np.random.seed(0)
-    
+
     model = simple_model()
     optimizer = AdaHessian(model.parameters())
     criterion = nn.CrossEntropyLoss()

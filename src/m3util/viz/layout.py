@@ -62,7 +62,7 @@ def plot_into_graph(axg, fig, colorbar_=True, clim=None, **kwargs):
     fig.savefig(img_buf, bbox_inches="tight", format="png")
     im = PIL.Image.open(img_buf)
 
-    if clim != None:
+    if clim is not None:
         ax_im = axg.imshow(im, clim=clim)
     else:
         ax_im = axg.imshow(im)
@@ -70,7 +70,7 @@ def plot_into_graph(axg, fig, colorbar_=True, clim=None, **kwargs):
     if colorbar_:
         divider = make_axes_locatable(axg)
         cax = divider.append_axes("right", size="5%", pad=0.05)
-        cbar = plt.colorbar(ax_im, cax=cax, **kwargs)
+        plt.colorbar(ax_im, cax=cax, **kwargs)
 
     img_buf.close()
 
@@ -286,7 +286,7 @@ def embedding_maps(data, image, colorbar_shown=True, c_lim=None, mod=None, title
             if colorbar_shown is True:
                 divider = make_axes_locatable(ax)
                 cax = divider.append_axes("right", size="10%", pad=0.05)
-                cbar = plt.colorbar(im, cax=cax, format="%.1e")
+                plt.colorbar(im, cax=cax, format="%.1e")
 
                 # Sets the scales
                 if c_lim is not None:
@@ -344,7 +344,7 @@ def imagemap(
             # adds the colorbar
             divider = make_axes_locatable(ax)
             cax = divider.append_axes("right", size="10%", pad=0.05)
-            cbar = plt.colorbar(im, cax=cax, format=cbar_number_format)
+            plt.colorbar(im, cax=cax, format=cbar_number_format)
         else:
             cb = plt.colorbar(im, fraction=0.046, pad=0.04, format=cbar_number_format)
             cb.ax.tick_params(labelsize=6, width=0.05)
@@ -405,7 +405,7 @@ def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
 
     # Get the size of the image
     x_lim, y_lim = axes.get_xlim(), axes.get_ylim()
-    x_size, y_size = (
+    x_size, y_size = (  # noqa: F841
         np.abs(np.int64(np.floor(x_lim[1] - x_lim[0]))),
         np.abs(np.int64(np.floor(y_lim[1] - y_lim[0]))),
     )
@@ -504,7 +504,7 @@ def get_axis_range(axs):
             xmax = np.max(xmax, ax_xmax)
             ymin = np.min(ymin, ax_ymin)
             ymax = np.max(ymax, ax_ymax)
-        except:
+        except:  # noqa: E722
             xmin = ax_xmin
             xmax = ax_xmax
             ymin = ax_ymin
@@ -855,97 +855,3 @@ def span_to_axis(ax, value, x_data, y_data, connect_to="left"):
 def mock_line_annotation(ax, text, line_x, line_y, annotation_kwargs, zorder=2):
     # A simple mock to bypass actual text annotation
     pass
-
-
-@pytest.fixture
-def mock_axis():
-    # Create a mock axis object with predefined x and y limits
-    ax = MagicMock()
-    ax.get_xlim.return_value = (0, 100)  # x-axis limits
-    ax.get_ylim.return_value = (0, 50)  # y-axis limits
-    return ax
-
-
-@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
-def test_draw_line_with_text_vertical_full(mock_line_annotation, mock_axis):
-    x_data = np.array([10, 50, 90])
-    y_data = np.array([5, 10, 15])
-    value = 50
-
-    # Call the function for a vertical line spanning the full y-axis
-    draw_line_with_text(mock_axis, x_data, y_data, value, axis="x", span="full")
-
-    # Assert that ax.plot is called with the correct line coordinates
-    mock_axis.plot.assert_called_once_with([value, value], [0, 50], zorder=2)
-
-
-@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
-def test_draw_line_with_text_horizontal_full(mock_line_annotation, mock_axis):
-    x_data = np.array([10, 50, 90])
-    y_data = np.array([5, 10, 15])
-    value = 10
-
-    # Call the function for a horizontal line spanning the full x-axis
-    draw_line_with_text(mock_axis, x_data, y_data, value, axis="y", span="full")
-
-    # Assert that ax.plot is called with the correct line coordinates
-    mock_axis.plot.assert_called_once_with([0, 100], [value, value], zorder=2)
-
-
-@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
-def test_draw_line_with_text_span_data_vertical(mock_line_annotation, mock_axis):
-    x_data = np.array([10, 50, 90])
-    y_data = np.array([5, 10, 15])
-    value = 50
-
-    # Call the function for a vertical line between closest y-values
-    draw_line_with_text(mock_axis, x_data, y_data, value, axis="x", span="data")
-
-    # Assert that ax.plot is called with the correct line coordinates between y1 and y2
-    mock_axis.plot.assert_called_once_with([value, value], [10, 10], zorder=2)
-
-
-@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
-def test_draw_line_with_text_span_data_horizontal(mock_line_annotation, mock_axis):
-    x_data = np.array([10, 50, 90])
-    y_data = np.array([5, 10, 15])
-    value = 10
-
-    # Call the function for a horizontal line between closest x-values
-    draw_line_with_text(mock_axis, x_data, y_data, value, axis="y", span="data")
-
-    # Assert that ax.plot is called with the correct line coordinates between x1 and x2
-    mock_axis.plot.assert_called_once_with([10, 50], [value, value], zorder=2)
-
-
-@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
-def test_draw_line_with_text_invalid_axis(mock_line_annotation, mock_axis):
-    x_data = np.array([10, 50, 90])
-    y_data = np.array([5, 10, 15])
-    value = 10
-
-    # Test invalid axis value
-    with pytest.raises(ValueError, match="axis must be 'x' or 'y'"):
-        draw_line_with_text(mock_axis, x_data, y_data, value, axis="z", span="full")
-
-
-@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
-def test_draw_line_with_text_invalid_span(mock_line_annotation, mock_axis):
-    x_data = np.array([10, 50, 90])
-    y_data = np.array([5, 10, 15])
-    value = 10
-
-    # Test invalid span value
-    with pytest.raises(ValueError, match="span must be 'full' or 'data'"):
-        draw_line_with_text(mock_axis, x_data, y_data, value, axis="x", span="invalid")
-
-
-@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
-def test_draw_line_with_text_data_outside_range(mock_line_annotation, mock_axis):
-    x_data = np.array([10, 50, 90])
-    y_data = np.array([5, 10, 15])
-    value = 100  # Value outside the range of x_data
-
-    # Test value outside the range of data points
-    with pytest.raises(ValueError, match="Value is outside the range of x_data."):
-        draw_line_with_text(mock_axis, x_data, y_data, value, axis="x", span="data")

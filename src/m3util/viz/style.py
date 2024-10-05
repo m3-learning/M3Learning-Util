@@ -1,7 +1,6 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-import matplotlib.pyplot as plt
 
 
 def set_style(name="default"):
@@ -17,7 +16,7 @@ def set_style(name="default"):
 
             print(f"{name} set for seaborn")
 
-        except:
+        except Exception:
             pass
 
         try:
@@ -32,7 +31,7 @@ def set_style(name="default"):
             plt.rcParams["xtick.top"] = True
             plt.rcParams["ytick.right"] = True
             print(f"{name} set for matplotlib")
-        except:
+        except Exception:
             pass
 
     if name == "printing":
@@ -42,7 +41,7 @@ def set_style(name="default"):
 
             print(f"{name} set for seaborn")
 
-        except:
+        except Exception:
             pass
 
         # setting default plotting params

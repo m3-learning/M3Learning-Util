@@ -365,7 +365,6 @@ def shift_object_in_inches(fig, position_inch, direction_vector, n_points):
     direction_vector = direction_vector / np.linalg.norm(direction_vector)
 
     # Get the DPI (dots per inch) of the figure to convert between points and inches.
-    dpi = fig.dpi
     points_per_inch = 72  # Standard conversion: 1 inch = 72 points
 
     # Convert the desired shift from points to inches using the figure's DPI.

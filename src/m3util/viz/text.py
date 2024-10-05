@@ -230,6 +230,8 @@ def labelfigs(
     )
 
     text_.set_zorder(np.inf)
+    
+    return text_
 
 
 def number_to_letters(num):

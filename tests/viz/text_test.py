@@ -1,8 +1,9 @@
-from m3util.viz.text import add_text_to_figure, set_sci_notation_label
+from m3util.viz.text import add_text_to_figure, set_sci_notation_label, labelfigs, line_annotation
 import matplotlib.pyplot as plt
 import pytest
 import numpy as np
 from matplotlib import patheffects
+from unittest.mock import patch
 
 
 def test_add_text_to_figure():
@@ -176,8 +177,8 @@ def test_set_sci_notation_label_offset_points():
     exponent_text = ax.texts[-1]
     fig_width, fig_height = fig.get_size_inches()
     dpi = fig.dpi
-    expected_offset_x = offset_points[0] / dpi / fig_width
-    expected_offset_y = offset_points[1] / dpi / fig_height
+    offset_points[0] / dpi / fig_width
+    offset_points[1] / dpi / fig_height
     transform = exponent_text.get_transform()
     x, y = transform.transform((exponent_text.get_position()))
     assert (
@@ -415,3 +416,302 @@ def test_set_sci_notation_label_handles_subplots():
         exponent_texts = [text.get_text() for text in ax.texts]
         assert len(exponent_texts) == 1, "Exponent text should be added to each subplot"
     plt.close(fig)
+
+
+@patch("m3util.viz.text.number_to_letters")
+def test_labelfigs_valid_position(mock_number_to_letters):
+    """Test labelfigs with valid position values (tl, tr, bl, br, ct, cb)."""
+    # Create a figure and axes
+    fig, ax = plt.subplots()
+
+    # Mock number_to_letters for consistent output
+    mock_number_to_letters.return_value = "A"
+
+    # Test all valid positions
+    positions = ["tl", "tr", "bl", "br", "ct", "cb"]
+
+    for loc in positions:
+        text_obj = labelfigs(ax, number=1, loc=loc, string_add="Fig", style="wb")
+
+        # Assert the text object is added
+        assert isinstance(text_obj, plt.Text)
+
+        # Check that the text includes the number (from mock) and the string_add
+        assert text_obj.get_text() == "FigA"
+
+        # Ensure the z-order is set to infinity
+        assert text_obj.get_zorder() == np.inf
+
+
+@patch("m3util.viz.text.number_to_letters")
+def test_labelfigs_invalid_position(mock_number_to_letters):
+    """Test labelfigs raises ValueError for invalid loc parameter."""
+    fig, ax = plt.subplots()
+
+    # Check that ValueError is raised for invalid location
+    with pytest.raises(ValueError, match="Invalid position"):
+        labelfigs(ax, number=1, loc="invalid_loc")
+
+
+@patch("m3util.viz.text.number_to_letters")
+def test_labelfigs_style_wb(mock_number_to_letters):
+    """Test labelfigs with 'wb' style (white text with black border)."""
+    fig, ax = plt.subplots()
+
+    # Call the function with 'wb' style
+    text_obj = labelfigs(ax, number=1, style="wb")
+
+    # Check the path effects for the stroke
+    path_effects_ = text_obj.get_path_effects()
+    assert isinstance(path_effects_[0], patheffects.withStroke)
+
+    # Verify the color and formatting
+    assert text_obj.get_color() == "w"
+
+
+@patch("m3util.viz.text.number_to_letters")
+def test_labelfigs_style_b(mock_number_to_letters):
+    """Test labelfigs with 'b' style (black text)."""
+    fig, ax = plt.subplots()
+
+    # Call the function with 'b' style
+    text_obj = labelfigs(ax, number=1, style="b")
+
+    # Check the path effects for the stroke
+    path_effects_ = text_obj.get_path_effects()
+    assert isinstance(path_effects_[0], patheffects.withStroke)
+
+    # Verify the color and formatting
+    assert text_obj.get_color() == "k"
+
+
+@patch("m3util.viz.text.number_to_letters")
+def test_labelfigs_number(mock_number_to_letters):
+    """Test that number is correctly converted to letter using number_to_letters."""
+    fig, ax = plt.subplots()
+
+    # Mock number_to_letters to return "B" for number 2
+    mock_number_to_letters.return_value = "B"
+
+    # Call the function with a number
+    text_obj = labelfigs(ax, number=2, string_add="Fig")
+
+    # Check that the correct text is set, including the converted number
+    assert text_obj.get_text() == "FigB"
+
+
+@patch("m3util.viz.text.number_to_letters")
+def test_labelfigs_no_number(mock_number_to_letters):
+    """Test labelfigs without a number."""
+    fig, ax = plt.subplots()
+
+    # Call the function without a number
+    text_obj = labelfigs(ax, string_add="Fig")
+
+    # Ensure the text only includes the string_add
+    assert text_obj.get_text() == "Fig"
+
+    # Ensure that number_to_letters was not called
+    mock_number_to_letters.assert_not_called()
+
+
+@patch("m3util.viz.text.number_to_letters")
+def test_labelfigs_inset_fraction(mock_number_to_letters):
+    """Test that the label is correctly positioned based on inset_fraction."""
+    fig, ax = plt.subplots()
+
+    # Set x and y limits of the axes
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 5)
+
+    # Call labelfigs with a specific inset_fraction
+    inset_fraction = (0.2, 0.1)
+    text_obj = labelfigs(ax, loc="br", inset_fraction=inset_fraction, string_add="Test")
+
+    # Verify the position of the label
+    pos = text_obj.get_position()
+
+    # Expected position for "br" (bottom-right) location
+    expected_x = 10 - (10 * 0.1)  # Right inset
+    expected_y = 0 + (5 * 0.2)  # Bottom inset
+
+    assert np.allclose(pos[0], expected_x)
+    assert np.allclose(pos[1], expected_y)
+
+
+@patch("m3util.viz.positioning.obj_offset")
+@patch("m3util.util.kwargs._filter_kwargs")
+def test_line_annotation_default_values(mock_filter_kwargs, mock_obj_offset):
+    """Test that line_annotation correctly annotates the midpoint with default values."""
+    fig, ax = plt.subplots()
+
+    # Define line coordinates
+    line_x = np.array([0, 10])
+    line_y = np.array([0, 20])
+
+    # Mock _filter_kwargs to pass all keyword arguments as is
+    mock_filter_kwargs.side_effect = lambda func, kwargs: kwargs
+
+    # Mock obj_offset to return the default offset
+    mock_obj_offset.return_value = (0, 0)
+
+    # Call the line_annotation function
+    annotation_kwargs = {}
+    line_annotation(ax, "Midpoint Text", line_x, line_y, annotation_kwargs)
+
+    # Check if annotate was called
+    annotations = ax.texts
+    assert len(annotations) == 1  # Only one annotation should be added
+
+    # Check the annotation properties
+    annotation = annotations[0]
+    mid_x = np.mean(line_x)
+    mid_y = np.mean(line_y)
+
+    # Ensure the annotation is placed at the midpoint
+    assert annotation.get_text() == "Midpoint Text"
+    assert annotation.get_ha() == "center"  # Default horizontal alignment
+    assert annotation.get_va() == "center"  # Default vertical alignment
+    assert annotation.get_zorder() == 100  # Default zorder
+
+
+
+@patch("m3util.viz.positioning.obj_offset")
+@patch("m3util.util.kwargs._filter_kwargs")
+def test_line_annotation_custom_values(mock_filter_kwargs, mock_obj_offset):
+    """Test line_annotation with custom annotation kwargs and zorder."""
+    fig, ax = plt.subplots()
+
+    # Define line coordinates
+    line_x = np.array([0, 10])
+    line_y = np.array([0, 20])
+
+    # Mock _filter_kwargs to pass all keyword arguments as is
+    mock_filter_kwargs.side_effect = lambda func, kwargs: kwargs
+
+    # Mock obj_offset to return a custom offset
+    mock_obj_offset.return_value = (10, 10)
+
+    # Call the line_annotation function with custom arguments
+    annotation_kwargs = {"ha": "right", "va": "bottom", "fontsize": 12}
+    line_annotation(ax, "Custom Text", line_x, line_y, annotation_kwargs, zorder=200)
+
+    # Check if annotate was called
+    annotations = ax.texts
+    assert len(annotations) == 1  # Only one annotation should be added
+
+    # Check the annotation properties
+    annotation = annotations[0]
+    mid_x = np.mean(line_x)
+    mid_y = np.mean(line_y)
+
+    # Ensure the annotation is placed at the midpoint
+    assert annotation.get_text() == "Custom Text"
+    assert annotation.get_ha() == "right"  # Custom horizontal alignment
+    assert annotation.get_va() == "bottom"  # Custom vertical alignment
+    assert annotation.get_zorder() == 200  # Custom zorder
+
+
+
+@patch("m3util.viz.positioning.obj_offset")
+@patch("m3util.util.kwargs._filter_kwargs")
+def test_line_annotation_with_offset(mock_filter_kwargs, mock_obj_offset):
+    """Test line_annotation with a custom text offset."""
+    fig, ax = plt.subplots()
+
+    # Define line coordinates
+    line_x = np.array([1, 3, 5, 7])
+    line_y = np.array([2, 4, 6, 8])
+
+    # Mock _filter_kwargs to pass all keyword arguments as is
+    mock_filter_kwargs.side_effect = lambda func, kwargs: kwargs
+
+    # Mock obj_offset to return a specific offset
+    mock_obj_offset.return_value = (15, 5)
+
+    # Call the line_annotation function with a custom text offset
+    annotation_kwargs = {"ha": "left", "va": "top", "fontsize": 10}
+    line_annotation(ax, "Offset Text", line_x, line_y, annotation_kwargs)
+
+    # Check if annotate was called
+    annotations = ax.texts
+    assert len(annotations) == 1  # Only one annotation should be added
+
+    # Check the annotation properties
+    annotation = annotations[0]
+    mid_x = np.mean(line_x)
+    mid_y = np.mean(line_y)
+
+    # Ensure the annotation is placed at the midpoint
+    assert annotation.get_text() == "Offset Text"
+    assert annotation.get_ha() == "left"  # Custom horizontal alignment
+    assert annotation.get_va() == "top"  # Custom vertical alignment
+
+
+
+@patch("m3util.viz.positioning.obj_offset")
+@patch("m3util.util.kwargs._filter_kwargs")
+def test_line_annotation_with_empty_annotation_kwargs(
+    mock_filter_kwargs, mock_obj_offset
+):
+    """Test line_annotation with empty annotation kwargs."""
+    fig, ax = plt.subplots()
+
+    # Define line coordinates
+    line_x = np.array([2, 4, 6, 8])
+    line_y = np.array([1, 3, 5, 7])
+
+    # Mock _filter_kwargs to pass all keyword arguments as is
+    mock_filter_kwargs.side_effect = lambda func, kwargs: kwargs
+
+    # Mock obj_offset to return the default offset
+    mock_obj_offset.return_value = (0, 0)
+
+    # Call the line_annotation function with empty annotation kwargs
+    annotation_kwargs = {}
+    line_annotation(ax, "Test Label", line_x, line_y, annotation_kwargs)
+
+    # Check if annotate was called
+    annotations = ax.texts
+    assert len(annotations) == 1  # Only one annotation should be added
+
+    # Check the annotation properties
+    annotation = annotations[0]
+    mid_x = np.mean(line_x)
+    mid_y = np.mean(line_y)
+
+
+
+
+@patch("m3util.viz.positioning.obj_offset")
+@patch("m3util.util.kwargs._filter_kwargs")
+def test_line_annotation_with_no_text(mock_filter_kwargs, mock_obj_offset):
+    """Test line_annotation with empty text input."""
+    fig, ax = plt.subplots()
+
+    # Define line coordinates
+    line_x = np.array([2, 4])
+    line_y = np.array([1, 3])
+
+    # Mock _filter_kwargs to pass all keyword arguments as is
+    mock_filter_kwargs.side_effect = lambda func, kwargs: kwargs
+
+    # Mock obj_offset to return the default offset
+    mock_obj_offset.return_value = (0, 0)
+
+    # Call the line_annotation function with no text
+    annotation_kwargs = {}
+    line_annotation(ax, "", line_x, line_y, annotation_kwargs)
+
+    # Check if annotate was called
+    annotations = ax.texts
+    assert len(annotations) == 1  # One annotation should still be added
+
+    # Check the annotation properties
+    annotation = annotations[0]
+    mid_x = np.mean(line_x)
+    mid_y = np.mean(line_y)
+
+    # Ensure the annotation is placed at the midpoint
+    assert annotation.get_text() == ""  # No text provided
+

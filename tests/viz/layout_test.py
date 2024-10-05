@@ -24,9 +24,13 @@ from m3util.viz.layout import (
     get_closest_point,
     span_to_axis,
     draw_line_with_text,
+    layout_subfigures_inches,
+    get_zorders,
     FigDimConverter,
 )
 from m3util.viz.text import add_text_to_figure, labelfigs, number_to_letters
+from matplotlib import patheffects
+
 
 @pytest.fixture
 def sample_figure():
@@ -189,7 +193,7 @@ def test_FigDimConverter():
     ), "Should convert inches to relative dimensions correctly."
 
 
-def test_add_box():
+def test_add_box_():
     fig, ax = plt.subplots()
 
     # Define the position of the box
@@ -704,9 +708,6 @@ def test_scalebar_different_image_size():
 
 ###### Span to axis #####
 
-import pytest
-from unittest.mock import MagicMock
-
 
 # Mock the get_closest_point function for testing purposes
 def mock_get_closest_point(x_data, y_data, value, axis="x"):
@@ -784,7 +785,7 @@ def mock_line_annotation(ax, text, line_x, line_y, annotation_kwargs, zorder=2):
 
 
 @pytest.fixture
-def mock_axis():
+def mock_axis_v2():
     # Create a mock axis object with predefined x and y limits
     ax = MagicMock()
     ax.get_xlim.return_value = (0, 100)  # x-axis limits
@@ -832,19 +833,6 @@ def test_draw_line_with_text_span_data_vertical(mock_line_annotation, mock_axis)
 
 
 @patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
-def test_draw_line_with_text_span_data_horizontal(mock_line_annotation, mock_axis):
-    x_data = np.array([10, 50, 90])
-    y_data = np.array([5, 10, 15])
-    value = 10
-
-    # Call the function for a horizontal line between closest x-values
-    draw_line_with_text(mock_axis, x_data, y_data, value, axis="y", span="data")
-
-    # Assert that ax.plot is called with the correct line coordinates between x1 and x2
-    mock_axis.plot.assert_called_once_with([10, 50], [value, value], zorder=2)
-
-
-@patch("m3util.viz.layout.line_annotation", side_effect=mock_line_annotation)
 def test_draw_line_with_text_invalid_axis(mock_line_annotation, mock_axis):
     x_data = np.array([10, 50, 90])
     y_data = np.array([5, 10, 15])
@@ -875,3 +863,524 @@ def test_draw_line_with_text_data_outside_range(mock_line_annotation, mock_axis)
     # Test value outside the range of data points
     with pytest.raises(ValueError, match="Value is outside the range of x_data."):
         draw_line_with_text(mock_axis, x_data, y_data, value, axis="x", span="data")
+
+
+@patch("m3util.viz.layout.ConnectionPatch", autospec=True)
+def test_inset_connector_default_coords_(mock_connection_patch):
+    """Test with default coordinates (coord1 and coord2 are None)."""
+    # Create a figure and two subplots (axes)
+    fig, (ax1, ax2) = plt.subplots(1, 2)
+
+    # Set limits for ax1 and ax2
+    ax1.set_xlim(0, 10)
+    ax1.set_ylim(0, 20)
+    ax2.set_xlim(5, 15)
+    ax2.set_ylim(10, 30)
+
+    # Call the function with default coord1 and coord2 (None)
+    inset_connector(fig, ax1, ax2)
+
+    # Check if ConnectionPatch is called twice for both points
+    assert mock_connection_patch.call_count == 2
+
+    # Verify the first call's arguments for p1 and p2
+    call_args = mock_connection_patch.call_args_list[0]
+    p1 = call_args[1]["xyA"]
+    p2 = call_args[1]["xyB"]
+
+    # p1 should be the bottom-left corner of ax1 and p2 the bottom-left of ax2
+    assert p1 == (0, 0)  # xlim[0], ylim[0] for ax1
+    assert p2 == (5, 10)  # xlim[0], ylim[0] for ax2
+
+    # Verify the second call's arguments for p1 and p2
+    call_args = mock_connection_patch.call_args_list[1]
+    p1 = call_args[1]["xyA"]
+    p2 = call_args[1]["xyB"]
+
+    # p1 should be the top-left corner of ax1 and p2 the top-left of ax2
+    assert p1 == (0, 20)  # xlim[0], ylim[1] for ax1
+    assert p2 == (5, 30)  # xlim[0], ylim[1] for ax2
+
+
+@patch("m3util.viz.layout.ConnectionPatch", autospec=True)
+def test_inset_connector_custom_coords(mock_connection_patch):
+    """Test with custom coord1 and coord2."""
+    # Create a figure and two subplots (axes)
+    fig, (ax1, ax2) = plt.subplots(1, 2)
+
+    # Custom coordinates for the connection points
+    coord1 = [(1, 2), (3, 4)]
+    coord2 = [(6, 7), (8, 9)]
+
+    # Call the function with custom coordinates
+    inset_connector(fig, ax1, ax2, coord1=coord1, coord2=coord2)
+
+    # Check if ConnectionPatch is called twice for both custom points
+    assert mock_connection_patch.call_count == 2
+
+    # Verify the first call's arguments for p1 and p2
+    call_args = mock_connection_patch.call_args_list[0]
+    p1 = call_args[1]["xyA"]
+    p2 = call_args[1]["xyB"]
+
+    assert p1 == (1, 2)  # Custom coord1[0]
+    assert p2 == (6, 7)  # Custom coord2[0]
+
+    # Verify the second call's arguments for p1 and p2
+    call_args = mock_connection_patch.call_args_list[1]
+    p1 = call_args[1]["xyA"]
+    p2 = call_args[1]["xyB"]
+
+    assert p1 == (3, 4)  # Custom coord1[1]
+    assert p2 == (8, 9)  # Custom coord2[1]
+
+
+@patch("m3util.viz.layout.ConnectionPatch", autospec=True)
+def test_inset_connector_with_kwargs_(mock_connection_patch):
+    """Test if additional keyword arguments are passed to ConnectionPatch."""
+    # Create a figure and two subplots (axes)
+    fig, (ax1, ax2) = plt.subplots(1, 2)
+
+    # Custom coordinates
+    coord1 = [(1, 2)]
+    coord2 = [(6, 7)]
+
+    # Additional keyword arguments for the ConnectionPatch
+    kwargs = {"color": "red", "linestyle": "--"}
+
+    # Call the function with custom coords and kwargs
+    inset_connector(fig, ax1, ax2, coord1=coord1, coord2=coord2, **kwargs)
+
+    # Check if ConnectionPatch is called once
+    assert mock_connection_patch.call_count == 1
+
+    # Verify that the keyword arguments were passed correctly
+    call_args = mock_connection_patch.call_args
+    assert call_args[1]["xyA"] == (1, 2)
+    assert call_args[1]["xyB"] == (6, 7)
+    assert call_args[1]["color"] == "red"
+    assert call_args[1]["linestyle"] == "--"
+
+
+@patch("m3util.viz.layout.ConnectionPatch", autospec=True)
+def test_inset_connector_with_partial_coords(mock_connection_patch):
+    """Test the function with coord1 provided and coord2 left as None."""
+    # Create a figure and two subplots (axes)
+    fig, (ax1, ax2) = plt.subplots(1, 2)
+
+    # Custom coordinates for coord1 and None for coord2
+    coord1 = [(1, 2)]
+
+    # Set limits for ax2
+    ax2.set_xlim(5, 15)
+    ax2.set_ylim(10, 30)
+
+    # Call the function with custom coord1 and default coord2
+    inset_connector(fig, ax1, ax2, coord1=coord1)
+
+    # Check if ConnectionPatch is called once
+    assert mock_connection_patch.call_count == 1
+
+    # Verify the arguments for the connection points
+    call_args = mock_connection_patch.call_args
+    p1 = call_args[1]["xyA"]
+    p2 = call_args[1]["xyB"]
+
+    # p1 should be the custom coord1[0] and p2 the bottom-left corner of ax2
+    assert p1 == (1, 2)
+    assert p2 == (5, 10)  # xlim[0], ylim[0] for ax2
+
+
+@patch("m3util.viz.layout.path_maker")
+@patch("matplotlib.axes.Axes.text")
+def test_scalebar_tr_location(mock_text, mock_path_maker):
+    """Test scalebar with 'tr' (top-right) location."""
+    fig, ax = plt.subplots()
+
+    # Set mock x and y limits for the axes
+    ax.set_xlim(0, 100)
+    ax.set_ylim(0, 100)
+
+    # Set the image size and scale size
+    image_size = 100
+    scale_size = 20  # nm
+
+    # Call the scalebar function with 'tr' location
+    scalebar(ax, image_size=image_size, scale_size=scale_size, loc="tr")
+
+    # Check if path_maker was called with the correct arguments
+    mock_path_maker.assert_called_once()
+    path_args = mock_path_maker.call_args[0][
+        1
+    ]  # Get the path arguments (x_start, x_end, y_start, y_end)
+
+    # Check that the scalebar coordinates are in the top-right
+    x_start, x_end, y_start, y_end = path_args
+    assert x_start > x_end  # In 'tr' x_start should be greater than x_end
+    assert y_start > y_end  # In 'tr' y_start should be greater than y_end
+
+    # Verify that the text label is placed correctly
+    mock_text.assert_called_once()
+    text_args = mock_text.call_args[0]
+    text_x = text_args[0]
+    label = text_args[2]
+
+    # The text should be placed between x_start and x_end, and near the top-right
+    assert x_start > x_end
+    assert text_x == pytest.approx((x_start + x_end) / 2)
+    assert label == "{0} {1}".format(scale_size, "nm")
+
+    # Check that the correct stroke effect is applied
+    path_effects = mock_text.call_args[1]["path_effects"]
+    assert isinstance(path_effects[0], patheffects.withStroke)
+
+
+
+@patch("m3util.viz.layout.scalebar")
+def test_add_scalebar_with_valid_input(mock_scalebar):
+    """Test that scalebar is called with correct arguments when scalebar_ is provided."""
+    # Create a figure and axes
+    fig, ax = plt.subplots()
+
+    # Example scalebar dictionary
+    scalebar_dict = {"width": 100, "scale length": 10, "units": "nm"}
+
+    # Call the add_scalebar function with the scalebar dictionary
+    add_scalebar(ax, scalebar_dict)
+
+    # Assert that the scalebar function was called once
+    mock_scalebar.assert_called_once()
+
+    # Check that the scalebar function was called with the correct arguments
+    mock_scalebar.assert_called_with(ax, 100, 10, units="nm")
+
+
+@patch("m3util.viz.layout.scalebar")
+def test_add_scalebar_with_none(mock_scalebar):
+    """Test that scalebar is not called when scalebar_ is None."""
+    # Create a figure and axes
+    fig, ax = plt.subplots()
+
+    # Call the add_scalebar function with None for scalebar_
+    add_scalebar(ax, None)
+
+    # Assert that the scalebar function was not called
+    mock_scalebar.assert_not_called()
+
+
+def test_layout_subfigures_with_margins():
+    """Test that subfigures are correctly positioned with margins applied."""
+    # Define the size of the overall figure (in inches)
+    figure_size = (10, 8)
+
+    # Define subfigure details with margins
+    subfigures_dict = {
+        "subfig1": {
+            "position": (1, 1, 4, 4),  # (x, y, width, height) in inches
+            "plot_func": MagicMock(),  # Mock the plot function
+        },
+        "subfig2": {
+            "position": (6, 1, 4, 4),  # (x, y, width, height) in inches
+            "plot_func": MagicMock(),  # Mock the plot function
+        },
+    }
+
+    # Call the layout function with margin_pts = 72 (1 inch)
+    fig, axes_dict = layout_subfigures_inches(
+        figure_size, subfigures_dict, margin_pts=72
+    )
+
+    # Assert that the figure is created
+    assert isinstance(fig, plt.Figure)
+
+    # Check if the axes are created
+    assert "subfig1" in axes_dict
+    assert "subfig2" in axes_dict
+
+    # Check that the axes positions respect the applied margins
+    ax1_position = axes_dict["subfig1"].get_position()
+    ax2_position = axes_dict["subfig2"].get_position()
+
+    # Calculate expected positions based on margins
+    # Margin is 1 inch (72 points)
+    expected_ax1_left = (1 + 1) / 10
+    expected_ax1_bottom = (1 + 1) / 8
+    expected_ax1_width = (4 - 1) / 10
+    expected_ax1_height = (4 - 1) / 8
+
+    expected_ax2_left = (6 + 1) / 10
+    expected_ax2_bottom = (1 + 1) / 8
+    expected_ax2_width = (4 - 1) / 10
+    expected_ax2_height = (4 - 1) / 8
+
+    # Check the positions of the axes
+    assert ax1_position.x0 == pytest.approx(expected_ax1_left)
+    assert ax1_position.y0 == pytest.approx(expected_ax1_bottom)
+    assert ax1_position.width == pytest.approx(expected_ax1_width)
+    assert ax1_position.height == pytest.approx(expected_ax1_height)
+
+    assert ax2_position.x0 == pytest.approx(expected_ax2_left)
+    assert ax2_position.y0 == pytest.approx(expected_ax2_bottom)
+    assert ax2_position.width == pytest.approx(expected_ax2_width)
+    assert ax2_position.height == pytest.approx(expected_ax2_height)
+
+
+def test_layout_subfigures_without_margins():
+    """Test that subfigures are correctly positioned when margins are skipped."""
+    # Define the size of the overall figure (in inches)
+    figure_size = (10, 8)
+
+    # Define subfigure details with no margins
+    subfigures_dict = {
+        "subfig1": {
+            "position": (1, 1, 4, 4),  # (x, y, width, height) in inches
+            "plot_func": MagicMock(),  # Mock the plot function
+            "skip_margin": True,  # Skip margins
+        },
+        "subfig2": {
+            "position": (6, 1, 4, 4),  # (x, y, width, height) in inches
+            "plot_func": MagicMock(),  # Mock the plot function
+            "skip_margin": True,  # Skip margins
+        },
+    }
+
+    # Call the layout function with no margins
+    fig, axes_dict = layout_subfigures_inches(
+        figure_size, subfigures_dict, margin_pts=72
+    )
+
+    # Assert that the figure is created
+    assert isinstance(fig, plt.Figure)
+
+    # Check if the axes are created
+    assert "subfig1" in axes_dict
+    assert "subfig2" in axes_dict
+
+    # Check that the axes positions respect skipping margins
+    ax1_position = axes_dict["subfig1"].get_position()
+    ax2_position = axes_dict["subfig2"].get_position()
+
+    # Calculate expected positions with no margins
+    expected_ax1_left = 1 / 10
+    expected_ax1_bottom = 1 / 8
+    expected_ax1_width = 4 / 10
+    expected_ax1_height = 4 / 8
+
+    expected_ax2_left = 6 / 10
+    expected_ax2_bottom = 1 / 8
+    expected_ax2_width = 4 / 10
+    expected_ax2_height = 4 / 8
+
+    # Check the positions of the axes
+    assert ax1_position.x0 == pytest.approx(expected_ax1_left)
+    assert ax1_position.y0 == pytest.approx(expected_ax1_bottom)
+    assert ax1_position.width == pytest.approx(expected_ax1_width)
+    assert ax1_position.height == pytest.approx(expected_ax1_height)
+
+    assert ax2_position.x0 == pytest.approx(expected_ax2_left)
+    assert ax2_position.y0 == pytest.approx(expected_ax2_bottom)
+    assert ax2_position.width == pytest.approx(expected_ax2_width)
+    assert ax2_position.height == pytest.approx(expected_ax2_height)
+
+
+def test_layout_subfigures_with_right_margin():
+    """Test that subfigures with 'right' key apply multiple margins."""
+    # Define the size of the overall figure (in inches)
+    figure_size = (10, 8)
+
+    # Define subfigure details with the 'right' key set to True
+    subfigures_dict = {
+        "subfig1": {
+            "position": (1, 1, 4, 4),  # (x, y, width, height) in inches
+            "plot_func": MagicMock(),  # Mock the plot function
+            "right": True,  # Apply double margin
+        }
+    }
+
+    # Call the layout function with margin_pts = 72 (1 inch)
+    fig, axes_dict = layout_subfigures_inches(
+        figure_size, subfigures_dict, margin_pts=72
+    )
+
+    # Assert that the figure is created
+    assert isinstance(fig, plt.Figure)
+
+    # Check if the axes are created
+    assert "subfig1" in axes_dict
+
+    # Check that the axes positions respect the double margins
+    ax1_position = axes_dict["subfig1"].get_position()
+
+    # Calculate expected positions based on margins (multiple = 2)
+    expected_ax1_left = (1 + 1) / 10
+    expected_ax1_bottom = (1 + 1) / 8
+    expected_ax1_width = (4 - 2 * 1) / 10  # Double margin applied to width
+    expected_ax1_height = (4 - 2 * 1) / 8  # Double margin applied to height
+
+    # Check the positions of the axes
+    assert ax1_position.x0 == pytest.approx(expected_ax1_left)
+    assert ax1_position.y0 == pytest.approx(expected_ax1_bottom)
+    assert ax1_position.width == pytest.approx(expected_ax1_width)
+    assert ax1_position.height == pytest.approx(expected_ax1_height)
+
+
+def test_get_zorders_with_lines():
+    """Test that the z-order of line objects in the figure is correctly retrieved."""
+    # Create a figure and axes
+    fig, ax = plt.subplots()
+
+    # Add a line to the axes with a specific z-order
+    (line,) = ax.plot([0, 1], [0, 1], zorder=3)
+
+    # Call the get_zorders function
+    zorders = get_zorders(fig)
+
+    # Assert that the line's z-order is in the zorders list
+    assert any("Line2D" in desc and z == 3 for desc, z in zorders)
+
+
+def test_get_zorders_with_text():
+    """Test that the z-order of text objects in the figure is correctly retrieved."""
+    # Create a figure and axes
+    fig, ax = plt.subplots()
+
+    # Add text to the axes with a specific z-order
+    ax.text(0.5, 0.5, "Test Text", zorder=4)
+
+    # Call the get_zorders function
+    zorders = get_zorders(fig)
+
+    # Assert that the text's z-order is in the zorders list
+    assert any("Text" in desc and z == 4 for desc, z in zorders)
+
+
+def test_get_zorders_with_ticks():
+    """Test that the z-order of tick labels is correctly retrieved."""
+    # Create a figure and axes
+    fig, ax = plt.subplots()
+
+    # Set some tick labels
+    ax.set_xticks([0.2, 0.5, 0.8])
+    ax.set_xticklabels(["A", "B", "C"])
+
+    # Call the get_zorders function
+    zorders = get_zorders(fig)
+
+    # Assert that tick labels' z-orders are in the zorders list
+    assert any("Tick Label (A)" in desc for desc, z in zorders)
+    assert any("Tick Label (B)" in desc for desc, z in zorders)
+    assert any("Tick Label (C)" in desc for desc, z in zorders)
+
+
+def test_get_zorders_with_multiple_axes():
+    """Test that z-orders are correctly retrieved for figures with multiple axes."""
+    # Create a figure with multiple axes
+    fig, (ax1, ax2) = plt.subplots(1, 2)
+
+    # Add elements to both axes
+    ax1.plot([0, 1], [0, 1], zorder=2)
+    ax2.text(0.5, 0.5, "Test on Ax2", zorder=5)
+
+    # Call the get_zorders function
+    zorders = get_zorders(fig)
+
+    # Assert that z-orders from both axes are in the zorders list
+    assert any("Line2D" in desc and z == 2 for desc, z in zorders)
+    assert any("Text" in desc and z == 5 for desc, z in zorders)
+
+
+def test_get_zorders_with_no_zorder_items():
+    """Test that the function handles cases where some items don't have z-order."""
+    # Create a figure and axes
+    fig, ax = plt.subplots()
+
+    # Add a patch that doesn't have a z-order attribute
+    ax.add_patch(plt.Circle((0.5, 0.5), radius=0.1))  # Default zorder
+
+    # Call the get_zorders function
+    zorders = get_zorders(fig)
+
+    # Assert that no errors occurred and the result is still valid
+    assert isinstance(zorders, list)
+
+
+def test_get_zorders_with_no_axes():
+    """Test that the function handles figures with no axes."""
+    # Create a figure with no axes
+    fig = plt.figure()
+
+    # Call the get_zorders function
+    zorders = get_zorders(fig)
+
+    # Assert that the zorders list is empty
+    assert len(zorders) == 0
+
+
+@patch(
+    "m3util.viz.layout.line_annotation"
+)  # Mock line_annotation since it's used in the function
+def test_draw_line_with_text_span_data_vertical_(mock_line_annotation):
+    """Test for drawing a vertical line between closest y-values for span='data'."""
+    # Create a figure and axes
+    fig, ax = plt.subplots()
+
+    # Define x_data and y_data
+    x_data = np.array([1, 2, 3, 4, 5])
+    y_data = np.array([10, 15, 20, 25, 30])
+
+    # Define the value for the line
+    value = 3.5  # Falls between x_data values
+
+    # Call the function with span="data" and axis="x"
+    draw_line_with_text(
+        ax, x_data, y_data, value, axis="x", span="data", text="Test Line"
+    )
+
+    # Check that the line was drawn between the closest y-values (20 and 25)
+    lines = ax.get_lines()
+    assert len(lines) == 1  # One line should be drawn
+
+    line_x = lines[0].get_xdata()
+    line_y = lines[0].get_ydata()
+
+    # Verify that the vertical line is at x=3.5 and spans the correct y-values
+    assert np.allclose(line_x, [3.5, 3.5])
+    assert np.allclose(line_y, [20, 25])
+
+    # Verify that the line_annotation function was called for the text
+    mock_line_annotation.assert_called_once()
+
+
+@patch(
+    "m3util.viz.layout.line_annotation"
+)  # Mock line_annotation since it's used in the function
+def test_draw_line_with_text_span_data_horizontal(mock_line_annotation):
+    """Test for drawing a horizontal line between closest x-values for span='data'."""
+    # Create a figure and axes
+    fig, ax = plt.subplots()
+
+    # Define x_data and y_data
+    x_data = np.array([1, 2, 3, 4, 5])
+    y_data = np.array([10, 15, 20, 25, 30])
+
+    # Define the value for the line
+    value = 22.5  # Falls between y_data values
+
+    # Call the function with span="data" and axis="y"
+    draw_line_with_text(
+        ax, x_data, y_data, value, axis="y", span="data", text="Test Line"
+    )
+
+    # Check that the line was drawn between the closest x-values (3 and 4)
+    lines = ax.get_lines()
+    assert len(lines) == 1  # One line should be drawn
+
+    line_x = lines[0].get_xdata()
+    line_y = lines[0].get_ydata()
+
+    # Verify that the horizontal line is at y=22.5 and spans the correct x-values
+    assert np.allclose(line_y, [22.5, 22.5])
+    assert np.allclose(line_x, [3, 4])
+
+    # Verify that the line_annotation function was called for the text
+    mock_line_annotation.assert_called_once()
