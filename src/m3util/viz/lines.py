@@ -44,9 +44,24 @@ def draw_lines(ax, x_values, y_values, style=None, halo=None):
     Returns:
         matplotlib.lines.Line2D: The line artist object.
     """
+    try:
+        line = ax.plot(x_values, y_values, **style)
+    except TypeError as e:
+        raise TypeError(f"Invalid style parameter: {e}")
+
+
+    if ax is None:
+        raise TypeError("The axis object cannot be None")
+    
+    if not x_values or not y_values:
+        raise ValueError("x_values and y_values cannot be empty")
+
     # Default style if none is provided
     if style is None:
         style = {}
+
+    # Handle linewidth conflicts in the main line style
+    style = handle_linewidth_conflicts(style)
 
     # Default halo settings if not provided
     halo_defaults = {
