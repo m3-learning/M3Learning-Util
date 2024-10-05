@@ -66,6 +66,7 @@ class TRCG(Optimizer):
             radius_initial (float, optional): Initial radius value. Defaults to 0.1.
             differentiable (bool, optional): Whether the optimization is differentiable. Defaults to False.
         """
+        self.gradient_cache = None
         self.model = model
         self.device = device
         self.cgopttol = cgopttol
