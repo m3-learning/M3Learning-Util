@@ -18,34 +18,57 @@ def set_sci_notation_label(
     stroke_color=None,
     write_to_axis=None,
 ):
-    # allows for manually setting the axis to write to
+    """
+    Set scientific notation label on the specified axis of a plot.
+
+    Parameters:
+    ax (matplotlib.axes.Axes): The axes to add the label to.
+    axis (str, optional): The axis to apply the label to ('x' or 'y'). Defaults to 'y'.
+    corner (str, optional): The corner of the plot to place the label. Defaults to 'bottom right'.
+    offset_points (tuple, optional): Offset of the label in points. Defaults to None.
+    scilimits (tuple, optional): The scientific notation limits. Defaults to (0, 0).
+    linewidth (float, optional): The linewidth for the stroke effect. Defaults to None.
+    stroke_color (str, optional): The stroke color for the text. Defaults to None.
+    write_to_axis (matplotlib.axes.Axes, optional): The axis to write the label to. Defaults to None.
+
+    Raises:
+    ValueError: If an invalid corner position is provided.
+
+    """
+    # Allows for manually setting the axis to write to
     if write_to_axis is None:
         write_to_axis = ax
 
+    # Set default offset points if not provided
     if offset_points is None:
         offset_points = (
             plt.rcParams["xtick.labelsize"] / 2,
             plt.rcParams["xtick.labelsize"] / 2,
         )
 
+    # Apply scientific notation formatting to the specified axis
     ax.ticklabel_format(axis=axis, style="sci", scilimits=scilimits)
 
+    # Hide the default offset text
     if axis == "x":
         ax.get_xaxis().get_offset_text().set_visible(False)
     else:
         ax.get_yaxis().get_offset_text().set_visible(False)
 
+    # Get the ticks for the specified axis
     ticks = ax.get_xticks() if axis == "x" else ax.get_yticks()
     ticks = ticks[ticks > 0]  # Filter out non-positive values to avoid log error
     if len(ticks) == 0:
         return  # No valid ticks to calculate the exponent, skip setting the label
 
+    # Calculate the exponent for the scientific notation
     ax_max = max(ticks)
     exponent_axis = int(np.floor(np.log10(ax_max)))
     if exponent_axis == 0:
         return None  # No need to display exponent if it is 0
     exponent_text = r"$\times10^{%i}$" % exponent_axis
 
+    # Define the corner positions
     corners = {
         "bottom left": (0, 0),
         "bottom right": (1, 0),
@@ -53,16 +76,19 @@ def set_sci_notation_label(
         "top right": (1, 1),
     }
 
+    # Validate the corner position
     if corner not in corners:
         raise ValueError(
             "Invalid corner position. Choose from 'top left', 'top right', 'bottom left', 'bottom right'."
         )
 
+    # Calculate the base position and offsets
     base_x, base_y = corners[corner]
     fig = ax.figure
     offset_x = offset_points[0] / fig.dpi / fig.get_size_inches()[0]
     offset_y = offset_points[1] / fig.dpi / fig.get_size_inches()[1]
 
+    # Adjust offsets based on the corner position
     if "left" in corner:
         offset_x = offset_x
     else:
@@ -72,15 +98,18 @@ def set_sci_notation_label(
     else:
         offset_y = -offset_y
 
+    # Calculate the final text position
     text_x = base_x + offset_x
     text_y = base_y + offset_y
 
+    # Configure path effects if linewidth and stroke color are provided
     path_effects_config = (
         [patheffects.withStroke(linewidth=linewidth, foreground=stroke_color)]
         if linewidth is not None and stroke_color is not None
         else None
     )
 
+    # Add the scientific notation label to the plot
     write_to_axis.text(
         text_x,
         text_y,
@@ -98,12 +127,14 @@ def bring_text_to_front(fig, zorder=100):
     """
     Sets the zorder of all text objects in the Figure to the specified value.
 
-    Args:
-        fig (matplotlib.figure.Figure): The Figure object to modify.
-        zorder (int, optional): The zorder value to set for text objects. Default is 5.
+    Parameters:
+    fig (matplotlib.figure.Figure): The Figure object to modify.
+    zorder (int, optional): The zorder value to set for text objects. Default is 100.
     """
     # Find all text objects in the figure
     text_objects = fig.findobj(match=matplotlib.text.Text)
+    
+    # Iterate over each text object and set its zorder
     for text in text_objects:
         text.set_zorder(zorder)
 
@@ -233,7 +264,6 @@ def add_text_to_figure(fig, text, text_position_in_inches, **kwargs):
     """
     # Get the figure size in inches and dpi
     fig_size_inches = fig.get_size_inches()
-    fig_dpi = fig.get_dpi()
 
     # Convert the desired text position in inches to a relative position (0 to 1)
     text_position_relative = (
@@ -247,21 +277,32 @@ def add_text_to_figure(fig, text, text_position_in_inches, **kwargs):
 
 
 def line_annotation(ax, text, line_x, line_y, annotation_kwargs, zorder=100):
+    """
+    Annotate a line on a plot with text at its midpoint.
+
+    Parameters:
+    ax (matplotlib.axes.Axes): The axes to add the annotation to.
+    text (str): The text to annotate the line with.
+    line_x (array-like): The x-coordinates of the line.
+    line_y (array-like): The y-coordinates of the line.
+    annotation_kwargs (dict): Additional keyword arguments for the annotation.
+    zorder (int, optional): The zorder value for the annotation. Default is 100.
+    """
     # Set text alignment
     ha = annotation_kwargs.get("ha", "center")
     va = annotation_kwargs.get("va", "center")
-
-    # offset text
 
     # Calculate the midpoint of the line
     mid_x = np.mean(line_x)
     mid_y = np.mean(line_y)
 
+    # Default offset for the text
     xytext = (0, 0)
 
+    # Filter the annotation kwargs to remove any invalid arguments
     filtered_kwargs = _filter_kwargs(ax.annotate, annotation_kwargs)
 
-    # Vertical line, so offset text horizontally
+    # Annotate the line at the midpoint with the specified text and properties
     ax.annotate(
         text,
         xy=(mid_x, mid_y),

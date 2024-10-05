@@ -40,9 +40,9 @@ def test_set_style_printing():
 
         # Check that the correct rcParams were set for printing style
         assert mock_rcparams["image.cmap"] == "viridis"
-        assert mock_rcparams["axes.labelsize"] == 6
-        assert mock_rcparams["xtick.labelsize"] == 5
-        assert mock_rcparams["ytick.labelsize"] == 5
+        assert mock_rcparams["axes.labelsize"] == 8
+        assert mock_rcparams["xtick.labelsize"] == 6
+        assert mock_rcparams["ytick.labelsize"] == 6
         assert mock_rcparams["figure.titlesize"] == 8
         assert mock_rcparams["xtick.direction"] == "in"
         assert mock_rcparams["ytick.direction"] == "in"
