@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import inspect
 
+
 def _filter_kwargs(obj, kwargs):
     """Filters out invalid keyword arguments for a given function or method.
 

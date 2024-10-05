@@ -19,10 +19,10 @@ def handle_linewidth_conflicts(textprops):
     elif "lw" in textprops:
         # If only 'lw' is present, map it to 'linewidth'
         textprops["linewidth"] = textprops.pop("lw")
-        
-    if 'ls' in textprops and 'linestyle' in textprops:
-        textprops.pop('ls')
-        textprops['linestyle'] ="solid"
+
+    if "ls" in textprops and "linestyle" in textprops:
+        textprops.pop("ls")
+        textprops["linestyle"] = "solid"
 
     return textprops
 
@@ -71,7 +71,7 @@ def draw_lines(ax, x_values, y_values, style=None, halo=None):
         halo_style = handle_linewidth_conflicts(
             halo_style
         )  # Handle conflicts between 'linewidth' and 'lw'
-        
+
         print(halo_style)
         ax.plot(x_values, y_values, **halo_style)
 

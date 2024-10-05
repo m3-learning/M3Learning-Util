@@ -2,6 +2,7 @@ import subprocess
 import json
 import os
 
+
 def check_globus_endpoint(endpoint_id):
     """
     Check the status of a Globus endpoint by its ID.

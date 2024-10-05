@@ -59,6 +59,3 @@ def extract_number(s):
             return int(number_str)
     else:
         return None
-
-
-

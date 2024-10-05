@@ -25,7 +25,7 @@ def draw_ellipse_with_arrow(
     arrow_direction="positive",
 ):
     """
-    Draws an ellipse at a specified location on a line plot and adds an arrow originating 
+    Draws an ellipse at a specified location on a line plot and adds an arrow originating
     from the ellipse.
 
     Args:
@@ -37,19 +37,19 @@ def draw_ellipse_with_arrow(
         height (float): The height of the ellipse, specified as a fraction of the y-axis range.
         axis (str, optional): The axis ('x' or 'y') used to find the closest point for placing the ellipse.
                               Default is 'x'.
-        line_direction (str, optional): Defines the orientation of the line ('horizontal' or 'vertical') to 
+        line_direction (str, optional): Defines the orientation of the line ('horizontal' or 'vertical') to
                                         which the ellipse and arrow are aligned. Default is 'horizontal'.
         arrow_position (str, optional): The position of the arrow relative to the ellipse ('top' or 'bottom').
                                         Default is 'top'.
-        arrow_length_frac (float, optional): The length of the arrow as a fraction of the axis range. 
+        arrow_length_frac (float, optional): The length of the arrow as a fraction of the axis range.
                                              Default is 0.3.
         color (str, optional): The color of both the ellipse and the arrow. Default is 'blue'.
         linewidth (float, optional): The line width of the ellipse outline. Default is 2.
-        arrow_props (dict, optional): Additional properties to customize the arrow's appearance, passed as 
+        arrow_props (dict, optional): Additional properties to customize the arrow's appearance, passed as
                                       a dictionary. Default is None.
-        ellipse_props (dict, optional): Additional properties to customize the ellipse's appearance, passed 
+        ellipse_props (dict, optional): Additional properties to customize the ellipse's appearance, passed
                                         as a dictionary. Default is None.
-        arrow_direction (str, optional): The direction of the arrow ('positive' or 'negative'). Determines 
+        arrow_direction (str, optional): The direction of the arrow ('positive' or 'negative'). Determines
                                          the direction of arrow relative to the axis. Default is 'positive'.
 
     Raises:
@@ -163,7 +163,7 @@ def place_text_in_inches(
     **textprops,
 ):
     """
-    Places a text element on a matplotlib figure at a specific position given in inches, 
+    Places a text element on a matplotlib figure at a specific position given in inches,
     with options for rotating the text and adding a stroke (outline) for enhanced visibility.
 
     Args:
@@ -174,7 +174,7 @@ def place_text_in_inches(
         angle (float): The angle to rotate the text, in degrees.
         stroke_width (int, optional): The width of the text outline (stroke) in points. Default is None, meaning no stroke.
         stroke_color (str, optional): The color of the text outline (stroke). Default is 'black'.
-        **textprops: Additional keyword arguments for customizing the text properties 
+        **textprops: Additional keyword arguments for customizing the text properties
                     (e.g., fontsize, color, fontweight, etc.).
 
     Returns:
@@ -195,19 +195,21 @@ def place_text_in_inches(
     text_artist = plt.text(
         display_coords[0],  # X-coordinate in pixel coordinates
         display_coords[1],  # Y-coordinate in pixel coordinates
-        text,               # Text string to be displayed
+        text,  # Text string to be displayed
         horizontalalignment="center",  # Center text horizontally
-        verticalalignment="center",    # Center text vertically
-        transform=None,     # Coordinates are already in display space, no additional transform needed
-        rotation=angle,     # Rotate the text to the specified angle
-        **textprops,        # Pass additional text properties such as fontsize, color, etc.
+        verticalalignment="center",  # Center text vertically
+        transform=None,  # Coordinates are already in display space, no additional transform needed
+        rotation=angle,  # Rotate the text to the specified angle
+        **textprops,  # Pass additional text properties such as fontsize, color, etc.
     )
 
     # If stroke (outline) is specified, apply the stroke effect using PathEffects
     if stroke_width is not None:
         text_artist.set_path_effects(
             [
-                path_effects.Stroke(linewidth=stroke_width, foreground=stroke_color),  # Stroke with given width and color
+                path_effects.Stroke(
+                    linewidth=stroke_width, foreground=stroke_color
+                ),  # Stroke with given width and color
                 path_effects.Normal(),  # Draw the text over the stroke to maintain readability
             ]
         )
@@ -230,7 +232,7 @@ def place_text_points(
     **textprops,
 ):
     """
-    Places a text element on a specified position in axis coordinates (or figure coordinates if no axis is provided) 
+    Places a text element on a specified position in axis coordinates (or figure coordinates if no axis is provided)
     with options for rotating the text and adding a stroke (outline) for enhanced visibility.
 
     Args:
@@ -266,7 +268,7 @@ def place_text_points(
         y,  # y-coordinate in axis coordinates
         text,  # Text string to display
         horizontalalignment="center",  # Center the text horizontally
-        verticalalignment="center",    # Center the text vertically
+        verticalalignment="center",  # Center the text vertically
         rotation=angle,  # Apply the specified rotation angle to the text
         **textprops,  # Pass additional text properties such as fontsize, color, etc.
     )
@@ -275,7 +277,9 @@ def place_text_points(
     if stroke_width is not None:
         text_artist.set_path_effects(
             [
-                path_effects.Stroke(linewidth=stroke_width, foreground=stroke_color),  # Set stroke width and color
+                path_effects.Stroke(
+                    linewidth=stroke_width, foreground=stroke_color
+                ),  # Set stroke width and color
                 path_effects.Normal(),  # Draw the text over the stroke to maintain readability
             ]
         )
@@ -285,17 +289,18 @@ def place_text_points(
 
     return text_artist
 
+
 def shift_object_in_points(ax, position_axis, direction_vector, n_points):
     """
-    Shifts a given position on a matplotlib axis by a specified number of points along a direction vector, 
+    Shifts a given position on a matplotlib axis by a specified number of points along a direction vector,
     and returns the new position in axis (data) coordinates.
 
     Args:
         ax (matplotlib.axes.Axes): The matplotlib axes on which the shift is performed.
         position_axis (tuple of float): The starting position in axis (data) coordinates as (x, y).
-        direction_vector (tuple of float): The direction vector for the shift as (dx, dy), 
+        direction_vector (tuple of float): The direction vector for the shift as (dx, dy),
                                            indicating the direction of the shift.
-        n_points (float): The number of points (in display units) by which to shift the position 
+        n_points (float): The number of points (in display units) by which to shift the position
                           along the direction vector.
 
     Returns:
@@ -326,17 +331,17 @@ def shift_object_in_points(ax, position_axis, direction_vector, n_points):
 
 def shift_object_in_inches(fig, position_inch, direction_vector, n_points):
     """
-    Shifts a position in a matplotlib figure by a specified number of points along a given direction vector, 
-    returning the new position in inches. This is useful for adjusting graphical elements in relation to 
+    Shifts a position in a matplotlib figure by a specified number of points along a given direction vector,
+    returning the new position in inches. This is useful for adjusting graphical elements in relation to
     the figure's DPI and point-based positioning system.
 
     Args:
-        fig (matplotlib.figure.Figure): The matplotlib figure, used to access the DPI (dots per inch) 
+        fig (matplotlib.figure.Figure): The matplotlib figure, used to access the DPI (dots per inch)
                                         for converting points to inches.
         position_inch (tuple of float): The starting position in inches as (x, y) relative to the figure's coordinates.
-        direction_vector (tuple of float): The direction vector for the shift as (dx, dy), which determines 
+        direction_vector (tuple of float): The direction vector for the shift as (dx, dy), which determines
                                            the direction of movement. The vector will be normalized internally.
-        n_points (float): The number of points to shift along the direction vector. 
+        n_points (float): The number of points to shift along the direction vector.
                           (Note: 1 inch = 72 points).
 
     Returns:
@@ -347,10 +352,10 @@ def shift_object_in_inches(fig, position_inch, direction_vector, n_points):
         new_position = shift_object_in_inches(fig, (2, 3), (1, 1), 15)
 
     Notes:
-        - This function performs a shift in a vector direction, first normalizing the direction vector 
+        - This function performs a shift in a vector direction, first normalizing the direction vector
           to ensure consistent movement regardless of the vector's magnitude.
         - The shift is specified in points, which is a common unit in graphic design (1 inch = 72 points).
-        - The position and shift are handled in figure units of inches to maintain compatibility with 
+        - The position and shift are handled in figure units of inches to maintain compatibility with
           the figure’s coordinate system, particularly for DPI scaling.
 
     """
@@ -385,28 +390,28 @@ def get_perpendicular_vector(point1, point2, clockwise=False):
     Args:
         point1 (tuple of float): The first point (x1, y1) representing one end of the vector.
         point2 (tuple of float): The second point (x2, y2) representing the other end of the vector.
-        clockwise (bool, optional): If True, returns the clockwise perpendicular vector 
-                                    (i.e., the vector rotated by -90 degrees). 
-                                    If False, returns the counterclockwise perpendicular vector 
+        clockwise (bool, optional): If True, returns the clockwise perpendicular vector
+                                    (i.e., the vector rotated by -90 degrees).
+                                    If False, returns the counterclockwise perpendicular vector
                                     (rotated by +90 degrees). Defaults to False.
 
     Returns:
-        tuple of float: The perpendicular vector as (dx, dy), which is perpendicular to the 
+        tuple of float: The perpendicular vector as (dx, dy), which is perpendicular to the
                         direction vector formed by point1 and point2.
 
     Example:
         # Compute the counterclockwise perpendicular vector
         perp_vector = get_perpendicular_vector((0, 0), (1, 0))  # Should return (0, 1)
-        
+
         # Compute the clockwise perpendicular vector
         perp_vector_clockwise = get_perpendicular_vector((0, 0), (1, 0), clockwise=True)  # Should return (0, -1)
 
     Notes:
         - The direction vector is first calculated as the difference between the coordinates of `point2` and `point1`.
-        - Depending on the `clockwise` argument, the direction vector is then rotated either by +90 degrees 
+        - Depending on the `clockwise` argument, the direction vector is then rotated either by +90 degrees
           (counterclockwise) or -90 degrees (clockwise) to get the perpendicular vector.
     """
-    
+
     # Unpack the coordinates of the two points
     x1, y1 = point1
     x2, y2 = point2
@@ -542,7 +547,6 @@ class DrawArrow:
 
         # If a halo is enabled, draw a thick arrow behind the actual arrow
         if halo_settings["enabled"]:
-
             halo_arrowprops = self.arrowprops.copy()
             halo_arrowprops["color"] = halo_settings["color"]  # Set the halo color
             # Scale the linewidth of the halo based on the original linewidth or lw
@@ -582,8 +586,6 @@ class DrawArrow:
 
         stroke_width = self.halo.get("font_stroke_width", None)
         stroke_color = self.halo.get("font_stroke_color", "black")
-        
-        
 
         # If textprops is not provided, initialize it as an empty dictionary
         if self.textprops is None:
@@ -764,10 +766,10 @@ def draw_extended_arrow_indicator(
     None: The function draws the arrow and extended lines directly on the figure.
 
     """
-    
+
     if direction not in ["vertical", "horizontal"]:
         raise ValueError("Direction must be 'vertical' or 'horizontal'.")
-    
+
     # Calculate the starting and ending points of the arrow with the applied offset
     point_0 = obj_offset(
         (x[0], y[0]),  # Position of the first point (start)

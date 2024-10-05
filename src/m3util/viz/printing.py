@@ -49,7 +49,7 @@ class printer:
 
         if tight_layout:
             fig.tight_layout()
-            
+
         if text_on_top:
             bring_text_to_front(fig)
 
@@ -59,7 +59,6 @@ class printer:
         if label_figs is not None:
             for i, ax in enumerate(label_figs):
                 labelfigs(ax, i, **kwargs)
-                
 
         if fileformats is None:
             fileformats = self.fileformats
