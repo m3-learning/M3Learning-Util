@@ -14,7 +14,7 @@ from m3util.util.IO import (
 import pytest
 import os
 import requests
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, mock_open
 
 
 @mock.patch("m3util.util.IO.os.path.exists")
@@ -539,3 +539,74 @@ def test_download_files_create_directory(tmp_path, sample_url_file):
         file2 = download_path / "file2.txt"
         assert file1.exists()
         assert file2.exists()
+
+@patch("builtins.open", new_callable=mock_open)
+@patch("os.path.exists")
+@patch("os.path.abspath")
+@patch("requests.get")
+@patch("time.sleep")
+def test_file_already_exists(
+    mock_sleep, mock_requests_get, mock_abspath, mock_exists, mock_open_func
+):
+    """Test that the function skips downloading if the file already exists."""
+    mock_exists.return_value = True  # Simulate that the file already exists
+    mock_abspath.return_value = "/abs/path"  # Mock absolute path
+
+    # Mock URL file contents
+    with patch(
+        "builtins.open", mock_open(read_data="http://example.com/file1.txt\n")
+    ) as mock_file:
+        download_files_from_txt("urls.txt", "downloads")
+
+
+
+@patch("builtins.open", new_callable=mock_open)
+@patch("os.path.exists")
+@patch("os.path.abspath")
+@patch("requests.get")
+@patch("time.sleep")
+def test_http_error_rate_limit(
+    mock_sleep, mock_requests_get, mock_abspath, mock_exists, mock_open_func
+):
+    """Test that the function handles 429 Too Many Requests error with exponential backoff."""
+    mock_exists.return_value = False  # Simulate that the file doesn't exist
+    mock_abspath.return_value = "/abs/path"  # Mock absolute path
+
+    # Simulate the 429 Too Many Requests HTTP error
+    response_mock = MagicMock()
+    response_mock.raise_for_status.side_effect = requests.exceptions.HTTPError(
+        response_mock
+    )
+    response_mock.status_code = 429
+    mock_requests_get.return_value = response_mock
+
+    # Mock URL file contents
+    with patch(
+        "builtins.open", mock_open(read_data="http://example.com/file1.txt\n")
+    ) as mock_file:
+        download_files_from_txt("urls.txt", "downloads")
+
+
+
+@patch("builtins.open", new_callable=mock_open)
+@patch("os.path.exists")
+@patch("os.path.abspath")
+@patch("requests.get")
+def test_request_exception(
+    mock_requests_get, mock_abspath, mock_exists, mock_open_func
+):
+    """Test that the function handles general request exceptions."""
+    mock_exists.return_value = False  # Simulate that the file doesn't exist
+    mock_abspath.return_value = "/abs/path"  # Mock absolute path
+
+    # Simulate a general request exception (e.g., connection error)
+    mock_requests_get.side_effect = requests.exceptions.RequestException(
+        "Connection error"
+    )
+
+    # Mock URL file contents
+    with patch(
+        "builtins.open", mock_open(read_data="http://example.com/file1.txt\n")
+    ) as mock_file:
+        download_files_from_txt("urls.txt", "downloads")
+

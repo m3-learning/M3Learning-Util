@@ -225,9 +225,10 @@ def layout_fig(graph, mod=None, figsize=None, layout="compressed", **kwargs):
     tuple: Figure and axes.
 
     """
-    # sets the kwarg values
-    for key, value in kwargs.items():
-        exec(f"{key} = value")
+    # 10-5-2024 Stale code
+    # # sets the kwarg values
+    # for key, value in kwargs.items():
+    #     exec(f"{key} = value")
 
     # Sets the layout of graphs in matplotlib in a pretty way based on the number of plots
 

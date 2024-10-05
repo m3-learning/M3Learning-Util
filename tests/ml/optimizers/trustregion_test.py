@@ -184,3 +184,112 @@ def test_trcg_compute_norm():
     norm = optimizer.computeNorm(v)
     expected_norm = torch.norm(v[0])
     assert norm.item() == expected_norm.item(), "Norm computed incorrectly"
+
+
+class SimpleModel2(torch.nn.Module):
+    def __init__(self):
+        super(SimpleModel2, self).__init__()
+        self.linear = torch.nn.Linear(2, 1)
+
+    def forward(self, x):
+        return self.linear(x)
+
+
+def closure_fn(part, closure_size, device):
+    def closure():
+        return torch.tensor(0.0, requires_grad=True)
+
+    return closure
+
+
+@pytest.fixture
+def model2():
+    return SimpleModel2()
+
+
+@pytest.fixture
+def optimizer2(model2):
+    return TRCG(model2, radius=1.0, device="cpu")
+
+
+def test_step_shrink_radius(optimizer2, model2):
+    # Mock the closure function
+    closure = MagicMock(side_effect=closure_fn(0, 1, "cpu"))
+
+    # Mock the computeGradientAndLoss method to return specific values
+    optimizer2.computeGradientAndLoss = MagicMock(
+        return_value=(1.0, [torch.tensor([1.0, 1.0])])
+    )
+
+    # Mock the CGSolver method to return specific values
+    optimizer2.CGSolver = MagicMock(return_value=([torch.tensor([0.5, 0.5])], 10, 0, 1))
+
+    # Mock the computeHessianVector method to return specific values
+    optimizer2.computeHessianVector = MagicMock(return_value=[torch.tensor([0.1, 0.1])])
+
+    # Mock the computeLoss method to return specific values
+    optimizer2.computeLoss = MagicMock(return_value=0.5)
+
+    # Mock the computeDotProduct method to return specific values
+    optimizer2.computeDotProduct = MagicMock(
+        side_effect=[torch.tensor(0.5), torch.tensor(0.1)]
+    )
+
+    # Mock the computeNorm method to return specific values
+    optimizer2.computeNorm = MagicMock(return_value=torch.tensor(0.5))
+
+    # Run the step function
+    outFval, radius, cnt_compute, cg_iter = optimizer2.step(closure)
+
+    # Check the results
+    assert cnt_compute == 1  # Computation count
+    assert cg_iter == 10  # CG iteration count
+    
+class SimpleModel3(torch.nn.Module):
+    def __init__(self):
+        super(SimpleModel3, self).__init__()
+        self.linear = torch.nn.Linear(2, 1)
+
+    def forward(self, x):
+        return self.linear(x)
+
+
+def closure_fn2(part, closure_size, device):
+    model = closure_fn2.model
+    inputs = torch.tensor([[1.0, 2.0]], device=device)
+    targets = torch.tensor([[1.0]], device=device)
+    outputs = model(inputs)
+    loss = torch.nn.functional.mse_loss(outputs, targets)
+    return loss
+
+
+@pytest.fixture
+def setup_trcg():
+    model = SimpleModel3()
+    device = torch.device("cpu")
+    trcg = TRCG(model, radius=1.0, device=device)
+    closure_fn2.model = model
+    return trcg, closure_fn2
+
+
+def test_step(setup_trcg):
+    trcg, closure = setup_trcg
+
+    # Mock the closure function
+    closure = MagicMock(side_effect=closure)
+
+    # Perform a step
+    outFval, radius, cnt_compute, cg_iter = trcg.step(closure)
+
+    # Assertions
+    assert isinstance(outFval, float)
+    assert isinstance(radius, float)
+    assert isinstance(cnt_compute, int)
+    assert isinstance(cg_iter, int)
+
+    # Check if the radius is updated correctly
+    assert radius <= trcg.radius_max
+    assert radius >= trcg.radius_initial
+
+    # Check if the closure function was called
+    closure.assert_called()

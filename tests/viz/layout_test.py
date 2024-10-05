@@ -1035,7 +1035,6 @@ def test_scalebar_tr_location(mock_text, mock_path_maker):
     assert isinstance(path_effects[0], patheffects.withStroke)
 
 
-
 @patch("m3util.viz.layout.scalebar")
 def test_add_scalebar_with_valid_input(mock_scalebar):
     """Test that scalebar is called with correct arguments when scalebar_ is provided."""
@@ -1384,3 +1383,63 @@ def test_draw_line_with_text_span_data_horizontal(mock_line_annotation):
 
     # Verify that the line_annotation function was called for the text
     mock_line_annotation.assert_called_once()
+
+
+def test_plot_into_graph_with_clim(sample_figure):
+    fig, ax = sample_figure
+    fig_test, ax_test = plt.subplots()
+    clim = (0, 1)
+    plot_into_graph(ax, fig_test, clim=clim)
+    assert len(ax.get_images()) > 0, "The image should be plotted into the axes."
+    assert (
+        ax.get_images()[0].get_clim() == clim
+    ), "The color limits should be set correctly."
+
+
+def test_plot_into_graph_with_colorbar(sample_figure):
+    fig, ax = sample_figure
+    fig_test, ax_test = plt.subplots()
+    plot_into_graph(ax, fig_test, colorbar_=True)
+    assert len(ax.get_images()) > 0, "The image should be plotted into the axes."
+
+
+def test_layout_fig_mod_2():
+    fig, axes = layout_fig(2)
+    assert len(axes) == 2, "Should create 2 subplots."
+    assert isinstance(fig, plt.Figure), "Should return a matplotlib figure."
+    assert axes.shape == (2,), "Should return a 1D array of axes."
+
+
+def test_layout_fig_mod_3():
+    fig, axes = layout_fig(4)
+    assert len(axes) == 4, "Should create 4 subplots."
+    assert isinstance(fig, plt.Figure), "Should return a matplotlib figure."
+    assert axes.shape == (4,), "Should return a 1D array of axes."
+
+
+def test_layout_fig_mod_4():
+    fig, axes = layout_fig(9)
+    assert len(axes) == 9, "Should create 9 subplots."
+    assert isinstance(fig, plt.Figure), "Should return a matplotlib figure."
+    assert axes.shape == (9,), "Should return a 1D array of axes."
+
+
+def test_layout_fig_mod_5():
+    fig, axes = layout_fig(16)
+    assert len(axes) == 16, "Should create 16 subplots."
+    assert isinstance(fig, plt.Figure), "Should return a matplotlib figure."
+    assert axes.shape == (16,), "Should return a 1D array of axes."
+
+
+def test_layout_fig_mod_6():
+    fig, axes = layout_fig(25)
+    assert len(axes) == 25, "Should create 25 subplots."
+    assert isinstance(fig, plt.Figure), "Should return a matplotlib figure."
+    assert axes.shape == (25,), "Should return a 1D array of axes."
+
+
+def test_layout_fig_mod_7():
+    fig, axes = layout_fig(36)
+    assert len(axes) == 36, "Should create 36 subplots."
+    assert isinstance(fig, plt.Figure), "Should return a matplotlib figure."
+    assert axes.shape == (36,), "Should return a 1D array of axes."

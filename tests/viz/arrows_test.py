@@ -669,7 +669,6 @@ def test_draw_arrow_with_halo():
         ), "Expected annotate to be called twice (halo and arrow)"
 
 
-
 def test_inches_conversion(setup_fig):
     """
     Test the conversion from inches to figure fraction coordinates.
@@ -1089,7 +1088,6 @@ def test_invalid_text_position():
         arrow._get_text_position()
 
 
-
 def test_draw_method_without_text():
     fig, ax = plt.subplots()
     arrow = DrawArrow(fig, (0, 0), (1, 1), ax=ax)
@@ -1224,3 +1222,33 @@ def test_place_text_points():
     )
     assert text_artist.get_text() == "Points Text"
     assert text_artist.get_fontsize() == 10
+
+
+def test_valid_input_vertical_bottom():
+    """Test the function with valid inputs for vertical line direction and bottom arrow position."""
+    fig, ax = plt.subplots()
+    x_data = np.linspace(0, 10, 100)
+    y_data = np.sin(x_data)
+
+    draw_ellipse_with_arrow(
+        ax=ax,
+        x_data=x_data,
+        y_data=y_data,
+        value=5.0,
+        width=0.1,
+        height=0.05,
+        line_direction="vertical",
+        arrow_position="bottom",
+    )
+
+    # Check if an ellipse has been added to the axis
+    ellipses = [patch for patch in ax.patches if isinstance(patch, Ellipse)]
+    assert len(ellipses) == 1, "Ellipse was not added to the plot"
+
+    # Check if an annotation (arrow) has been added to the axis
+    annotations = ax.texts
+    assert len(annotations) == 1, "Arrow annotation was not added to the plot"
+
+    # Check if the arrow annotation has the expected properties
+    arrow = annotations[0]
+    assert arrow.arrowprops is not None, "Arrow properties not found in annotation"

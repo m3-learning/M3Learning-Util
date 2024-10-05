@@ -88,11 +88,18 @@ def check_globus_file_access(endpoint_id, file_path, verbose=False):
             text=True,
         )
 
-        # If verbose is enabled, print the access confirmation and output
-        if verbose:
-            print(f"Access to '{file_path}' confirmed.\nOutput:\n{result.stdout}")
+        # Check if the subprocess call was successful
+        if result.returncode == 0:
+            # If verbose is enabled, print the access confirmation and output
+            if verbose:
+                print(f"Access to '{file_path}' confirmed.\nOutput:\n{result.stdout}")
+        else:
+            # Raise a custom GlobusAccessError if the access check fails
+            raise GlobusAccessError(
+                f"Error accessing '{file_path}': {result.stderr.strip()}"
+            )
     except Exception as e:
-        # Raise a custom GlobusAccessError if the access check fails
+        # Handle exceptions related to subprocess
         raise GlobusAccessError(
-            f"Error accessing '{file_path}': {result.stderr.strip()}"
+            f"Exception occurred while accessing '{file_path}': {str(e)}"
         )

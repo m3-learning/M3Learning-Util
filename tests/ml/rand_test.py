@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 import pytest
+from unittest.mock import patch, MagicMock
 
 # Skip TensorFlow tests if it's not installed
 try:
@@ -132,7 +133,7 @@ def test_set_seeds_numpy():
 
 
 @pytest.mark.skipif(not tensorflow_available, reason="TensorFlow not installed")
-def test_set_seeds_tensorflow():
+def test_set_seeds_tensorflow__():
     seed = 123
     set_seeds(seed, pytorch_=False, numpy_=False, tensorflow_=True)
 
@@ -143,3 +144,59 @@ def test_set_seeds_tensorflow():
     assert (
         tf1 == tf2
     ), "TensorFlow should return the same random number with the same seed."
+    
+### Test for rand_tensor function ###
+
+@patch("builtins.print")
+@patch("torch.rand", side_effect=ImportError("torch not found"))
+def test_rand_tensor_torch_not_installed(mock_torch_rand, mock_print):
+    """Test that the function raises an error if torch is not installed"""
+    with pytest.raises(ImportError):
+        rand_tensor(min=0, max=1, size=(1))
+
+
+### Test for set_seeds function ###
+
+
+@patch("numpy.random.seed")
+@patch("builtins.print")
+def test_set_seeds_numpy_(mock_print, mock_numpy_seed):
+    """Test that Numpy seed is set correctly"""
+    set_seeds(seed=123, numpy_=True)
+
+
+
+@patch("tensorflow.random.set_seed")
+@patch("builtins.print")
+def test_set_seeds_tensorflow_(mock_print, mock_tf_seed):
+    """Test that TensorFlow seed is set correctly"""
+    set_seeds(seed=123, tensorflow_=True)
+
+    # Check if TensorFlow seed-setting function was called
+    mock_tf_seed.assert_called_once_with(123)
+
+
+
+@patch("builtins.print")
+@patch("torch.manual_seed", side_effect=ImportError("torch not found"))
+def test_set_seeds_pytorch_not_installed(mock_manual_seed, mock_print):
+    """Test that the function gracefully handles when Pytorch is not installed"""
+    set_seeds(seed=123, pytorch_=True)
+
+
+
+@patch("builtins.print")
+@patch("tensorflow.random.set_seed", side_effect=ImportError("tensorflow not found"))
+def test_set_seeds_tensorflow_not_installed(mock_tf_seed, mock_print):
+    """Test that the function gracefully handles when TensorFlow is not installed"""
+    set_seeds(seed=123, tensorflow_=True)
+
+
+
+@patch("builtins.print")
+@patch("numpy.random.seed", side_effect=ImportError("numpy not found"))
+def test_set_seeds_numpy_not_installed(mock_numpy_seed, mock_print):
+    """Test that the function gracefully handles when Numpy is not installed"""
+    set_seeds(seed=123, numpy_=True)
+
+

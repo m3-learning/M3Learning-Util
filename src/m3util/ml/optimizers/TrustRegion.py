@@ -398,3 +398,40 @@ class TRCG(Optimizer):
             outFval = lossInit
 
         return outFval, self.radius, cnt_compute, cg_iter
+
+
+class SimpleModel4(torch.nn.Module):
+    def __init__(self):
+        super(SimpleModel4, self).__init__()
+        self.linear = torch.nn.Linear(2, 1)
+
+    def forward(self, x):
+        return self.linear(x)
+
+
+def closure_fn3(model, device):
+    def closure(part, closure_size, device):
+        inputs = torch.tensor([[1.0, 2.0], [3.0, 4.0]], device=device)
+        targets = torch.tensor([[1.0], [2.0]], device=device)
+        outputs = model(inputs)
+        loss = torch.nn.functional.mse_loss(outputs, targets)
+        return loss
+
+    return closure
+
+
+def test_trcg_step_shrink_radius():
+    model = SimpleModel4()
+    device = torch.device("cpu")
+    optimizer = TRCG(model, radius=1.0, device=device, closure_size=1)
+
+    closure = closure_fn3(model, device)
+
+    # Perform a step
+    outFval, radius, cnt_compute, cg_iter = optimizer.step(closure)
+
+    # Check if the radius was shrunk
+    assert radius < 1.0
+    assert outFval is not None
+    assert cnt_compute > 0
+    assert cg_iter > 0

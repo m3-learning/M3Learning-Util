@@ -1,7 +1,11 @@
 import pytest
 import subprocess
 from unittest.mock import patch
-from m3util.globus.globus import check_globus_endpoint, check_globus_file_access, GlobusAccessError
+from m3util.globus.globus import (
+    check_globus_endpoint,
+    check_globus_file_access,
+    GlobusAccessError,
+)
 
 # Sample data to use for mocking
 mock_endpoint_active = '{"is_paused": false, "is_connected": true}'
@@ -64,3 +68,31 @@ def test_check_globus_file_access_success():
         result = check_globus_file_access("12345", "/path/to/file", verbose=True)
         assert mock_run.called
 
+
+
+
+def test_check_globus_file_access_success_verbose():
+    """Test for successful access to a file or directory with verbose output."""
+    with patch("subprocess.run") as mock_run:
+        # Mock subprocess to simulate successful file listing
+        mock_run.return_value = subprocess.CompletedProcess(
+            args=["globus", "ls"],
+            returncode=0,
+            stdout="file1.txt\nfile2.txt\n",
+            stderr="",
+        )
+        with patch("builtins.print") as mock_print:
+            result = check_globus_file_access("12345", "/path/to/file", verbose=True)
+            assert mock_run.called
+            mock_print.assert_called_with(
+                "Access to '/path/to/file' confirmed.\nOutput:\nfile1.txt\nfile2.txt\n"
+            )
+
+
+def test_check_globus_endpoint_exception():
+    """Test for an exception during the endpoint check."""
+    with patch("subprocess.run") as mock_run:
+        # Simulate an exception being raised during the subprocess call
+        mock_run.side_effect = Exception("Subprocess failed")
+        result = check_globus_endpoint("12345")
+        assert result == "Exception occurred: Subprocess failed"
