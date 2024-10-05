@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from unittest.mock import patch
 from m3util.viz.printing import (
     printer,
-)  # Replace 'your_module' with the actual module name
+) 
 
 
 @pytest.fixture
@@ -14,7 +14,7 @@ def mock_make_folder():
 
 @pytest.fixture
 def mock_labelfigs():
-    with patch("m3util.viz.layout.labelfigs") as mock:
+    with patch("m3util.viz.text.labelfigs") as mock:
         yield mock
 
 

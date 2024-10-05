@@ -1,3 +1,6 @@
+from datafed.CommandLib import API
+
+
 def search_for_alias(listing_reply, target_alias):
     """
     Searches for an item with a matching alias within a ListingReply object.
@@ -18,10 +21,10 @@ def search_for_alias(listing_reply, target_alias):
             print("Alias not found.")
         ```
 
-    This function iterates over the `item` field of the provided `listing_reply`, 
-    which is assumed to contain a list of items. Each item is expected to have an 
-    `alias` attribute. If an item's `alias` matches the provided `target_alias`, 
-    the function returns the corresponding item's `id`. If no such item is found, 
+    This function iterates over the `item` field of the provided `listing_reply`,
+    which is assumed to contain a list of items. Each item is expected to have an
+    `alias` attribute. If an item's `alias` matches the provided `target_alias`,
+    the function returns the corresponding item's `id`. If no such item is found,
     the function returns None.
     """
     # Iterate over each item in the ListingReply's 'item' field.
@@ -32,4 +35,3 @@ def search_for_alias(listing_reply, target_alias):
 
     # If no matching alias is found, return None.
     return None
-

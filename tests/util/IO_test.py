@@ -9,7 +9,12 @@ from m3util.util.IO import (
     get_size,
     download_and_unzip,
     append_to_csv,
+    download_files_from_txt,
 )  # Adjust the import according to your file structure
+import pytest
+import os
+import requests
+from unittest.mock import MagicMock, patch, mock_open
 
 
 @mock.patch("m3util.util.IO.os.path.exists")
@@ -414,3 +419,194 @@ def test_append_to_csv_file_exists(mock_csv_writer, mock_open, mock_isfile):
     mock_writer.writerow.assert_called_once_with(
         data
     )  # Only data row should be written
+
+
+@pytest.fixture
+def sample_url_file(tmp_path):
+    # Create a temporary text file with some URLs
+    url_file = tmp_path / "urls.txt"
+    with url_file.open("w") as f:
+        f.write("http://example.com/file1.txt\n")
+        f.write("http://example.com/file2.txt\n")
+    return str(url_file)
+
+
+def test_download_files_success(tmp_path, sample_url_file):
+    download_path = tmp_path / "downloads"
+    # Mock response for requests.get
+    mock_response = MagicMock()
+    mock_response.iter_content.return_value = [b"Test content"]
+    mock_response.status_code = 200
+    mock_response.raise_for_status = MagicMock()
+
+    with patch("requests.get", return_value=mock_response):
+        download_files_from_txt(sample_url_file, str(download_path))
+
+        # Check that directory was created
+        assert download_path.exists()
+
+        # Check that files are created
+        file1 = download_path / "file1.txt"
+        file2 = download_path / "file2.txt"
+        assert file1.exists()
+        assert file2.exists()
+
+        # Check the content of the files
+        with file1.open("rb") as f:
+            content = f.read()
+            assert content == b"Test content"
+        with file2.open("rb") as f:
+            content = f.read()
+            assert content == b"Test content"
+
+
+def test_download_files_existing_files(tmp_path, sample_url_file):
+    download_path = tmp_path / "downloads"
+    os.makedirs(download_path)
+
+    # Create one of the files in advance
+    file1 = download_path / "file1.txt"
+    with file1.open("wb") as f:
+        f.write(b"Existing content")
+
+    # Mock response for requests.get
+    mock_response = MagicMock()
+    mock_response.iter_content.return_value = [b"New content"]
+    mock_response.status_code = 200
+    mock_response.raise_for_status = MagicMock()
+
+    with patch("requests.get", return_value=mock_response):
+        download_files_from_txt(sample_url_file, str(download_path))
+
+        # Check that file1.txt was not overwritten
+        with file1.open("rb") as f:
+            content = f.read()
+            assert content == b"Existing content"
+
+        # Check that file2.txt was created
+        file2 = download_path / "file2.txt"
+        assert file2.exists()
+        with file2.open("rb") as f:
+            content = f.read()
+            assert content == b"New content"
+
+
+def test_download_files_empty_urls(tmp_path):
+    download_path = tmp_path / "downloads"
+
+    # Create a URL file with empty lines
+    url_file = tmp_path / "urls.txt"
+    with url_file.open("w") as f:
+        f.write("\n")
+        f.write("http://example.com/file1.txt\n")
+        f.write("\n")
+        f.write("http://example.com/file2.txt\n")
+        f.write("\n")
+
+    # Mock response for requests.get
+    mock_response = MagicMock()
+    mock_response.iter_content.return_value = [b"Test content"]
+    mock_response.status_code = 200
+    mock_response.raise_for_status = MagicMock()
+
+    with patch("requests.get", return_value=mock_response):
+        download_files_from_txt(str(url_file), str(download_path))
+        # Check that files were created
+        file1 = download_path / "file1.txt"
+        file2 = download_path / "file2.txt"
+        assert file1.exists()
+        assert file2.exists()
+
+
+def test_download_files_create_directory(tmp_path, sample_url_file):
+    download_path = tmp_path / "downloads"
+    # Do not create the directory
+    assert not download_path.exists()
+
+    # Mock response for requests.get
+    mock_response = MagicMock()
+    mock_response.iter_content.return_value = [b"Test content"]
+    mock_response.status_code = 200
+    mock_response.raise_for_status = MagicMock()
+
+    with patch("requests.get", return_value=mock_response):
+        download_files_from_txt(sample_url_file, str(download_path))
+
+        # Check that directory was created
+        assert download_path.exists()
+        # Check that files are created
+        file1 = download_path / "file1.txt"
+        file2 = download_path / "file2.txt"
+        assert file1.exists()
+        assert file2.exists()
+
+@patch("builtins.open", new_callable=mock_open)
+@patch("os.path.exists")
+@patch("os.path.abspath")
+@patch("requests.get")
+@patch("time.sleep")
+def test_file_already_exists(
+    mock_sleep, mock_requests_get, mock_abspath, mock_exists, mock_open_func
+):
+    """Test that the function skips downloading if the file already exists."""
+    mock_exists.return_value = True  # Simulate that the file already exists
+    mock_abspath.return_value = "/abs/path"  # Mock absolute path
+
+    # Mock URL file contents
+    with patch(
+        "builtins.open", mock_open(read_data="http://example.com/file1.txt\n")
+    ) as mock_file:
+        download_files_from_txt("urls.txt", "downloads")
+
+
+
+@patch("builtins.open", new_callable=mock_open)
+@patch("os.path.exists")
+@patch("os.path.abspath")
+@patch("requests.get")
+@patch("time.sleep")
+def test_http_error_rate_limit(
+    mock_sleep, mock_requests_get, mock_abspath, mock_exists, mock_open_func
+):
+    """Test that the function handles 429 Too Many Requests error with exponential backoff."""
+    mock_exists.return_value = False  # Simulate that the file doesn't exist
+    mock_abspath.return_value = "/abs/path"  # Mock absolute path
+
+    # Simulate the 429 Too Many Requests HTTP error
+    response_mock = MagicMock()
+    response_mock.raise_for_status.side_effect = requests.exceptions.HTTPError(
+        response_mock
+    )
+    response_mock.status_code = 429
+    mock_requests_get.return_value = response_mock
+
+    # Mock URL file contents
+    with patch(
+        "builtins.open", mock_open(read_data="http://example.com/file1.txt\n")
+    ) as mock_file:
+        download_files_from_txt("urls.txt", "downloads")
+
+
+
+@patch("builtins.open", new_callable=mock_open)
+@patch("os.path.exists")
+@patch("os.path.abspath")
+@patch("requests.get")
+def test_request_exception(
+    mock_requests_get, mock_abspath, mock_exists, mock_open_func
+):
+    """Test that the function handles general request exceptions."""
+    mock_exists.return_value = False  # Simulate that the file doesn't exist
+    mock_abspath.return_value = "/abs/path"  # Mock absolute path
+
+    # Simulate a general request exception (e.g., connection error)
+    mock_requests_get.side_effect = requests.exceptions.RequestException(
+        "Connection error"
+    )
+
+    # Mock URL file contents
+    with patch(
+        "builtins.open", mock_open(read_data="http://example.com/file1.txt\n")
+    ) as mock_file:
+        download_files_from_txt("urls.txt", "downloads")
+

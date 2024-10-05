@@ -3,7 +3,7 @@ import numpy as np
 
 try:
     import torch
-except:
+except ImportError:
     print("torch not found")
 
 
@@ -21,19 +21,6 @@ def rand_tensor(min=0, max=1, size=(1)):
     """
     out = (max - min) * torch.rand(size) + min
     return out
-
-
-# def set_seeds(seed=42):
-#     """
-#     Sets the random seeds for reproducibility.
-
-#     Args:
-#         seed (int): The random seed value.
-#     """
-#     os.environ["PYTHONHASHSEED"] = str(seed)
-#     random.seed(seed)
-#     np.random.seed(seed)
-#     torch.manual_seed(seed)
 
 
 def set_seeds(seed=42, pytorch_=True, numpy_=True, tensorflow_=True):
@@ -59,13 +46,13 @@ def set_seeds(seed=42, pytorch_=True, numpy_=True, tensorflow_=True):
             torch.backends.cudnn.benchmark = False
             torch.backends.cudnn.deterministic = True
             print(f"Pytorch seed was set to {seed}")
-    except:
+    except ImportError:
         pass
 
     try:
         np.random.seed(42)
         print(f"Numpy seed was set to {seed}")
-    except:
+    except ImportError:
         pass
 
     try:
@@ -73,5 +60,5 @@ def set_seeds(seed=42, pytorch_=True, numpy_=True, tensorflow_=True):
 
         tf.random.set_seed(seed)
         print(f"tensorflow seed was set to {seed}")
-    except:
+    except ImportError:
         pass

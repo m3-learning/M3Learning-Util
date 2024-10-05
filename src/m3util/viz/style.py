@@ -2,6 +2,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
+
 def set_style(name="default"):
     """Function to implement custom default style for graphs
 
@@ -15,7 +16,7 @@ def set_style(name="default"):
 
             print(f"{name} set for seaborn")
 
-        except:
+        except Exception:
             pass
 
         try:
@@ -30,7 +31,7 @@ def set_style(name="default"):
             plt.rcParams["xtick.top"] = True
             plt.rcParams["ytick.right"] = True
             print(f"{name} set for matplotlib")
-        except:
+        except Exception:
             pass
 
     if name == "printing":
@@ -40,14 +41,14 @@ def set_style(name="default"):
 
             print(f"{name} set for seaborn")
 
-        except:
+        except Exception:
             pass
 
         # setting default plotting params
         plt.rcParams["image.cmap"] = "viridis"
-        plt.rcParams["axes.labelsize"] = 6
-        plt.rcParams["xtick.labelsize"] = 5
-        plt.rcParams["ytick.labelsize"] = 5
+        plt.rcParams["axes.labelsize"] = 8
+        plt.rcParams["xtick.labelsize"] = 6
+        plt.rcParams["ytick.labelsize"] = 6
         plt.rcParams["figure.titlesize"] = 8
         plt.rcParams["xtick.direction"] = "in"
         plt.rcParams["ytick.direction"] = "in"
@@ -60,3 +61,4 @@ def set_style(name="default"):
         plt.rcParams["legend.fontsize"] = 5
         plt.rcParams["legend.loc"] = "upper left"
         plt.rcParams["legend.frameon"] = False
+        plt.rcParams["font.size"] = 8

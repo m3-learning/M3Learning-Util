@@ -1,6 +1,7 @@
 import json
 from m3util.util.hashing import select_hash_algorithm
 
+
 def calculate_notebook_checksum(notebook_path, algorithm="sha256"):
     """
     Calculate the checksum of the code cells in a Jupyter notebook (.ipynb) file using the specified hashing algorithm.
@@ -24,7 +25,7 @@ def calculate_notebook_checksum(notebook_path, algorithm="sha256"):
     """
 
     hash_function = select_hash_algorithm(algorithm)
-    
+
     # Load the notebook as a JSON object
     with open(notebook_path, "r", encoding="utf-8") as f:
         notebook = json.load(f)
@@ -39,10 +40,8 @@ def calculate_notebook_checksum(notebook_path, algorithm="sha256"):
             # Join the source lines of the code cell (if it's not empty)
             code_cells_content += "".join(cell.get("source", [])) + "\n"
 
-
     # Encode the concatenated code cells content as bytes and update the hash function
     hash_function.update(code_cells_content.encode("utf-8"))
 
     # Return the checksum as a hexadecimal string
     return hash_function.hexdigest()
-

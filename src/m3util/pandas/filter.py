@@ -1,4 +1,3 @@
-
 def find_min_max_by_group(df, col_name, find="min", exclude_kwargs=None, **kwargs):
     """
     Finds the minimum or maximum value for a specific column, grouped by unique values

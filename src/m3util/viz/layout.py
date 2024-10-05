@@ -10,9 +10,45 @@ from matplotlib import (
 )
 import PIL
 import io
+from m3util.viz.text import line_annotation
 
 Path = path.Path
 PathPatch = patches.PathPatch
+
+
+def get_closest_point(x_data, y_data, value, axis="x"):
+    """Get the closest point on a line plot to a provided x or y value.
+
+    Args:
+        x_data (array-like): Array of x data points.
+        y_data (array-like): Array of y data points.
+        value (float): The x or y value to find the closest point to.
+        axis (str, optional): Specify which axis to use for finding the closest point.
+            Must be 'x' or 'y'. Defaults to 'x'.
+
+    Returns:
+        tuple: (closest_x, closest_y) The closest point on the line plot.
+
+    Raises:
+        ValueError: If the axis is not 'x' or 'y', or if x_data and y_data have different lengths.
+    """
+    # Ensure x_data and y_data are NumPy arrays
+    x_data = np.asarray(x_data)
+    y_data = np.asarray(y_data)
+
+    # Check that x_data and y_data have the same length
+    if x_data.shape != y_data.shape:
+        raise ValueError("x_data and y_data must have the same shape.")
+
+    # Find the index of the closest point
+    if axis == "x":
+        idx = np.abs(x_data - value).argmin()
+    elif axis == "y":
+        idx = np.abs(y_data - value).argmin()
+    else:
+        raise ValueError("axis must be 'x' or 'y'")
+
+    return x_data[idx], y_data[idx]
 
 
 def plot_into_graph(axg, fig, colorbar_=True, clim=None, **kwargs):
@@ -26,7 +62,7 @@ def plot_into_graph(axg, fig, colorbar_=True, clim=None, **kwargs):
     fig.savefig(img_buf, bbox_inches="tight", format="png")
     im = PIL.Image.open(img_buf)
 
-    if clim != None:
+    if clim is not None:
         ax_im = axg.imshow(im, clim=clim)
     else:
         ax_im = axg.imshow(im)
@@ -34,7 +70,7 @@ def plot_into_graph(axg, fig, colorbar_=True, clim=None, **kwargs):
     if colorbar_:
         divider = make_axes_locatable(axg)
         cax = divider.append_axes("right", size="5%", pad=0.05)
-        cbar = plt.colorbar(ax_im, cax=cax, **kwargs)
+        plt.colorbar(ax_im, cax=cax, **kwargs)
 
     img_buf.close()
 
@@ -80,31 +116,6 @@ def subfigures(
     ax.reverse()
 
     return fig, ax
-
-
-def add_text_to_figure(fig, text, text_position_in_inches, **kwargs):
-    """
-    Add text to a figure at a specified position.
-
-    Parameters:
-    fig (Figure): The figure to add the text to.
-    text (str): The text to be added.
-    text_position_in_inches (tuple): The position of the text in inches.
-    **kwargs: Additional keyword arguments.
-
-    """
-    # Get the figure size in inches and dpi
-    fig_size_inches = fig.get_size_inches()
-    fig_dpi = fig.get_dpi()
-
-    # Convert the desired text position in inches to a relative position (0 to 1)
-    text_position_relative = (
-        text_position_in_inches[0] / fig_size_inches[0],
-        text_position_in_inches[1] / fig_size_inches[1],
-    )
-
-    # Add the text to the figure with the calculated relative position
-    fig.text(text_position_relative[0], text_position_relative[1], text, **kwargs)
 
 
 def add_box(axs, pos, **kwargs):
@@ -165,89 +176,6 @@ def inset_connector(fig, ax1, ax2, coord1=None, coord2=None, **kwargs):
         fig.add_artist(con)
 
 
-def subfigures(
-    nrows, ncols, size=(1.25, 1.25), gaps=(0.8, 0.33), figsize=None, **kwargs
-):
-    """
-    Create subfigures with specified number of rows and columns.
-
-    Parameters:
-    nrows (int): Number of rows.
-    ncols (int): Number of columns.
-    size (tuple, optional): Size of each subfigure. Defaults to (1.25, 1.25).
-    gaps (tuple, optional): Gaps between subfigures. Defaults to (.8, .33).
-    figsize (tuple, optional): Size of the figure. Defaults to None.
-    **kwargs: Additional keyword arguments.
-
-    Returns:
-    fig (Figure): The created figure.
-    ax (list): List of axes objects.
-
-    """
-    if figsize is None:
-        figsize = (size[0] * ncols + gaps[0] * ncols, size[1] * nrows + gaps[1] * nrows)
-
-    # create a new figure with the specified size
-    fig = plt.figure(figsize=figsize)
-
-    ax = []
-
-    for i, j in product(range(nrows), range(ncols)):
-        rvalue = (nrows - 1) - j
-        # calculate the position and size of each subfigure
-        pos1 = [
-            (size[0] * rvalue + gaps[0] * rvalue) / figsize[0],
-            (size[1] * i + gaps[1] * i) / figsize[1],
-            size[0] / figsize[0],
-            size[1] / figsize[1],
-        ]
-        ax.append(fig.add_axes(pos1))
-
-    ax.reverse()
-
-    return fig, ax
-
-
-def add_text_to_figure(fig, text, text_position_in_inches, **kwargs):
-    """
-    Add text to a figure at a specified position.
-
-    Parameters:
-    fig (Figure): The figure to add the text to.
-    text (str): The text to be added.
-    text_position_in_inches (tuple): The position of the text in inches.
-    **kwargs: Additional keyword arguments.
-
-    """
-    # Get the figure size in inches and dpi
-    fig_size_inches = fig.get_size_inches()
-    fig_dpi = fig.get_dpi()
-
-    # Convert the desired text position in inches to a relative position (0 to 1)
-    text_position_relative = (
-        text_position_in_inches[0] / fig_size_inches[0],
-        text_position_in_inches[1] / fig_size_inches[1],
-    )
-
-    # Add the text to the figure with the calculated relative position
-    fig.text(text_position_relative[0], text_position_relative[1], text, **kwargs)
-
-
-def add_box(axs, pos, **kwargs):
-    """
-    Add a box to the axes.
-
-    Parameters:
-    axs (Axes): The axes to add the box to.
-    pos (tuple): The position of the box in the form (xmin, ymin, xmax, ymax).
-    **kwargs: Additional keyword arguments.
-
-    """
-    xmin, ymin, xmax, ymax = pos
-    rect = patches.Rectangle((xmin, ymin), xmax - xmin, ymax - ymin, **kwargs)
-    axs.add_patch(rect)
-
-
 def path_maker(axes, locations, facecolor, edgecolor, linestyle, lineweight):
     """
     Create a path patch and add it to the axes.
@@ -297,9 +225,10 @@ def layout_fig(graph, mod=None, figsize=None, layout="compressed", **kwargs):
     tuple: Figure and axes.
 
     """
-    # sets the kwarg values
-    for key, value in kwargs.items():
-        exec(f"{key} = value")
+    # 10-5-2024 Stale code
+    # # sets the kwarg values
+    # for key, value in kwargs.items():
+    #     exec(f"{key} = value")
 
     # Sets the layout of graphs in matplotlib in a pretty way based on the number of plots
 
@@ -358,7 +287,7 @@ def embedding_maps(data, image, colorbar_shown=True, c_lim=None, mod=None, title
             if colorbar_shown is True:
                 divider = make_axes_locatable(ax)
                 cax = divider.append_axes("right", size="10%", pad=0.05)
-                cbar = plt.colorbar(im, cax=cax, format="%.1e")
+                plt.colorbar(im, cax=cax, format="%.1e")
 
                 # Sets the scales
                 if c_lim is not None:
@@ -416,7 +345,7 @@ def imagemap(
             # adds the colorbar
             divider = make_axes_locatable(ax)
             cax = divider.append_axes("right", size="10%", pad=0.05)
-            cbar = plt.colorbar(im, cax=cax, format=cbar_number_format)
+            plt.colorbar(im, cax=cax, format=cbar_number_format)
         else:
             cb = plt.colorbar(im, fraction=0.046, pad=0.04, format=cbar_number_format)
             cb.ax.tick_params(labelsize=6, width=0.05)
@@ -463,115 +392,6 @@ def combine_lines(*args):
     return lines, labels
 
 
-def labelfigs(
-    axes,
-    number=None,
-    style="wb",
-    loc="tl",
-    string_add="",
-    size=8,
-    text_pos="center",
-    inset_fraction=(0.15, 0.15),
-    **kwargs,
-):
-    """
-    Add labels to figures.
-
-    Parameters:
-    axes (Axes): The axes to add the labels to.
-    number (int, optional): The number to be added as a label. Defaults to None.
-    style (str, optional): The style of the label. Defaults to "wb".
-    loc (str, optional): The location of the label. Defaults to "tl".
-    string_add (str, optional): Additional string to be added to the label. Defaults to "".
-    size (int, optional): The font size of the label. Defaults to 8.
-    text_pos (str, optional): The position of the label text. Defaults to "center".
-    inset_fraction (tuple, optional): The fraction of the axes to inset the label. Defaults to (0.15, 0.15).
-    **kwargs: Additional keyword arguments.
-
-    Returns:
-    Text: The created text object.
-
-    Raises:
-    ValueError: If an invalid position is provided.
-
-    """
-
-    # initializes an empty string
-    text = ""
-
-    # Sets up various color options
-    formatting_key = {
-        "wb": dict(color="w", linewidth=0.75),
-        "b": dict(color="k", linewidth=0),
-        "w": dict(color="w", linewidth=0),
-    }
-
-    # Stores the selected option
-    formatting = formatting_key[style]
-    xlim = axes.get_xlim()
-    ylim = axes.get_ylim()
-
-    x_inset = (xlim[1] - xlim[0]) * inset_fraction[1]
-    y_inset = (ylim[1] - ylim[0]) * inset_fraction[0]
-
-    if loc == "tl":
-        x, y = xlim[0] + x_inset, ylim[1] - y_inset
-    elif loc == "tr":
-        x, y = xlim[1] - x_inset, ylim[1] - y_inset
-    elif loc == "bl":
-        x, y = xlim[0] + x_inset, ylim[0] + y_inset
-    elif loc == "br":
-        x, y = xlim[1] - x_inset, ylim[0] + y_inset
-    elif loc == "ct":
-        x, y = (xlim[0] + xlim[1]) / 2, ylim[1] - y_inset
-    elif loc == "cb":
-        x, y = (xlim[0] + xlim[1]) / 2, ylim[0] + y_inset
-    else:
-        raise ValueError(
-            "Invalid position. Choose from 'tl', 'tr', 'bl', 'br', 'ct', or 'cb'."
-        )
-
-    text += string_add
-
-    if number is not None:
-        text += number_to_letters(number)
-
-    text_ = axes.text(
-        x,
-        y,
-        text,
-        va=text_pos,
-        ha="center",
-        path_effects=[
-            patheffects.withStroke(linewidth=formatting["linewidth"], foreground="k")
-        ],
-        color=formatting["color"],
-        size=size,
-        **kwargs,
-    )
-
-    text_.set_zorder(np.inf)
-
-
-def number_to_letters(num):
-    """
-    Convert a number to a string representation using letters.
-
-    Parameters:
-    num (int): The number to convert.
-
-    Returns:
-    str: The string representation of the number.
-
-    """
-    letters = ""
-    while num >= 0:
-        num, remainder = divmod(num, 26)
-        letters = chr(97 + remainder) + letters
-        num -= 1  # decrease num by 1 because we have processed the current digit
-    return letters
-
-
 def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
     """
     Adds a scalebar to figures.
@@ -586,7 +406,7 @@ def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
 
     # Get the size of the image
     x_lim, y_lim = axes.get_xlim(), axes.get_ylim()
-    x_size, y_size = (
+    x_size, y_size = (  # noqa: F841
         np.abs(np.int64(np.floor(x_lim[1] - x_lim[0]))),
         np.abs(np.int64(np.floor(y_lim[1] - y_lim[0]))),
     )
@@ -685,7 +505,7 @@ def get_axis_range(axs):
             xmax = np.max(xmax, ax_xmax)
             ymin = np.min(ymin, ax_ymin)
             ymax = np.max(ymax, ax_ymax)
-        except:
+        except:  # noqa: E722
             xmin = ax_xmin
             xmax = ax_xmax
             ymin = ax_ymin
@@ -749,7 +569,8 @@ def get_axis_pos_inches(fig, ax):
 
     return center_bottom_display / fig.dpi
 
-def layout_subfigures(size, subfigures_dict, margin_pts=20):
+
+def layout_subfigures_inches(size, subfigures_dict, margin_pts=20):
     """
     Creates a matplotlib figure with subfigures arranged based on positions in inches,
     and manually adds margins (in points) to accommodate axis labels and titles.
@@ -779,8 +600,8 @@ def layout_subfigures(size, subfigures_dict, margin_pts=20):
         position = subfig_data["position"]  # (x, y, width, height) in inches
         skip_margin = subfig_data.get("skip_margin", False)  # Defaults to False
         right = subfig_data.get("right", False)  # Defaults to False
-        
-        if right == True: 
+
+        if right == True:
             multiple = 2
         else:
             multiple = 1
@@ -805,6 +626,7 @@ def layout_subfigures(size, subfigures_dict, margin_pts=20):
         axes_dict[name] = ax
 
     return fig, axes_dict
+
 
 class FigDimConverter:
     """class to convert between relative and inches dimensions of a figure"""
@@ -852,3 +674,185 @@ class FigDimConverter:
             x[2] / self.fig_width,
             x[3] / self.fig_height,
         )
+
+
+def get_zorders(fig):
+    """
+    Retrieves the z-order of all objects in a given Matplotlib figure.
+
+    Parameters:
+    - fig: Matplotlib Figure object
+
+    Returns:
+    - List of tuples containing (object description, zorder)
+    """
+    zorder_list = []
+
+    # Iterate over all axes in the figure
+    for ax in fig.get_axes():
+        # Check items in axes (lines, text, etc.)
+        for item in ax.get_children():
+            desc = str(item)  # Get a string description of the item
+            try:
+                # Append description and zorder to the list
+                zorder_list.append((desc, item.get_zorder()))
+            except AttributeError:
+                # Not all elements have a zorder attribute
+                continue
+
+        # Check zorder for major and minor ticks
+        for axis in [ax.xaxis, ax.yaxis]:
+            for which in ["major", "minor"]:
+                ticks = axis.get_ticklabels(which=which)
+                for tick in ticks:
+                    zorder_list.append(
+                        (f"Tick Label ({tick.get_text()})", tick.get_zorder())
+                    )
+
+    return zorder_list
+
+
+def draw_line_with_text(
+    ax,
+    x_data,
+    y_data,
+    value,
+    axis="x",
+    span="full",
+    text="",
+    zorder=2,
+    line_kwargs={},
+    annotation_kwargs={},
+):
+    """
+    Draw a horizontal or vertical line on a plot, either spanning the axis or between the closest two data points,
+    with optional text offset by a fixed number of points perpendicular to the line.
+
+    Args:
+        ax (matplotlib.axes.Axes): The axis to draw on.
+        x_data (array-like): The x data points of the plot.
+        y_data (array-like): The y data points of the plot.
+        value (float): The x or y value at which to draw the line.
+        axis (str, optional): Specifies whether to draw a vertical ('x') or horizontal ('y') line (default is 'x').
+        span (str, optional): Specifies whether the line spans the full axis ('full') or between the closest two data points ('data').
+        text (str, optional): Text to place near the line.
+        zorder (int or float, optional): The z-order of the line and text (default is 2).
+        **kwargs: Additional keyword arguments passed to the line drawing function (e.g., color, linewidth).
+
+    Raises:
+        ValueError: If invalid values are provided for axis or span.
+    """
+    # Ensure x_data and y_data are NumPy arrays
+    x_data = np.asarray(x_data)
+    y_data = np.asarray(y_data)
+
+    # Validate axis parameter
+    if axis not in ["x", "y"]:
+        raise ValueError("axis must be 'x' or 'y'")
+
+    # Validate span parameter
+    if span not in ["full", "axis", "data"]:
+        raise ValueError("span must be 'full' or 'data'")
+
+    # Get axis limits
+    x_min, x_max = ax.get_xlim()
+    y_min, y_max = ax.get_ylim()
+
+    # Initialize line start and end points
+    if span == "full":
+        if axis == "x":
+            # Vertical line spanning full y-axis
+            line_x = [value, value]
+            line_y = [y_min, y_max]
+        else:
+            # Horizontal line spanning full x-axis
+            line_x = [x_min, x_max]
+            line_y = [value, value]
+    elif span == "axis":
+        connect_to = line_kwargs.get("connect_to", "left")
+        line_x, line_y = span_to_axis(ax, value, x_data, y_data, connect_to=connect_to)
+    else:
+        # Span between closest data points
+        if axis == "x":
+            # Vertical line between two y-values at closest x-values to 'value'
+            idx_below = np.where(x_data <= value)[0]
+            idx_above = np.where(x_data >= value)[0]
+
+            if idx_below.size == 0 or idx_above.size == 0:
+                raise ValueError("Value is outside the range of x_data.")
+
+            idx1 = idx_below[-1]
+            idx2 = idx_above[0]
+
+            y1 = y_data[idx1]
+            y2 = y_data[idx2]
+
+            line_x = [value, value]
+            line_y = [y1, y2]
+        else:
+            # Horizontal line between two x-values at closest y-values to 'value'
+            idx_below = np.where(y_data <= value)[0]
+            idx_above = np.where(y_data >= value)[0]
+
+            if idx_below.size == 0 or idx_above.size == 0:
+                raise ValueError("Value is outside the range of y_data.")
+
+            idx1 = idx_below[-1]
+            idx2 = idx_above[0]
+
+            x1 = x_data[idx1]
+            x2 = x_data[idx2]
+
+            line_x = [x1, x2]
+            line_y = [value, value]
+
+    # Set zorder in line properties
+    line_kwargs["zorder"] = zorder
+
+    # Draw the line
+    ax.plot(line_x, line_y, **line_kwargs)
+
+    # Add text if provided
+    if text:
+        line_annotation(ax, text, line_x, line_y, annotation_kwargs, zorder=zorder)
+
+def span_to_axis(ax, value, x_data, y_data, connect_to="left"):
+    # Get axis limits
+    x_min, x_max = ax.get_xlim()
+    y_min, y_max = ax.get_ylim()
+
+    # Span between closest data points
+    if connect_to == "left" or connect_to == "right":
+        x_, y_ = get_closest_point(x_data, y_data, value, axis="x")
+
+        # Determine which axis to connect to
+        if connect_to == "left":
+            line_x = [x_, x_min]  # Connect to left y-axis
+            line_y = [y_, y_]
+        elif connect_to == "right":
+            line_x = [x_, x_max]  # Connect to right y-axis
+            line_y = [y_, y_]
+        else:
+            raise ValueError("Invalid connect_to value. Choose 'left', 'right'")
+    elif connect_to == "bottom" or connect_to == "top":
+        x_, y_ = get_closest_point(x_data, y_data, value, axis="y")
+
+        if connect_to == "bottom":
+            line_x = [x_, x_]
+            line_y = [y_, y_min]  # Connect to bottom x-axis
+        elif connect_to == "top":
+            line_x = [x_, x_]
+            line_y = [y_, y_max]  # Connect to top x-axis
+        else:
+            raise ValueError("Invalid connect_to value. Choose 'bottom', 'top'")
+    else:
+        raise ValueError(
+            "Invalid connect_to value. Choose 'left', 'right', 'bottom', 'top'"
+        )
+    return line_x, line_y
+
+
+# Mock line_annotation since it's used internally
+def mock_line_annotation(ax, text, line_x, line_y, annotation_kwargs, zorder=2):
+    # A simple mock to bypass actual text annotation
+    pass
