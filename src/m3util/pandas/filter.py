@@ -1,3 +1,5 @@
+import pandas as pd
+
 def find_min_max_by_group(df, col_name, find="min", exclude_kwargs=None, **kwargs):
     """
     Finds the minimum or maximum value for a specific column, grouped by unique values
@@ -14,9 +16,7 @@ def find_min_max_by_group(df, col_name, find="min", exclude_kwargs=None, **kwarg
     pd.DataFrame: A DataFrame containing the min/max row from each group.
     """
 
-    # Filter the DataFrame based on the keyword arguments for inclusion
-    for key, value in kwargs.items():
-        df = df[df[key] == value]
+    df = filter_df(df, **kwargs)
 
     # Exclude rows based on the exclusion keyword arguments
     if exclude_kwargs:
@@ -50,3 +50,14 @@ def find_min_max_by_group(df, col_name, find="min", exclude_kwargs=None, **kwarg
 
     # Extract the corresponding rows from the original dataframe
     return df.loc[min_max_indices]
+
+# Function to filter DataFrame based on mixed type values in kwargs
+def filter_df(df, **kwargs):
+    for key, value in kwargs.items():
+        if pd.api.types.is_numeric_dtype(df[key]):
+            # Use exact match for numeric columns
+            df = df[df[key] == value]
+        else:
+            # Use regex for string columns
+            df = df[df[key].astype(str).str.contains(str(value), regex=True, na=False)]
+    return df
