@@ -2,14 +2,16 @@ import pandas as pd
 import re
 
 
-def find_min_max_by_group(df, col_name, find="min", exclude_kwargs=None, **kwargs):
+def find_min_max_by_group(
+    df, optimized_result, find="min", exclude_kwargs=None, **kwargs
+):
     """
     Finds the minimum or maximum value for a specific column based on filtered criteria,
     and returns the corresponding row from the original DataFrame.
 
     Parameters:
     df (pd.DataFrame): The original DataFrame to filter, group, and search.
-    col_name (str): The column name to find the max or min value.
+    optimized_result (str): The column name to find the max or min value.
     find (str): 'min' or 'max' to specify whether to find the minimum or maximum.
     exclude_kwargs (dict): Column-value pairs to exclude from the DataFrame.
     **kwargs: Column-value pairs to filter the DataFrame.
@@ -34,9 +36,9 @@ def find_min_max_by_group(df, col_name, find="min", exclude_kwargs=None, **kwarg
 
     # Find the index of the min/max in the filtered DataFrame
     if find == "min":
-        idx = filtered_df[col_name].idxmin()
+        idx = filtered_df[optimized_result].idxmin()
     elif find == "max":
-        idx = filtered_df[col_name].idxmax()
+        idx = filtered_df[optimized_result].idxmax()
     else:
         raise ValueError("Invalid value for 'find'. Use 'min' or 'max'.")
 
@@ -51,7 +53,7 @@ def filter_df(df, **kwargs):
             df = df[df[key] == value]
         else:
             # Determine if `value` contains regex characters
-            if re.search(r"[.*+?^]", str(value)):
+            if re.search(r"[*+?^]", str(value)):
                 # Treat as regex if it contains special characters
                 try:
                     df = df[
@@ -62,7 +64,7 @@ def filter_df(df, **kwargs):
                     raise
             else:
                 # Treat as literal if no special characters found
-                pattern = re.escape(str(value))
+                pattern = str(value)
                 df = df[
                     df[key].astype(str).str.contains(pattern, regex=False, na=False)
                 ]
