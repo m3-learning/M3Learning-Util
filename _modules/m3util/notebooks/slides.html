@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.notebooks.slides &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.notebooks.slides &#8212; M3Learning-Util 2.0.3 documentation</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../_static/documentation_options.js?v=fbe5091d"></script>
+    <script src="../../../_static/documentation_options.js?v=664ffad9"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/notebooks/slides';</script>
@@ -121,8 +121,8 @@
       
     
     
-    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
-    <script>document.write(`<img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 0.0.po documentation - Home"/>`);</script>
+    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.3 documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark" alt="M3Learning-Util 2.0.3 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -534,8 +534,8 @@ document.write(`
 
     <span class="c1"># Define output path</span>
     <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">output_path</span> <span class="o">=</span> <span class="n">notebook_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.ipynb&quot;</span><span class="p">,</span> <span class="s2">&quot;_slides.ipynb&quot;</span><span class="p">)</span>
-
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">notebook_path</span>
+        
     <span class="c1"># Save the modified notebook back to a file</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">notebook</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -544,8 +544,10 @@ document.write(`
 
 
 
-<span class="c1"># Parse command-line arguments</span>
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../api/m3util.notebooks.html#m3util.notebooks.slides.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Parse command-line arguments</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Convert a Jupyter notebook to slides.&quot;</span>
     <span class="p">)</span>
@@ -569,15 +571,19 @@ document.write(`
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output file path (default: original path with &#39;_slides&#39;)&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-
+    
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-
+    
     <span class="n">convert_notebook_to_slides</span><span class="p">(</span>
         <span class="n">notebook_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">notebook_path</span><span class="p">,</span>
         <span class="n">slide_level</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">slide_level</span><span class="p">,</span>
         <span class="n">subslide_level</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">subslide_level</span><span class="p">,</span>
         <span class="n">output_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 
                 </article>
