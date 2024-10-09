@@ -38,8 +38,8 @@ def convert_notebook_to_slides(
 
     # Define output path
     if output_path is None:
-        output_path = notebook_path.replace(".ipynb", "_slides.ipynb")
-
+        output_path = notebook_path
+        
     # Save the modified notebook back to a file
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(notebook, f, indent=2)
@@ -47,8 +47,8 @@ def convert_notebook_to_slides(
     print(f"Notebook converted to slides and saved as {output_path}")
 
 
-# Parse command-line arguments
-if __name__ == "__main__":
+def main():
+    # Parse command-line arguments
     parser = argparse.ArgumentParser(
         description="Convert a Jupyter notebook to slides."
     )
@@ -72,12 +72,15 @@ if __name__ == "__main__":
         type=str,
         help="Output file path (default: original path with '_slides')",
     )
-
+    
     args = parser.parse_args()
-
+    
     convert_notebook_to_slides(
         notebook_path=args.notebook_path,
         slide_level=args.slide_level,
         subslide_level=args.subslide_level,
         output_path=args.output,
     )
+
+if __name__ == "__main__":
+    main()
