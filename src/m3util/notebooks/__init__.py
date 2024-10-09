@@ -1,5 +1,5 @@
 # Auto-generated __init__.py
 
-from . import checksum
+from . import checksum, slides
 
-__all__ = ['checksum']
+__all__ = ['checksum', 'slides']
