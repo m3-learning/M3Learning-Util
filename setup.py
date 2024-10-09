@@ -9,22 +9,22 @@ Learn more under: https://pyscaffold.org/
 
 from setuptools import setup
 
-# if __name__ == "__main__":
-#     try:
-#         setup(
-#             use_scm_version={"version_scheme": "no-guess-dev"},
-#             entry_points={
-#                 "console_scripts": [
-#                     "generate-init-py=m3util.util.generate_init:main",
-#                     "convert_to_slides=m3util.notebooks.slides:main",
-#                 ],
-#             },
-#         )
-#     except:  # noqa
-#         print(
-#             "\n\nAn error occurred while building the project, "
-#             "please ensure you have the most updated version of setuptools, "
-#             "setuptools_scm, and wheel with:\n"
-#             "   pip install -U setuptools setuptools_scm wheel\n\n"
-#         )
-#         raise
+if __name__ == "__main__":
+    try:
+        setup(
+            use_scm_version={"version_scheme": "no-guess-dev"},
+            entry_points={
+                # "console_scripts": [
+                #     "generate-init-py=m3util.util.generate_init:main",
+                #     "convert_to_slides=m3util.notebooks.slides:main",
+                # ],
+            },
+        )
+    except:  # noqa
+        print(
+            "\n\nAn error occurred while building the project, "
+            "please ensure you have the most updated version of setuptools, "
+            "setuptools_scm, and wheel with:\n"
+            "   pip install -U setuptools setuptools_scm wheel\n\n"
+        )
+        raise
