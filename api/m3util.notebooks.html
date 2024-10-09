@@ -561,6 +561,22 @@ print(checksum)</p>
 </dd></dl>
 
 </section>
+<section id="module-m3util.notebooks.slides">
+<span id="m3util-notebooks-slides-module"></span><h2>m3util.notebooks.slides module<a class="headerlink" href="#module-m3util.notebooks.slides" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.notebooks.slides.convert_notebook_to_slides">
+<span class="sig-prename descclassname"><span class="pre">m3util.notebooks.slides.</span></span><span class="sig-name descname"><span class="pre">convert_notebook_to_slides</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notebook_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slide_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subslide_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/notebooks/slides.html#convert_notebook_to_slides"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.notebooks.slides.convert_notebook_to_slides" title="Link to this definition">#</a></dt>
+<dd><p>Convert a Jupyter notebook to slides by modifying the metadata of each cell.</p>
+<p>Parameters:
+notebook_path (str): Path to the Jupyter notebook (.ipynb) file.
+slide_level (int): Heading level for slides.
+subslide_level (int): Heading level for subslides.
+output_path (str, optional): Output file path. Defaults to None, which appends ‘_slides’ to the original filename.</p>
+<p>Returns:
+None</p>
+</dd></dl>
+
+</section>
 <section id="module-m3util.notebooks">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-m3util.notebooks" title="Link to this heading">#</a></h2>
 </section>
@@ -615,6 +631,10 @@ print(checksum)</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.notebooks.checksum">m3util.notebooks.checksum module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.notebooks.checksum.calculate_notebook_checksum"><code class="docutils literal notranslate"><span class="pre">calculate_notebook_checksum()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.notebooks.slides">m3util.notebooks.slides module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.notebooks.slides.convert_notebook_to_slides"><code class="docutils literal notranslate"><span class="pre">convert_notebook_to_slides()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.notebooks">Module contents</a></li>

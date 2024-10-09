@@ -12,6 +12,14 @@ m3util.notebooks.checksum module
    :undoc-members:
    :show-inheritance:
 
+m3util.notebooks.slides module
+------------------------------
+
+.. automodule:: m3util.notebooks.slides
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
