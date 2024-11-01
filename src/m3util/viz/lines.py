@@ -86,7 +86,6 @@ def draw_lines(ax, x_values, y_values, style=None, halo=None):
             halo_style
         )  # Handle conflicts between 'linewidth' and 'lw'
 
-        print(halo_style)
         ax.plot(x_values, y_values, **halo_style)
 
     # Draw the actual line with the provided style
