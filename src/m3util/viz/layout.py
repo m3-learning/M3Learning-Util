@@ -1,5 +1,6 @@
 from matplotlib.patches import ConnectionPatch
 import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from itertools import product
 import numpy as np
@@ -210,30 +211,23 @@ def path_maker(axes, locations, facecolor, edgecolor, linestyle, lineweight):
     axes.add_patch(pathpatch)
 
 
-def layout_fig(graph, mod=None, figsize=None, layout="compressed", **kwargs):
+def layout_fig(graph, mod=None, figsize=None, subplot_style='subplots', spacing=(0.3, 0.3), layout="compressed", **kwargs):
     """
-    Utility function that helps lay out many figures.
+    Utility function to create a figure with a flexible layout using either GridSpec or plt.subplots.
 
     Parameters:
-    graph (int): Number of graphs.
-    mod (int, optional): Value that assists in determining the number of rows and columns. Defaults to None.
+    graph (int): Number of graphs (plots).
+    mod (int, optional): Determines the number of columns. Defaults to None.
     figsize (tuple, optional): Size of the figure. Defaults to None.
-    layout (str, optional): Layout style of the subplots. Defaults to 'compressed'.
-    **kwargs: Additional keyword arguments.
+    layout (str, optional): 'subplots' or 'gridspec'. Determines the layout method. Defaults to 'subplots'.
+    spacing (tuple, optional): (wspace, hspace) - space between subplots. Defaults to (0.3, 0.3).
+    **kwargs: Additional keyword arguments for flexibility.
 
     Returns:
-    tuple: Figure and axes.
-
+    tuple: Figure and list of axes.
     """
-    # 10-5-2024 Stale code
-    # # sets the kwarg values
-    # for key, value in kwargs.items():
-    #     exec(f"{key} = value")
-
-    # Sets the layout of graphs in matplotlib in a pretty way based on the number of plots
-
+    # Determine the number of columns (mod) based on the number of graphs
     if mod is None:
-        # Select the number of columns to have in the graph
         if graph < 3:
             mod = 2
         elif graph < 5:
@@ -244,24 +238,55 @@ def layout_fig(graph, mod=None, figsize=None, layout="compressed", **kwargs):
             mod = 5
         elif graph < 26:
             mod = 6
-        elif graph < 37:
+        else:
             mod = 7
 
+    # Calculate the number of rows needed
+    nrows = graph // mod + (graph % mod > 0)
+
+    # Set default figure size if not provided
     if figsize is None:
-        figsize = (3 * mod, 3 * (graph // mod + (graph % mod > 0)))
+        figsize = (3 * mod, 3 * nrows)
+    elif isinstance(figsize, tuple) and (figsize[0] == None or figsize[1] == None):
+        w, h = figsize
+        unit_w = kwargs.pop('unit_w', 3) # unit size for each plot, default is 3
+        unit_h = kwargs.pop('unit_h', 3) # unit size for each plot, default is 3
+        w = w if w is not None else unit_w * mod
+        h = h if h is not None else unit_h * nrows
+        figsize = (w, h)
+        
+    # Extract wspace and hspace from the spacing parameter
+    wspace, hspace = spacing
 
-    # builds the figure based on the number of graphs and a selected number of columns
-    fig, axes = plt.subplots(
-        graph // mod + (graph % mod > 0), mod, figsize=figsize, layout=layout
-    )
+    # Create the figure and layout based on the selected method
+    if subplot_style == 'gridspec':
+        fig = plt.figure(figsize=figsize)
+        
+        width_ratios = kwargs.pop('width_ratios', None)
+        if width_ratios is None:
+            width_ratios = [1] * mod
+        height_ratios = kwargs.pop('height_ratios', None)
+        if height_ratios is None:
+            height_ratios = [1] * nrows
+            
+        gs = GridSpec(nrows, mod, figure=fig, width_ratios=width_ratios, height_ratios=height_ratios, wspace=wspace, hspace=hspace)
 
-    # deletes extra unneeded axes
-    axes = axes.reshape(-1)
-    for i in range(axes.shape[0]):
-        if i + 1 > graph:
-            fig.delaxes(axes[i])
+        # Create subplots based on GridSpec
+        axes = [fig.add_subplot(gs[i // mod, i % mod]) for i in range(graph)]
+        
+    elif subplot_style == 'subplots':
+        fig, axes = plt.subplots(nrows, mod, figsize=figsize, layout=layout)
+        # Flatten the axes for consistency
+        if isinstance(axes, np.ndarray):
+            axes = axes.flatten()[:graph]
 
-    return fig, axes[:graph]
+        # Adjust spacing between plots
+        fig.subplots_adjust(wspace=wspace, hspace=hspace)
+    else:
+        raise ValueError("Invalid layout option. Choose 'gridspec' or 'subplots'.")
+
+    # Return the figure and the axes
+    return fig, axes
 
 
 def embedding_maps(data, image, colorbar_shown=True, c_lim=None, mod=None, title=None):
