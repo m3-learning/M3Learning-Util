@@ -12,6 +12,14 @@ m3util.notebooks.checksum module
    :undoc-members:
    :show-inheritance:
 
+m3util.notebooks.skip\_execution module
+---------------------------------------
+
+.. automodule:: m3util.notebooks.skip_execution
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 m3util.notebooks.slides module
 ------------------------------
 
