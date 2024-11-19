@@ -177,39 +177,6 @@ def inset_connector(fig, ax1, ax2, coord1=None, coord2=None, **kwargs):
         fig.add_artist(con)
 
 
-def path_maker(axes, locations, facecolor, edgecolor, linestyle, lineweight):
-    """
-    Create a path patch and add it to the axes.
-
-    Parameters:
-    axes (Axes): The axes to add the path patch to.
-    locations (tuple): The locations of the path in the form (x1, x2, y1, y2).
-    facecolor (str): The face color of the path patch.
-    edgecolor (str): The edge color of the path patch.
-    linestyle (str): The line style of the path patch.
-    lineweight (float): The line weight of the path patch.
-
-    """
-    vertices = []
-    codes = []
-    codes = [Path.MOVETO] + [Path.LINETO] * 3 + [Path.CLOSEPOLY]
-    # Extract the vertices used to construct the path
-    vertices = [
-        (locations[0], locations[2]),
-        (locations[1], locations[2]),
-        (locations[1], locations[3]),
-        (locations[0], locations[3]),
-        (0, 0),
-    ]
-    vertices = np.array(vertices, float)
-    # Make a path from the vertices
-    path = Path(vertices, codes)
-    pathpatch = PathPatch(
-        path, facecolor=facecolor, edgecolor=edgecolor, ls=linestyle, lw=lineweight
-    )
-    # Add the path to the axes
-    axes.add_patch(pathpatch)
-
 
 def layout_fig(graph, mod=None, figsize=None, subplot_style='subplots', spacing=(0.3, 0.3), layout="compressed", **kwargs):
     """
@@ -219,7 +186,8 @@ def layout_fig(graph, mod=None, figsize=None, subplot_style='subplots', spacing=
     graph (int): Number of graphs (plots).
     mod (int, optional): Determines the number of columns. Defaults to None.
     figsize (tuple, optional): Size of the figure. Defaults to None.
-    layout (str, optional): 'subplots' or 'gridspec'. Determines the layout method. Defaults to 'subplots'.
+    subplot_style (str, optional): 'subplots' or 'gridspec'. Determines the layout method. Defaults to 'subplots'
+    layout (str, optional): 'compressed' or 'expanded'. Determines the layout style. Defaults to 'compressed'.
     spacing (tuple, optional): (wspace, hspace) - space between subplots. Defaults to (0.3, 0.3).
     **kwargs: Additional keyword arguments for flexibility.
 
@@ -275,7 +243,10 @@ def layout_fig(graph, mod=None, figsize=None, subplot_style='subplots', spacing=
         axes = [fig.add_subplot(gs[i // mod, i % mod]) for i in range(graph)]
         
     elif subplot_style == 'subplots':
-        fig, axes = plt.subplots(nrows, mod, figsize=figsize, layout=layout)
+        if layout == None:
+            fig, axes = plt.subplots(nrows, mod, figsize=figsize)
+        else:   
+            fig, axes = plt.subplots(nrows, mod, figsize=figsize, layout=layout)
         # Flatten the axes for consistency
         if isinstance(axes, np.ndarray):
             axes = axes.flatten()[:graph]
@@ -417,6 +388,40 @@ def combine_lines(*args):
     return lines, labels
 
 
+def path_maker(axes, locations, facecolor, edgecolor, linestyle, lineweight):
+    """
+    Create a path patch and add it to the axes.
+
+    Parameters:
+    axes (Axes): The axes to add the path patch to.
+    locations (tuple): The locations of the path in the form (x1, x2, y1, y2).
+    facecolor (str): The face color of the path patch.
+    edgecolor (str): The edge color of the path patch.
+    linestyle (str): The line style of the path patch.
+    lineweight (float): The line weight of the path patch.
+
+    """
+    vertices = []
+    codes = []
+    codes = [Path.MOVETO] + [Path.LINETO] * 3 + [Path.CLOSEPOLY]
+    # Extract the vertices used to construct the path
+    vertices = [
+        (locations[0], locations[2]),
+        (locations[1], locations[2]),
+        (locations[1], locations[3]),
+        (locations[0], locations[3]),
+        (0, 0),
+    ]
+    vertices = np.array(vertices, float)
+    # Make a path from the vertices
+    path = Path(vertices, codes)
+    pathpatch = PathPatch(
+        path, facecolor=facecolor, edgecolor=edgecolor, ls=linestyle, lw=lineweight
+    )
+    # Add the path to the axes
+    axes.add_patch(pathpatch)
+
+
 def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
     """
     Adds a scalebar to figures.
@@ -439,21 +444,27 @@ def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
     fract = scale_size / image_size
 
     x_point = np.linspace(x_lim[0], x_lim[1], np.int64(np.floor(image_size)))
-    y_point = np.linspace(y_lim[0], y_lim[1], np.int64(np.floor(image_size)))
 
     # Set the location of the scalebar
+    height_fraction = 0.03 * (y_lim[1] - y_lim[0])  # 5% of the plot height
+    width_offset = 0.05 * (x_lim[1] - x_lim[0])  # 5% of the plot width
+    
     if loc == "br":
-        x_start = x_point[np.int64(0.9 * image_size // 1)]
-        x_end = x_point[np.int64((0.9 - fract) * image_size // 1)]
-        y_start = y_point[np.int64(0.1 * image_size // 1)]
-        y_end = y_point[np.int64((0.1 + 0.025) * image_size // 1)]
-        y_label_height = y_point[np.int64((0.1 + 0.075) * image_size // 1)]
+        x_start = x_point[np.int64(0.9 * image_size // 1)] - width_offset
+        x_end = x_point[np.int64((0.9 - fract) * image_size // 1)] - width_offset
+        y_start = y_lim[0] + 0.1 * (y_lim[1] - y_lim[0])  # 10% above the bottom
+        y_end = y_start + height_fraction  # Add 5% of the height for the bar thickness
+        y_label_height = y_start + 3 * height_fraction  # Adjust label position above the scalebar
+
     elif loc == "tr":
-        x_start = x_point[np.int64(0.9 * image_size // 1)]
-        x_end = x_point[np.int64((0.9 - fract) * image_size // 1)]
-        y_start = y_point[np.int64(0.9 * image_size // 1)]
-        y_end = y_point[np.int64((0.9 - 0.025) * image_size // 1)]
-        y_label_height = y_point[np.int64((0.9 - 0.075) * image_size // 1)]
+        x_start = x_point[np.int64(0.9 * image_size // 1)] - width_offset
+        x_end = x_point[np.int64((0.9 - fract) * image_size // 1)] - width_offset
+        y_start = y_lim[1] - 0.1 * (y_lim[1] - y_lim[0])  # 10% below the top
+        y_end = y_start - height_fraction  # Subtract 5% of the height for the bar thickness
+        y_label_height = y_start - 3.5 * height_fraction  # Adjust label position below the scalebar
+
+        
+    # print(x_start, x_end, y_start, y_end)
 
     # Make the path for the scalebar
     path_maker(axes, [x_start, x_end, y_start, y_end], "w", "k", "-", 0.25)
@@ -463,7 +474,7 @@ def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
         (x_start + x_end) / 2,
         y_label_height,
         "{0} {1}".format(scale_size, units),
-        size=6,
+        size=7,
         weight="bold",
         ha="center",
         va="center",
