@@ -1,5 +1,6 @@
 import os
 import argparse
+import sys
 
 
 def generate_index(folder_path, output_file, title, start_number):
@@ -31,14 +32,14 @@ def generate_index(folder_path, output_file, title, start_number):
         )
         content.append(f"{i}. {{doc}}`{doc_title} <./{file}>`")
 
-    # Write to the index.md file
-    with open(output_file, "w") as f:
+    # Write to the index.md file in the specified folder
+    output_path = os.path.join(folder_path, output_file)
+    with open(output_path, "w") as f:
         f.write("\n".join(content))
 
-    print(f"Index file '{output_file}' created successfully.")
+    print(f"Index file '{output_path}' created successfully.")
 
-
-if __name__ == "__main__":
+def main():
     # Set up argument parser
     parser = argparse.ArgumentParser(
         description="Generate an index.md file for a JupyterBook with a single session."
@@ -72,3 +73,7 @@ if __name__ == "__main__":
 
     # Call the function with arguments
     generate_index(args.folder_path, args.output_file, args.title, args.start_number)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
