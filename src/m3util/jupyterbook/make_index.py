@@ -1,6 +1,33 @@
 import os
 import argparse
 import sys
+import nbformat
+
+
+def extract_first_heading(file_path):
+    """
+    Extract the first heading from a markdown or notebook file.
+
+    Args:
+        file_path (str): The path to the file.
+
+    Returns:
+        str: The first heading found in the file, or the file name if no heading is found.
+    """
+    if file_path.endswith(".md"):
+        with open(file_path, "r") as f:
+            for line in f:
+                if line.startswith("#"):
+                    return line.strip("# ").strip()
+    elif file_path.endswith(".ipynb"):
+        with open(file_path, "r") as f:
+            nb = nbformat.read(f, as_version=4)
+            for cell in nb.cells:
+                if cell.cell_type == "markdown":
+                    for line in cell.source.splitlines():
+                        if line.startswith("#"):
+                            return line.strip("# ").strip()
+    return os.path.basename(file_path).replace(".md", "").replace(".ipynb", "").replace("_", " ")
 
 
 def generate_index(folder_path, output_file, title, start_number):
@@ -24,12 +51,8 @@ def generate_index(folder_path, output_file, title, start_number):
     # Generate index content
     content = [f"# {title}"]
     for i, file in enumerate(files, start=start_number):
-        doc_title = (
-            file.split("_", 2)[-1]
-            .replace(".md", "")
-            .replace(".ipynb", "")
-            .replace("_", " ")
-        )
+        file_path = os.path.join(folder_path, file)
+        doc_title = extract_first_heading(file_path)
         content.append(f"{i}. {{doc}}`{doc_title} <./{file}>`")
 
     # Write to the index.md file in the specified folder
@@ -38,6 +61,7 @@ def generate_index(folder_path, output_file, title, start_number):
         f.write("\n".join(content))
 
     print(f"Index file '{output_path}' created successfully.")
+
 
 def main():
     # Set up argument parser
