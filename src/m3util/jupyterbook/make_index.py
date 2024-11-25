@@ -2,6 +2,7 @@ import os
 import argparse
 import sys
 import nbformat
+import re
 
 
 def extract_first_heading(file_path):
@@ -27,7 +28,23 @@ def extract_first_heading(file_path):
                     for line in cell.source.splitlines():
                         if line.startswith("#"):
                             return line.strip("# ").strip()
-    return os.path.basename(file_path).replace(".md", "").replace(".ipynb", "").replace("_", " ")
+    return os.path.basename(file_path).replace(".md", "").replace(".ipynb", "").replace("_", " ").replace("-", " ")
+
+
+def extract_number_from_title(title):
+    """
+    Extract the number from the title before the first underscore or hyphen.
+
+    Args:
+        title (str): The title of the file.
+
+    Returns:
+        int: The extracted number, or a large number if no number is found.
+    """
+    match = re.match(r"(\d+)[_-]", title)
+    if match:
+        return int(match.group(1))
+    return float('inf')  # Return a large number if no number is found
 
 
 def generate_index(folder_path, output_file, title, start_number):
@@ -40,20 +57,22 @@ def generate_index(folder_path, output_file, title, start_number):
         title (str): Custom title for the session.
         start_number (int): Starting number for the file entries.
     """
-    # Get a list of .md and .ipynb files in the folder
+    # Get a list of .md and .ipynb files in the folder, excluding index.md
     files = [
-        f for f in os.listdir(folder_path) if f.endswith(".md") or f.endswith(".ipynb")
+        f for f in os.listdir(folder_path)
+        if (f.endswith(".md") or f.endswith(".ipynb")) and f != "index.md"
     ]
 
-    # Sort files alphanumerically
-    files.sort()
+    # Sort files by the number in the title before the first underscore or hyphen
+    files.sort(key=lambda f: extract_number_from_title(os.path.splitext(f)[0]))
 
     # Generate index content
     content = [f"# {title}"]
     for i, file in enumerate(files, start=start_number):
         file_path = os.path.join(folder_path, file)
         doc_title = extract_first_heading(file_path)
-        content.append(f"{i}. {{doc}}`{doc_title} <./{file}>`")
+        file_name = os.path.splitext(file)[0]  # Remove the file extension
+        content.append(f"{i}. {{doc}}`{doc_title} <./{file_name}>`")
 
     # Write to the index.md file in the specified folder
     output_path = os.path.join(folder_path, output_file)
