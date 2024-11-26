@@ -422,7 +422,7 @@ def path_maker(axes, locations, facecolor, edgecolor, linestyle, lineweight):
     axes.add_patch(pathpatch)
 
 
-def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
+def scalebar(axes, image_size, scale_size, units="nm", loc="br", text_fontsize=7):
     """
     Adds a scalebar to figures.
 
@@ -474,7 +474,7 @@ def scalebar(axes, image_size, scale_size, units="nm", loc="br"):
         (x_start + x_end) / 2,
         y_label_height,
         "{0} {1}".format(scale_size, units),
-        size=7,
+        size=text_fontsize,
         weight="bold",
         ha="center",
         va="center",
