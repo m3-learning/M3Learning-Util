@@ -22,7 +22,7 @@ def organize_folder(path="."):
         files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
 
         # Move image files to the assets/figures directory
-        image_extensions = {".png", ".jpg", ".jpeg", ".gif"}
+        image_extensions = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"}
         for file in files:
             if any(file.lower().endswith(ext) for ext in image_extensions):
                 src = os.path.join(path, file)
@@ -36,7 +36,7 @@ def organize_folder(path="."):
         # Refresh the list of files in the provided path after moving images
         files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
 
-        # Process files for renaming based on numbering
+        # Process files for renaming with no gaps in numbering
         number_pattern = re.compile(r"^(\d+)(?:[-_](\d+))?(.*)$")
         files_with_numbers = []
 
@@ -48,28 +48,21 @@ def organize_folder(path="."):
                 remainder = match.group(3)
                 # Standardize the separator to `_`
                 remainder = re.sub(r"^[-_]", "_", remainder)
-                # Calculate effective number
-                effective_num = main_num + (
-                    sub_num / 10.0
-                )  # Use decimals for uniqueness
-                files_with_numbers.append((file, effective_num, remainder))
+                files_with_numbers.append((file, main_num, sub_num, remainder))
+            else:
+                # Assign a default numeric prefix for files without numbers
+                files_with_numbers.append((file, float("inf"), 0, file))
 
-        # Sort files by calculated effective number
-        files_with_numbers.sort(key=lambda x: x[1])
+        # Sort files by main number and sub number
+        files_with_numbers.sort(key=lambda x: (x[1], x[2]))
 
-        # Ensure unique numbering and map to new names
-        used_numbers = set()
+        # Assign new sequential numbers starting from 1
         rename_map = {}
-
-        for file, effective_num, remainder in files_with_numbers:
-            # Increment effective_num if already used
-            rounded_num = int(effective_num)
-            while rounded_num in used_numbers:
-                rounded_num += 1
-            used_numbers.add(rounded_num)
-
-            new_name = f"{rounded_num}{remainder}"
+        counter = 1
+        for file, _, _, remainder in files_with_numbers:
+            new_name = f"{counter}{remainder}"
             rename_map[file] = new_name
+            counter += 1
 
         # Perform renaming within the provided path
         for old_name, new_name in rename_map.items():
@@ -85,7 +78,7 @@ def organize_folder(path="."):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Organize a folder by moving images and renaming files."
+        description="Organize a folder by moving images and renaming files with no gaps in numbering."
     )
     parser.add_argument("path", type=str, help="The path to the folder to organize")
     args = parser.parse_args()
