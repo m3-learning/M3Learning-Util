@@ -42,6 +42,47 @@ def process_notebooks(root_folder):
                         new_notebook_path, os.path.join(notebook_subfolder, "dist")
                     )
 
+                    student_notebook = os.path.join(
+                        notebook_subfolder, "dist", "student", notebook_name + ".ipynb"
+                    )
+
+                    clean_notebook(student_notebook)
+
+                    shutil.copy(student_notebook, root_folder)
+                    print(
+                        f"Copied and cleaned student notebook: {student_notebook} -> {root_folder}"
+                    )
+
+
+def clean_notebook(notebook_path):
+    """
+    Removes cells containing "## Submission" or `grader.export` from a Jupyter notebook.
+    """
+    try:
+        with open(notebook_path, "r", encoding="utf-8") as f:
+            notebook = nbformat.read(f, as_version=4)
+
+        # Filter out cells containing the specified content
+        cleaned_cells = []
+        for cell in notebook.cells:
+            if (
+                "## Submission" not in cell.source
+                and "# Save your notebook first," not in cell.source
+            ):
+                cleaned_cells.append(cell)
+            else:
+                print(f"Removed cell: {cell.source.strip()[:50]}...")
+
+        notebook.cells = cleaned_cells
+
+        # Write the cleaned notebook back to the file
+        with open(notebook_path, "w", encoding="utf-8") as f:
+            nbformat.write(notebook, f)
+        print(f"Cleaned notebook: {notebook_path}")
+
+    except Exception as e:
+        print(f"Error cleaning notebook {notebook_path}: {e}")
+
 
 def has_assignment_config(notebook_path):
     """
