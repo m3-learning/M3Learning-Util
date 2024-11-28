@@ -1,62 +1,96 @@
 import os
 import shutil
 import re
+import argparse
+import sys
 
 
 def organize_folder(path="."):
-    # Create assets/figures directory if it doesn't exist
-    assets_dir = os.path.join(path, "assets", "figures")
-    os.makedirs(assets_dir, exist_ok=True)
+    try:
+        # Normalize the path
+        path = os.path.abspath(path)
 
-    # Get all files in directory
-    files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+        # Check if the provided path exists
+        if not os.path.exists(path):
+            raise FileNotFoundError(f"The specified path '{path}' does not exist.")
 
-    # Move image files
-    image_extensions = {".png", ".jpg", ".jpeg", ".gif"}
-    for file in files:
-        if any(file.lower().endswith(ext) for ext in image_extensions):
-            src = os.path.join(path, file)
-            dst = os.path.join(assets_dir, file)
+        # Create assets/figures directory within the provided path
+        assets_dir = os.path.join(path, "assets", "figures")
+        os.makedirs(assets_dir, exist_ok=True)
+
+        # Get all files in the provided directory (excluding subdirectories)
+        files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+
+        # Move image files to the assets/figures directory
+        image_extensions = {".png", ".jpg", ".jpeg", ".gif"}
+        for file in files:
+            if any(file.lower().endswith(ext) for ext in image_extensions):
+                src = os.path.join(path, file)
+                dst = os.path.join(assets_dir, file)
+                if os.path.abspath(src) != os.path.abspath(
+                    dst
+                ):  # Avoid moving files already in target
+                    shutil.move(src, dst)
+                    print(f"Moved: {file} -> {dst}")
+
+        # Refresh the list of files in the provided path after moving images
+        files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+
+        # Process files for renaming based on numbering
+        number_pattern = re.compile(r"^(\d+)(?:[-_](\d+))?(.*)$")
+        files_with_numbers = []
+
+        for file in files:
+            match = number_pattern.match(file)
+            if match:
+                main_num = int(match.group(1))
+                sub_num = int(match.group(2)) if match.group(2) else 0
+                remainder = match.group(3)
+                # Standardize the separator to `_`
+                remainder = re.sub(r"^[-_]", "_", remainder)
+                # Calculate effective number
+                effective_num = main_num + (
+                    sub_num / 10.0
+                )  # Use decimals for uniqueness
+                files_with_numbers.append((file, effective_num, remainder))
+
+        # Sort files by calculated effective number
+        files_with_numbers.sort(key=lambda x: x[1])
+
+        # Ensure unique numbering and map to new names
+        used_numbers = set()
+        rename_map = {}
+
+        for file, effective_num, remainder in files_with_numbers:
+            # Increment effective_num if already used
+            rounded_num = int(effective_num)
+            while rounded_num in used_numbers:
+                rounded_num += 1
+            used_numbers.add(rounded_num)
+
+            new_name = f"{rounded_num}{remainder}"
+            rename_map[file] = new_name
+
+        # Perform renaming within the provided path
+        for old_name, new_name in rename_map.items():
+            src = os.path.join(path, old_name)
+            dst = os.path.join(path, new_name)
             shutil.move(src, dst)
+            print(f"Renamed: {old_name} -> {new_name}")
 
-    # Process files for renaming
-    number_pattern = re.compile(r"^(\d+)(?:[-_](\d+))?(.*)$")
-    files_with_numbers = []
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
 
-    for file in files:
-        match = number_pattern.match(file)
-        if match:
-            main_num = int(match.group(1))
-            sub_num = int(match.group(2)) if match.group(2) else 0
-            remainder = match.group(3)
-            # Standardize the separator to `_`
-            remainder = re.sub(r"^[-_]", "_", remainder)
-            # Calculate effective number
-            effective_num = main_num if sub_num == 0 else main_num + sub_num
-            files_with_numbers.append((file, effective_num, remainder))
 
-    # Sort files by calculated effective number
-    files_with_numbers.sort(key=lambda x: x[1])
-
-    # Ensure unique numbering and map to new names
-    used_numbers = set()
-    rename_map = {}
-
-    for file, effective_num, remainder in files_with_numbers:
-        # Increment effective_num if already used
-        while effective_num in used_numbers:
-            effective_num += 1
-        used_numbers.add(effective_num)
-
-        new_name = f"{effective_num}{remainder}"
-        rename_map[file] = new_name
-
-    # Perform renaming
-    for old_name, new_name in rename_map.items():
-        src = os.path.join(path, old_name)
-        dst = os.path.join(path, new_name)
-        shutil.move(src, dst)
+def main():
+    parser = argparse.ArgumentParser(
+        description="Organize a folder by moving images and renaming files."
+    )
+    parser.add_argument("path", type=str, help="The path to the folder to organize")
+    args = parser.parse_args()
+    organize_folder(args.path)
 
 
 if __name__ == "__main__":
-    organize_folder()
+    main()
