@@ -64,14 +64,24 @@ def clean_notebook(notebook_path):
 
         cleaned_cells = []
         for cell in notebook.cells:
+            if not hasattr(cell, "cell_type") or not hasattr(cell, "source"):
+                continue
+
             if (
                 "## Submission" not in cell.source
                 and "# Save your notebook first," not in cell.source
             ):
                 # Make Markdown cells non-editable and non-deletable
                 if cell.cell_type == "markdown":
-                    cell.metadata["editable"] = False
-                    cell.metadata["deletable"] = False
+                    cell.metadata["editable"] = cell.metadata.get("editable", False)
+                    cell.metadata["deletable"] = cell.metadata.get("deletable", False)
+
+                # Add "skip-execution" tag to Code cells
+                if cell.cell_type == "code":
+                    cell.metadata["tags"] = cell.metadata.get("tags", [])
+                    if "skip-execution" not in cell.metadata["tags"]:
+                        cell.metadata["tags"].append("skip-execution")
+
                 cleaned_cells.append(cell)
             else:
                 print(f"Removed cell: {cell.source.strip()[:50]}...")
