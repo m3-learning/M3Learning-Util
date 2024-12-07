@@ -27,13 +27,15 @@ def generate_toc(folder_path):
     except ValueError:
         relative_path = path_parts[-1]
 
-    # Get files in the folder and sort
+    # Get files in the folder and filter for .ipynb and .md, excluding index.md
     files = [
         f
         for f in os.listdir(folder_path)
         if os.path.isfile(os.path.join(folder_path, f))
         and not f.startswith(".")
         and f != "_toc.yml"
+        and (f.endswith(".ipynb") or f.endswith(".md"))
+        # and f != "index.md"
     ]
     files.sort(
         key=lambda x: (
@@ -54,7 +56,6 @@ def generate_toc(folder_path):
                 "sections": [
                     {"file": os.path.join(relative_path, os.path.splitext(f)[0])}
                     for f in files
-                    if f != "index.md"
                 ],
             }
         ],

@@ -36,6 +36,13 @@ def organize_folder(path="."):
         # Refresh the list of files in the provided path after moving images
         files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
 
+        # Filter for .ipynb and .md files, excluding index.md
+        files = [
+            f
+            for f in files
+            if f.endswith(".ipynb") or f.endswith(".md") and f != "index.md"
+        ]
+
         # Process files for renaming with no gaps in numbering
         number_pattern = re.compile(r"^(\d+)(?:[-_](\d+))?(.*)$")
         files_with_numbers = []
