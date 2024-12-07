@@ -56,26 +56,29 @@ def process_notebooks(root_folder):
 
 def clean_notebook(notebook_path):
     """
-    Removes cells containing "## Submission" or `grader.export` from a Jupyter notebook.
+    Removes specific cells and makes Markdown cells non-editable and non-deletable by updating their metadata.
     """
     try:
         with open(notebook_path, "r", encoding="utf-8") as f:
             notebook = nbformat.read(f, as_version=4)
 
-        # Filter out cells containing the specified content
         cleaned_cells = []
         for cell in notebook.cells:
             if (
                 "## Submission" not in cell.source
                 and "# Save your notebook first," not in cell.source
             ):
+                # Make Markdown cells non-editable and non-deletable
+                if cell.cell_type == "markdown":
+                    cell.metadata["editable"] = False
+                    cell.metadata["deletable"] = False
                 cleaned_cells.append(cell)
             else:
                 print(f"Removed cell: {cell.source.strip()[:50]}...")
 
         notebook.cells = cleaned_cells
 
-        # Write the cleaned notebook back to the file
+        # Write the updated notebook back to the file
         with open(notebook_path, "w", encoding="utf-8") as f:
             nbformat.write(notebook, f)
         print(f"Cleaned notebook: {notebook_path}")
