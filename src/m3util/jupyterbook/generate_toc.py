@@ -35,7 +35,7 @@ def generate_toc(folder_path):
         and not f.startswith(".")
         and f != "_toc.yml"
         and (f.endswith(".ipynb") or f.endswith(".md"))
-        # and f != "index.md"
+        and f != "index.md"
     ]
     files.sort(
         key=lambda x: (
