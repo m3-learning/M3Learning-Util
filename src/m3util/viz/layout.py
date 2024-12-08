@@ -178,7 +178,7 @@ def inset_connector(fig, ax1, ax2, coord1=None, coord2=None, **kwargs):
 
 
 
-def layout_fig(graph, mod=None, figsize=None, subplot_style='subplots', spacing=(0.3, 0.3), layout="compressed", **kwargs):
+def layout_fig(graph, mod=None, figsize=None, subplot_style='subplots', spacing=(0.3, 0.3), parent_ax=None, layout="compressed", **kwargs):
     """
     Utility function to create a figure with a flexible layout using either GridSpec or plt.subplots.
 
@@ -187,8 +187,9 @@ def layout_fig(graph, mod=None, figsize=None, subplot_style='subplots', spacing=
     mod (int, optional): Determines the number of columns. Defaults to None.
     figsize (tuple, optional): Size of the figure. Defaults to None.
     subplot_style (str, optional): 'subplots' or 'gridspec'. Determines the layout method. Defaults to 'subplots'
-    layout (str, optional): 'compressed' or 'expanded'. Determines the layout style. Defaults to 'compressed'.
     spacing (tuple, optional): (wspace, hspace) - space between subplots. Defaults to (0.3, 0.3).
+    parent_ax (Axes, optional): Parent Axes to create nested subplots within. If None, a new figure is created.
+    layout (str, optional): 'compressed' or 'expanded'. Determines the layout style. Defaults to 'compressed'.
     **kwargs: Additional keyword arguments for flexibility.
 
     Returns:
@@ -211,53 +212,73 @@ def layout_fig(graph, mod=None, figsize=None, subplot_style='subplots', spacing=
 
     # Calculate the number of rows needed
     nrows = graph // mod + (graph % mod > 0)
-
-    # Set default figure size if not provided
-    if figsize is None:
-        figsize = (3 * mod, 3 * nrows)
-    elif isinstance(figsize, tuple) and (figsize[0] == None or figsize[1] == None):
-        w, h = figsize
-        unit_w = kwargs.pop('unit_w', 3) # unit size for each plot, default is 3
-        unit_h = kwargs.pop('unit_h', 3) # unit size for each plot, default is 3
-        w = w if w is not None else unit_w * mod
-        h = h if h is not None else unit_h * nrows
-        figsize = (w, h)
         
     # Extract wspace and hspace from the spacing parameter
     wspace, hspace = spacing
+    
+    if parent_ax is None:
+        # Set default figure size if not provided
+        if figsize is None:
+            figsize = (3 * mod, 3 * nrows)
+        elif isinstance(figsize, tuple) and (figsize[0] == None or figsize[1] == None):
+            w, h = figsize
+            unit_w = kwargs.pop('unit_w', 3) # unit size for each plot, default is 3
+            unit_h = kwargs.pop('unit_h', 3) # unit size for each plot, default is 3
+            w = w if w is not None else unit_w * mod
+            h = h if h is not None else unit_h * nrows
+            figsize = (w, h)
 
-    # Create the figure and layout based on the selected method
-    if subplot_style == 'gridspec':
-        fig = plt.figure(figsize=figsize)
-        
+        # Create the figure and layout based on the selected method
+        if subplot_style == 'gridspec':
+            fig = plt.figure(figsize=figsize)
+            
+            width_ratios = kwargs.pop('width_ratios', None)
+            if width_ratios is None:
+                width_ratios = [1] * mod
+            height_ratios = kwargs.pop('height_ratios', None)
+            if height_ratios is None:
+                height_ratios = [1] * nrows
+                
+            gs = GridSpec(nrows, mod, figure=fig, width_ratios=width_ratios, height_ratios=height_ratios, wspace=wspace, hspace=hspace)
+
+            # Create subplots based on GridSpec
+            axes = [fig.add_subplot(gs[i // mod, i % mod]) for i in range(graph)]
+            
+        elif subplot_style == 'subplots':
+            if layout == None:
+                fig, axes = plt.subplots(nrows, mod, figsize=figsize)
+            else:   
+                fig, axes = plt.subplots(nrows, mod, figsize=figsize, layout=layout)
+            # Flatten the axes for consistency
+            if isinstance(axes, np.ndarray):
+                axes = axes.flatten()[:graph]
+
+            # Adjust spacing between plots
+            fig.subplots_adjust(wspace=wspace, hspace=hspace)
+        else:
+            raise ValueError("Invalid layout option. Choose 'gridspec' or 'subplots'.")
+
+        # Return the figure and the axes
+        return fig, axes
+
+    else:
         width_ratios = kwargs.pop('width_ratios', None)
         if width_ratios is None:
             width_ratios = [1] * mod
         height_ratios = kwargs.pop('height_ratios', None)
         if height_ratios is None:
             height_ratios = [1] * nrows
-            
-        gs = GridSpec(nrows, mod, figure=fig, width_ratios=width_ratios, height_ratios=height_ratios, wspace=wspace, hspace=hspace)
-
-        # Create subplots based on GridSpec
-        axes = [fig.add_subplot(gs[i // mod, i % mod]) for i in range(graph)]
         
-    elif subplot_style == 'subplots':
-        if layout == None:
-            fig, axes = plt.subplots(nrows, mod, figsize=figsize)
-        else:   
-            fig, axes = plt.subplots(nrows, mod, figsize=figsize, layout=layout)
-        # Flatten the axes for consistency
-        if isinstance(axes, np.ndarray):
-            axes = axes.flatten()[:graph]
+        # Create nested subplots within the provided Axes
+        bbox = parent_ax.get_position()
+        fig = parent_ax.figure
+        gs = GridSpec(nrows, mod, figure=fig, left=bbox.x0, bottom=bbox.y0, right=bbox.x1, top=bbox.y1, width_ratios=width_ratios, height_ratios=height_ratios, wspace=wspace, hspace=hspace)
 
-        # Adjust spacing between plots
-        fig.subplots_adjust(wspace=wspace, hspace=hspace)
-    else:
-        raise ValueError("Invalid layout option. Choose 'gridspec' or 'subplots'.")
-
-    # Return the figure and the axes
-    return fig, axes
+        # Create subplots in the given Axes space
+        axes = [fig.add_subplot(gs[i // mod, i % mod]) for i in range(graph)]
+        if len(axes) == 1:
+            axes = axes[0]
+        return None, axes
 
 
 def embedding_maps(data, image, colorbar_shown=True, c_lim=None, mod=None, title=None):
