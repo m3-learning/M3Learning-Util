@@ -50,6 +50,62 @@ def split_cell_at_headings(cell):
     return new_cells
 
 
+def extract_code_blocks(cell):
+    """
+    Extract explicitly defined code blocks (` ```python `) from a markdown cell
+    into separate code cells.
+    """
+    if cell["cell_type"] != "markdown":
+        return [cell]
+
+    new_cells = []
+    current_markdown = []
+    inside_code_block = False
+    code_block = []
+
+    for line in cell["source"]:
+        if line.strip().startswith("```python") and not inside_code_block:
+            # Start of an explicit code block
+            inside_code_block = True
+            if current_markdown:
+                new_cells.append(
+                    {
+                        "cell_type": "markdown",
+                        "metadata": {},
+                        "source": current_markdown,
+                    }
+                )
+                current_markdown = []
+            code_block = []
+        elif inside_code_block and line.strip() == "```":
+            # End of an explicit code block
+            inside_code_block = False
+            new_cells.append(
+                {
+                    "cell_type": "code",
+                    "metadata": {},
+                    "source": code_block,
+                }
+            )
+            code_block = []
+        elif inside_code_block:
+            code_block.append(line)
+        else:
+            current_markdown.append(line)
+
+    # Add any remaining markdown
+    if current_markdown:
+        new_cells.append(
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": current_markdown,
+            }
+        )
+
+    return new_cells
+
+
 def has_iframe(source):
     """
     Check if a code cell's source contains an iframe.
@@ -59,10 +115,24 @@ def has_iframe(source):
     return "IFrame" in source.lower()
 
 
+def remove_empty_markdown_cells(cells):
+    """
+    Remove all empty markdown cells from the notebook.
+    """
+    return [
+        cell
+        for cell in cells
+        if not (
+            cell["cell_type"] == "markdown"
+            and not "".join(cell.get("source", [])).strip()
+        )
+    ]
+
+
 def convert_notebook_to_slides(notebook_path, output_path=None):
     """
     Convert a Jupyter notebook to slides by modifying the metadata of each cell
-    and splitting cells at headings.
+    and splitting cells at headings and code blocks.
 
     Parameters:
     notebook_path (str): Path to the Jupyter notebook (.ipynb) file.
@@ -79,11 +149,14 @@ def convert_notebook_to_slides(notebook_path, output_path=None):
     new_cells = []
     for cell in notebook["cells"]:
         if cell["cell_type"] == "markdown":
-            # Split markdown cells at headings
-            split_cells = split_cell_at_headings(cell)
-            new_cells.extend(split_cells)
+            # Extract code blocks first
+            extracted_cells = extract_code_blocks(cell)
+            # Then split at headings for remaining markdown cells
+            for extracted_cell in extracted_cells:
+                split_cells = split_cell_at_headings(extracted_cell)
+                new_cells.extend(split_cells)
         else:
-            # Non-markdown cells become fragments
+            # For non-markdown cells
             cell["metadata"]["slideshow"] = {"slide_type": "fragment"}
 
             # Add hide-input tag for code cells with iframes
@@ -94,6 +167,9 @@ def convert_notebook_to_slides(notebook_path, output_path=None):
                     cell["metadata"]["tags"].append("hide-input")
 
             new_cells.append(cell)
+
+    # Remove all empty markdown cells
+    new_cells = remove_empty_markdown_cells(new_cells)
 
     # Update notebook with new cells
     notebook["cells"] = new_cells
@@ -114,7 +190,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Convert a Jupyter notebook to slides. Splits cells at headings, "
         "makes level 1 and 2 headings into slides, level 3 into subslides, "
-        "and everything else into fragments. Adds hide-input tag to code cells with iframes."
+        "and everything else into fragments. Extracts all Python code from markdown cells."
     )
     parser.add_argument(
         "notebook_path", help="Path to the Jupyter notebook (.ipynb) file"

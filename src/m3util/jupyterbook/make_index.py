@@ -15,7 +15,7 @@ def extract_first_heading(file_path):
     Returns:
         str: The first heading found in the file, or the file name if no heading is found.
     """
-    if file_path.endswith(".md"):
+    if file_path.endswith(".md") and file_path != "index.md":
         with open(file_path, "r") as f:
             for line in f:
                 if line.startswith("#"):
