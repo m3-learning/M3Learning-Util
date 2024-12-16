@@ -2,9 +2,10 @@ import re
 import sys
 
 
-def remove_bold_from_headings(input_file: str):
+def remove_bold_markers_from_headings(input_file: str):
     """
-    Reads a Markdown file, removes bold text within headings, and overwrites the file.
+    Reads a Markdown file, removes bold markers (** or __) from text in headings,
+    and overwrites the file.
 
     Args:
         input_file (str): Path to the input Markdown file.
@@ -14,13 +15,17 @@ def remove_bold_from_headings(input_file: str):
         markdown_content = file.readlines()
 
     # Regex pattern to match headings with bold text
-    heading_pattern = re.compile(r"^(#{1,6}\s.*?)(\*\*.*?\*\*|__.*?__)(.*)$")
+    # Captures the heading line and removes ** or __ around text
+    heading_pattern = re.compile(r"^(#{1,6}\s.*?)\*\*(.*?)\*\*(.*)$")
+    heading_pattern_alt = re.compile(r"^(#{1,6}\s.*?)__(.*?)__(.*)$")
 
     modified_content = []
 
     for line in markdown_content:
         if line.strip().startswith("#"):  # Check if the line is a heading
-            line = heading_pattern.sub(r"\1\3", line)
+            # Remove ** or __ markers from bold text in headings
+            line = heading_pattern.sub(r"\1\2\3", line)
+            line = heading_pattern_alt.sub(r"\1\2\3", line)
         modified_content.append(line)
 
     # Overwrite the input file with modified content
@@ -38,13 +43,13 @@ def main(args=None):
         args = sys.argv[1:]
 
     if len(args) != 1:
-        print("Usage: remove-bold-headings <input_file>")
+        print("Usage: remove-bold-markers <input_file>")
         sys.exit(1)
 
     input_file = args[0]
 
     try:
-        remove_bold_from_headings(input_file)
+        remove_bold_markers_from_headings(input_file)
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(1)

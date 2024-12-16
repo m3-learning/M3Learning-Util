@@ -79,7 +79,7 @@ def clean_notebook(notebook_path):
                 # Add "skip-execution" tag to Code cells
                 if cell.cell_type == "code":
                     cell.metadata["tags"] = cell.metadata.get("tags", [])
-                    if "skip-execution" not in cell.metadata["tags"]:
+                    if "skip-execution" not in cell.metadata["tags"] and "shift + enter" not in cell.source:
                         cell.metadata["tags"].append("skip-execution")
 
                 cleaned_cells.append(cell)
