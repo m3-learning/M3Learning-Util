@@ -1,38 +1,37 @@
 import re
 import sys
+import json
+import re
 
 
 def remove_bold_markers_from_headings(input_file: str):
     """
-    Reads a Markdown file, removes bold markers (** or __) from text in headings,
-    and overwrites the file.
+    Reads a Jupyter Notebook file, removes bold markers (** or __) from text
+    in Markdown cells, and overwrites the file.
 
     Args:
-        input_file (str): Path to the input Markdown file.
+        input_file (str): Path to the input Jupyter Notebook file.
     """
-    # Read the Markdown file
+    # Load the notebook
     with open(input_file, "r", encoding="utf-8") as file:
-        markdown_content = file.readlines()
+        notebook = json.load(file)
 
-    # Regex pattern to match headings with bold text
-    # Captures the heading line and removes ** or __ around text
-    heading_pattern = re.compile(r"^(#{1,6}\s.*?)\*\*(.*?)\*\*(.*)$")
-    heading_pattern_alt = re.compile(r"^(#{1,6}\s.*?)__(.*?)__(.*)$")
+    # Regex pattern to match and remove bold markers in Markdown text
+    bold_pattern = re.compile(r"(\*\*|__)(.*?)(\*\*|__)")
 
-    modified_content = []
+    # Process only Markdown cells
+    for cell in notebook.get("cells", []):
+        if cell.get("cell_type") == "markdown":  # Only process Markdown cells
+            modified_source = []
+            for line in cell.get("source", []):
+                # Remove bold markers from each line
+                modified_line = bold_pattern.sub(r"\2", line)
+                modified_source.append(modified_line)
+            cell["source"] = modified_source  # Update the cell source
 
-    for line in markdown_content:
-        if line.strip().startswith("#"):  # Check if the line is a heading
-            # Remove ** or __ markers from bold text in headings
-            line = heading_pattern.sub(r"\1\2\3", line)
-            line = heading_pattern_alt.sub(r"\1\2\3", line)
-        modified_content.append(line)
-
-    # Overwrite the input file with modified content
+    # Overwrite the input file with the modified content
     with open(input_file, "w", encoding="utf-8") as file:
-        file.writelines(modified_content)
-
-    print(f"Modified Markdown saved to: {input_file}")
+        json.dump(notebook, file, indent=2, ensure_ascii=False)
 
 
 def main(args=None):
