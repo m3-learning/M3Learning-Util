@@ -3,6 +3,7 @@ import shutil
 import re
 import argparse
 import sys
+import subprocess
 
 
 def organize_folder(path="."):
@@ -73,6 +74,11 @@ def organize_folder(path="."):
 
         # Perform renaming within the provided path
         for old_name, new_name in rename_map.items():
+            if "ipynb" in old_name:
+                subprocess.run(["nbqa", "black", os.path.join(path, old_name)])
+            elif "md" in old_name:
+                subprocess.run(["mdformat", os.path.join(path, old_name)])
+
             src = os.path.join(path, old_name)
             dst = os.path.join(path, new_name)
             shutil.move(src, dst)
