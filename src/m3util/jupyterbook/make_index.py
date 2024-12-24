@@ -15,6 +15,7 @@ def extract_first_heading(file_path):
     Returns:
         str: The first heading found in the file, or the file name if no heading is found.
     """
+
     if file_path.endswith(".md") and file_path != "index.md":
         with open(file_path, "r") as f:
             for line in f:
@@ -28,7 +29,13 @@ def extract_first_heading(file_path):
                     for line in cell.source.splitlines():
                         if line.startswith("#"):
                             return line.strip("# ").strip()
-    return os.path.basename(file_path).replace(".md", "").replace(".ipynb", "").replace("_", " ").replace("-", " ")
+    return (
+        os.path.basename(file_path)
+        .replace(".md", "")
+        .replace(".ipynb", "")
+        .replace("_", " ")
+        .replace("-", " ")
+    )
 
 
 def extract_number_from_title(title):
@@ -44,7 +51,7 @@ def extract_number_from_title(title):
     match = re.match(r"(\d+)[_-]", title)
     if match:
         return int(match.group(1))
-    return float('inf')  # Return a large number if no number is found
+    return float("inf")  # Return a large number if no number is found
 
 
 def generate_index(folder_path, output_file, title, start_number):
@@ -57,9 +64,13 @@ def generate_index(folder_path, output_file, title, start_number):
         title (str): Custom title for the session.
         start_number (int): Starting number for the file entries.
     """
+    if title is None:
+        title = os.path.basename(folder_path).title()
+
     # Get a list of .md and .ipynb files in the folder, excluding index.md
     files = [
-        f for f in os.listdir(folder_path)
+        f
+        for f in os.listdir(folder_path)
         if (f.endswith(".md") or f.endswith(".ipynb")) and f != "index.md"
     ]
 
@@ -101,7 +112,7 @@ def main():
     parser.add_argument(
         "--title",
         type=str,
-        default="Session",
+        default=None,
         help="Custom title for the session (default: 'Session').",
     )
     parser.add_argument(
