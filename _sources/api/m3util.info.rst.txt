@@ -11,5 +11,5 @@ m3util.info.computer module
 
 .. automodule:: m3util.info.computer
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

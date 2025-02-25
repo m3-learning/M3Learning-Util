@@ -9,13 +9,13 @@ m3util.globus.globus module
 
 .. automodule:: m3util.globus.globus
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: m3util.globus
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

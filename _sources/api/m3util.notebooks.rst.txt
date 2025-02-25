@@ -9,29 +9,29 @@ m3util.notebooks.checksum module
 
 .. automodule:: m3util.notebooks.checksum
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.notebooks.skip\_execution module
 ---------------------------------------
 
 .. automodule:: m3util.notebooks.skip_execution
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.notebooks.slides module
 ------------------------------
 
 .. automodule:: m3util.notebooks.slides
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: m3util.notebooks
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

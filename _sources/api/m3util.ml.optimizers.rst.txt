@@ -9,21 +9,21 @@ m3util.ml.optimizers.AdaHessian module
 
 .. automodule:: m3util.ml.optimizers.AdaHessian
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.ml.optimizers.TrustRegion module
 ---------------------------------------
 
 .. automodule:: m3util.ml.optimizers.TrustRegion
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: m3util.ml.optimizers
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

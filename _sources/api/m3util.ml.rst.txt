@@ -17,37 +17,45 @@ m3util.ml.inference module
 
 .. automodule:: m3util.ml.inference
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.ml.logging module
 ------------------------
 
 .. automodule:: m3util.ml.logging
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.ml.preprocessor module
 -----------------------------
 
 .. automodule:: m3util.ml.preprocessor
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.ml.rand module
 ---------------------
 
 .. automodule:: m3util.ml.rand
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
+
+m3util.ml.regularization module
+-------------------------------
+
+.. automodule:: m3util.ml.regularization
+   :members:
+   :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: m3util.ml
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

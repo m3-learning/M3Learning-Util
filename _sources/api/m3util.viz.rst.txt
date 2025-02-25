@@ -9,77 +9,77 @@ m3util.viz.arrows module
 
 .. automodule:: m3util.viz.arrows
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.viz.images module
 ------------------------
 
 .. automodule:: m3util.viz.images
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.viz.layout module
 ------------------------
 
 .. automodule:: m3util.viz.layout
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.viz.lines module
 -----------------------
 
 .. automodule:: m3util.viz.lines
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.viz.movies module
 ------------------------
 
 .. automodule:: m3util.viz.movies
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.viz.positioning module
 -----------------------------
 
 .. automodule:: m3util.viz.positioning
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.viz.printing module
 --------------------------
 
 .. automodule:: m3util.viz.printing
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.viz.style module
 -----------------------
 
 .. automodule:: m3util.viz.style
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.viz.text module
 ----------------------
 
 .. automodule:: m3util.viz.text
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: m3util.viz
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

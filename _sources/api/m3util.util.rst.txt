@@ -9,61 +9,61 @@ m3util.util.IO module
 
 .. automodule:: m3util.util.IO
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.util.code module
 -----------------------
 
 .. automodule:: m3util.util.code
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.util.generate\_init module
 ---------------------------------
 
 .. automodule:: m3util.util.generate_init
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.util.h5 module
 ---------------------
 
 .. automodule:: m3util.util.h5
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.util.hashing module
 --------------------------
 
 .. automodule:: m3util.util.hashing
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.util.kwargs module
 -------------------------
 
 .. automodule:: m3util.util.kwargs
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 m3util.util.search module
 -------------------------
 
 .. automodule:: m3util.util.search
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: m3util.util
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

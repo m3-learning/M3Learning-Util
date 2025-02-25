@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.viz.text &#8212; M3Learning-Util 2.0.4 documentation</title>
+    <title>m3util.viz.text &#8212; M3Learning-Util 0.0.po documentation</title>
   
   
   
@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,19 +26,19 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=19c47fc1" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=adc66a14"></script>
+    <script src="../../../_static/documentation_options.js?v=fbe5091d"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/viz/text';</script>
@@ -46,8 +46,8 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0.4" />
-    <meta name="docbuild:last-update" content="Nov 10, 2024"/>
+  <meta name="docsearch:version" content="0.0.post1.dev1+g64e05b2" />
+    <meta name="docbuild:last-update" content="Feb 25, 2025"/>
   </head>
   
   
@@ -113,8 +113,8 @@
       
     
     
-    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.4 documentation - Home"/>
-    <img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.4 documentation - Home"/>
+    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
+    <img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 0.0.po documentation - Home"/>
   
   
 </a></div>
@@ -164,7 +164,9 @@
 </li>
 
             <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
                     More
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
@@ -418,9 +420,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -467,19 +474,19 @@
                 <article class="bd-article">
                   
   <h1>Source code for m3util.viz.text</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="p">(</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">patheffects</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="kn">from</span> <span class="nn">m3util.util.kwargs</span> <span class="kn">import</span> <span class="n">_filter_kwargs</span>
-<span class="kn">from</span> <span class="nn">m3util.viz.positioning</span> <span class="kn">import</span> <span class="n">obj_offset</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">m3util.util.kwargs</span><span class="w"> </span><span class="kn">import</span> <span class="n">_filter_kwargs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">m3util.viz.positioning</span><span class="w"> </span><span class="kn">import</span> <span class="n">obj_offset</span>
 
 
 <div class="viewcode-block" id="set_sci_notation_label">
 <a class="viewcode-back" href="../../../api/m3util.viz.html#m3util.viz.text.set_sci_notation_label">[docs]</a>
-<span class="k">def</span> <span class="nf">set_sci_notation_label</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_sci_notation_label</span><span class="p">(</span>
     <span class="n">ax</span><span class="p">,</span>
     <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
     <span class="n">corner</span><span class="o">=</span><span class="s2">&quot;bottom right&quot;</span><span class="p">,</span>
@@ -597,7 +604,7 @@
 
 <div class="viewcode-block" id="bring_text_to_front">
 <a class="viewcode-back" href="../../../api/m3util.viz.html#m3util.viz.text.bring_text_to_front">[docs]</a>
-<span class="k">def</span> <span class="nf">bring_text_to_front</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">bring_text_to_front</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sets the zorder of all text objects in the Figure to the specified value.</span>
 
@@ -616,7 +623,7 @@
 
 <div class="viewcode-block" id="labelfigs">
 <a class="viewcode-back" href="../../../api/m3util.viz.html#m3util.viz.text.labelfigs">[docs]</a>
-<span class="k">def</span> <span class="nf">labelfigs</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">labelfigs</span><span class="p">(</span>
     <span class="n">axes</span><span class="p">,</span>
     <span class="n">number</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">style</span><span class="o">=</span><span class="s2">&quot;wb&quot;</span><span class="p">,</span>
@@ -714,7 +721,7 @@
 
 <div class="viewcode-block" id="number_to_letters">
 <a class="viewcode-back" href="../../../api/m3util.viz.html#m3util.viz.text.number_to_letters">[docs]</a>
-<span class="k">def</span> <span class="nf">number_to_letters</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">number_to_letters</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a number to a string representation using letters.</span>
 
@@ -736,7 +743,7 @@
 
 <div class="viewcode-block" id="add_text_to_figure">
 <a class="viewcode-back" href="../../../api/m3util.viz.html#m3util.viz.text.add_text_to_figure">[docs]</a>
-<span class="k">def</span> <span class="nf">add_text_to_figure</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text_position_in_inches</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_text_to_figure</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text_position_in_inches</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add text to a figure at a specified position.</span>
 
@@ -764,7 +771,7 @@
 
 <div class="viewcode-block" id="line_annotation">
 <a class="viewcode-back" href="../../../api/m3util.viz.html#m3util.viz.text.line_annotation">[docs]</a>
-<span class="k">def</span> <span class="nf">line_annotation</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">line_x</span><span class="p">,</span> <span class="n">line_y</span><span class="p">,</span> <span class="n">annotation_kwargs</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">line_annotation</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">line_x</span><span class="p">,</span> <span class="n">line_y</span><span class="p">,</span> <span class="n">annotation_kwargs</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Annotate a line on a plot with text at its midpoint.</span>
 
@@ -832,8 +839,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -853,7 +860,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.1.
     <br/>
   </p>
 </div>
@@ -866,7 +873,8 @@
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>
