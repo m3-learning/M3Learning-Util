@@ -4,6 +4,14 @@ from pygments.formatters import TerminalFormatter
 import inspect
 
 
+def filter_cls_params(cls, params):
+    """Filters params dict to match the signature of cls.__init__."""
+    signature = inspect.signature(cls.__init__)
+    return {
+        k: v for k, v in params.items()
+        if k in signature.parameters and k != 'self'
+    }
+
 def print_code(func):
     """
     print_code A function to print the source code of a function with syntax highlighting and line numbers.
