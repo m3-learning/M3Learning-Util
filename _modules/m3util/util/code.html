@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.util.code &#8212; M3Learning-Util 0.0.po documentation</title>
+    <title>m3util.util.code &#8212; M3Learning-Util 2.0.6 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=fbe5091d"></script>
+    <script src="../../../_static/documentation_options.js?v=3e466467"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/util/code';</script>
@@ -46,8 +46,8 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.0.post1.dev1+g64e05b2" />
-    <meta name="docbuild:last-update" content="Feb 25, 2025"/>
+  <meta name="docsearch:version" content="2.0.6" />
+    <meta name="docbuild:last-update" content="Apr 02, 2025"/>
   </head>
   
   
@@ -113,8 +113,8 @@
       
     
     
-    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 0.0.po documentation - Home"/>
-    <img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 0.0.po documentation - Home"/>
+    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.6 documentation - Home"/>
+    <img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.6 documentation - Home"/>
   
   
 </a></div>
@@ -480,6 +480,17 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
 
 
+<div class="viewcode-block" id="filter_cls_params">
+<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.code.filter_cls_params">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_cls_params</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filters params dict to match the signature of cls.__init__.&quot;&quot;&quot;</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="fm">__init__</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">signature</span><span class="o">.</span><span class="n">parameters</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">&#39;self&#39;</span>
+    <span class="p">}</span></div>
+
+
 <div class="viewcode-block" id="print_code">
 <a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.code.print_code">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">print_code</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
@@ -551,7 +562,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.1.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     <br/>
   </p>
 </div>
