@@ -163,6 +163,7 @@ def labelfigs(
     text_pos (str, optional): The position of the label text. Defaults to "center".
     inset_fraction (tuple, optional): The fraction of the axes to inset the label. Defaults to (0.15, 0.15).
     **kwargs: Additional keyword arguments.
+        add_label (bool, optional): Whether to add the label. Defaults to True.
 
     Returns:
     Text: The created text object.
@@ -171,6 +172,11 @@ def labelfigs(
     ValueError: If an invalid position is provided.
 
     """
+    
+    kwargs['add_label'] = kwargs.get('add_label', True)
+    
+    if kwargs['add_label'] is False:
+        return
 
     # initializes an empty string
     text = ""
