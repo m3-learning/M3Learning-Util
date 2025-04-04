@@ -3,14 +3,9 @@ from pygments.lexers import PythonLexer
 from pygments.formatters import TerminalFormatter
 import inspect
 
+#TODO: this is deprecated, use m3util.util.kwargs.filter_kwargs instead
+from m3util.util.kwargs import filter_kwargs
 
-def filter_cls_params(cls, params):
-    """Filters params dict to match the signature of cls.__init__."""
-    signature = inspect.signature(cls.__init__)
-    return {
-        k: v for k, v in params.items()
-        if k in signature.parameters and k != 'self'
-    }
 
 def print_code(func):
     """
