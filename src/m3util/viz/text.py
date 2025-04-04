@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib
 from m3util.util.kwargs import _filter_kwargs
 from m3util.viz.positioning import obj_offset
+import inspect
 
 
 def set_sci_notation_label(
@@ -218,6 +219,8 @@ def labelfigs(
 
     if number is not None:
         text += number_to_letters(number)
+        
+    filtered_kwargs = _filter_kwargs(axes.text, kwargs)
 
     text_ = axes.text(
         x,
@@ -232,7 +235,7 @@ def labelfigs(
         ],
         color=formatting["color"],
         size=size,
-        **kwargs,
+        **filtered_kwargs,
     )
 
     text_.set_zorder(np.inf)
