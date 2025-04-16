@@ -14,9 +14,9 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Fix Git permissions
+      - name: Fix Git permissions (no sudo)
         run: |
-          sudo chown -R $(whoami):$(whoami) .git
+          chown -R $(whoami):$(whoami) .git || true
           chmod -R u+rwX .git
       
       - name: Checkout code
