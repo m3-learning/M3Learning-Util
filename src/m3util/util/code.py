@@ -4,7 +4,7 @@ from pygments.formatters import TerminalFormatter
 import inspect
 
 #TODO: this is deprecated, use m3util.util.kwargs.filter_kwargs instead
-from m3util.util.kwargs import filter_kwargs
+from m3util.util.kwargs import filter_cls_params
 
 
 def print_code(func):
