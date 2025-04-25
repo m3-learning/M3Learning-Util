@@ -1,5 +1,7 @@
 # Auto-generated __init__.py
 
-from . import complex
+from m3util.converters import complex
 
-__all__ = ["complex"]
+from m3util.converters.complex import (to_complex,)
+
+__all__ = ['complex', 'to_complex']
