@@ -1,6 +1,7 @@
 # Auto-generated __init__.py
 
 from m3util.viz import arrows
+from m3util.viz import axes
 from m3util.viz import colorbars
 from m3util.viz import images
 from m3util.viz import layout
@@ -16,6 +17,7 @@ from m3util.viz.arrows import (DrawArrow, draw_ellipse_with_arrow,
                                get_perpendicular_vector, place_text_in_inches,
                                place_text_points, shift_object_in_inches,
                                shift_object_in_points,)
+from m3util.viz.axes import (remove_all_ticks,)
 from m3util.viz.colorbars import (add_colorbar,)
 from m3util.viz.images import (display_image,)
 from m3util.viz.layout import (Axis_Ratio, FigDimConverter, Path, PathPatch,
@@ -38,8 +40,8 @@ from m3util.viz.text import (add_text_to_figure, bring_text_to_front,
 
 __all__ = ['Axis_Ratio', 'DrawArrow', 'FigDimConverter', 'Path', 'PathPatch',
            'add_box', 'add_colorbar', 'add_scalebar', 'add_text_to_figure',
-           'arrows', 'bring_text_to_front', 'colorbars', 'combine_lines',
-           'display_image', 'draw_ellipse_with_arrow',
+           'arrows', 'axes', 'bring_text_to_front', 'colorbars',
+           'combine_lines', 'display_image', 'draw_ellipse_with_arrow',
            'draw_extended_arrow_indicator', 'draw_line_with_text',
            'draw_lines', 'embedding_maps', 'find_nearest',
            'get_axis_pos_inches', 'get_axis_range', 'get_closest_point',
@@ -50,6 +52,7 @@ __all__ = ['Axis_Ratio', 'DrawArrow', 'FigDimConverter', 'Path', 'PathPatch',
            'make_movie', 'mock_line_annotation', 'movies', 'number_to_letters',
            'obj_offset', 'path_maker', 'place_text_in_inches',
            'place_text_points', 'plot_into_graph', 'positioning', 'printer',
-           'printing', 'scalebar', 'set_axis', 'set_sci_notation_label',
-           'set_style', 'shift_object_in_inches', 'shift_object_in_points',
-           'span_to_axis', 'style', 'subfigures', 'text']
+           'printing', 'remove_all_ticks', 'scalebar', 'set_axis',
+           'set_sci_notation_label', 'set_style', 'shift_object_in_inches',
+           'shift_object_in_points', 'span_to_axis', 'style', 'subfigures',
+           'text']
