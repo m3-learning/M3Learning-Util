@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.viz.text &#8212; M3Learning-Util 2.0.6 documentation</title>
+    <title>m3util.viz.text &#8212; M3Learning-Util 2.0.9 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=3e466467"></script>
+    <script src="../../../_static/documentation_options.js?v=d65cc7a5"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/viz/text';</script>
@@ -46,8 +46,8 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0.6" />
-    <meta name="docbuild:last-update" content="Apr 02, 2025"/>
+  <meta name="docsearch:version" content="2.0.9" />
+    <meta name="docbuild:last-update" content="Apr 25, 2025"/>
   </head>
   
   
@@ -113,8 +113,8 @@
       
     
     
-    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.6 documentation - Home"/>
-    <img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.6 documentation - Home"/>
+    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.9 documentation - Home"/>
+    <img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.9 documentation - Home"/>
   
   
 </a></div>
@@ -482,6 +482,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">m3util.util.kwargs</span><span class="w"> </span><span class="kn">import</span> <span class="n">_filter_kwargs</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">m3util.viz.positioning</span><span class="w"> </span><span class="kn">import</span> <span class="n">obj_offset</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
 
 
 <div class="viewcode-block" id="set_sci_notation_label">
@@ -647,6 +648,7 @@
 <span class="sd">    text_pos (str, optional): The position of the label text. Defaults to &quot;center&quot;.</span>
 <span class="sd">    inset_fraction (tuple, optional): The fraction of the axes to inset the label. Defaults to (0.15, 0.15).</span>
 <span class="sd">    **kwargs: Additional keyword arguments.</span>
+<span class="sd">        add_label (bool, optional): Whether to add the label. Defaults to True.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">    Text: The created text object.</span>
@@ -655,6 +657,11 @@
 <span class="sd">    ValueError: If an invalid position is provided.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;add_label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;add_label&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;add_label&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span>
 
     <span class="c1"># initializes an empty string</span>
     <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -696,6 +703,8 @@
 
     <span class="k">if</span> <span class="n">number</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">text</span> <span class="o">+=</span> <span class="n">number_to_letters</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+        
+    <span class="n">filtered_kwargs</span> <span class="o">=</span> <span class="n">_filter_kwargs</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
 
     <span class="n">text_</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
         <span class="n">x</span><span class="p">,</span>
@@ -710,7 +719,7 @@
         <span class="p">],</span>
         <span class="n">color</span><span class="o">=</span><span class="n">formatting</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span>
         <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">filtered_kwargs</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">text_</span><span class="o">.</span><span class="n">set_zorder</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>

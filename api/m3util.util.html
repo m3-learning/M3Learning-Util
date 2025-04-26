@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.util package &#8212; M3Learning-Util 2.0.6 documentation</title>
+    <title>m3util.util package &#8212; M3Learning-Util 2.0.9 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=3e466467"></script>
+    <script src="../_static/documentation_options.js?v=d65cc7a5"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.util';</script>
@@ -49,8 +49,8 @@
     <link rel="prev" title="m3util.pandas package" href="m3util.pandas.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0.6" />
-    <meta name="docbuild:last-update" content="Apr 02, 2025"/>
+  <meta name="docsearch:version" content="2.0.9" />
+    <meta name="docbuild:last-update" content="Apr 25, 2025"/>
   </head>
   
   
@@ -116,8 +116,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.6 documentation - Home"/>
-    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.6 documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.9 documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.9 documentation - Home"/>
   
   
 </a></div>
@@ -690,12 +690,6 @@ download_path (str): Directory to save the downloaded files. The directory must 
 <section id="module-m3util.util.code">
 <span id="m3util-util-code-module"></span><h2>m3util.util.code module<a class="headerlink" href="#module-m3util.util.code" title="Link to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="m3util.util.code.filter_cls_params">
-<span class="sig-prename descclassname"><span class="pre">m3util.util.code.</span></span><span class="sig-name descname"><span class="pre">filter_cls_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/util/code.html#filter_cls_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.util.code.filter_cls_params" title="Link to this definition">#</a></dt>
-<dd><p>Filters params dict to match the signature of cls.__init__.</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="m3util.util.code.print_code">
 <span class="sig-prename descclassname"><span class="pre">m3util.util.code.</span></span><span class="sig-name descname"><span class="pre">print_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/util/code.html#print_code"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.util.code.print_code" title="Link to this definition">#</a></dt>
 <dd><p>print_code A function to print the source code of a function with syntax highlighting and line numbers.</p>
@@ -877,6 +871,17 @@ one of the supported hashing algorithms: ‘sha256’, ‘md5’, or ‘sha1’.
 </section>
 <section id="module-m3util.util.kwargs">
 <span id="m3util-util-kwargs-module"></span><h2>m3util.util.kwargs module<a class="headerlink" href="#module-m3util.util.kwargs" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.util.kwargs.filter_cls_params">
+<span class="sig-prename descclassname"><span class="pre">m3util.util.kwargs.</span></span><span class="sig-name descname"><span class="pre">filter_cls_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/util/kwargs.html#filter_cls_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.util.kwargs.filter_cls_params" title="Link to this definition">#</a></dt>
+<dd><p>Filters params dict to match the signature of cls.__init__.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.util.kwargs.filter_kwargs">
+<span class="sig-prename descclassname"><span class="pre">m3util.util.kwargs.</span></span><span class="sig-name descname"><span class="pre">filter_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/util/kwargs.html#filter_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.util.kwargs.filter_kwargs" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="module-m3util.util.search">
 <span id="m3util-util-search-module"></span><h2>m3util.util.search module<a class="headerlink" href="#module-m3util.util.search" title="Link to this heading">#</a></h2>
@@ -1006,7 +1011,6 @@ one of the supported hashing algorithms: ‘sha256’, ‘md5’, or ‘sha1’.
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.util.code">m3util.util.code module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.code.filter_cls_params"><code class="docutils literal notranslate"><span class="pre">filter_cls_params()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.code.print_code"><code class="docutils literal notranslate"><span class="pre">print_code()</span></code></a></li>
 </ul>
 </li>
@@ -1029,7 +1033,11 @@ one of the supported hashing algorithms: ‘sha256’, ‘md5’, or ‘sha1’.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.hashing.select_hash_algorithm"><code class="docutils literal notranslate"><span class="pre">select_hash_algorithm()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.util.kwargs">m3util.util.kwargs module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.util.kwargs">m3util.util.kwargs module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.kwargs.filter_cls_params"><code class="docutils literal notranslate"><span class="pre">filter_cls_params()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.kwargs.filter_kwargs"><code class="docutils literal notranslate"><span class="pre">filter_kwargs()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.util.search">m3util.util.search module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.search.extract_number"><code class="docutils literal notranslate"><span class="pre">extract_number()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.util.search.get_tuple_names"><code class="docutils literal notranslate"><span class="pre">get_tuple_names()</span></code></a></li>

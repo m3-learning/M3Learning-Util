@@ -12,6 +12,14 @@ m3util.viz.arrows module
    :show-inheritance:
    :undoc-members:
 
+m3util.viz.colorbars module
+---------------------------
+
+.. automodule:: m3util.viz.colorbars
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 m3util.viz.images module
 ------------------------
 

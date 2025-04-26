@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.viz package &#8212; M3Learning-Util 2.0.6 documentation</title>
+    <title>m3util.viz package &#8212; M3Learning-Util 2.0.9 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=3e466467"></script>
+    <script src="../_static/documentation_options.js?v=d65cc7a5"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.viz';</script>
@@ -48,8 +48,8 @@
     <link rel="prev" title="m3util.util package" href="m3util.util.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0.6" />
-    <meta name="docbuild:last-update" content="Apr 02, 2025"/>
+  <meta name="docsearch:version" content="2.0.9" />
+    <meta name="docbuild:last-update" content="Apr 25, 2025"/>
   </head>
   
   
@@ -115,8 +115,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.6 documentation - Home"/>
-    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.6 documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.9 documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.9 documentation - Home"/>
   
   
 </a></div>
@@ -857,6 +857,25 @@ new_position = shift_object_in_points(ax, (0.5, 0.5), (1, 0), 10)</p>
 </dd></dl>
 
 </section>
+<section id="module-m3util.viz.colorbars">
+<span id="m3util-viz-colorbars-module"></span><h2>m3util.viz.colorbars module<a class="headerlink" href="#module-m3util.viz.colorbars" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.colorbars.add_colorbar">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.colorbars.</span></span><span class="sig-name descname"><span class="pre">add_colorbar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'5%'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/colorbars.html#add_colorbar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.colorbars.add_colorbar" title="Link to this definition">#</a></dt>
+<dd><p>function to add colorbar to subplots</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>im</strong> (<em>matplotlib image</em>) – image that colorbar comes from</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib subplot ax</em>) – where to attach the colorbar</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – size of the colorbar. Defaults to “5%”.</p></li>
+<li><p><strong>pad</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – pad of the colorbar. Defaults to 0.05.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-m3util.viz.images">
 <span id="m3util-viz-images-module"></span><h2>m3util.viz.images module<a class="headerlink" href="#module-m3util.viz.images" title="Link to this heading">#</a></h2>
 <dl class="py function">
@@ -1422,6 +1441,9 @@ size (int, optional): The font size of the label. Defaults to 8.
 text_pos (str, optional): The position of the label text. Defaults to “center”.
 inset_fraction (tuple, optional): The fraction of the axes to inset the label. Defaults to (0.15, 0.15).
 <a href="#id13"><span class="problematic" id="id14">**</span></a>kwargs: Additional keyword arguments.</p>
+<blockquote>
+<div><p>add_label (bool, optional): Whether to add the label. Defaults to True.</p>
+</div></blockquote>
 <p>Returns:
 Text: The created text object.</p>
 <p>Raises:
@@ -1531,6 +1553,10 @@ ValueError: If an invalid corner position is provided.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.place_text_points"><code class="docutils literal notranslate"><span class="pre">place_text_points()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.shift_object_in_inches"><code class="docutils literal notranslate"><span class="pre">shift_object_in_inches()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.shift_object_in_points"><code class="docutils literal notranslate"><span class="pre">shift_object_in_points()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.colorbars">m3util.viz.colorbars module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.colorbars.add_colorbar"><code class="docutils literal notranslate"><span class="pre">add_colorbar()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.images">m3util.viz.images module</a><ul class="nav section-nav flex-column">
