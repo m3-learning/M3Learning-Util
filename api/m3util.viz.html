@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.viz package &#8212; M3Learning-Util 2.0.10 documentation</title>
+    <title>m3util.viz package &#8212; M3Learning-Util unknow documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=4dc8cd5f"></script>
+    <script src="../_static/documentation_options.js?v=815f36d8"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.viz';</script>
@@ -48,7 +48,7 @@
     <link rel="prev" title="m3util.util package" href="m3util.util.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0.10" />
+  <meta name="docsearch:version" content="unknown" />
     <meta name="docbuild:last-update" content="Apr 25, 2025"/>
   </head>
   
@@ -115,8 +115,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.10 documentation - Home"/>
-    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.10 documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util unknow documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util unknow documentation - Home"/>
   
   
 </a></div>
@@ -854,6 +854,18 @@ along the direction vector.</p></li>
 <p class="rubric">Example</p>
 <p># Shift a point (0.5, 0.5) by 10 points along the direction (1, 0)
 new_position = shift_object_in_points(ax, (0.5, 0.5), (1, 0), 10)</p>
+</dd></dl>
+
+</section>
+<section id="module-m3util.viz.axes">
+<span id="m3util-viz-axes-module"></span><h2>m3util.viz.axes module<a class="headerlink" href="#module-m3util.viz.axes" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.axes.remove_all_ticks">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.axes.</span></span><span class="sig-name descname"><span class="pre">remove_all_ticks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/axes.html#remove_all_ticks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.axes.remove_all_ticks" title="Link to this definition">#</a></dt>
+<dd><p>Remove all x and y ticks from all axes in the current figure.</p>
+<p>This function iterates over all axes in the current figure and sets
+both the x and y ticks to be empty, effectively removing them from
+the plot.</p>
 </dd></dl>
 
 </section>
@@ -2890,6 +2902,15 @@ with options for rotating the text and adding a stroke (outline) for enhanced vi
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="m3util.viz.remove_all_ticks">
+<span class="sig-prename descclassname"><span class="pre">m3util.viz.</span></span><span class="sig-name descname"><span class="pre">remove_all_ticks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/axes.html#remove_all_ticks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.remove_all_ticks" title="Link to this definition">#</a></dt>
+<dd><p>Remove all x and y ticks from all axes in the current figure.</p>
+<p>This function iterates over all axes in the current figure and sets
+both the x and y ticks to be empty, effectively removing them from
+the plot.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="m3util.viz.scalebar">
 <span class="sig-prename descclassname"><span class="pre">m3util.viz.</span></span><span class="sig-name descname"><span class="pre">scalebar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'br'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/layout.html#scalebar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.viz.scalebar" title="Link to this definition">#</a></dt>
 <dd><p>Adds a scalebar to figures.</p>
@@ -3089,6 +3110,10 @@ ax (list): List of axes objects.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.arrows.shift_object_in_points"><code class="docutils literal notranslate"><span class="pre">shift_object_in_points()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.axes">m3util.viz.axes module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.axes.remove_all_ticks"><code class="docutils literal notranslate"><span class="pre">remove_all_ticks()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.viz.colorbars">m3util.viz.colorbars module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.colorbars.add_colorbar"><code class="docutils literal notranslate"><span class="pre">add_colorbar()</span></code></a></li>
 </ul>
@@ -3263,6 +3288,7 @@ ax (list): List of axes objects.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.printer.savefig"><code class="docutils literal notranslate"><span class="pre">printer.savefig()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.remove_all_ticks"><code class="docutils literal notranslate"><span class="pre">remove_all_ticks()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.scalebar"><code class="docutils literal notranslate"><span class="pre">scalebar()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.set_axis"><code class="docutils literal notranslate"><span class="pre">set_axis()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.viz.set_sci_notation_label"><code class="docutils literal notranslate"><span class="pre">set_sci_notation_label()</span></code></a></li>

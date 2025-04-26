@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util package &#8212; M3Learning-Util 2.0.10 documentation</title>
+    <title>m3util package &#8212; M3Learning-Util unknow documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=4dc8cd5f"></script>
+    <script src="../_static/documentation_options.js?v=815f36d8"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util';</script>
@@ -49,7 +49,7 @@
     <link rel="prev" title="m3util" href="modules.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0.10" />
+  <meta name="docsearch:version" content="unknown" />
     <meta name="docbuild:last-update" content="Apr 25, 2025"/>
   </head>
   
@@ -116,8 +116,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.10 documentation - Home"/>
-    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.10 documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util unknow documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util unknow documentation - Home"/>
   
   
 </a></div>
@@ -815,6 +815,10 @@
 <li class="toctree-l3"><a class="reference internal" href="m3util.viz.html#m3util.viz.arrows.shift_object_in_points"><code class="docutils literal notranslate"><span class="pre">shift_object_in_points()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="m3util.viz.html#module-m3util.viz.axes">m3util.viz.axes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="m3util.viz.html#m3util.viz.axes.remove_all_ticks"><code class="docutils literal notranslate"><span class="pre">remove_all_ticks()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="m3util.viz.html#module-m3util.viz.colorbars">m3util.viz.colorbars module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="m3util.viz.html#m3util.viz.colorbars.add_colorbar"><code class="docutils literal notranslate"><span class="pre">add_colorbar()</span></code></a></li>
 </ul>
@@ -989,6 +993,7 @@
 <li class="toctree-l4"><a class="reference internal" href="m3util.viz.html#m3util.viz.printer.savefig"><code class="docutils literal notranslate"><span class="pre">printer.savefig()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="m3util.viz.html#m3util.viz.remove_all_ticks"><code class="docutils literal notranslate"><span class="pre">remove_all_ticks()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="m3util.viz.html#m3util.viz.scalebar"><code class="docutils literal notranslate"><span class="pre">scalebar()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="m3util.viz.html#m3util.viz.set_axis"><code class="docutils literal notranslate"><span class="pre">set_axis()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="m3util.viz.html#m3util.viz.set_sci_notation_label"><code class="docutils literal notranslate"><span class="pre">set_sci_notation_label()</span></code></a></li>
@@ -3463,6 +3468,15 @@ with options for rotating the text and adding a stroke (outline) for enhanced vi
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="m3util.remove_all_ticks">
+<span class="sig-prename descclassname"><span class="pre">m3util.</span></span><span class="sig-name descname"><span class="pre">remove_all_ticks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/viz/axes.html#remove_all_ticks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.remove_all_ticks" title="Link to this definition">#</a></dt>
+<dd><p>Remove all x and y ticks from all axes in the current figure.</p>
+<p>This function iterates over all axes in the current figure and sets
+both the x and y ticks to be empty, effectively removing them from
+the plot.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="m3util.reporthook">
 <span class="sig-prename descclassname"><span class="pre">m3util.</span></span><span class="sig-name descname"><span class="pre">reporthook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/util/IO.html#reporthook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.reporthook" title="Link to this definition">#</a></dt>
 <dd><p>A function that displays the status and speed of the download</p>
@@ -3982,6 +3996,7 @@ ax (list): List of axes objects.</p>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.rand_tensor"><code class="docutils literal notranslate"><span class="pre">rand_tensor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.remove_all_ticks"><code class="docutils literal notranslate"><span class="pre">remove_all_ticks()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.reporthook"><code class="docutils literal notranslate"><span class="pre">reporthook()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.save_list_to_txt"><code class="docutils literal notranslate"><span class="pre">save_list_to_txt()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.scalebar"><code class="docutils literal notranslate"><span class="pre">scalebar()</span></code></a></li>
