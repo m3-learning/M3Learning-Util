@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.notebooks package &#8212; M3Learning-Util 2.0.9 documentation</title>
+    <title>m3util.notebooks package &#8212; M3Learning-Util 2.0.10 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d65cc7a5"></script>
+    <script src="../_static/documentation_options.js?v=4dc8cd5f"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.notebooks';</script>
@@ -49,7 +49,7 @@
     <link rel="prev" title="m3util.ml.optimizers package" href="m3util.ml.optimizers.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0.9" />
+  <meta name="docsearch:version" content="2.0.10" />
     <meta name="docbuild:last-update" content="Apr 25, 2025"/>
   </head>
   
@@ -116,8 +116,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.9 documentation - Home"/>
-    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.9 documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.10 documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.10 documentation - Home"/>
   
   
 </a></div>
@@ -586,6 +586,63 @@ None</p>
 </section>
 <section id="module-m3util.notebooks">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-m3util.notebooks" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.notebooks.add_tags_to_notebook">
+<span class="sig-prename descclassname"><span class="pre">m3util.notebooks.</span></span><span class="sig-name descname"><span class="pre">add_tags_to_notebook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notebook_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/notebooks/skip_execution.html#add_tags_to_notebook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.notebooks.add_tags_to_notebook" title="Link to this definition">#</a></dt>
+<dd><p>Add skip-execution tags to all cells in a Jupyter notebook.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>notebook_path</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Path to the Jupyter notebook file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.notebooks.calculate_notebook_checksum">
+<span class="sig-prename descclassname"><span class="pre">m3util.notebooks.</span></span><span class="sig-name descname"><span class="pre">calculate_notebook_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notebook_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sha256'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/notebooks/checksum.html#calculate_notebook_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.notebooks.calculate_notebook_checksum" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the checksum of the code cells in a Jupyter notebook (.ipynb) file using the specified hashing algorithm.</p>
+<p>This function reads the contents of a Jupyter notebook file, extracts the code cells (ignoring metadata, execution counts,
+and other non-code content), and computes its checksum using one of the supported hashing algorithms: ‘sha256’, ‘md5’, or ‘sha1’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notebook_path</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The path to the Jupyter notebook file (.ipynb) to be hashed.</p></li>
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The hashing algorithm to use. Supported options are ‘sha256’ (default), ‘md5’, and ‘sha1’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The computed checksum as a hexadecimal string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.11/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.11/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – If an unsupported hashing algorithm is specified.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>checksum = calculate_notebook_checksum(“/path/to/notebook.ipynb”, algorithm=”sha256”)
+print(checksum)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.notebooks.convert_notebook_to_slides">
+<span class="sig-prename descclassname"><span class="pre">m3util.notebooks.</span></span><span class="sig-name descname"><span class="pre">convert_notebook_to_slides</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notebook_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slide_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subslide_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/notebooks/slides.html#convert_notebook_to_slides"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.notebooks.convert_notebook_to_slides" title="Link to this definition">#</a></dt>
+<dd><p>Convert a Jupyter notebook to slides by modifying the metadata of each cell.</p>
+<p>Parameters:
+notebook_path (str): Path to the Jupyter notebook (.ipynb) file.
+slide_level (int): Heading level for slides.
+subslide_level (int): Heading level for subslides.
+output_path (str, optional): Output file path. Defaults to None, which appends ‘_slides’ to the original filename.</p>
+<p>Returns:
+None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.notebooks.main">
+<span class="sig-prename descclassname"><span class="pre">m3util.notebooks.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/notebooks/slides.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.notebooks.main" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
 </section>
 
@@ -651,7 +708,13 @@ None</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.notebooks.slides.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.notebooks">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.notebooks">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.notebooks.add_tags_to_notebook"><code class="docutils literal notranslate"><span class="pre">add_tags_to_notebook()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.notebooks.calculate_notebook_checksum"><code class="docutils literal notranslate"><span class="pre">calculate_notebook_checksum()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.notebooks.convert_notebook_to_slides"><code class="docutils literal notranslate"><span class="pre">convert_notebook_to_slides()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.notebooks.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

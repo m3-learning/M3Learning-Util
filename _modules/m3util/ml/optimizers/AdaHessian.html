@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.ml.optimizers.AdaHessian &#8212; M3Learning-Util 2.0.9 documentation</title>
+    <title>m3util.ml.optimizers.AdaHessian &#8212; M3Learning-Util 2.0.10 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../../_static/documentation_options.js?v=d65cc7a5"></script>
+    <script src="../../../../_static/documentation_options.js?v=4dc8cd5f"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/ml/optimizers/AdaHessian';</script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0.9" />
+  <meta name="docsearch:version" content="2.0.10" />
     <meta name="docbuild:last-update" content="Apr 25, 2025"/>
   </head>
   
@@ -113,8 +113,8 @@
       
     
     
-    <img src="../../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.9 documentation - Home"/>
-    <img src="../../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.9 documentation - Home"/>
+    <img src="../../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.10 documentation - Home"/>
+    <img src="../../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.10 documentation - Home"/>
   
   
 </a></div>
@@ -485,7 +485,7 @@
 
 
 <div class="viewcode-block" id="AdaHessian">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.AdaHessian.AdaHessian">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.AdaHessian">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AdaHessian</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implements the AdaHessian algorithm from &quot;ADAHESSIAN: An Adaptive Second OrderOptimizer for Machine Learning&quot;</span>
@@ -544,7 +544,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="s2">&quot;hessian step&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
 <div class="viewcode-block" id="AdaHessian.get_params">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.AdaHessian.AdaHessian.get_params">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.AdaHessian.get_params">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets all parameters in all param_groups with gradients</span>
@@ -556,7 +556,7 @@
 
 
 <div class="viewcode-block" id="AdaHessian.zero_hessian">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.AdaHessian.AdaHessian.zero_hessian">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.AdaHessian.zero_hessian">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">zero_hessian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Zeros out the accumulated hessian traces.</span>
@@ -571,7 +571,7 @@
 
 
 <div class="viewcode-block" id="AdaHessian.set_hessian">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.AdaHessian.AdaHessian.set_hessian">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.AdaHessian.set_hessian">[docs]</a>
     <span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_hessian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -617,7 +617,7 @@
 
 
 <div class="viewcode-block" id="AdaHessian.step">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.AdaHessian.AdaHessian.step">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.AdaHessian.step">[docs]</a>
     <span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">closure</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

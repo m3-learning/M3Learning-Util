@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>m3util.pandas package &#8212; M3Learning-Util 2.0.9 documentation</title>
+    <title>m3util.pandas package &#8212; M3Learning-Util 2.0.10 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d65cc7a5"></script>
+    <script src="../_static/documentation_options.js?v=4dc8cd5f"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/m3util.pandas';</script>
@@ -49,7 +49,7 @@
     <link rel="prev" title="m3util.notebooks package" href="m3util.notebooks.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0.9" />
+  <meta name="docsearch:version" content="2.0.10" />
     <meta name="docbuild:last-update" content="Apr 25, 2025"/>
   </head>
   
@@ -116,8 +116,8 @@
       
     
     
-    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.9 documentation - Home"/>
-    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.9 documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.10 documentation - Home"/>
+    <img src="../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.10 documentation - Home"/>
   
   
 </a></div>
@@ -537,6 +537,26 @@ pd.Series: A Series containing the min/max row data from the original DataFrame.
 </section>
 <section id="module-m3util.pandas">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-m3util.pandas" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.pandas.filter_df">
+<span class="sig-prename descclassname"><span class="pre">m3util.pandas.</span></span><span class="sig-name descname"><span class="pre">filter_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/pandas/filter.html#filter_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.pandas.filter_df" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="m3util.pandas.find_min_max_by_group">
+<span class="sig-prename descclassname"><span class="pre">m3util.pandas.</span></span><span class="sig-name descname"><span class="pre">find_min_max_by_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimized_result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">find</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/m3util/pandas/filter.html#find_min_max_by_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#m3util.pandas.find_min_max_by_group" title="Link to this definition">#</a></dt>
+<dd><p>Finds the minimum or maximum value for a specific column based on filtered criteria,
+and returns the corresponding row from the original DataFrame.</p>
+<p>Parameters:
+df (pd.DataFrame): The original DataFrame to filter, group, and search.
+optimized_result (str): The column name to find the max or min value.
+find (str): ‘min’ or ‘max’ to specify whether to find the minimum or maximum.
+exclude_kwargs (dict): Column-value pairs to exclude from the DataFrame.
+<a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs: Column-value pairs to filter the DataFrame.</p>
+<p>Returns:
+pd.Series: A Series containing the min/max row data from the original DataFrame.</p>
+</dd></dl>
+
 </section>
 </section>
 
@@ -593,7 +613,11 @@ pd.Series: A Series containing the min/max row data from the original DataFrame.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.pandas.filter.find_min_max_by_group"><code class="docutils literal notranslate"><span class="pre">find_min_max_by_group()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.pandas">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-m3util.pandas">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.pandas.filter_df"><code class="docutils literal notranslate"><span class="pre">filter_df()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m3util.pandas.find_min_max_by_group"><code class="docutils literal notranslate"><span class="pre">find_min_max_by_group()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

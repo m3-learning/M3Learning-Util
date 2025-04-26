@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.util.h5 &#8212; M3Learning-Util 2.0.9 documentation</title>
+    <title>m3util.util.h5 &#8212; M3Learning-Util 2.0.10 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=d65cc7a5"></script>
+    <script src="../../../_static/documentation_options.js?v=4dc8cd5f"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/util/h5';</script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0.9" />
+  <meta name="docsearch:version" content="2.0.10" />
     <meta name="docbuild:last-update" content="Apr 25, 2025"/>
   </head>
   
@@ -113,8 +113,8 @@
       
     
     
-    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.9 documentation - Home"/>
-    <img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.9 documentation - Home"/>
+    <img src="../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.10 documentation - Home"/>
+    <img src="../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.10 documentation - Home"/>
   
   
 </a></div>
@@ -478,7 +478,7 @@
 
 
 <div class="viewcode-block" id="print_tree">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.print_tree">[docs]</a>
+<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.print_tree">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">print_tree</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Utility function to print the tree structure of an h5 file.</span>
@@ -494,7 +494,7 @@
 
 
 <div class="viewcode-block" id="get_tree">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.get_tree">[docs]</a>
+<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.get_tree">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_tree</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Utility function to get the tree structure of an h5 file.</span>
@@ -516,7 +516,7 @@
 
 
 <div class="viewcode-block" id="make_group">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.make_group">[docs]</a>
+<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.make_group">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_group</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Utility function to add a group to an h5 file.</span>
@@ -533,7 +533,7 @@
 
 
 <div class="viewcode-block" id="make_dataset">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.make_dataset">[docs]</a>
+<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.make_dataset">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_dataset</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Utility function to write or overwrite an h5 dataset.</span>
@@ -552,7 +552,7 @@
 
 
 <div class="viewcode-block" id="find_groups_with_string">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.find_groups_with_string">[docs]</a>
+<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.find_groups_with_string">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">find_groups_with_string</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">desired_string</span><span class="p">,</span> <span class="n">start_path</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find all groups in an h5 file with a certain string in their name,</span>
@@ -592,7 +592,7 @@
 
 
 <div class="viewcode-block" id="find_measurement">
-<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.util.h5.find_measurement">[docs]</a>
+<a class="viewcode-back" href="../../../api/m3util.util.html#m3util.find_measurement">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">find_measurement</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">search_string</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">list_all</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find measurements in an h5 file that match a certain string.</span>

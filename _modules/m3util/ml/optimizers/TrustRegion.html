@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>m3util.ml.optimizers.TrustRegion &#8212; M3Learning-Util 2.0.9 documentation</title>
+    <title>m3util.ml.optimizers.TrustRegion &#8212; M3Learning-Util 2.0.10 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../../_static/documentation_options.js?v=d65cc7a5"></script>
+    <script src="../../../../_static/documentation_options.js?v=4dc8cd5f"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/m3util/ml/optimizers/TrustRegion';</script>
@@ -46,7 +46,7 @@
     <link rel="search" title="Search" href="../../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0.9" />
+  <meta name="docsearch:version" content="2.0.10" />
     <meta name="docbuild:last-update" content="Apr 25, 2025"/>
   </head>
   
@@ -113,8 +113,8 @@
       
     
     
-    <img src="../../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.9 documentation - Home"/>
-    <img src="../../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.9 documentation - Home"/>
+    <img src="../../../../_static/Drexel_blue_Logo_square_Light.png" class="logo__image only-light" alt="M3Learning-Util 2.0.10 documentation - Home"/>
+    <img src="../../../../_static/Drexel_blue_Logo_square_Dark.png" class="logo__image only-dark pst-js-only" alt="M3Learning-Util 2.0.10 documentation - Home"/>
   
   
 </a></div>
@@ -488,7 +488,7 @@
 
 
 <div class="viewcode-block" id="TRCG">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.TRCG">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">TRCG</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implements the Trust-Region Conjugate Gradient (TRCG) optimization algorithm.</span>
@@ -567,7 +567,7 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">TRCG</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">defaults</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TRCG.findroot">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.findroot">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.TRCG.findroot">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">findroot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Finds the root of the quadratic equation to adjust the trust-region radius.</span>
@@ -612,7 +612,7 @@
                     <span class="n">momentum_buffer_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;ph&quot;</span><span class="p">])</span>
 
 <div class="viewcode-block" id="TRCG.CGSolver">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.CGSolver">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.TRCG.CGSolver">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">CGSolver</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="n">cnt_compute</span><span class="p">,</span> <span class="n">closure</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Conjugate Gradient (CG) solver for finding the optimization direction.</span>
@@ -698,7 +698,7 @@
 
 
 <div class="viewcode-block" id="TRCG.computeHessianVector">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeHessianVector">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.TRCG.computeHessianVector">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">computeHessianVector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">closure</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the product of the Hessian matrix with a vector `p`.</span>
@@ -735,7 +735,7 @@
 
 
 <div class="viewcode-block" id="TRCG.computeLoss">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeLoss">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.TRCG.computeLoss">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">computeLoss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">closure</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the total loss value across the closure parts.</span>
@@ -756,7 +756,7 @@
 
 
 <div class="viewcode-block" id="TRCG.computeGradientAndLoss">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeGradientAndLoss">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.TRCG.computeGradientAndLoss">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">computeGradientAndLoss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">closure</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the gradients and the total loss value across the closure parts.</span>
@@ -792,7 +792,7 @@
 
 
 <div class="viewcode-block" id="TRCG.computeGradient">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeGradient">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.TRCG.computeGradient">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">computeGradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">closure</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the gradients using the closure function.</span>
@@ -807,7 +807,7 @@
 
 
 <div class="viewcode-block" id="TRCG.computeDotProduct">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeDotProduct">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.TRCG.computeDotProduct">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">computeDotProduct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the dot product between two lists of vectors.</span>
@@ -823,7 +823,7 @@
 
 
 <div class="viewcode-block" id="TRCG.computeNorm">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.computeNorm">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.TRCG.computeNorm">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">computeNorm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the L2 norm of a list of vectors.</span>
@@ -838,7 +838,7 @@
 
 
 <div class="viewcode-block" id="TRCG.step">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.TRCG.step">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.TRCG.step">[docs]</a>
     <span class="nd">@_use_grad_for_differentiable</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">closure</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -907,14 +907,14 @@
 
 
 <div class="viewcode-block" id="SimpleModel4">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.SimpleModel4">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.SimpleModel4">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SimpleModel4</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SimpleModel4</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SimpleModel4.forward">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.SimpleModel4.forward">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.SimpleModel4.forward">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 </div>
@@ -922,7 +922,7 @@
 
 
 <div class="viewcode-block" id="closure_fn3">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.closure_fn3">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.closure_fn3">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">closure_fn3</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">closure</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="n">closure_size</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
         <span class="n">inputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
@@ -936,7 +936,7 @@
 
 
 <div class="viewcode-block" id="test_trcg_step_shrink_radius">
-<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.ml.optimizers.TrustRegion.test_trcg_step_shrink_radius">[docs]</a>
+<a class="viewcode-back" href="../../../../api/m3util.ml.optimizers.html#m3util.test_trcg_step_shrink_radius">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_trcg_step_shrink_radius</span><span class="p">():</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">SimpleModel4</span><span class="p">()</span>
     <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
