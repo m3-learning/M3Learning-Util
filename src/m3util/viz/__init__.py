@@ -32,7 +32,7 @@ from m3util.viz.layout import (Axis_Ratio, FigDimConverter, Path, PathPatch,
 from m3util.viz.lines import (draw_lines, handle_linewidth_conflicts,)
 from m3util.viz.movies import (make_movie,)
 from m3util.viz.positioning import (obj_offset,)
-from m3util.viz.printing import (printer,)
+from m3util.viz.printing import (Printer,)
 from m3util.viz.style import (set_style,)
 from m3util.viz.text import (add_text_to_figure, bring_text_to_front,
                              labelfigs, line_annotation, number_to_letters,
@@ -51,7 +51,7 @@ __all__ = ['Axis_Ratio', 'DrawArrow', 'FigDimConverter', 'Path', 'PathPatch',
            'layout_subfigures_inches', 'line_annotation', 'lines',
            'make_movie', 'mock_line_annotation', 'movies', 'number_to_letters',
            'obj_offset', 'path_maker', 'place_text_in_inches',
-           'place_text_points', 'plot_into_graph', 'positioning', 'printer',
+           'place_text_points', 'plot_into_graph', 'positioning', 'Printer',
            'printing', 'remove_all_ticks', 'scalebar', 'set_axis',
            'set_sci_notation_label', 'set_style', 'shift_object_in_inches',
            'shift_object_in_points', 'span_to_axis', 'style', 'subfigures',

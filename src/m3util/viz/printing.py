@@ -2,8 +2,22 @@ from m3util.util.IO import make_folder
 from m3util.viz.text import labelfigs
 from m3util.viz.text import bring_text_to_front
 
+import warnings
 
-class printer:
+def printer(*args, **kwargs):
+    """Deprecated: Use Printer instead."""
+    warnings.warn(
+        "The 'printer' class/function has been renamed to 'Printer'. Please update your code.",
+        DeprecationWarning,
+        stacklevel=2
+    )
+    # Assuming Printer is defined later in the file or imported elsewhere
+    # If Printer is defined later in *this* file, this will work at runtime
+    # as long as printer() is called after the Printer class definition.
+    return Printer(*args, **kwargs)
+
+
+class Printer:
     """Class to save figures to a folder"""
 
     def __init__(
