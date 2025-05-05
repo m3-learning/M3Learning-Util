@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-def remove_all_ticks():
+def remove_all_ticks(*args, **kwargs):
     """
     Remove all x and y ticks from all axes in the current figure.
 
@@ -8,4 +8,8 @@ def remove_all_ticks():
     both the x and y ticks to be empty, effectively removing them from
     the plot.
     """
-    plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[])
+    if len(args) > 0:
+        for ax in args:
+            plt.setp(ax, xticks=[], yticks=[])
+    else:
+        plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[])
