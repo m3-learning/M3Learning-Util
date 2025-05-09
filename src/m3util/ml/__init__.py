@@ -1,11 +1,11 @@
 # Auto-generated __init__.py
 
+from m3util.ml import regularization
 from m3util.ml import inference
 from m3util.ml import logging
 from m3util.ml import optimizers
 from m3util.ml import preprocessor
 from m3util.ml import rand
-from m3util.ml import regularization
 
 from m3util.ml.inference import (computeTime,)
 from m3util.ml.logging import (save_list_to_txt, write_csv,)
