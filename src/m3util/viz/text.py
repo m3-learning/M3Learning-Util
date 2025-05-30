@@ -146,7 +146,7 @@ def labelfigs(
     style="wb",
     loc="tl",
     string_add="",
-    size=8,
+    label_size=8,
     text_pos="center",
     inset_fraction=(0.15, 0.15),
     **kwargs,
@@ -195,21 +195,28 @@ def labelfigs(
     xlim = axes.get_xlim()
     ylim = axes.get_ylim()
 
-    x_inset = (xlim[1] - xlim[0]) * inset_fraction[1]
-    y_inset = (ylim[1] - ylim[0]) * inset_fraction[0]
+    # These are no longer needed since the position is relative to axis coordinates, not data coordinates 
+    # x_inset = (xlim[1] - xlim[0]) * inset_fraction[1]
+    # y_inset = (ylim[1] - ylim[0]) * inset_fraction[0]
 
     if loc == "tl":
-        x, y = xlim[0] + x_inset, ylim[1] - y_inset
+       # x, y = xlim[0] + x_inset, ylim[1] - y_inset
+        x, y = inset_fraction[1], 1-inset_fraction[0]
     elif loc == "tr":
-        x, y = xlim[1] - x_inset, ylim[1] - y_inset
+        #x, y = xlim[1] - x_inset, ylim[1] - y_inset
+        x, y = 1-inset_fraction[1], 1-inset_fraction[0]
     elif loc == "bl":
-        x, y = xlim[0] + x_inset, ylim[0] + y_inset
+       # x, y = xlim[0] + x_inset, ylim[0] + y_inset
+        x,y = inset_fraction[1], inset_fraction[0]
     elif loc == "br":
-        x, y = xlim[1] - x_inset, ylim[0] + y_inset
+       # x, y = xlim[1] - x_inset, ylim[0] + y_inset
+        x, y = 1-inset_fraction[1], inset_fraction[0]
     elif loc == "ct":
-        x, y = (xlim[0] + xlim[1]) / 2, ylim[1] - y_inset
+        #x, y = (xlim[0] + xlim[1]) / 2, ylim[1] - y_inset
+        x, y = 0.5, 1-inset_fraction[0]
     elif loc == "cb":
-        x, y = (xlim[0] + xlim[1]) / 2, ylim[0] + y_inset
+        #x, y = (xlim[0] + xlim[1]) / 2, ylim[0] + y_inset
+        x, y = 0.5, inset_fraction[0]
     else:
         raise ValueError(
             "Invalid position. Choose from 'tl', 'tr', 'bl', 'br', 'ct', or 'cb'."
