@@ -47,7 +47,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="unknown" />
-    <meta name="docbuild:last-update" content="Apr 25, 2025"/>
+    <meta name="docbuild:last-update" content="May 30, 2025"/>
   </head>
   
   
@@ -2820,7 +2820,7 @@
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">pprint_styles</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the available styles as pretty-printed string.&quot;&quot;&quot;</span>
-        <span class="n">table</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Class&#39;</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Attrs&#39;</span><span class="p">),</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Class&#39;</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Parameters&#39;</span><span class="p">),</span>
                  <span class="o">*</span><span class="p">[(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                     <span class="c1"># Add backquotes, as - and | have special meaning in reST.</span>
                     <span class="sa">f</span><span class="s1">&#39;``</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">``&#39;</span><span class="p">,</span>
@@ -4644,49 +4644,90 @@
                  <span class="n">patchA</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">patchB</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shrinkA</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">shrinkB</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
                  <span class="n">mutation_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mutation_aspect</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        There are two ways for defining an arrow:</span>
+<span class="sd">        **Defining the arrow position and path**</span>
 
-<span class="sd">        - If *posA* and *posB* are given, a path connecting two points is</span>
-<span class="sd">          created according to *connectionstyle*. The path will be</span>
-<span class="sd">          clipped with *patchA* and *patchB* and further shrunken by</span>
-<span class="sd">          *shrinkA* and *shrinkB*. An arrow is drawn along this</span>
-<span class="sd">          resulting path using the *arrowstyle* parameter.</span>
+<span class="sd">        There are two ways to define the arrow position and path:</span>
 
-<span class="sd">        - Alternatively if *path* is provided, an arrow is drawn along this</span>
-<span class="sd">          path and *patchA*, *patchB*, *shrinkA*, and *shrinkB* are ignored.</span>
+<span class="sd">        - **Start, end and connection**:</span>
+<span class="sd">          The typical approach is to define the start and end points of the</span>
+<span class="sd">          arrow using *posA* and *posB*. The curve between these two can</span>
+<span class="sd">          further be configured using *connectionstyle*.</span>
+
+<span class="sd">          If given, the arrow curve is clipped by *patchA* and *patchB*,</span>
+<span class="sd">          allowing it to start/end at the border of these patches.</span>
+<span class="sd">          Additionally, the arrow curve can be shortened by *shrinkA* and *shrinkB*</span>
+<span class="sd">          to create a margin between start/end (after possible clipping) and the</span>
+<span class="sd">          drawn arrow.</span>
+
+<span class="sd">        - **path**: Alternatively if *path* is provided, an arrow is drawn along</span>
+<span class="sd">          this Path. In this case, *connectionstyle*, *patchA*, *patchB*,</span>
+<span class="sd">          *shrinkA*, and *shrinkB* are ignored.</span>
+
+<span class="sd">        **Styling**</span>
+
+<span class="sd">        The *arrowstyle* defines the styling of the arrow head, tail and shaft.</span>
+<span class="sd">        The resulting arrows can be styled further by setting the `.Patch`</span>
+<span class="sd">        properties such as *linewidth*, *color*, *facecolor*, *edgecolor*</span>
+<span class="sd">        etc. via keyword arguments.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        posA, posB : (float, float), default: None</span>
-<span class="sd">            (x, y) coordinates of arrow tail and arrow head respectively.</span>
+<span class="sd">        posA, posB : (float, float), optional</span>
+<span class="sd">            (x, y) coordinates of start and end point of the arrow.</span>
+<span class="sd">            The actually drawn start and end positions may be modified</span>
+<span class="sd">            through *patchA*, *patchB*, *shrinkA*, and *shrinkB*.</span>
 
-<span class="sd">        path : `~matplotlib.path.Path`, default: None</span>
+<span class="sd">            *posA*, *posB* are exclusive of *path*.</span>
+
+<span class="sd">        path : `~matplotlib.path.Path`, optional</span>
 <span class="sd">            If provided, an arrow is drawn along this path and *patchA*,</span>
 <span class="sd">            *patchB*, *shrinkA*, and *shrinkB* are ignored.</span>
 
+<span class="sd">            *path* is exclusive of *posA*, *posB*.</span>
+
 <span class="sd">        arrowstyle : str or `.ArrowStyle`, default: &#39;simple&#39;</span>
-<span class="sd">            The `.ArrowStyle` with which the fancy arrow is drawn.  If a</span>
-<span class="sd">            string, it should be one of the available arrowstyle names, with</span>
-<span class="sd">            optional comma-separated attributes.  The optional attributes are</span>
-<span class="sd">            meant to be scaled with the *mutation_scale*.  The following arrow</span>
-<span class="sd">            styles are available:</span>
+<span class="sd">            The styling of arrow head, tail and shaft. This can be</span>
+
+<span class="sd">            - `.ArrowStyle` or one of its subclasses</span>
+<span class="sd">            - The shorthand string name (e.g. &quot;-&gt;&quot;) as given in the table below,</span>
+<span class="sd">              optionally containing a comma-separated list of style parameters,</span>
+<span class="sd">              e.g. &quot;-&gt;, head_length=10, head_width=5&quot;.</span>
+
+<span class="sd">            The style parameters are scaled by *mutation_scale*.</span>
+
+<span class="sd">            The following arrow styles are available. See also</span>
+<span class="sd">            :doc:`/gallery/text_labels_and_annotations/fancyarrow_demo`.</span>
 
 <span class="sd">            %(ArrowStyle:table)s</span>
 
+<span class="sd">            Only the styles ``&lt;|-``, ``-|&gt;``, ``&lt;|-|&gt;`` ``simple``, ``fancy``</span>
+<span class="sd">            and ``wedge`` contain closed paths and can be filled.</span>
+
 <span class="sd">        connectionstyle : str or `.ConnectionStyle` or None, optional, \</span>
 <span class="sd">default: &#39;arc3&#39;</span>
-<span class="sd">            The `.ConnectionStyle` with which *posA* and *posB* are connected.</span>
-<span class="sd">            If a string, it should be one of the available connectionstyle</span>
-<span class="sd">            names, with optional comma-separated attributes.  The following</span>
-<span class="sd">            connection styles are available:</span>
+<span class="sd">            `.ConnectionStyle` with which *posA* and *posB* are connected.</span>
+<span class="sd">            This can be</span>
+
+<span class="sd">            - `.ConnectionStyle` or one of its subclasses</span>
+<span class="sd">            - The shorthand string name as given in the table below, e.g. &quot;arc3&quot;.</span>
 
 <span class="sd">            %(ConnectionStyle:table)s</span>
 
+<span class="sd">            Ignored if *path* is provided.</span>
+
 <span class="sd">        patchA, patchB : `~matplotlib.patches.Patch`, default: None</span>
-<span class="sd">            Head and tail patches, respectively.</span>
+<span class="sd">            Optional Patches at *posA* and *posB*, respectively. If given,</span>
+<span class="sd">            the arrow path is clipped by these patches such that head and tail</span>
+<span class="sd">            are at the border of the patches.</span>
+
+<span class="sd">            Ignored if *path* is provided.</span>
 
 <span class="sd">        shrinkA, shrinkB : float, default: 2</span>
-<span class="sd">            Shrink amount, in points, of the tail and head of the arrow respectively.</span>
+<span class="sd">            Shorten the arrow path at *posA* and *posB* by this amount in points.</span>
+<span class="sd">            This allows to add a margin between the intended start/end points and</span>
+<span class="sd">            the arrow.</span>
+
+<span class="sd">            Ignored if *path* is provided.</span>
 
 <span class="sd">        mutation_scale : float, default: 1</span>
 <span class="sd">            Value with which attributes of *arrowstyle* (e.g., *head_length*)</span>

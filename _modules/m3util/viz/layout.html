@@ -47,7 +47,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="unknown" />
-    <meta name="docbuild:last-update" content="Apr 25, 2025"/>
+    <meta name="docbuild:last-update" content="May 30, 2025"/>
   </head>
   
   
@@ -668,10 +668,9 @@
 
 
 
-
 <div class="viewcode-block" id="layout_fig">
 <a class="viewcode-back" href="../../../api/m3util.viz.html#m3util.layout_fig">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">layout_fig</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">mod</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subplot_style</span><span class="o">=</span><span class="s1">&#39;subplots&#39;</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;compressed&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">layout_fig</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">mod</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subplot_style</span><span class="o">=</span><span class="s1">&#39;subplots&#39;</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="n">parent_ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;compressed&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Utility function to create a figure with a flexible layout using either GridSpec or plt.subplots.</span>
 
@@ -680,8 +679,9 @@
 <span class="sd">    mod (int, optional): Determines the number of columns. Defaults to None.</span>
 <span class="sd">    figsize (tuple, optional): Size of the figure. Defaults to None.</span>
 <span class="sd">    subplot_style (str, optional): &#39;subplots&#39; or &#39;gridspec&#39;. Determines the layout method. Defaults to &#39;subplots&#39;</span>
-<span class="sd">    layout (str, optional): &#39;compressed&#39; or &#39;expanded&#39;. Determines the layout style. Defaults to &#39;compressed&#39;.</span>
 <span class="sd">    spacing (tuple, optional): (wspace, hspace) - space between subplots. Defaults to (0.3, 0.3).</span>
+<span class="sd">    parent_ax (Axes, optional): Parent Axes to create nested subplots within. If None, a new figure is created.</span>
+<span class="sd">    layout (str, optional): &#39;compressed&#39; or &#39;expanded&#39;. Determines the layout style. Defaults to &#39;compressed&#39;.</span>
 <span class="sd">    **kwargs: Additional keyword arguments for flexibility.</span>
 
 <span class="sd">    Returns:</span>
@@ -704,53 +704,73 @@
 
     <span class="c1"># Calculate the number of rows needed</span>
     <span class="n">nrows</span> <span class="o">=</span> <span class="n">graph</span> <span class="o">//</span> <span class="n">mod</span> <span class="o">+</span> <span class="p">(</span><span class="n">graph</span> <span class="o">%</span> <span class="n">mod</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-
-    <span class="c1"># Set default figure size if not provided</span>
-    <span class="k">if</span> <span class="n">figsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">mod</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">nrows</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">figsize</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">figsize</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">figsize</span>
-        <span class="n">unit_w</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;unit_w&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># unit size for each plot, default is 3</span>
-        <span class="n">unit_h</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;unit_h&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># unit size for each plot, default is 3</span>
-        <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="k">if</span> <span class="n">w</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">unit_w</span> <span class="o">*</span> <span class="n">mod</span>
-        <span class="n">h</span> <span class="o">=</span> <span class="n">h</span> <span class="k">if</span> <span class="n">h</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">unit_h</span> <span class="o">*</span> <span class="n">nrows</span>
-        <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
         
     <span class="c1"># Extract wspace and hspace from the spacing parameter</span>
     <span class="n">wspace</span><span class="p">,</span> <span class="n">hspace</span> <span class="o">=</span> <span class="n">spacing</span>
+    
+    <span class="k">if</span> <span class="n">parent_ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Set default figure size if not provided</span>
+        <span class="k">if</span> <span class="n">figsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">mod</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">nrows</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">figsize</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">figsize</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">figsize</span>
+            <span class="n">unit_w</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;unit_w&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># unit size for each plot, default is 3</span>
+            <span class="n">unit_h</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;unit_h&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># unit size for each plot, default is 3</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="k">if</span> <span class="n">w</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">unit_w</span> <span class="o">*</span> <span class="n">mod</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">h</span> <span class="k">if</span> <span class="n">h</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">unit_h</span> <span class="o">*</span> <span class="n">nrows</span>
+            <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
 
-    <span class="c1"># Create the figure and layout based on the selected method</span>
-    <span class="k">if</span> <span class="n">subplot_style</span> <span class="o">==</span> <span class="s1">&#39;gridspec&#39;</span><span class="p">:</span>
-        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
-        
+        <span class="c1"># Create the figure and layout based on the selected method</span>
+        <span class="k">if</span> <span class="n">subplot_style</span> <span class="o">==</span> <span class="s1">&#39;gridspec&#39;</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+            
+            <span class="n">width_ratios</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;width_ratios&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">width_ratios</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">width_ratios</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mod</span>
+            <span class="n">height_ratios</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;height_ratios&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">height_ratios</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">height_ratios</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">nrows</span>
+                
+            <span class="n">gs</span> <span class="o">=</span> <span class="n">GridSpec</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="n">width_ratios</span><span class="p">,</span> <span class="n">height_ratios</span><span class="o">=</span><span class="n">height_ratios</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="n">wspace</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="n">hspace</span><span class="p">)</span>
+
+            <span class="c1"># Create subplots based on GridSpec</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="n">mod</span><span class="p">,</span> <span class="n">i</span> <span class="o">%</span> <span class="n">mod</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">graph</span><span class="p">)]</span>
+            
+        <span class="k">elif</span> <span class="n">subplot_style</span> <span class="o">==</span> <span class="s1">&#39;subplots&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">layout</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>   
+                <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
+            <span class="c1"># Flatten the axes for consistency</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:</span><span class="n">graph</span><span class="p">]</span>
+
+            <span class="c1"># Adjust spacing between plots</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="n">wspace</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="n">hspace</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid layout option. Choose &#39;gridspec&#39; or &#39;subplots&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Return the figure and the axes</span>
+        <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span>
+
+    <span class="k">else</span><span class="p">:</span>
         <span class="n">width_ratios</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;width_ratios&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">width_ratios</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">width_ratios</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mod</span>
         <span class="n">height_ratios</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;height_ratios&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">height_ratios</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">height_ratios</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">nrows</span>
-            
-        <span class="n">gs</span> <span class="o">=</span> <span class="n">GridSpec</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="n">width_ratios</span><span class="p">,</span> <span class="n">height_ratios</span><span class="o">=</span><span class="n">height_ratios</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="n">wspace</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="n">hspace</span><span class="p">)</span>
-
-        <span class="c1"># Create subplots based on GridSpec</span>
-        <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="n">mod</span><span class="p">,</span> <span class="n">i</span> <span class="o">%</span> <span class="n">mod</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">graph</span><span class="p">)]</span>
         
-    <span class="k">elif</span> <span class="n">subplot_style</span> <span class="o">==</span> <span class="s1">&#39;subplots&#39;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">layout</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>   
-            <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
-        <span class="c1"># Flatten the axes for consistency</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-            <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:</span><span class="n">graph</span><span class="p">]</span>
+        <span class="c1"># Create nested subplots within the provided Axes</span>
+        <span class="n">bbox</span> <span class="o">=</span> <span class="n">parent_ax</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">parent_ax</span><span class="o">.</span><span class="n">figure</span>
+        <span class="n">gs</span> <span class="o">=</span> <span class="n">GridSpec</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">bbox</span><span class="o">.</span><span class="n">x0</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="n">bbox</span><span class="o">.</span><span class="n">y0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">bbox</span><span class="o">.</span><span class="n">x1</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="n">bbox</span><span class="o">.</span><span class="n">y1</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="n">width_ratios</span><span class="p">,</span> <span class="n">height_ratios</span><span class="o">=</span><span class="n">height_ratios</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="n">wspace</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="n">hspace</span><span class="p">)</span>
 
-        <span class="c1"># Adjust spacing between plots</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="n">wspace</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="n">hspace</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid layout option. Choose &#39;gridspec&#39; or &#39;subplots&#39;.&quot;</span><span class="p">)</span>
-
-    <span class="c1"># Return the figure and the axes</span>
-    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span></div>
+        <span class="c1"># Create subplots in the given Axes space</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="n">mod</span><span class="p">,</span> <span class="n">i</span> <span class="o">%</span> <span class="n">mod</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">graph</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">axes</span></div>
 
 
 
