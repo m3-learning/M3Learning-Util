@@ -187,7 +187,7 @@ def layout_fig(graph, mod=None, figsize=None, subplot_style='subplots', spacing=
     figsize (tuple, optional): Size of the figure. Defaults to None.
     subplot_style (str, optional): 'subplots' or 'gridspec'. Determines the layout method. Defaults to 'subplots'
     spacing (tuple, optional): (wspace, hspace) - space between subplots. Defaults to (0.3, 0.3).
-    parent_ax (Axes, optional): Parent Axes to create nested subplots within. If None, a new figure is created.
+    parent_ax (Axes, optional): Parent Axes to create nested subplots within. If None, a new figure is created. Defaults to None.
     layout (str, optional): 'compressed' or 'expanded'. Determines the layout style. Defaults to 'compressed'.
     **kwargs: Additional keyword arguments for flexibility.
 
