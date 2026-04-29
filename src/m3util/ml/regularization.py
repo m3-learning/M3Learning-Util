@@ -86,6 +86,23 @@ class DivergenceLoss(nn.Module):
 '''
 from Xinqiao's fork of m3_learning.nn.Regularization
 '''
+
+class LN_loss(nn.Module):
+    def __init__(self, ln_parm=2, coef=0.01, channels=1, ):
+        """_summary_
+
+        Args:
+            ln_parm (int, optional): _description_. Defaults to 2.
+            coef (float, optional): _description_. Defaults to 0.01.
+        """        
+        super(LN_loss, self).__init__()        
+        self.ln_parm = ln_parm
+        self.coef = coef
+        
+    def forward(self,x):
+        loss = torch.linalg.norm(x, ord=self.ln_parm, dim=1).mean()
+        return loss.mean()*self.coef
+    
 class Weighted_LN_loss(nn.Module):
     def __init__(self, ln_parm=2, coef=0.01, channels=1, ):
         """_summary_
